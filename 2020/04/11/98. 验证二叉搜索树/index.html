@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="leetcode," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="98. 验证二叉搜索树题目描述： 给定一个二叉树，判断其是否是一个有效的二叉搜索树。 假设一个二叉搜索树具有如下特征： 节点的左子树只包含小于当前节点的数。节点的右子树只包含大于当前节点的数。所有左子树和右子树自身必须也是二叉搜索树。 示例： 123456789101112131415161718示例 1:输入:    2   &#x2F; \  1   3输出: true示例 2:输入:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="98. 验证二叉搜索树">
+<meta property="og:url" content="http://extrali.com/2020/04/11/98.%20%E9%AA%8C%E8%AF%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/index.html">
+<meta property="og:site_name" content="Extrali">
+<meta property="og:description" content="98. 验证二叉搜索树题目描述： 给定一个二叉树，判断其是否是一个有效的二叉搜索树。 假设一个二叉搜索树具有如下特征： 节点的左子树只包含小于当前节点的数。节点的右子树只包含大于当前节点的数。所有左子树和右子树自身必须也是二叉搜索树。 示例： 123456789101112131415161718示例 1:输入:    2   &#x2F; \  1   3输出: true示例 2:输入:">
+<meta property="article:published_time" content="2020-04-11T09:51:24.000Z">
+<meta property="article:modified_time" content="2020-04-11T03:50:57.355Z">
+<meta property="article:author" content="黎达">
+<meta property="article:tag" content="leetcode">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://extrali.com/2020/04/11/98. 验证二叉搜索树/"/>
+
+
+
+
+
+  <title>98. 验证二叉搜索树 | Extrali</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Extrali</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/98.%20%E9%AA%8C%E8%AF%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">98. 验证二叉搜索树</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="98-验证二叉搜索树"><a href="#98-验证二叉搜索树" class="headerlink" title="98. 验证二叉搜索树"></a><a href="https://leetcode-cn.com/problems/validate-binary-search-tree/" target="_blank" rel="noopener">98. 验证二叉搜索树</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个二叉树，判断其是否是一个有效的二叉搜索树。</p>
+<p>假设一个二叉搜索树具有如下特征：</p>
+<p>节点的左子树只包含小于当前节点的数。<br>节点的右子树只包含大于当前节点的数。<br>所有左子树和右子树自身必须也是二叉搜索树。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入:</span><br><span class="line">    2</span><br><span class="line">   &#x2F; \</span><br><span class="line">  1   3</span><br><span class="line">输出: true</span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入:</span><br><span class="line">    5</span><br><span class="line">   &#x2F; \</span><br><span class="line">  1   4</span><br><span class="line">     &#x2F; \</span><br><span class="line">    3   6</span><br><span class="line">输出: false</span><br><span class="line">解释: 输入为: [5,1,4,null,null,3,6]。</span><br><span class="line">     根节点的值为 5 ，但是其右子节点值为 4 。</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法一：中序遍历"><a href="#算法一：中序遍历" class="headerlink" title="算法一：中序遍历"></a>算法一：中序遍历</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>用lastNode指向前一个被访问的节点，node指向当前被访问的节点</li>
+<li>在中序遍历的顺序下，二叉排序树一定是升序排列的，所以可以检查是否有逆序存在即可</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public boolean isValidBST(TreeNode root) &#123;</span><br><span class="line">		&#x2F;&#x2F;lastNode指向上一个被访问节点的val域，初始为一个很小的数</span><br><span class="line">        double lastNode&#x3D;-Double.MAX_VALUE;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack&#x3D;new Stack&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;node指向当前被访问的节点</span><br><span class="line">        TreeNode node&#x3D;root;</span><br><span class="line">        while(node!&#x3D;null||!stack.isEmpty())&#123;</span><br><span class="line">            while(node!&#x3D;null)&#123;</span><br><span class="line">                stack.push(node);</span><br><span class="line">                node&#x3D;node.left;</span><br><span class="line">            &#125;</span><br><span class="line">            node&#x3D;stack.pop();</span><br><span class="line">            &#x2F;&#x2F;如果当前节点val小于等于前一个节点，即逆序则返回false</span><br><span class="line">            if(node.val&lt;&#x3D;lastNode)&#123;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;更新lastNode的值</span><br><span class="line">            lastNode&#x3D;node.val;</span><br><span class="line">            node&#x3D;node.right;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后若没有逆序存在则返回会true</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)</li>
+<li><strong>空间复杂度：</strong>O(n)</li>
+</ul>
+<h2 id="算法二：递归"><a href="#算法二：递归" class="headerlink" title="算法二：递归"></a>算法二：递归</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>要判断以root为根的树为二叉排序树，只要root大于左子树上最大的节点，小于右子树上最小的节点</li>
+<li>然后递归判断左子树和右子树</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">public boolean isValidBST(TreeNode root) &#123;</span><br><span class="line">		&#x2F;&#x2F;flag记录以root为根的树是否是二叉排序树，默认是true</span><br><span class="line">        boolean flag&#x3D;true;</span><br><span class="line">        &#x2F;&#x2F;left记录以root的左子树为根的树是否为二叉排序树</span><br><span class="line">        boolean left&#x3D;true;</span><br><span class="line">        &#x2F;&#x2F;right记录以root的右子树为根的树是否为二叉排序树</span><br><span class="line">        boolean right&#x3D;true;</span><br><span class="line">        if(root!&#x3D;null)&#123;</span><br><span class="line">        	&#x2F;&#x2F;递归判断是左子树</span><br><span class="line">            left&#x3D;isValidBST(root.left);</span><br><span class="line">            &#x2F;&#x2F;如果左子树为空或者root大于左边最大的，并且右子树为空或者root小于右边最小</span><br><span class="line">            if((getMax(root.left)&#x3D;&#x3D;null||root.val&gt;getMax(root.left).val)&amp;&amp;(getMin(root.right)&#x3D;&#x3D;null||root.val&lt;getMin(root.right).val))&#123;</span><br><span class="line">                flag&#x3D;true;</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                flag&#x3D;false;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;递归判断右子树</span><br><span class="line">            right&#x3D;isValidBST(root.right);</span><br><span class="line">        &#125;</span><br><span class="line">        return flag&amp;&amp;left&amp;&amp;right;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;getMax返回以root为根的子树的最大节点</span><br><span class="line">    private TreeNode getMax(TreeNode root)&#123;</span><br><span class="line">          if(root&#x3D;&#x3D;null)&#123;</span><br><span class="line">              return null;</span><br><span class="line">          &#125;</span><br><span class="line">          &#x2F;&#x2F;最右边节点为最大</span><br><span class="line">          while(root.right!&#x3D;null)&#123;</span><br><span class="line">              root&#x3D;root.right;</span><br><span class="line">          &#125;</span><br><span class="line">          return root;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;getMin返回以root为根的子树的最小节点</span><br><span class="line">    private TreeNode getMin(TreeNode root)&#123;</span><br><span class="line">        if(root&#x3D;&#x3D;null)&#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最左边节点最小</span><br><span class="line">        while(root.left!&#x3D;null)&#123;</span><br><span class="line">            root&#x3D;root.left;</span><br><span class="line">        &#125;</span><br><span class="line">        return root;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="算法三：递归"><a href="#算法三：递归" class="headerlink" title="算法三：递归"></a>算法三：递归</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>上面算法的简介版，由于上面每次都要去计算最小节点和最大节点非常麻烦，所以想到可以将树的上界和下界存储在参数中传递，随时更新</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public boolean isValidBST(TreeNode root) &#123;</span><br><span class="line">		&#x2F;&#x2F;初始不知道上下界，所以为null</span><br><span class="line">        return helper(root, null, null);</span><br><span class="line">    &#125;</span><br><span class="line">	&#x2F;&#x2F;lower表示下界，upper表示上界</span><br><span class="line">    private boolean helper(TreeNode root, Integer lower, Integer upper) &#123;</span><br><span class="line">    	&#x2F;&#x2F;root为空，返回true</span><br><span class="line">        if(root&#x3D;&#x3D;null) return true;</span><br><span class="line">        &#x2F;&#x2F;如果lower不为空且逆序，则返回false，下同</span><br><span class="line">        if(lower!&#x3D;null&amp;&amp;root.val&lt;&#x3D;lower) return false;</span><br><span class="line">        if(upper!&#x3D;null&amp;&amp;root.val&gt;&#x3D;upper) return false;</span><br><span class="line">        &#x2F;&#x2F;递归判断左子树，此时更新上界为root.val</span><br><span class="line">        if(!helper(root.left,lower,root.val)) return false;</span><br><span class="line">        &#x2F;&#x2F;递归判断右子树，此时更新下界为root.val</span><br><span class="line">        if(!helper(root.right,root.val,upper)) return false;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)</li>
+<li><strong>空间复杂度：</strong>O(n)</li>
+</ul>
+<h2 id="算法四：迭代"><a href="#算法四：迭代" class="headerlink" title="算法四：迭代"></a>算法四：迭代</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>将上面的算法改为迭代形式，分别用三个链表存储根节点，上界，下界</li>
+<li>用深度优先遍历，依次判断每一个节点是否满足条件</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;stack存储节点</span><br><span class="line">LinkedList&lt;TreeNode&gt; stack&#x3D;new LinkedList&lt;&gt;();</span><br><span class="line">&#x2F;&#x2F;uppers和lowers分别存储对应的上界与下界</span><br><span class="line">   LinkedList&lt;Integer&gt; uppers&#x3D;new LinkedList&lt;&gt;(),lowers&#x3D;new LinkedList&lt;&gt;();</span><br><span class="line">   &#x2F;&#x2F;三个链表的入栈操作</span><br><span class="line">   private void update(TreeNode root,Integer lower,Integer upper)&#123;</span><br><span class="line">       stack.add(root);</span><br><span class="line">       lowers.add(lower);</span><br><span class="line">       uppers.add(upper);</span><br><span class="line">   &#125;</span><br><span class="line"> public boolean isValidBST(TreeNode root) &#123;</span><br><span class="line">     Integer lower&#x3D;null,upper&#x3D;null,val;</span><br><span class="line">     update(root,lower,upper);</span><br><span class="line">     while(!stack.isEmpty())&#123;</span><br><span class="line">         root&#x3D;stack.poll();</span><br><span class="line">         lower&#x3D;lowers.poll();</span><br><span class="line">         upper&#x3D;uppers.poll();</span><br><span class="line">         if(root&#x3D;&#x3D;null) continue;</span><br><span class="line">         val&#x3D;root.val;</span><br><span class="line">         if (lower !&#x3D; null &amp;&amp; val &lt;&#x3D; lower) return false;</span><br><span class="line">         if (upper !&#x3D; null &amp;&amp; val &gt;&#x3D; upper) return false;</span><br><span class="line">         update(root.right,val,upper);</span><br><span class="line">         update(root.left,lower,val);</span><br><span class="line">     &#125;</span><br><span class="line">     return true;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)</li>
+<li><strong>空间复杂度：</strong>O(n)</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/leetcode/" rel="tag"># leetcode</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/08/50.%20Pow(x,%20n)/" rel="next" title="50. Pow(x, n)">
+                <i class="fa fa-chevron-left"></i> 50. Pow(x, n)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/11/91.%20%E8%A7%A3%E7%A0%81%E6%96%B9%E6%B3%95/" rel="prev" title="91. 解码方法">
+                91. 解码方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg"
+                alt="黎达" />
+            
+              <p class="site-author-name" itemprop="name">黎达</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">211</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/extrali" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:extralida@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#98-验证二叉搜索树"><span class="nav-number">1.</span> <span class="nav-text">98. 验证二叉搜索树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法一：中序遍历"><span class="nav-number">1.1.</span> <span class="nav-text">算法一：中序遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法二：递归"><span class="nav-number">1.2.</span> <span class="nav-text">算法二：递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法三：递归"><span class="nav-number">1.3.</span> <span class="nav-text">算法三：递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法四：迭代"><span class="nav-number">1.4.</span> <span class="nav-text">算法四：迭代</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黎达</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

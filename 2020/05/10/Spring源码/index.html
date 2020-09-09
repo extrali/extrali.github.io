@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Spring," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="SpringIOCSpringBean初始化过程初始化所有的singleton beans是在finishBeanFactoryInitialization(beanFactory)方法中，进一步是在其中的的preInstantiateSingletons()方法中，在里面如果是普通的bean(非抽象，非懒加载，非FactoryBean)，就会直接调用getBean(beanName)方法，这是一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring源码">
+<meta property="og:url" content="http://extrali.com/2020/05/10/Spring%E6%BA%90%E7%A0%81/index.html">
+<meta property="og:site_name" content="Extrali">
+<meta property="og:description" content="SpringIOCSpringBean初始化过程初始化所有的singleton beans是在finishBeanFactoryInitialization(beanFactory)方法中，进一步是在其中的的preInstantiateSingletons()方法中，在里面如果是普通的bean(非抽象，非懒加载，非FactoryBean)，就会直接调用getBean(beanName)方法，这是一">
+<meta property="og:image" content="https://i.loli.net/2020/05/14/65ZnRUdOLbDyeVA.png">
+<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/Spring%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%9D%97.png">
+<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-7/SpringMVC%E4%BC%A0%E7%BB%9F%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-7/SpringMVCRestController.png">
+<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-7/Spring3.xMVCRESTfulWeb%E6%9C%8D%E5%8A%A1%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-7/SpringIOC%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/SpringAOPProcess.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/48376272.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/5496407.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-11/60679444.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-11/49790288.jpg">
+<meta property="article:published_time" content="2020-05-10T02:31:08.000Z">
+<meta property="article:modified_time" content="2020-07-04T02:44:05.927Z">
+<meta property="article:author" content="黎达">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/14/65ZnRUdOLbDyeVA.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://extrali.com/2020/05/10/Spring源码/"/>
+
+
+
+
+
+  <title>Spring源码 | Extrali</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Extrali</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/05/10/Spring%E6%BA%90%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring源码</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-10T10:31:08+08:00">
+                2020-05-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="SpringIOC"><a href="#SpringIOC" class="headerlink" title="SpringIOC"></a>SpringIOC</h1><h2 id="SpringBean初始化过程"><a href="#SpringBean初始化过程" class="headerlink" title="SpringBean初始化过程"></a>SpringBean初始化过程</h2><p>初始化所有的singleton beans是在finishBeanFactoryInitialization(beanFactory)方法中，进一步是在其中的的preInstantiateSingletons()方法中，在里面如果是普通的bean(非抽象，非懒加载，非FactoryBean)，就会直接调用getBean(beanName)方法，这是一个空壳方法，然后会调用doGetBean()方法，主要代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public void preInstantiateSingletons() throws BeansException &#123;</span><br><span class="line">   &#x2F;&#x2F; this.beanDefinitionNames 保存了所有的 beanNames</span><br><span class="line">   List&lt;String&gt; beanNames &#x3D; new ArrayList&lt;String&gt;(this.beanDefinitionNames);</span><br><span class="line"></span><br><span class="line">   &#x2F;&#x2F; 下面这个循环，触发所有的非懒加载的 singleton beans 的初始化操作</span><br><span class="line">   for (String beanName : beanNames) &#123;</span><br><span class="line">         &#x2F;&#x2F; 处理 FactoryBean</span><br><span class="line">         if (isFactoryBean(beanName)) &#123;</span><br><span class="line">            &#x2F;&#x2F; FactoryBean 的话，在 beanName 前面加上 ‘&amp;’ 符号。再调用getBean()</span><br><span class="line">            final FactoryBean&lt;?&gt; factory &#x3D; (FactoryBean&lt;?&gt;) getBean(FACTORY_BEAN_PREFIX + beanName);</span><br><span class="line">         &#125;  </span><br><span class="line">         else &#123;</span><br><span class="line">            &#x2F;&#x2F; 对于普通的 Bean，只要调用 getBean(beanName) 这个方法就可以进行初始化了</span><br><span class="line">            getBean(beanName);</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结preInstantiateSingletons()方法，首先会遍历一个装着BeanDenifinitionName的集合，然后依次调用getBean(beanName)方法，如果这个beanName是FactoryBean，则会在其前面加上一个&amp;符号后再调用getBean()方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">protected &lt;T&gt; T doGetBean(String name, @Nullable Class&lt;T&gt; requiredType, @Nullable Object[] args, boolean typeCheckOnly) throws BeansException &#123;</span><br><span class="line">		&#x2F;&#x2F;对beanName进行处理，一是处理别名，二是处理&amp;符号的FactoryBean</span><br><span class="line">        String beanName &#x3D; this.transformedBeanName(name);</span><br><span class="line">        &#x2F;&#x2F;第一次调用getSingleton()方法，这个方法检查对象是否已经放在单例池中，可以解决循环依赖</span><br><span class="line">        Object sharedInstance &#x3D; this.getSingleton(beanName);</span><br><span class="line">        &#x2F;&#x2F;返回值</span><br><span class="line">        Object bean;</span><br><span class="line">        if (sharedInstance !&#x3D; null &amp;&amp; args &#x3D;&#x3D; null) &#123;</span><br><span class="line">        &#x2F;&#x2F;如果是普通Bean，则直接返回；如果是BeanFactory则会返回它创建的哪个对象。</span><br><span class="line">        bean &#x3D; this.getObjectForBeanInstance(sharedInstance, name, beanName, (RootBeanDefinition)null);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                RootBeanDefinition mbd &#x3D; this.getMergedLocalBeanDefinition(beanName);</span><br><span class="line">                this.checkMergedBeanDefinition(mbd, beanName, args);</span><br><span class="line">                &#x2F;&#x2F;先初始化依赖的所有 Bean，这个很好理解。</span><br><span class="line">         		&#x2F;&#x2F; 注意，这里的依赖指的是 depends-on 中定义的依赖</span><br><span class="line">                String[] dependsOn &#x3D; mbd.getDependsOn();</span><br><span class="line">                String[] var11;</span><br><span class="line">                if (dependsOn !&#x3D; null) &#123;</span><br><span class="line">                    var11 &#x3D; dependsOn;</span><br><span class="line">                    int var12 &#x3D; dependsOn.length;</span><br><span class="line"></span><br><span class="line">                    for(int var13 &#x3D; 0; var13 &lt; var12; ++var13) &#123;</span><br><span class="line">                        String dep &#x3D; var11[var13];</span><br><span class="line">                        &#x2F;&#x2F;检查是不是有循环依赖，这里是depends-on的循环依赖</span><br><span class="line">                        if (this.isDependent(beanName, dep)) &#123;</span><br><span class="line">                            throw new BeanCreationException(mbd.getResourceDescription(), beanName, &quot;Circular depends-on relationship between &#39;&quot; + beanName + &quot;&#39; and &#39;&quot; + dep + &quot;&#39;&quot;);</span><br><span class="line">                        &#125;</span><br><span class="line">						&#x2F;&#x2F;注册一下依赖关系</span><br><span class="line">                        this.registerDependentBean(dep, beanName);</span><br><span class="line">                        &#x2F;&#x2F;先初始化被依赖的项</span><br><span class="line">                        this.getBean(dep);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">				&#x2F;&#x2F;如果是singleton的，创建实例</span><br><span class="line">                if (mbd.isSingleton()) &#123;</span><br><span class="line">                    sharedInstance &#x3D; this.getSingleton(beanName, () -&gt; &#123;</span><br><span class="line">                        try &#123;</span><br><span class="line">                        	&#x2F;&#x2F;执行创建bean</span><br><span class="line">                            return this.createBean(beanName, mbd, args);</span><br><span class="line">                        &#125; catch (BeansException var5) &#123;</span><br><span class="line">                            this.destroySingleton(beanName);</span><br><span class="line">                            throw var5;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                    &#x2F;&#x2F;如果是普通Bean，则直接返回；如果是BeanFactory则会返回它创建的哪个对象。</span><br><span class="line">                    bean &#x3D; this.getObjectForBeanInstance(sharedInstance, name, beanName, mbd);</span><br><span class="line">                &#x2F;&#x2F;如果是 prototype scope 的，创建 prototype 的实例</span><br><span class="line">                &#125; else if (mbd.isPrototype()) &#123;</span><br><span class="line">                    var11 &#x3D; null;</span><br><span class="line"></span><br><span class="line">                    Object prototypeInstance;</span><br><span class="line">                    try &#123;</span><br><span class="line">                        this.beforePrototypeCreation(beanName);</span><br><span class="line">                        &#x2F;&#x2F;执行创建Bean</span><br><span class="line">                        prototypeInstance &#x3D; this.createBean(beanName, mbd, args);</span><br><span class="line">                    &#125; finally &#123;</span><br><span class="line">                        this.afterPrototypeCreation(beanName);</span><br><span class="line">                    &#125;</span><br><span class="line">					&#x2F;&#x2F;如果是普通Bean，则直接返回；如果是BeanFactory则会返回它创建的哪个对象。</span><br><span class="line">                    bean &#x3D; this.getObjectForBeanInstance(prototypeInstance, name, beanName, mbd);</span><br><span class="line">                &#125; </span><br><span class="line">         &#x2F;&#x2F;返回bean</span><br><span class="line">         return bean;</span><br><span class="line">     </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结一下doGetBean()，首先会调用transformedBeanName()方法转换别名或者是FactoryBean的name，然后会调用getSingleton()方法从单例池中获取，没有获取到的话，就会调用getSingleton()中重载的有ObjectFactory参数的方法，其中传入一个拉姆达表达式重写getObject()方法为调用createBean()方法，这个方法里面会创建bean。</p>
+<p>插一下<code>getSingleton(String beanName, ObjectFactory&lt;?&gt; singletonFactory)</code>方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public Object getSingleton(String beanName, ObjectFactory&lt;?&gt; singletonFactory) &#123;</span><br><span class="line">        synchronized(this.singletonObjects) &#123;</span><br><span class="line">            Object singletonObject &#x3D; this.singletonObjects.get(beanName);</span><br><span class="line">            if (singletonObject &#x3D;&#x3D; null) &#123;</span><br><span class="line">            	&#x2F;&#x2F;这个方法会把当前的beanName添加到一个singletonsCurrentlyInCreation的set				   中，这个set用于解决循环依赖</span><br><span class="line">                this.beforeSingletonCreation(beanName);</span><br><span class="line">                try &#123;</span><br><span class="line">                	&#x2F;&#x2F;调用ObjectFactory的getObject()方法</span><br><span class="line">                    singletonObject &#x3D; singletonFactory.getObject();</span><br><span class="line">                    newSingleton &#x3D; true;</span><br><span class="line">                &#125; </span><br><span class="line">                	&#x2F;&#x2F;将beanName从singletonsCurrentlyInCreation中移除</span><br><span class="line">                    this.afterSingletonCreation(beanName);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                if (newSingleton) &#123;</span><br><span class="line">                	&#x2F;&#x2F;将对象加入单例池，并将其从singletonFactories和earlySingletonObjects						中移除</span><br><span class="line">                    this.addSingleton(beanName, singletonObject);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            return singletonObject;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结一下getSingleton(ObjectFactory)方法：首先会调用beforeSingletonCreation(beanName)方法，将beanName加入到singletonsCurrentlyInCreation的set中，然后调用传进来的ObjectFactory的getObject()方法，这个方法过后，对象就会创建成功，后面就是从singletonsCurrentlyInCreation移除beanName，并且将当前的对象加入单例池中，同时将其从singletonFactories和earlySingletonObjects中移除。</p>
+<p>下面是createBean()方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">protected Object createBean(String beanName, RootBeanDefinition mbd, @Nullable Object[] args) throws BeanCreationException &#123;</span><br><span class="line">       </span><br><span class="line">        RootBeanDefinition mbdToUse &#x3D; mbd;</span><br><span class="line">        &#x2F;&#x2F;确保 BeanDefinition 中的 Class 被加载</span><br><span class="line">        Class&lt;?&gt; resolvedClass &#x3D; this.resolveBeanClass(mbd, beanName, new Class[0]);</span><br><span class="line">        if (resolvedClass !&#x3D; null &amp;&amp; !mbd.hasBeanClass() &amp;&amp; mbd.getBeanClassName() !&#x3D; null) &#123;</span><br><span class="line">            mbdToUse &#x3D; new RootBeanDefinition(mbd);</span><br><span class="line">            mbdToUse.setBeanClass(resolvedClass);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        Object beanInstance;</span><br><span class="line">        try &#123;</span><br><span class="line">        	&#x2F;&#x2F;让 InstantiationAwareBeanPostProcessor 在这一步有机会返回代理</span><br><span class="line">            beanInstance &#x3D; this.resolveBeforeInstantiation(beanName, mbdToUse);</span><br><span class="line">            if (beanInstance !&#x3D; null) &#123;</span><br><span class="line">                return beanInstance;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Throwable var11) &#123;</span><br><span class="line">            throw new BeanCreationException(mbdToUse.getResourceDescription(), beanName, &quot;BeanPostProcessor before instantiation of bean failed&quot;, var11);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">        	&#x2F;&#x2F;创建bean</span><br><span class="line">            beanInstance &#x3D; this.doCreateBean(beanName, mbdToUse, args);</span><br><span class="line">            return beanInstance;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>createBean()方法会调用doCreateBean()方法来创建bean。</p>
+<p>下面是doCreateBean()方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">protected Object doCreateBean(String beanName, RootBeanDefinition mbd, @Nullable Object[] args) throws BeanCreationException &#123;</span><br><span class="line">        BeanWrapper instanceWrapper &#x3D; null;</span><br><span class="line">        if (mbd.isSingleton()) &#123;</span><br><span class="line">            instanceWrapper &#x3D; (BeanWrapper)this.factoryBeanInstanceCache.remove(beanName);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (instanceWrapper &#x3D;&#x3D; null) &#123;</span><br><span class="line">        	&#x2F;&#x2F;这里实例化Bean</span><br><span class="line">            instanceWrapper &#x3D; this.createBeanInstance(beanName, mbd, args);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Object bean &#x3D; instanceWrapper.getWrappedInstance();</span><br><span class="line">        Class&lt;?&gt; beanType &#x3D; instanceWrapper.getWrappedClass();</span><br><span class="line">        if (beanType !&#x3D; NullBean.class) &#123;</span><br><span class="line">            mbd.resolvedTargetType &#x3D; beanType;</span><br><span class="line">        &#125;</span><br><span class="line">		</span><br><span class="line">		&#x2F;&#x2F;解决循环依赖，将beanName对应的ObjectFactory放入到singletonFactories中</span><br><span class="line">        boolean earlySingletonExposure &#x3D; mbd.isSingleton() &amp;&amp; this.allowCircularReferences &amp;&amp; this.isSingletonCurrentlyInCreation(beanName);</span><br><span class="line">        if (earlySingletonExposure) &#123;</span><br><span class="line">            this.addSingletonFactory(beanName, () -&gt; &#123;</span><br><span class="line">                return this.getEarlyBeanReference(beanName, mbd, bean);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Object exposedObject &#x3D; bean;</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">        	&#x2F;&#x2F;属性装配</span><br><span class="line">            this.populateBean(beanName, mbd, instanceWrapper);</span><br><span class="line">            &#x2F;&#x2F;处理bean初始化完成后的各种回调</span><br><span class="line">            exposedObject &#x3D; this.initializeBean(beanName, exposedObject, mbd);</span><br><span class="line">        &#125; </span><br><span class="line">        return exposedObject;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结一下doCreateBean()方法：其首先会实例化Bean，然后判断当前是否支持循环依赖，如果支持循环依赖就把beanName对应的ObjectFactory放到singletonFactories中，然后进行属性装配，最后处理各种回调。</p>
+<p>然后是实例化Bean的createBeanInstance()方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">protected BeanWrapper createBeanInstance(String beanName, RootBeanDefinition mbd, @Nullable Object[] args) &#123;</span><br><span class="line">        Class&lt;?&gt; beanClass &#x3D; this.resolveBeanClass(mbd, beanName, new Class[0]);</span><br><span class="line">        &#x2F;&#x2F;如果不是第一次创建，比如第二次创建 prototype bean。</span><br><span class="line">   		&#x2F;&#x2F; 这种情况下，我们可以从第一次创建知道，采用无参构造函数，还是构造函数依赖注入 来完成实例化</span><br><span class="line">        boolean resolved &#x3D; false;</span><br><span class="line">        boolean autowireNecessary &#x3D; false;</span><br><span class="line">        if (args &#x3D;&#x3D; null) &#123;</span><br><span class="line">               synchronized(mbd.constructorArgumentLock) &#123;</span><br><span class="line">                     if (mbd.resolvedConstructorOrFactoryMethod !&#x3D; null) &#123;</span><br><span class="line">                           resolved &#x3D; true;</span><br><span class="line">                           autowireNecessary &#x3D; mbd.constructorArgumentsResolved;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">         if (resolved) &#123;</span><br><span class="line">             return autowireNecessary ? this.autowireConstructor(beanName, mbd, (Constructor[])null, (Object[])null) : this.instantiateBean(beanName, mbd);</span><br><span class="line">         &#125; else &#123;</span><br><span class="line">         	&#x2F;&#x2F;判断是否有有参构造函数，然后判断调用有参构造还是无参构造</span><br><span class="line">             Constructor&lt;?&gt;[] ctors &#x3D; this.determineConstructorsFromBeanPostProcessors(beanClass, beanName);</span><br><span class="line">         	 return ctors &#x3D;&#x3D; null &amp;&amp; mbd.getResolvedAutowireMode() !&#x3D; 3 &amp;&amp; !mbd.hasConstructorArgumentValues() &amp;&amp; ObjectUtils.isEmpty(args) ? this.instantiateBean(beanName, mbd) : this.autowireConstructor(beanName, mbd, ctors, args);</span><br><span class="line">          &#125;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的方法就是实例化的过程。</p>
+<p>属性注入的populateBean()方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">protected void populateBean(String beanName, RootBeanDefinition mbd, @Nullable BeanWrapper bw) &#123;</span><br><span class="line">        if (bw &#x3D;&#x3D; null) &#123;</span><br><span class="line">            boolean continueWithPropertyPopulation &#x3D; true;</span><br><span class="line">            if (continueWithPropertyPopulation) &#123;</span><br><span class="line">                PropertyValues pvs &#x3D; mbd.hasPropertyValues() ? mbd.getPropertyValues() : null;</span><br><span class="line">                if (mbd.getResolvedAutowireMode() &#x3D;&#x3D; 1 || mbd.getResolvedAutowireMode() &#x3D;&#x3D; 2) &#123;</span><br><span class="line">                    MutablePropertyValues newPvs &#x3D; new MutablePropertyValues((PropertyValues)pvs);</span><br><span class="line">                    if (mbd.getResolvedAutowireMode() &#x3D;&#x3D; 1) &#123;</span><br><span class="line">                    	&#x2F;&#x2F;通过名字找到所有属性值，如果是 bean 依赖，先初始化依赖的 bean。记录依							赖关系</span><br><span class="line">                        this.autowireByName(beanName, mbd, bw, newPvs);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    if (mbd.getResolvedAutowireMode() &#x3D;&#x3D; 2) &#123;</span><br><span class="line">                    	&#x2F;&#x2F;通过类型装配</span><br><span class="line">                        this.autowireByType(beanName, mbd, bw, newPvs);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    pvs &#x3D; newPvs;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                if (pvs !&#x3D; null) &#123;</span><br><span class="line">                	&#x2F;&#x2F;设置 bean 实例的属性值</span><br><span class="line">                    this.applyPropertyValues(beanName, mbd, bw, (PropertyValues)pvs);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>处理回调的initializeBean()方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">protected Object initializeBean(String beanName, Object bean, @Nullable RootBeanDefinition mbd) &#123;</span><br><span class="line">    &#x2F;&#x2F;如果 bean 实现了 BeanNameAware、BeanClassLoaderAware 或 BeanFactoryAware 接口，回调</span><br><span class="line">        this.invokeAwareMethods(beanName, bean);</span><br><span class="line">        Object wrappedBean &#x3D; bean;</span><br><span class="line">        if (mbd &#x3D;&#x3D; null || !mbd.isSynthetic()) &#123;</span><br><span class="line">       	    &#x2F;&#x2F;BeanPostProcessor 的 postProcessBeforeInitialization 回调</span><br><span class="line">            wrappedBean &#x3D; this.applyBeanPostProcessorsBeforeInitialization(bean, beanName);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">        &#x2F;&#x2F;处理 bean 中定义的 init-method，</span><br><span class="line">        &#x2F;&#x2F; 或者如果 bean 实现了 InitializingBean 接口，调用 afterPropertiesSet() 方法</span><br><span class="line">            this.invokeInitMethods(beanName, wrappedBean, mbd);</span><br><span class="line">        &#125; catch (Throwable var6) &#123;</span><br><span class="line">            throw new BeanCreationException(mbd !&#x3D; null ? mbd.getResourceDescription() : null, beanName, &quot;Invocation of init method failed&quot;, var6);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (mbd &#x3D;&#x3D; null || !mbd.isSynthetic()) &#123;</span><br><span class="line">        &#x2F;&#x2F;BeanPostProcessor 的 postProcessAfterInitialization 回调</span><br><span class="line">   		wrappedBean &#x3D; this.applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return wrappedBean;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以发现BeanPostProcessor 的两个回调都发生在这边，只不过中间处理了 init-method</p>
+<h1 id="FactoryBean和BeanFactory的区别"><a href="#FactoryBean和BeanFactory的区别" class="headerlink" title="FactoryBean和BeanFactory的区别"></a>FactoryBean和BeanFactory的区别</h1><p><strong>BeanFactory</strong>是一个接口，它是Spring中工厂的顶层规范，是SpringIoc容器的核心接口。</p>
+<p><strong>FactoryBean</strong>首先它是一个Bean，但又不仅仅是一个Bean。它是一个能生产或修饰对象生成的工厂Bean，类似于设计模式中的工厂模式和装饰器模式。它能在需要的时候生产一个对象，且不仅仅限于它自身，它能返回任何Bean的实例。</p>
+<p><strong>一个Bean A如果实现了FactoryBean接口，那么A就变成了一个工厂，根据A的名称获取到的实际上是工厂调用<code>getObject()</code>返回的对象，而不是A本身，如果要获取工厂A自身的实例，那么需要在名称前面加上’<code>&amp;</code>‘符号。</strong></p>
+<ul>
+<li>getObject(‘name’)返回工厂中的实例</li>
+<li>getObject(‘&amp;name’)返回工厂本身的实例</li>
+</ul>
+<h1 id="Spring循环依赖"><a href="#Spring循环依赖" class="headerlink" title="Spring循环依赖"></a>Spring循环依赖</h1><p>Spring中默认<strong>单例</strong>是支持循环依赖的。</p>
+<p>解决循环依赖的主要代码在getSingleton(beanName)方法中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">protected Object getSingleton(String beanName, boolean allowEarlyReference) &#123;</span><br><span class="line">		&#x2F;&#x2F;首先会从单例池中获取</span><br><span class="line">        Object singletonObject &#x3D; this.singletonObjects.get(beanName);</span><br><span class="line">        &#x2F;&#x2F;如果没有获取到，并且当前对象正在创建中</span><br><span class="line">        if (singletonObject &#x3D;&#x3D; null &amp;&amp; this.isSingletonCurrentlyInCreation(beanName)) &#123;</span><br><span class="line">            synchronized(this.singletonObjects) &#123;</span><br><span class="line">            	&#x2F;&#x2F;尝试直接从三级缓存中拿</span><br><span class="line">                singletonObject &#x3D; this.earlySingletonObjects.get(beanName);</span><br><span class="line">                &#x2F;&#x2F;没有拿到则会从二级缓存中拿到对应的ObjectFactory，并调用其中的getObject()方法				获取到对象。</span><br><span class="line">                if (singletonObject &#x3D;&#x3D; null &amp;&amp; allowEarlyReference) &#123;</span><br><span class="line">                    ObjectFactory&lt;?&gt; singletonFactory &#x3D; (ObjectFactory)this.singletonFactories.get(beanName);</span><br><span class="line">                    if (singletonFactory !&#x3D; null) &#123;</span><br><span class="line">                        singletonObject &#x3D; singletonFactory.getObject();</span><br><span class="line">                        &#x2F;&#x2F;获取到之后将其加入到三级缓存中，并将其从二级缓存中移除。</span><br><span class="line">                        this.earlySingletonObjects.put(beanName, singletonObject);</span><br><span class="line">                        this.singletonFactories.remove(beanName);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return singletonObject;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>有一个三级缓存的结构：</p>
+<ol>
+<li>singletonObjects：单例池</li>
+<li>singletonFactory：存放ObjectFactory类型的工厂对象</li>
+<li>earlySingletonObjects：主要存放的是还未完成属性注入的bean</li>
+</ol>
+<p><code>isSingletonCurrentlyInCreation(beanName)</code>会判断singletonsCurrentlyInCreation表示的set集合中是否包含当前的beanName。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="面试题：是否看过Spring的源码，讲一下IOC的流程"><a href="#面试题：是否看过Spring的源码，讲一下IOC的流程" class="headerlink" title="面试题：是否看过Spring的源码，讲一下IOC的流程"></a>面试题：是否看过Spring的源码，讲一下IOC的流程</h2><p>对refresh()方法中的finishBeanFactoryInitialization()比较了解，里面会调用preInstantiateSingletons()，这个方法里面会获取到一个装着beanName的List集合，然后遍历这个集合，依次调用getBean(beanName)方法，这是个空方法，会调用doGetBean()方法，doGetBean()方法里面首先会转换beanName，例如转换别名或者FactoryBean对应的前面加的&amp;符号去掉，然后会调用getSingleton()方法，会尝试从单例池中获取，也可以解决循环依赖的问题，(后面到属性注入的时候，再退回来讲，假设现在是A，B两个类，然后相互依赖，现在首先加载A)，这次不会获取到，然后会调用getSingleton()方法中有ObjectFactory参数的重载方法，传入的ObjectFactory是一个拉姆达表达式，用一个createBean()方法来覆盖getObject()方法，进入getSingleton()方法后，首先会将beanName加入到一个singletonsCurrentlyInCreation的set集合中，也是用来解决循环依赖，然后会调用ObjectFactory的getObject()方法，也就会调用createBean()方法，在这个方法里面首先会把bean通过反射实例化出来，然后判断是否运行循环依赖，允许的话就把它对应的ObjectFactory加入到singletonFactories的map集合中，然后下一步就是属性注入，按上面的案例。会注入B，但是B还没有实例化，就会先调用getbean()方法去获取B，流程也是一样，也会先调用getSingleton()方法，这个时候还是获取不到的，然后会走到属性注入，同样去注入A，也会调用getBean()方法去获取A，先调用getSingleton()方法，这个方法里面，首先会尝试从singletonObjects也就是单例池中获取，获取不到，就会判断beanName是否在singletonsCurrentlyInCreation的set集合中，如果在就会尝试从earlySingletonObjects中获取，也获取不到，然后就会从singletonFactories中获取对应的ObjectFacory，调用getObject()方法就会获取到bean，然后将其加入到earlySingletonObjects中，并从singletonFactories中移除。</p>
+<p><img src="https://i.loli.net/2020/05/14/65ZnRUdOLbDyeVA.png" alt="image-20200514102601370.png"></p>
+<h1 id="1-什么是Spring框架"><a href="#1-什么是Spring框架" class="headerlink" title="1.什么是Spring框架"></a>1.什么是Spring框架</h1><p>Spring 是一种轻量级开发框架，旨在提高开发人员的开发效率以及系统的可维护性。</p>
+<p>我们一般说 Spring 框架指的都是 Spring Framework，它是很多模块的集合，使用这些模块可以很方便地协助我们进行开发。这些模块是：核心容器、数据访问/集成,、Web、AOP（面向切面编程）、工具、消息和测试模块。比如：Core Container 中的 Core 组件是Spring 所有组件的核心，Beans 组件和 Context 组件是实现IOC和依赖注入的基础，AOP组件用来实现面向切面编程。</p>
+<p>Spring 官网列出的 Spring 的 6 个特征:</p>
+<ul>
+<li><strong>核心技术</strong> ：依赖注入(DI)，AOP，事件(events)，资源，i18n，验证，数据绑定，类型转换，SpEL。</li>
+<li><strong>测试</strong> ：模拟对象，TestContext框架，Spring MVC 测试，WebTestClient。</li>
+<li><strong>数据访问</strong> ：事务，DAO支持，JDBC，ORM，编组XML。</li>
+<li><strong>Web支持</strong> : Spring MVC和Spring WebFlux Web框架。</li>
+<li><strong>集成</strong> ：远程处理，JMS，JCA，JMX，电子邮件，任务，调度，缓存。</li>
+<li><strong>语言</strong> ：Kotlin，Groovy，动态语言。</li>
+</ul>
+<h1 id="2-列举一些重要的Spring模块"><a href="#2-列举一些重要的Spring模块" class="headerlink" title="2.列举一些重要的Spring模块"></a>2.列举一些重要的Spring模块</h1><p>图对应的是 Spring4.x 版本。目前最新的5.x版本中 Web 模块的 Portlet 组件已经被废弃掉，同时增加了用于异步响应式处理的 WebFlux 组件。</p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/Spring%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%9D%97.png" alt="Spring主要模块"></p>
+<ul>
+<li><strong>Spring Core：</strong> 基础,可以说 Spring 其他所有的功能都需要依赖于该类库。主要提供 IoC 依赖注入功能。</li>
+<li><strong>Spring Aspects</strong> ： 该模块为与AspectJ的集成提供支持。</li>
+<li><strong>Spring AOP</strong> ：提供了面向切面的编程实现。</li>
+<li><strong>Spring JDBC</strong> : Java数据库连接。</li>
+<li><strong>Spring JMS</strong> ：Java消息服务。</li>
+<li><strong>Spring ORM</strong> : 用于支持Hibernate等ORM工具。</li>
+<li><strong>Spring Web</strong> : 为创建Web应用程序提供支持。</li>
+<li><strong>Spring Test</strong> : 提供了对 JUnit 和 TestNG 测试的支持。</li>
+</ul>
+<h1 id="3-RestController-VS-Controller"><a href="#3-RestController-VS-Controller" class="headerlink" title="3.@RestController VS @Controller"></a>3.@RestController VS @Controller</h1><p><strong><code>Controller</code> 返回一个页面</strong></p>
+<p>单独使用 <code>@Controller</code> 不加 <code>@ResponseBody</code>的话一般使用在要返回一个视图的情况，这种情况属于比较传统的Spring MVC 的应用，对应于前后端不分离的情况。</p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-7/SpringMVC%E4%BC%A0%E7%BB%9F%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png" alt="SpringMVC 传统工作流程"></p>
+<p><strong><code>@RestController</code> 返回JSON 或 XML 形式数据</strong></p>
+<p>但<code>@RestController</code><strong>只返回对象</strong>，对象数据直接以 JSON 或 XML 形式写入 HTTP 响应(Response)中，这种情况属于 RESTful Web服务，这也是目前日常开发所接触的最常用的情况（前后端分离）。</p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-7/SpringMVCRestController.png" alt="SpringMVC+RestController"></p>
+<p><strong><code>@Controller +@ResponseBody</code> 返回JSON 或 XML 形式数据</strong></p>
+<p>如果你需要在Spring4之前开发 RESTful Web服务的话，你需要使用<code>@Controller</code> 并结合<code>@ResponseBody</code>注解，也就是说<code>@Controller</code> +<code>@ResponseBody</code>= <code>@RestController</code>（Spring 4 之后新加的注解）。</p>
+<blockquote>
+<p><code>@ResponseBody</code> 注解的作用是将 <code>Controller</code> 的方法返回的对象通过适当的转换器转换为指定的格式之后，写入到HTTP 响应(Response)对象的 body 中，通常用来返回 JSON 或者 XML 数据，返回 JSON 数据的情况比较多。</p>
+</blockquote>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-7/Spring3.xMVCRESTfulWeb%E6%9C%8D%E5%8A%A1%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png" alt="Spring3.xMVC RESTfulWeb服务工作流程"></p>
+<h1 id="4-Spring-IOC-amp-AOP"><a href="#4-Spring-IOC-amp-AOP" class="headerlink" title="4.Spring IOC&amp;AOP"></a>4.Spring IOC&amp;AOP</h1><h2 id="4-1-谈谈自己对SpringIOC和AOP的理解"><a href="#4-1-谈谈自己对SpringIOC和AOP的理解" class="headerlink" title="4.1 谈谈自己对SpringIOC和AOP的理解"></a>4.1 谈谈自己对SpringIOC和AOP的理解</h2><h3 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h3><p>IoC（Inverse of Control:控制反转）是一种<strong>设计思想</strong>，就是 <strong>将原本在程序中手动创建对象的控制权，交由Spring框架来管理。</strong> IoC 在其他语言中也有应用，并非 Spring 特有。 <strong>IoC 容器是 Spring 用来实现 IoC 的载体， IoC 容器实际上就是个Map（key，value）,Map 中存放的是各种对象。</strong></p>
+<p>将对象之间的相互依赖关系交给 IoC 容器来管理，并由 IoC 容器完成对象的注入。这样可以很大程度上简化应用的开发，把应用从复杂的依赖关系中解放出来。 <strong>IoC 容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件/注解即可，完全不用考虑对象是如何被创建出来的。</strong> 在实际项目中一个 Service 类可能有几百甚至上千个类作为它的底层，假如我们需要实例化这个 Service，你可能要每次都要搞清这个 Service 所有底层类的构造函数，这可能会把人逼疯。如果利用 IoC 的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。</p>
+<p><strong>Spring IoC的初始化过程：</strong></p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-7/SpringIOC%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B.png" alt="Spring IoC的初始化过程"></p>
+<h3 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h3><p><strong>AOP： 面向切面编程</strong>，可以在不改变原有业务逻辑的基础上，加上一些<strong>横切逻辑代码</strong>，例如：事务控制，权限控制。</p>
+<p>AOP(Aspect-Oriented Programming:面向切面编程)能够将那些与业务无关，<strong>却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来</strong>，便于<strong>减少系统的重复代码</strong>，<strong>降低模块间的耦合度</strong>，并<strong>有利于未来的可拓展性和可维护性</strong>。</p>
+<p><strong>Spring AOP就是基于动态代理的</strong>，如果要代理的对象，实现了某个接口，那么Spring AOP会使用<strong>JDK Proxy</strong>，去创建代理对象，而对于没有实现接口的对象，就无法使用 JDK Proxy 去进行代理了，这时候Spring AOP会使用<strong>Cglib</strong> ，这时候Spring AOP会使用 <strong>Cglib</strong> 生成一个被代理对象的子类来作为代理，如下图所示：</p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/SpringAOPProcess.jpg" alt="SpringAOPProcess"></p>
+<p>当然你也可以使用 AspectJ ,Spring AOP 已经集成了AspectJ ，AspectJ 应该算的上是 Java 生态系统中最完整的 AOP 框架了。</p>
+<p>使用 AOP 之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了 AOP 。</p>
+<h2 id="4-2-SpringAOP和AspectJ-AOP有什么区别"><a href="#4-2-SpringAOP和AspectJ-AOP有什么区别" class="headerlink" title="4.2 SpringAOP和AspectJ AOP有什么区别"></a>4.2 SpringAOP和AspectJ AOP有什么区别</h2><p><strong>Spring AOP 属于运行时增强，而 AspectJ 是编译时增强。</strong> <strong>Spring AOP 基于代理(Proxying)，而 AspectJ 基于字节码操作(Bytecode Manipulation)。</strong></p>
+<p>Spring AOP 已经集成了 AspectJ ，AspectJ 应该算的上是 Java 生态系统中最完整的 AOP 框架了。AspectJ 相比于 Spring AOP 功能更加强大，但是 Spring AOP 相对来说更简单，</p>
+<p>如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择 AspectJ ，它比Spring AOP 快很多。</p>
+<h1 id="5-SpringBean"><a href="#5-SpringBean" class="headerlink" title="5.SpringBean"></a>5.SpringBean</h1><h2 id="5-1-Spring中bean的作用域有哪些"><a href="#5-1-Spring中bean的作用域有哪些" class="headerlink" title="5.1 Spring中bean的作用域有哪些"></a>5.1 Spring中bean的作用域有哪些</h2><ul>
+<li>singleton : 唯一 bean 实例，Spring 中的 bean 默认都是单例的。</li>
+<li>prototype : 每次请求都会创建一个新的 bean 实例。</li>
+<li>request : 每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP request内有效。</li>
+<li>session : 每一次HTTP请求都会产生一个新的 bean，该bean仅在当前 HTTP session 内有效。</li>
+</ul>
+<h2 id="5-2-Spring中的单例bean的线程安全问题了解吗"><a href="#5-2-Spring中的单例bean的线程安全问题了解吗" class="headerlink" title="5.2 Spring中的单例bean的线程安全问题了解吗"></a>5.2 Spring中的单例bean的线程安全问题了解吗</h2><p>大部分时候我们并没有在系统中使用多线程，所以很少有人会关注这个问题。单例 bean 存在线程问题，主要是因为当多个线程操作同一个对象的时候，对这个对象的非静态成员变量的写操作会存在线程安全问题。</p>
+<p>常见的有两种解决办法：</p>
+<ol>
+<li>在Bean对象中尽量避免定义可变的成员变量（不太现实）。</li>
+<li>在类中定义一个ThreadLocal成员变量，将需要的可变成员变量保存在 ThreadLocal 中（推荐的一种方式）。</li>
+</ol>
+<h2 id="5-3-Component和-Bean的区别"><a href="#5-3-Component和-Bean的区别" class="headerlink" title="5.3 @Component和@Bean的区别"></a>5.3 @Component和@Bean的区别</h2><ol>
+<li>作用对象不同: <code>@Component</code> 注解作用于类，而<code>@Bean</code>注解作用于方法。</li>
+<li><code>@Component</code>通常是通过类路径扫描来自动侦测以及自动装配到Spring容器中（我们可以使用 <code>@ComponentScan</code> 注解定义要扫描的路径从中找出标识了需要装配的类自动装配到 Spring 的 bean 容器中）。<code>@Bean</code> 注解通常是我们在标有该注解的方法中定义产生这个 bean,<code>@Bean</code>告诉了Spring这是某个类的示例，当我需要用它的时候还给我。</li>
+<li><code>@Bean</code> 注解比 <code>Component</code> 注解的自定义性更强，而且很多地方我们只能通过 <code>@Bean</code> 注解来注册bean。比如当我们引用第三方库中的类需要装配到 <code>Spring</code>容器时，则只能通过 <code>@Bean</code>来实现。</li>
+</ol>
+<p><code>@Bean</code>注解使用示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> TransferService <span class="title">transferService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> TransferServiceImpl();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码相当于下面的 xml 配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"transferService"</span> <span class="attr">class</span>=<span class="string">"com.acme.TransferServiceImpl"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>下面这个例子是通过 <code>@Component</code> 无法实现的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> OneService <span class="title">getService</span><span class="params">(status)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> (status)  &#123;</span><br><span class="line">        when <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> serviceImpl1();</span><br><span class="line">        when <span class="number">2</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> serviceImpl2();</span><br><span class="line">        when <span class="number">3</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> serviceImpl3();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-4-将一个类声明为Spring的bean的注解有哪些"><a href="#5-4-将一个类声明为Spring的bean的注解有哪些" class="headerlink" title="5.4 将一个类声明为Spring的bean的注解有哪些"></a>5.4 将一个类声明为Spring的bean的注解有哪些</h2><p>我们一般使用 <code>@Autowired</code> 注解自动装配 bean，要想把类标识成可用于 <code>@Autowired</code> 注解自动装配的 bean 的类,采用以下注解可实现：</p>
+<ul>
+<li><code>@Component</code> ：通用的注解，可标注任意类为 <code>Spring</code> 组件。如果一个Bean不知道属于哪个层，可以使用<code>@Component</code> 注解标注。</li>
+<li><code>@Repository</code> : 对应持久层即 Dao 层，主要用于数据库相关操作。</li>
+<li><code>@Service</code> : 对应服务层，主要涉及一些复杂的逻辑，需要用到 Dao层。</li>
+<li><code>@Controller</code> : 对应 Spring MVC 控制层，主要用户接受用户请求并调用 Service 层返回数据给前端页面。</li>
+</ul>
+<h2 id="5-5-Spring生命周期"><a href="#5-5-Spring生命周期" class="headerlink" title="5.5 Spring生命周期"></a>5.5 Spring生命周期</h2><ul>
+<li>Bean 容器找到配置文件中 Spring Bean 的定义。</li>
+<li>Bean 容器利用 Java Reflection API 创建一个Bean的实例。</li>
+<li>如果涉及到一些属性值 利用 <code>set()</code>方法设置一些属性值。</li>
+<li>如果 Bean 实现了 <code>BeanNameAware</code> 接口，调用 <code>setBeanName()</code>方法，传入Bean的名字。</li>
+<li>如果 Bean 实现了 <code>BeanClassLoaderAware</code> 接口，调用 <code>setBeanClassLoader()</code>方法，传入 <code>ClassLoader</code>对象的实例。</li>
+<li>与上面的类似，如果实现了其他 <code>*.Aware</code>接口，就调用相应的方法。</li>
+<li>如果有和加载这个 Bean 的 Spring 容器相关的 <code>BeanPostProcessor</code> 对象，执行<code>postProcessBeforeInitialization()</code> 方法</li>
+<li>如果Bean实现了<code>InitializingBean</code>接口，执行<code>afterPropertiesSet()</code>方法。</li>
+<li>如果 Bean 在配置文件中的定义包含 init-method 属性，执行指定的方法。</li>
+<li>如果有和加载这个 Bean的 Spring 容器相关的 <code>BeanPostProcessor</code> 对象，执行<code>postProcessAfterInitialization()</code> 方法</li>
+<li>当要销毁 Bean 的时候，如果 Bean 实现了 <code>DisposableBean</code> 接口，执行 <code>destroy()</code> 方法。</li>
+<li>当要销毁 Bean 的时候，如果 Bean 在配置文件中的定义包含 destroy-method 属性，执行指定的方法。</li>
+</ul>
+<p>图示：</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/48376272.jpg" alt="Spring Bean 生命周期"></p>
+<p>与之比较类似的中文版本:</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/5496407.jpg" alt="Spring Bean 生命周期"></p>
+<h1 id="6-SpringMVC"><a href="#6-SpringMVC" class="headerlink" title="6. SpringMVC"></a>6. SpringMVC</h1><h2 id="6-1说说自己对SpringMVC了解"><a href="#6-1说说自己对SpringMVC了解" class="headerlink" title="6.1说说自己对SpringMVC了解"></a>6.1说说自己对SpringMVC了解</h2><p>MVC 是一种设计模式,Spring MVC 是一款很优秀的 MVC 框架。Spring MVC 可以帮助我们进行更简洁的Web层的开发，并且它天生与 Spring 框架集成。Spring MVC 下我们一般把后端项目分为 Service层（处理业务）、Dao层（数据库操作）、Entity层（实体类）、Controller层(控制层，返回数据给前台页面)。</p>
+<p><strong>Spring MVC 的简单原理图如下：</strong></p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-11/60679444.jpg" alt="img"></p>
+<h2 id="6-2-SpringMVC的工作原理了解吗"><a href="#6-2-SpringMVC的工作原理了解吗" class="headerlink" title="6.2 SpringMVC的工作原理了解吗"></a>6.2 SpringMVC的工作原理了解吗</h2><p><strong>原理如下图所示：</strong> <img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-11/49790288.jpg" alt="SpringMVC运行原理"></p>
+<p>上图的一个笔误的小问题：Spring MVC 的入口函数也就是前端控制器 <code>DispatcherServlet</code> 的作用是接收请求，响应结果。</p>
+<p><strong>流程说明（重要）：</strong></p>
+<ol>
+<li>客户端（浏览器）发送请求，直接请求到 <code>DispatcherServlet</code>。</li>
+<li><code>DispatcherServlet</code> 根据请求信息调用 <code>HandlerMapping</code>，解析请求对应的 <code>Handler</code>。</li>
+<li>解析到对应的 <code>Handler</code>（也就是我们平常说的 <code>Controller</code> 控制器）后，开始由 <code>HandlerAdapter</code> 适配器处理。</li>
+<li><code>HandlerAdapter</code> 会根据 <code>Handler</code>来调用真正的处理器开处理请求，并处理相应的业务逻辑。</li>
+<li>处理器处理完业务后，会返回一个 <code>ModelAndView</code> 对象，<code>Model</code> 是返回的数据对象，<code>View</code> 是个逻辑上的 <code>View</code>。</li>
+<li><code>ViewResolver</code> 会根据逻辑 <code>View</code> 查找实际的 <code>View</code>。</li>
+<li><code>DispaterServlet</code> 把返回的 <code>Model</code> 传给 <code>View</code>（视图渲染）。</li>
+<li>把 <code>View</code> 返回给请求者（浏览器）</li>
+</ol>
+<h1 id="7-Spring框架用到了哪些设计模式"><a href="#7-Spring框架用到了哪些设计模式" class="headerlink" title="7.Spring框架用到了哪些设计模式"></a>7.Spring框架用到了哪些设计模式</h1><ul>
+<li><strong>工厂设计模式</strong> : Spring使用工厂模式通过 <code>BeanFactory</code>、<code>ApplicationContext</code> 创建 bean 对象。</li>
+<li><strong>代理设计模式</strong> : Spring AOP 功能的实现。</li>
+<li><strong>单例设计模式</strong> : Spring 中的 Bean 默认都是单例的。</li>
+<li><strong>模板方法模式</strong> : Spring 中 <code>jdbcTemplate</code>、<code>hibernateTemplate</code> 等以 Template 结尾的对数据库操作的类，它们就使用到了模板模式。</li>
+<li><strong>包装器设计模式</strong> : 我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库。这种模式让我们可以根据客户的需求能够动态切换不同的数据源。</li>
+<li><strong>观察者模式:</strong> Spring 事件驱动模型就是观察者模式很经典的一个应用。</li>
+<li><strong>适配器模式</strong> :Spring AOP 的增强或通知(Advice)使用到了适配器模式、spring MVC 中也是用到了适配器模式适配<code>Controller</code>。</li>
+</ul>
+<h1 id="8-Spring事务"><a href="#8-Spring事务" class="headerlink" title="8.Spring事务"></a>8.Spring事务</h1><h2 id="8-1-Spring管理事务的方式"><a href="#8-1-Spring管理事务的方式" class="headerlink" title="8.1 Spring管理事务的方式"></a>8.1 Spring管理事务的方式</h2><ol>
+<li>编程式事务，在代码中硬编码。(不推荐使用)</li>
+<li>声明式事务，在配置文件中配置（推荐使用）</li>
+</ol>
+<p><strong>声明式事务又分为两种：</strong></p>
+<ol>
+<li>基于XML的声明式事务</li>
+<li>基于注解的声明式事务</li>
+</ol>
+<h2 id="8-2-Spring事务的隔离级别"><a href="#8-2-Spring事务的隔离级别" class="headerlink" title="8.2 Spring事务的隔离级别"></a>8.2 Spring事务的隔离级别</h2><p><strong>TransactionDefinition 接口中定义了五个表示隔离级别的常量：</strong></p>
+<ul>
+<li><strong>TransactionDefinition.ISOLATION_DEFAULT:</strong> 使用后端数据库默认的隔离级别，Mysql 默认采用的 REPEATABLE_READ隔离级别 Oracle 默认采用的 READ_COMMITTED隔离级别.</li>
+<li><strong>TransactionDefinition.ISOLATION_READ_UNCOMMITTED:</strong> 最低的隔离级别，允许读取尚未提交的数据变更，<strong>可能会导致脏读、幻读或不可重复读</strong></li>
+<li><strong>TransactionDefinition.ISOLATION_READ_COMMITTED:</strong> 允许读取并发事务已经提交的数据，<strong>可以阻止脏读，但是幻读或不可重复读仍有可能发生</strong></li>
+<li><strong>TransactionDefinition.ISOLATION_REPEATABLE_READ:</strong> 对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，<strong>可以阻止脏读和不可重复读，但幻读仍有可能发生。</strong></li>
+<li><strong>TransactionDefinition.ISOLATION_SERIALIZABLE:</strong> 最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，<strong>该级别可以防止脏读、不可重复读以及幻读</strong>。但是这将严重影响程序的性能。通常情况下也不会用到该级别。</li>
+</ul>
+<h2 id="8-3-Spring事务中哪几种事务传播行为"><a href="#8-3-Spring事务中哪几种事务传播行为" class="headerlink" title="8.3 Spring事务中哪几种事务传播行为"></a>8.3 Spring事务中哪几种事务传播行为</h2><p><strong>支持当前事务的情况：</strong></p>
+<ul>
+<li><strong>TransactionDefinition.PROPAGATION_REQUIRED：</strong> 如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。</li>
+<li><strong>TransactionDefinition.PROPAGATION_SUPPORTS：</strong> 如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。</li>
+<li><strong>TransactionDefinition.PROPAGATION_MANDATORY：</strong> 如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。（mandatory：强制性）</li>
+</ul>
+<p><strong>不支持当前事务的情况：</strong></p>
+<ul>
+<li><strong>TransactionDefinition.PROPAGATION_REQUIRES_NEW：</strong> 创建一个新的事务，如果当前存在事务，则把当前事务挂起。</li>
+<li><strong>TransactionDefinition.PROPAGATION_NOT_SUPPORTED：</strong> 以非事务方式运行，如果当前存在事务，则把当前事务挂起。</li>
+<li><strong>TransactionDefinition.PROPAGATION_NEVER：</strong> 以非事务方式运行，如果当前存在事务，则抛出异常。</li>
+</ul>
+<p><strong>其他情况：</strong></p>
+<ul>
+<li><strong>TransactionDefinition.PROPAGATION_NESTED：</strong> 如果当前存在事务，则创建一个事务作为当前事务的嵌套事务来运行；如果当前没有事务，则该取值等价于TransactionDefinition.PROPAGATION_REQUIRED。</li>
+</ul>
+<h2 id="8-4-Transactional-rollbackFor-Exception-class-注解"><a href="#8-4-Transactional-rollbackFor-Exception-class-注解" class="headerlink" title="8.4 @Transactional(rollbackFor=Exception.class)注解"></a>8.4 @Transactional(rollbackFor=Exception.class)注解</h2><p>我们知道：Exception分为运行时异常RuntimeException和非运行时异常。事务管理对于企业应用来说是至关重要的，即使出现异常情况，它也可以保证数据的一致性。</p>
+<p>当<code>@Transactional</code>注解作用于类上时，该类的所有 public 方法将都具有该类型的事务属性，同时，我们也可以在方法级别使用该标注来覆盖类级别的定义。如果类或者方法加了这个注解，那么这个类里面的方法抛出异常，就会回滚，数据库里面的数据也会回滚。</p>
+<p>在<code>@Transactional</code>注解中如果不配置<code>rollbackFor</code>属性,那么事物只会在遇到<code>RuntimeException</code>的时候才会回滚,加上<code>rollbackFor=Exception.class</code>,可以让事物在遇到非运行时异常时也回滚。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/09/524-%E9%80%9A%E8%BF%87%E5%88%A0%E9%99%A4%E5%AD%97%E6%AF%8D%E5%8C%B9%E9%85%8D%E5%88%B0%E5%AD%97%E5%85%B8%E9%87%8C%E6%9C%80%E9%95%BF%E5%8D%95%E8%AF%8D/" rel="next" title="524. 通过删除字母匹配到字典里最长单词">
+                <i class="fa fa-chevron-left"></i> 524. 通过删除字母匹配到字典里最长单词
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/10/%E9%9D%A2%E7%BB%8F/" rel="prev" title="面经">
+                面经 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg"
+                alt="黎达" />
+            
+              <p class="site-author-name" itemprop="name">黎达</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">211</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/extrali" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:extralida@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringIOC"><span class="nav-number">1.</span> <span class="nav-text">SpringIOC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringBean初始化过程"><span class="nav-number">1.1.</span> <span class="nav-text">SpringBean初始化过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FactoryBean和BeanFactory的区别"><span class="nav-number">2.</span> <span class="nav-text">FactoryBean和BeanFactory的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring循环依赖"><span class="nav-number">3.</span> <span class="nav-text">Spring循环依赖</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#面试题：是否看过Spring的源码，讲一下IOC的流程"><span class="nav-number">4.1.</span> <span class="nav-text">面试题：是否看过Spring的源码，讲一下IOC的流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-什么是Spring框架"><span class="nav-number">5.</span> <span class="nav-text">1.什么是Spring框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-列举一些重要的Spring模块"><span class="nav-number">6.</span> <span class="nav-text">2.列举一些重要的Spring模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-RestController-VS-Controller"><span class="nav-number">7.</span> <span class="nav-text">3.@RestController VS @Controller</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Spring-IOC-amp-AOP"><span class="nav-number">8.</span> <span class="nav-text">4.Spring IOC&amp;AOP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-谈谈自己对SpringIOC和AOP的理解"><span class="nav-number">8.1.</span> <span class="nav-text">4.1 谈谈自己对SpringIOC和AOP的理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IOC"><span class="nav-number">8.1.1.</span> <span class="nav-text">IOC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AOP"><span class="nav-number">8.1.2.</span> <span class="nav-text">AOP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-SpringAOP和AspectJ-AOP有什么区别"><span class="nav-number">8.2.</span> <span class="nav-text">4.2 SpringAOP和AspectJ AOP有什么区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-SpringBean"><span class="nav-number">9.</span> <span class="nav-text">5.SpringBean</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-Spring中bean的作用域有哪些"><span class="nav-number">9.1.</span> <span class="nav-text">5.1 Spring中bean的作用域有哪些</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-Spring中的单例bean的线程安全问题了解吗"><span class="nav-number">9.2.</span> <span class="nav-text">5.2 Spring中的单例bean的线程安全问题了解吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-Component和-Bean的区别"><span class="nav-number">9.3.</span> <span class="nav-text">5.3 @Component和@Bean的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-将一个类声明为Spring的bean的注解有哪些"><span class="nav-number">9.4.</span> <span class="nav-text">5.4 将一个类声明为Spring的bean的注解有哪些</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-5-Spring生命周期"><span class="nav-number">9.5.</span> <span class="nav-text">5.5 Spring生命周期</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-SpringMVC"><span class="nav-number">10.</span> <span class="nav-text">6. SpringMVC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1说说自己对SpringMVC了解"><span class="nav-number">10.1.</span> <span class="nav-text">6.1说说自己对SpringMVC了解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-SpringMVC的工作原理了解吗"><span class="nav-number">10.2.</span> <span class="nav-text">6.2 SpringMVC的工作原理了解吗</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-Spring框架用到了哪些设计模式"><span class="nav-number">11.</span> <span class="nav-text">7.Spring框架用到了哪些设计模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-Spring事务"><span class="nav-number">12.</span> <span class="nav-text">8.Spring事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-Spring管理事务的方式"><span class="nav-number">12.1.</span> <span class="nav-text">8.1 Spring管理事务的方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-2-Spring事务的隔离级别"><span class="nav-number">12.2.</span> <span class="nav-text">8.2 Spring事务的隔离级别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3-Spring事务中哪几种事务传播行为"><span class="nav-number">12.3.</span> <span class="nav-text">8.3 Spring事务中哪几种事务传播行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-Transactional-rollbackFor-Exception-class-注解"><span class="nav-number">12.4.</span> <span class="nav-text">8.4 @Transactional(rollbackFor&#x3D;Exception.class)注解</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黎达</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
