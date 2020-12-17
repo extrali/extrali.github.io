@@ -3668,7 +3668,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/104.%20%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6/">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/102.%20%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黎达">
@@ -3687,7 +3687,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/11/104.%20%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6/" itemprop="url">104. 二叉树的最大深度</a></h1>
+                <a class="post-title-link" href="/2020/04/11/102.%20%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/" itemprop="url">102. 二叉树的层次遍历</a></h1>
         
 
         <div class="post-meta">
@@ -3761,27 +3761,60 @@
       
         
           
-            <h1 id="104-二叉树的最大深度"><a href="#104-二叉树的最大深度" class="headerlink" title="104. 二叉树的最大深度"></a><a href="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/" target="_blank" rel="noopener">104. 二叉树的最大深度</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个二叉树，找出其最大深度。</p>
-<p>二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。</p>
-<p><strong>说明:</strong> 叶子节点是指没有子节点的节点。</p>
-<h2 id="算法一：递归"><a href="#算法一：递归" class="headerlink" title="算法一：递归"></a>算法一：递归</h2><p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public int maxDepth(TreeNode root) &#123;</span><br><span class="line">        if(root&#x3D;&#x3D;null) return 0;</span><br><span class="line">        int leftDepth&#x3D;maxDepth(root.left);</span><br><span class="line">        int rightDepth&#x3D;maxDepth(root.right);</span><br><span class="line">        return Math.max(leftDepth,rightDepth)+1;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+            <h1 id="102-二叉树的层次遍历"><a href="#102-二叉树的层次遍历" class="headerlink" title="102. 二叉树的层次遍历"></a><a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal/" target="_blank" rel="noopener">102. 二叉树的层次遍历</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个二叉树，返回其按层次遍历的节点值。 （即逐层地，从左到右访问所有节点）。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">例如:</span><br><span class="line">给定二叉树: [3,9,20,null,null,15,7],</span><br><span class="line"></span><br><span class="line">    3</span><br><span class="line">   &#x2F; \</span><br><span class="line">  9  20</span><br><span class="line">    &#x2F;  \</span><br><span class="line">   15   7</span><br><span class="line">返回其层次遍历结果：</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">  [3],</span><br><span class="line">  [9,20],</span><br><span class="line">  [15,7]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 
 
-<p><strong>复杂度分析:</strong></p>
+<h2 id="算法一：迭代"><a href="#算法一：迭代" class="headerlink" title="算法一：迭代"></a>算法一：迭代</h2><p><strong>算法思想：</strong></p>
 <ul>
-<li>时间复杂度：我们每个结点只访问一次，因此时间复杂度为 O(N)，<br>其中 N 是结点的数量。</li>
-<li><strong>空间复杂度：</strong>在最糟糕的情况下，树是完全不平衡的，例如每个结点只剩下左子结点，递归将会被调用 N 次（树的高度），因此保持调用栈的存储将是 O(N)。但在最好的情况下（树是完全平衡的），树的高度将是 log(N)。因此，在这种情况下的空间复杂度将是 O(log(N))。</li>
-</ul>
-<h2 id="算法二：层次遍历"><a href="#算法二：层次遍历" class="headerlink" title="算法二：层次遍历"></a>算法二：层次遍历</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>层次遍历，没遍历一层，高度加一</li>
+<li>层次遍历可以用队列来实现，由于要将同一层的节点存储在一个list中，所以想到用lastNode指向本层中的最后一个节点</li>
+<li>当访问到lastNode时就表明访问到了本层最后一个节点，需要更新结果result，以及初始化list，同时更新lastNode的值，此时队尾元素即为更新后的lastNode的值</li>
 </ul>
 <p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public int maxDepth(TreeNode root) &#123;</span><br><span class="line">        if(root&#x3D;&#x3D;null) return 0;</span><br><span class="line">        Queue&lt;TreeNode&gt; queue&#x3D;new LinkedList&lt;&gt;();</span><br><span class="line">        queue.add(root);</span><br><span class="line">        &#x2F;&#x2F;depth记录高度</span><br><span class="line">        int depth&#x3D;0;</span><br><span class="line">        while(!queue.isEmpty())&#123;</span><br><span class="line">            int level_size&#x3D;queue.size();</span><br><span class="line">            for(int i&#x3D;0;i&lt;level_size;i++)&#123;</span><br><span class="line">                TreeNode node &#x3D; queue.poll();</span><br><span class="line">                if(node.left!&#x3D;null)&#123;</span><br><span class="line">                    queue.add(node.left);</span><br><span class="line">                &#125;</span><br><span class="line">                if(node.right!&#x3D;null)&#123;</span><br><span class="line">                    queue.add(node.right);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            depth++;</span><br><span class="line">        &#125;</span><br><span class="line">        return depth;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; result&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">        if(root&#x3D;&#x3D;null) return result;</span><br><span class="line">        LinkedList&lt;TreeNode&gt; queue&#x3D;new LinkedList&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;lastNode指向本层的最后一个节点</span><br><span class="line">        TreeNode node&#x3D;root,lastNode&#x3D;root;</span><br><span class="line">        queue.add(node);</span><br><span class="line">        List&lt;Integer&gt; list&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;当队列不为空时</span><br><span class="line">        while(!queue.isEmpty())&#123;</span><br><span class="line">            node&#x3D;queue.poll();</span><br><span class="line">            list.add(node.val);</span><br><span class="line">            &#x2F;&#x2F;如果左子树不为空，则将左子树添加到队列中</span><br><span class="line">            if(node.left!&#x3D;null)&#123;</span><br><span class="line">                queue.add(node.left);</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;右子树同理</span><br><span class="line">            if(node.right!&#x3D;null)&#123;</span><br><span class="line">                queue.add(node.right);</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;如果当前访问的节点为本层的最后一个节点</span><br><span class="line">            if(node&#x3D;&#x3D;lastNode)&#123;</span><br><span class="line">            	&#x2F;&#x2F;将list加入到result中</span><br><span class="line">                result.add(new ArrayList&lt;&gt;(list));</span><br><span class="line">                &#x2F;&#x2F;此时更新lastNode的值为队列中的队尾元素</span><br><span class="line">                lastNode&#x3D;queue.peekLast();</span><br><span class="line">                &#x2F;&#x2F;初始化list</span><br><span class="line">                list&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
+
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O<em>(</em>N)，因为每个节点恰好会被运算一次。</li>
+<li><strong>空间复杂度：</strong>O(N)，保存输出结果的数组包含 N 个节点的值。</li>
+</ul>
+<p><strong>说明：</strong></p>
+<ul>
+<li><p>本来想用Queue，但是由于要访问队列中的队尾元素，Queue好像没有对应的方法，所以用LinkedList</p>
+</li>
+<li><p>首先用的是LinkedList中的方法getLast()，但是当队列中没有元素时会报错NoSuchElementException，在jdk1.6后出现了替代方法peekLast()，在队列没有元素时返回null</p>
+</li>
+</ul>
+<h2 id="算法二：迭代改"><a href="#算法二：迭代改" class="headerlink" title="算法二：迭代改"></a>算法二：迭代改</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>上面的迭代算法中是用lastNode记录每一层的最后一个节点</li>
+<li>这里用第二种算法，用level记录每一层的层数，每一次循环遍历完一层的节点后再将层数加一，然后遍历下一层</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; result&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">        if(root&#x3D;&#x3D;null) return result;</span><br><span class="line">        LinkedList&lt;TreeNode&gt; queue&#x3D;new LinkedList&lt;&gt;();</span><br><span class="line">        TreeNode node&#x3D;root;</span><br><span class="line">        &#x2F;&#x2F;level记录当前遍历的层数，从0开始</span><br><span class="line">        int level&#x3D;0;</span><br><span class="line">        queue.add(node);</span><br><span class="line">        List&lt;Integer&gt; list&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">        while(!queue.isEmpty())&#123;</span><br><span class="line">            result.add(new ArrayList&lt;&gt;());</span><br><span class="line">            &#x2F;&#x2F;外层循环中，每一循环遍历一层的节点并将下一层的节点全部入队，所以每一次循环开始时队				 列长度即为这一层总的节点个数</span><br><span class="line">            int level_size&#x3D;queue.size();</span><br><span class="line">            &#x2F;&#x2F;循环遍历这一层的所有节点，并出队，然后将下一层节点入队</span><br><span class="line">            for(int i&#x3D;0;i&lt;level_size;i++)&#123;</span><br><span class="line">                node&#x3D;queue.poll();</span><br><span class="line">                result.get(level).add(node.val);</span><br><span class="line">                if(node.left!&#x3D;null)&#123;</span><br><span class="line">                    queue.add(node.left);</span><br><span class="line">                &#125;</span><br><span class="line">                if(node.right!&#x3D;null)&#123;</span><br><span class="line">                    queue.add(node.right);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;层数加一</span><br><span class="line">            level++;</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法三：递归"><a href="#算法三：递归" class="headerlink" title="算法三：递归"></a>算法三：递归</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>将上面的迭代算法改为递归算法，层次遍历按层数递归</li>
+<li>注意在遍历新的一层时要将result集合的大小更新</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">List&lt;List&lt;Integer&gt;&gt; result&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">    public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) &#123;</span><br><span class="line">        if(root&#x3D;&#x3D;null) return result;</span><br><span class="line">        helper(root,0);</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">	&#x2F;&#x2F;此方法将level层的root节点添加到对应的result的子集合中，并且递归将计算其左孩子与右孩子</span><br><span class="line">    private void helper(TreeNode root,int level)&#123;</span><br><span class="line">    	&#x2F;&#x2F;如果result的大小等于当前level，表示在递归计算新的一层，需要更新result的大小</span><br><span class="line">        if(result.size()&#x3D;&#x3D;level)&#123;</span><br><span class="line">            result.add(new ArrayList&lt;&gt;());</span><br><span class="line">        &#125;</span><br><span class="line">        result.get(level).add(root.val);</span><br><span class="line">        if(root.left!&#x3D;null)&#123;</span><br><span class="line">            helper(root.left,level+1);</span><br><span class="line">        &#125;</span><br><span class="line">        if(root.right!&#x3D;null)&#123;</span><br><span class="line">            helper(root.right,level+1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(N)，因为每个节点恰好会被运算一次。</li>
+<li><strong>空间复杂度</strong>：O(N)，保存输出结果的数组包含 <code>N</code> 个节点的值。</li>
+</ul>
 
           
         

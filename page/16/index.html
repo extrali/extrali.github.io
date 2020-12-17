@@ -764,166 +764,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/171.%20Excel%E8%A1%A8%E5%88%97%E5%BA%8F%E5%8F%B7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/171.%20Excel%E8%A1%A8%E5%88%97%E5%BA%8F%E5%8F%B7/" itemprop="url">171. Excel表列序号</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="171-Excel表列序号"><a href="#171-Excel表列序号" class="headerlink" title="171. Excel表列序号"></a><a href="https://leetcode-cn.com/problems/excel-sheet-column-number/" target="_blank" rel="noopener">171. Excel表列序号</a></h1><p><strong>题目描述：</strong><br>给定一个Excel表格中的列名称，返回其相应的列序号。</p>
-<p>例如，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">A -&gt; 1</span><br><span class="line">  B -&gt; 2</span><br><span class="line">  C -&gt; 3</span><br><span class="line">  ...</span><br><span class="line">  Z -&gt; 26</span><br><span class="line">  AA -&gt; 27</span><br><span class="line">  AB -&gt; 28 </span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: &quot;A&quot;</span><br><span class="line">输出: 1</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: &quot;AB&quot;</span><br><span class="line">输出: 28</span><br><span class="line"></span><br><span class="line">示例 3:</span><br><span class="line"></span><br><span class="line">输入: &quot;ZY&quot;</span><br><span class="line">输出: 701</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>类似于二进制与十进制之间的转换</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public int titleToNumber(String s) &#123;</span><br><span class="line">        int len&#x3D;s.length();</span><br><span class="line">        int res&#x3D;0;</span><br><span class="line">        &#x2F;&#x2F;从后向前加，相当于从各位开始加</span><br><span class="line">        for(int i&#x3D;len-1;i&gt;&#x3D;0;i--)&#123;</span><br><span class="line">            int num&#x3D;s.charAt(i)-&#39;A&#39;+1;</span><br><span class="line">            res+&#x3D;num*Math.pow(26,len-i-1);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/169.%20%E5%A4%9A%E6%95%B0%E5%85%83%E7%B4%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1104,6 +944,166 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/171.%20Excel%E8%A1%A8%E5%88%97%E5%BA%8F%E5%8F%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/171.%20Excel%E8%A1%A8%E5%88%97%E5%BA%8F%E5%8F%B7/" itemprop="url">171. Excel表列序号</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="171-Excel表列序号"><a href="#171-Excel表列序号" class="headerlink" title="171. Excel表列序号"></a><a href="https://leetcode-cn.com/problems/excel-sheet-column-number/" target="_blank" rel="noopener">171. Excel表列序号</a></h1><p><strong>题目描述：</strong><br>给定一个Excel表格中的列名称，返回其相应的列序号。</p>
+<p>例如，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">A -&gt; 1</span><br><span class="line">  B -&gt; 2</span><br><span class="line">  C -&gt; 3</span><br><span class="line">  ...</span><br><span class="line">  Z -&gt; 26</span><br><span class="line">  AA -&gt; 27</span><br><span class="line">  AB -&gt; 28 </span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: &quot;A&quot;</span><br><span class="line">输出: 1</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: &quot;AB&quot;</span><br><span class="line">输出: 28</span><br><span class="line"></span><br><span class="line">示例 3:</span><br><span class="line"></span><br><span class="line">输入: &quot;ZY&quot;</span><br><span class="line">输出: 701</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>类似于二进制与十进制之间的转换</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public int titleToNumber(String s) &#123;</span><br><span class="line">        int len&#x3D;s.length();</span><br><span class="line">        int res&#x3D;0;</span><br><span class="line">        &#x2F;&#x2F;从后向前加，相当于从各位开始加</span><br><span class="line">        for(int i&#x3D;len-1;i&gt;&#x3D;0;i--)&#123;</span><br><span class="line">            int num&#x3D;s.charAt(i)-&#39;A&#39;+1;</span><br><span class="line">            res+&#x3D;num*Math.pow(26,len-i-1);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/172.%20%E9%98%B6%E4%B9%98%E5%90%8E%E7%9A%84%E9%9B%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1220,6 +1220,326 @@
 <li><strong>时间复杂度：</strong>O(logn),底数为5</li>
 <li><strong>空间复杂度：</strong>O(1)</li>
 </ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/189.%20%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/189.%20%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/" itemprop="url">189. 旋转数组</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="189-旋转数组"><a href="#189-旋转数组" class="headerlink" title="189. 旋转数组"></a><a href="https://leetcode-cn.com/problems/rotate-array/" target="_blank" rel="noopener">189. 旋转数组</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个数组，将数组中的元素向右移动 <em>k</em> 个位置，其中 <em>k</em> 是非负数。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: [1,2,3,4,5,6,7] 和 k &#x3D; 3</span><br><span class="line">输出: [5,6,7,1,2,3,4]</span><br><span class="line">解释:</span><br><span class="line">向右旋转 1 步: [7,1,2,3,4,5,6]</span><br><span class="line">向右旋转 2 步: [6,7,1,2,3,4,5]</span><br><span class="line">向右旋转 3 步: [5,6,7,1,2,3,4]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: [-1,-100,3,99] 和 k &#x3D; 2</span><br><span class="line">输出: [3,99,-1,-100]</span><br><span class="line">解释: </span><br><span class="line">向右旋转 1 步: [99,-1,-100,3]</span><br><span class="line">向右旋转 2 步: [3,99,-1,-100]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法：反转"><a href="#算法：反转" class="headerlink" title="算法：反转"></a>算法：反转</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>以[1,2,3,4,5,6,7]为例，右移3个位置，可以先将[5,6,7]和[1,2,3,4]分别翻转得到[4,3,2,1,7,6,5]，然后再整体反转得到[5,6,7,1,2,3,4]即为最终结果</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public void rotate(int[] nums, int k) &#123;</span><br><span class="line">        int len&#x3D;nums.length;</span><br><span class="line">        &#x2F;&#x2F;k先取模</span><br><span class="line">        k&#x3D;k%len;</span><br><span class="line">        &#x2F;&#x2F;分别反转</span><br><span class="line">        reverse(nums,0,len-k-1);</span><br><span class="line">        reverse(nums,len-k,len-1);</span><br><span class="line">        reverse(nums,0,len-1);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;反转函数</span><br><span class="line">    private void reverse(int[] nums,int start,int end)&#123;</span><br><span class="line">        while (start&lt;end)&#123;</span><br><span class="line">            int temp&#x3D;nums[start];</span><br><span class="line">            nums[start]&#x3D;nums[end];</span><br><span class="line">            nums[end]&#x3D;temp;</span><br><span class="line">            start++;</span><br><span class="line">            end--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/190.%20%E9%A2%A0%E5%80%92%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BD%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/190.%20%E9%A2%A0%E5%80%92%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BD%8D/" itemprop="url">190. 颠倒二进制位</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="190-颠倒二进制位"><a href="#190-颠倒二进制位" class="headerlink" title="190. 颠倒二进制位"></a><a href="https://leetcode-cn.com/problems/reverse-bits/" target="_blank" rel="noopener">190. 颠倒二进制位</a></h1><p><strong>题目描述：</strong></p>
+<p>颠倒给定的 32 位无符号整数的二进制位。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入: 00000010100101000001111010011100</span><br><span class="line">输出: 00111001011110000010100101000000</span><br><span class="line">解释: 输入的二进制串 00000010100101000001111010011100 表示无符号整数 43261596，</span><br><span class="line">      因此返回 964176192，其二进制表示形式为 00111001011110000010100101000000。</span><br><span class="line">      </span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：11111111111111111111111111111101</span><br><span class="line">输出：10111111111111111111111111111111</span><br><span class="line">解释：输入的二进制串 11111111111111111111111111111101 表示无符号整数 4294967293，</span><br><span class="line">      因此返回 3221225471 其二进制表示形式为 10101111110010110010011101101001。</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>颠倒32位无符号整数的二进制可以通过将从低位开始之后的每一位插入在其低位的后面，以1010为例，先插入0，然后在0后面插入1，接着是0和1，得到0101</li>
+<li><strong>需要注意的是位运算是以补码作为运算的</strong></li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public int reverseBits(int n) &#123;</span><br><span class="line">        int count&#x3D;0;</span><br><span class="line">        int res&#x3D;0;</span><br><span class="line">        &#x2F;&#x2F;因为是以补码作为运算，所以要循环32位</span><br><span class="line">        while (count&lt;32)&#123;</span><br><span class="line">        	&#x2F;&#x2F;为插入下一位做好准备，留下一个空位</span><br><span class="line">            res&#x3D;res&lt;&lt;1;</span><br><span class="line">            &#x2F;&#x2F;得到n的最后一位，并将其插入res的末位</span><br><span class="line">            res|&#x3D;n&amp;1;</span><br><span class="line">            &#x2F;&#x2F;n右移一位</span><br><span class="line">            n&#x3D;n&gt;&gt;1;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
 
           
         
@@ -1445,168 +1765,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/189.%20%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/189.%20%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/" itemprop="url">189. 旋转数组</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="189-旋转数组"><a href="#189-旋转数组" class="headerlink" title="189. 旋转数组"></a><a href="https://leetcode-cn.com/problems/rotate-array/" target="_blank" rel="noopener">189. 旋转数组</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个数组，将数组中的元素向右移动 <em>k</em> 个位置，其中 <em>k</em> 是非负数。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: [1,2,3,4,5,6,7] 和 k &#x3D; 3</span><br><span class="line">输出: [5,6,7,1,2,3,4]</span><br><span class="line">解释:</span><br><span class="line">向右旋转 1 步: [7,1,2,3,4,5,6]</span><br><span class="line">向右旋转 2 步: [6,7,1,2,3,4,5]</span><br><span class="line">向右旋转 3 步: [5,6,7,1,2,3,4]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: [-1,-100,3,99] 和 k &#x3D; 2</span><br><span class="line">输出: [3,99,-1,-100]</span><br><span class="line">解释: </span><br><span class="line">向右旋转 1 步: [99,-1,-100,3]</span><br><span class="line">向右旋转 2 步: [3,99,-1,-100]</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="算法：反转"><a href="#算法：反转" class="headerlink" title="算法：反转"></a>算法：反转</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>以[1,2,3,4,5,6,7]为例，右移3个位置，可以先将[5,6,7]和[1,2,3,4]分别翻转得到[4,3,2,1,7,6,5]，然后再整体反转得到[5,6,7,1,2,3,4]即为最终结果</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public void rotate(int[] nums, int k) &#123;</span><br><span class="line">        int len&#x3D;nums.length;</span><br><span class="line">        &#x2F;&#x2F;k先取模</span><br><span class="line">        k&#x3D;k%len;</span><br><span class="line">        &#x2F;&#x2F;分别反转</span><br><span class="line">        reverse(nums,0,len-k-1);</span><br><span class="line">        reverse(nums,len-k,len-1);</span><br><span class="line">        reverse(nums,0,len-1);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;反转函数</span><br><span class="line">    private void reverse(int[] nums,int start,int end)&#123;</span><br><span class="line">        while (start&lt;end)&#123;</span><br><span class="line">            int temp&#x3D;nums[start];</span><br><span class="line">            nums[start]&#x3D;nums[end];</span><br><span class="line">            nums[end]&#x3D;temp;</span><br><span class="line">            start++;</span><br><span class="line">            end--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(n)</li>
-<li><strong>空间复杂度：</strong>O(1)</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/191.%20%E4%BD%8D1%E7%9A%84%E4%B8%AA%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1755,164 +1913,6 @@
 <li><strong>时间复杂度：</strong>O(1)，上面的循环的次数为n中1的个数，所以最大为32次，也是常数次幂</li>
 <li><strong>空间复杂度：</strong>O(1)</li>
 </ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/190.%20%E9%A2%A0%E5%80%92%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BD%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/190.%20%E9%A2%A0%E5%80%92%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BD%8D/" itemprop="url">190. 颠倒二进制位</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="190-颠倒二进制位"><a href="#190-颠倒二进制位" class="headerlink" title="190. 颠倒二进制位"></a><a href="https://leetcode-cn.com/problems/reverse-bits/" target="_blank" rel="noopener">190. 颠倒二进制位</a></h1><p><strong>题目描述：</strong></p>
-<p>颠倒给定的 32 位无符号整数的二进制位。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入: 00000010100101000001111010011100</span><br><span class="line">输出: 00111001011110000010100101000000</span><br><span class="line">解释: 输入的二进制串 00000010100101000001111010011100 表示无符号整数 43261596，</span><br><span class="line">      因此返回 964176192，其二进制表示形式为 00111001011110000010100101000000。</span><br><span class="line">      </span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：11111111111111111111111111111101</span><br><span class="line">输出：10111111111111111111111111111111</span><br><span class="line">解释：输入的二进制串 11111111111111111111111111111101 表示无符号整数 4294967293，</span><br><span class="line">      因此返回 3221225471 其二进制表示形式为 10101111110010110010011101101001。</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>颠倒32位无符号整数的二进制可以通过将从低位开始之后的每一位插入在其低位的后面，以1010为例，先插入0，然后在0后面插入1，接着是0和1，得到0101</li>
-<li><strong>需要注意的是位运算是以补码作为运算的</strong></li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public int reverseBits(int n) &#123;</span><br><span class="line">        int count&#x3D;0;</span><br><span class="line">        int res&#x3D;0;</span><br><span class="line">        &#x2F;&#x2F;因为是以补码作为运算，所以要循环32位</span><br><span class="line">        while (count&lt;32)&#123;</span><br><span class="line">        	&#x2F;&#x2F;为插入下一位做好准备，留下一个空位</span><br><span class="line">            res&#x3D;res&lt;&lt;1;</span><br><span class="line">            &#x2F;&#x2F;得到n的最后一位，并将其插入res的末位</span><br><span class="line">            res|&#x3D;n&amp;1;</span><br><span class="line">            &#x2F;&#x2F;n右移一位</span><br><span class="line">            n&#x3D;n&gt;&gt;1;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
 
           
         

@@ -248,7 +248,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2019/12/24/19.%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACN%E4%B8%AA%E8%8A%82%E7%82%B9/">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2019/12/24/17.%20%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81%E7%9A%84%E5%AD%97%E6%AF%8D%E7%BB%84%E5%90%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黎达">
@@ -267,7 +267,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/12/24/19.%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACN%E4%B8%AA%E8%8A%82%E7%82%B9/" itemprop="url">19.删除链表的倒数第N个节点</a></h1>
+                <a class="post-title-link" href="/2019/12/24/17.%20%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81%E7%9A%84%E5%AD%97%E6%AF%8D%E7%BB%84%E5%90%88/" itemprop="url">17. 电话号码的字母组合</a></h1>
         
 
         <div class="post-meta">
@@ -341,43 +341,36 @@
       
         
           
-            <h1 id="19-删除链表的倒数第N个节点"><a href="#19-删除链表的倒数第N个节点" class="headerlink" title="19.删除链表的倒数第N个节点"></a>19.删除链表的倒数第N个节点</h1><p><strong>描述：</strong></p>
-<p>​        给定一个链表，删除链表的倒数第 <em>n</em> 个节点，并且返回链表的头结点。 </p>
+            <h1 id="17-电话号码的字母组合"><a href="#17-电话号码的字母组合" class="headerlink" title="17. 电话号码的字母组合"></a><a href="https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/" target="_blank" rel="noopener">17. 电话号码的字母组合</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个仅包含数字 <code>2-9</code> 的字符串，返回所有它能表示的字母组合。</p>
+<p>给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。</p>
+<p> <img src="https://assets.leetcode-cn.com/aliyun-lc-upload/original_images/17_telephone_keypad.png" alt="img"> </p>
+<hr>
 <p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">给定一个链表: 1-&gt;2-&gt;3-&gt;4-&gt;5, 和 n &#x3D; 2.</span><br><span class="line"></span><br><span class="line">当删除了倒数第二个节点后，链表变为 1-&gt;2-&gt;3-&gt;5.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：&quot;23&quot;</span><br><span class="line">输出：[&quot;ad&quot;, &quot;ae&quot;, &quot;af&quot;, &quot;bd&quot;, &quot;be&quot;, &quot;bf&quot;, &quot;cd&quot;, &quot;ce&quot;, &quot;cf&quot;].</span><br></pre></td></tr></table></figure>
 
 
 
-<p><strong>说明：</strong></p>
-<pre><code>给定的 *n* 保证是有效的。 </code></pre><hr>
-<p><strong>算法思路：</strong></p>
+<hr>
+<p><strong>算法描述：</strong></p>
+<blockquote>
+<p><strong>回溯法</strong>（其实本算法并不是传统意义上的回溯法，没有回溯与剪枝）</p>
+</blockquote>
 <ol>
-<li><p>若只有一个节点，则直接删除，返回null</p>
-</li>
-<li><p>否则，令p和q指向第一个节点，<code>prevq</code>也指向第一个节点，但其表示的是q的前一个节点</p>
-</li>
-<li><p>首先让p独自向后移动n步</p>
-<ul>
-<li>若移动到了末尾，则表明n达到最大为链表长度，表示删除第一个节点</li>
-<li>否则让q和<code>prevq</code>与p同步向后移动(<code>prevq</code>指向q的前一个节点，方便删除)，直到p移动到末尾</li>
+<li>如果输入的字符串长度为0或者为<code>null</code>，则返回一个空的列表</li>
+<li>否则，调用方法<code>backtrack(String combination, String next_digits),combination表示当前已经拼接后的字符串（还没有拼完）,next_digits表示还未参与拼接的字符串</code><ul>
+<li>在方法中，首先要判断<code>next_digits</code>的长度是否为0，如果为0则表示全部的字符都已经拼接完了，直接将<code>combination</code>加到list中</li>
+<li>否则，表示没拼接完，则在<code>combination</code>后加上符合条件的字符，然后将<code>next_digits</code>去掉第一个字符后再递归调用<code>backtrack</code>方法</li>
 </ul>
 </li>
 </ol>
-<hr>
-<p><strong>算法实现如下：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public ListNode removeNthFromEnd(ListNode head, int n)&#123;</span><br><span class="line">        &#x2F;&#x2F;若只有一个节点，则直接删除，返回null</span><br><span class="line">        if(head.next&#x3D;&#x3D;null) return null;</span><br><span class="line">        ListNode p&#x3D;head;</span><br><span class="line">        ListNode q&#x3D;head;</span><br><span class="line">        ListNode prevq&#x3D;head;</span><br><span class="line">        int rev&#x3D;0;</span><br><span class="line">        &#x2F;&#x2F;首先让p独自后移n位</span><br><span class="line">        for(int i&#x3D;0;i&lt;n;i++)&#123;</span><br><span class="line">            p&#x3D;p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;若p移动到了末尾，即p为null时，删除头节点</span><br><span class="line">        if(p&#x3D;&#x3D;null)&#123;</span><br><span class="line">            head&#x3D;head.next;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;若没移动到末尾，则三个指针同步移动</span><br><span class="line">        while(p!&#x3D;null)&#123;</span><br><span class="line">            p&#x3D;p.next;</span><br><span class="line">            &#x2F;&#x2F;让prevq指向q的前一个节点</span><br><span class="line">            prevq&#x3D;q;</span><br><span class="line">            q&#x3D;q.next;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;删除节点q</span><br><span class="line">        prevq.next&#x3D;q.next;</span><br><span class="line">        return head;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法改进：</strong></p>
-<blockquote>
-<p>在上面的算法中，单独将删除头节点的情况拿出来了，而通过在头节点前再田间一个哑节点的方式，可以将这种情况归到普通情况中。</p>
-</blockquote>
 <p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public ListNode removeNthFromEnd(ListNode head, int n)&#123;</span><br><span class="line">        ListNode dummy&#x3D;new ListNode(0);</span><br><span class="line">        dummy.next&#x3D;head;</span><br><span class="line">        ListNode p&#x3D;head;</span><br><span class="line">        for(int i&#x3D;0;i&lt;n;i++)&#123;</span><br><span class="line">            p&#x3D;p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode q&#x3D;head;</span><br><span class="line">        ListNode prev&#x3D;dummy;</span><br><span class="line">        while (p!&#x3D;null)&#123;</span><br><span class="line">            p&#x3D;p.next;</span><br><span class="line">            prev&#x3D;q;</span><br><span class="line">            q&#x3D;q.next;</span><br><span class="line">        &#125;</span><br><span class="line">        prev.next&#x3D;q.next;</span><br><span class="line">        &#x2F;&#x2F;注意最后要返回dummy.next,而不能返回head</span><br><span class="line">        return dummy.next;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public class Solution1 &#123;</span><br><span class="line">    &#x2F;&#x2F;phone集合封装数字和字母的对应关系</span><br><span class="line">    Map&lt;String, String&gt; phone &#x3D; new HashMap&lt;String, String&gt;() &#123;&#123;</span><br><span class="line">        put(&quot;2&quot;, &quot;abc&quot;);</span><br><span class="line">        put(&quot;3&quot;, &quot;def&quot;);</span><br><span class="line">        put(&quot;4&quot;, &quot;ghi&quot;);</span><br><span class="line">        put(&quot;5&quot;, &quot;jkl&quot;);</span><br><span class="line">        put(&quot;6&quot;, &quot;mno&quot;);</span><br><span class="line">        put(&quot;7&quot;, &quot;pqrs&quot;);</span><br><span class="line">        put(&quot;8&quot;, &quot;tuv&quot;);</span><br><span class="line">        put(&quot;9&quot;, &quot;wxyz&quot;);</span><br><span class="line">    &#125;&#125;;</span><br><span class="line">    &#x2F;&#x2F;最终结果</span><br><span class="line">    List&lt;String&gt; output &#x3D; new ArrayList&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">    public void backtrack(String combination, String next_digits) &#123;</span><br><span class="line">        &#x2F;&#x2F;表示没有字符要拼接了，直接把结果加入到集合中</span><br><span class="line">        if (next_digits.length() &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            output.add(combination);</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            </span><br><span class="line">            String digit &#x3D; next_digits.substring(0, 1);</span><br><span class="line">            String letters &#x3D; phone.get(digit);</span><br><span class="line">            for (int i &#x3D; 0; i &lt; letters.length(); i++) &#123;</span><br><span class="line">                String letter &#x3D; phone.get(digit).substring(i, i + 1);</span><br><span class="line">                backtrack(combination + letter, next_digits.substring(1));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public List&lt;String&gt; letterCombinations(String digits) &#123;</span><br><span class="line">        &#x2F;&#x2F;如果digits长度不为0，则调用递归函数</span><br><span class="line">        if (digits.length() !&#x3D; 0)</span><br><span class="line">            backtrack(&quot;&quot;, digits);</span><br><span class="line">        return output;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
+<hr>
+<p><strong>注意：</strong> 由于字符串的不可变性，所以 <code>next_digits.substring(1)</code>不会改变 ``next_digits`的值，而是创建了一个字符串来接受了新的值。并传入到了新的递归中。</p>
 
           
         
