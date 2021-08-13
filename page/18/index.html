@@ -248,6 +248,537 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/215.%20%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E7%AC%ACK%E4%B8%AA%E6%9C%80%E5%A4%A7%E5%85%83%E7%B4%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/215.%20%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E7%AC%ACK%E4%B8%AA%E6%9C%80%E5%A4%A7%E5%85%83%E7%B4%A0/" itemprop="url">215. 数组中的第K个最大元素</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="215-数组中的第K个最大元素"><a href="#215-数组中的第K个最大元素" class="headerlink" title="215. 数组中的第K个最大元素"></a><a href="https://leetcode-cn.com/problems/kth-largest-element-in-an-array/" target="_blank" rel="noopener">215. 数组中的第K个最大元素</a></h1><p><strong>题目描述：</strong></p>
+<p>在未排序的数组中找到第 <strong>k</strong> 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: [3,2,1,5,6,4] 和 k &#x3D; 2</span><br><span class="line">输出: 5</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: [3,2,3,1,2,4,5,5,6] 和 k &#x3D; 4</span><br><span class="line">输出: 4</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法一：排序"><a href="#算法一：排序" class="headerlink" title="算法一：排序"></a>算法一：排序</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>直接排序，然后再返回第k大的</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public int findKthLargest(int[] nums, int k) &#123;</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        return nums[nums.length-k];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(nlogn)</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+<h2 id="算法二：快速选择"><a href="#算法二：快速选择" class="headerlink" title="算法二：快速选择"></a>算法二：快速选择</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>基于快速排序中的快速选择算法，每次将数组划分成两部分，每次可以确定两部分中间的哪个数是第几大的数，如果满足条件直接返回，否则可以按照大小淘汰掉一部分，在另一部分中寻找</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public int findKthLargest(int[] nums, int k) &#123;</span><br><span class="line">        int start&#x3D;0,end&#x3D;nums.length-1;</span><br><span class="line">        while (start&lt;end)&#123;</span><br><span class="line">            int low&#x3D;start,high&#x3D;end;</span><br><span class="line">            int compare&#x3D;nums[low];</span><br><span class="line">            while (low&lt;high)&#123;</span><br><span class="line">            	&#x2F;&#x2F;下面一定要有等号(nums[high]&gt;&#x3D;compare)</span><br><span class="line">                while (low&lt;high&amp;&amp;nums[high]&gt;&#x3D;compare) high--;</span><br><span class="line">                nums[low]&#x3D;nums[high];</span><br><span class="line">                while (low&lt;high&amp;&amp;nums[low]&lt;&#x3D;compare) low++;</span><br><span class="line">                nums[high]&#x3D;nums[low];</span><br><span class="line">            &#125;</span><br><span class="line">            nums[high]&#x3D;compare;</span><br><span class="line">            &#x2F;&#x2F;如果找到的是第k大的元素，直接返回</span><br><span class="line">            if(high-start&#x3D;&#x3D;end-start-k+1) return compare;</span><br><span class="line">            &#x2F;&#x2F;否则，如果在左边，更新end的值，同时也要用k减去右边部分元素个数</span><br><span class="line">            else if(high-start&gt;end-start-k+1)&#123;</span><br><span class="line">                k&#x3D;k-(end-high+1);</span><br><span class="line">                end&#x3D;high-1;</span><br><span class="line">                &#x2F;&#x2F;如果在右边，直接更新start</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                start&#x3D;high+1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return nums[end];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>最好情况下，一次划分一半，时间复杂度为n+n/2+n/4+……=2n，所以为O(n)，最坏情况下时间复杂度为O(n^2^)，平均下时间复杂度为O(n)</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+<h2 id="算法三：小根堆"><a href="#算法三：小根堆" class="headerlink" title="算法三：小根堆"></a>算法三：小根堆</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>维护一个小根堆，依次将数组中的元素加入堆中，堆顶为最小元素，当堆中元素个数大于k时，最小元素出堆，最后堆中只剩下k个元素，堆中剩下的元素一定大于之前出堆的元素，堆中的k个元素就是最大的k个元素，堆顶元素就是第k大的元素</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public int findKthLargest(int[] nums, int k) &#123;</span><br><span class="line">        &#x2F;&#x2F;PriorityQueue&lt;Integer&gt; heap&#x3D;new PriorityQueue&lt;&gt;(o1,o2 -&gt; o1-o2);</span><br><span class="line">        PriorityQueue&lt;Integer&gt; heap&#x3D;new PriorityQueue&lt;&gt;(new Comparator&lt;Integer&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public int compare(Integer o1, Integer o2) &#123;</span><br><span class="line">                return o1-o2;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        for(int n:nums)&#123;</span><br><span class="line">            heap.add(n);</span><br><span class="line">            if(heap.size()&gt;k) heap.poll();</span><br><span class="line">        &#125;</span><br><span class="line">        return heap.poll();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>说明：</strong></p>
+<ul>
+<li>java中用PriorityQueue来实现堆，其默认为小根堆，可以传入自定义的Comparator变成大根堆：<code>PriorityQueue&lt;Integer&gt; heap=new PriorityQueue&lt;&gt;(o1,o2 -&gt; o2-o1);</code></li>
+</ul>
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><p><strong>时间复杂度：</strong>O(nlogk)，像大小为 k 的堆中添加元素的时间复杂度为 O(logk)，我们将重复该操作 N 次，故总时间复杂度为 O(Nlogk)。</p>
+</li>
+<li><p><strong>空间复杂度：</strong>O(k)</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/217.%20%E5%AD%98%E5%9C%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/217.%20%E5%AD%98%E5%9C%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/" itemprop="url">217. 存在重复元素</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="217-存在重复元素"><a href="#217-存在重复元素" class="headerlink" title="217. 存在重复元素"></a><a href="https://leetcode-cn.com/problems/contains-duplicate/" target="_blank" rel="noopener">217. 存在重复元素</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个整数数组，判断是否存在重复元素。</p>
+<p>如果任何值在数组中出现至少两次，函数返回 true。如果数组中每个元素都不相同，则返回 false。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: [1,2,3,1]</span><br><span class="line">输出: true</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: [1,2,3,4]</span><br><span class="line">输出: false</span><br><span class="line"></span><br><span class="line">示例 3:</span><br><span class="line"></span><br><span class="line">输入: [1,1,1,3,3,4,3,2,4,2]</span><br><span class="line">输出: true</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>用一个哈希表存储已经访问过的元素若有重复直接返回true</li>
+<li>对于哈希表（Java 中的 HashSet 或 HashMap），<code>search</code> 和 <code>insert</code> 的平均时间复杂度为 <em>O</em>(1)</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public boolean containsDuplicate(int[] nums) &#123;</span><br><span class="line">        Set&lt;Integer&gt; set&#x3D;new HashSet&lt;&gt;();</span><br><span class="line">        for(int num:nums)&#123;</span><br><span class="line">            if(set.contains(num)) return true;</span><br><span class="line">            set.add(num);</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n),<code>search</code> 和 <code>insert</code> 的平均时间复杂度为 <em>O</em>(1)</li>
+<li><strong>空间复杂度：</strong>O(n)</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/227.%20%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E5%99%A8%20II/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/227.%20%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E5%99%A8%20II/" itemprop="url">227. 基本计算器 II</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="227-基本计算器-II"><a href="#227-基本计算器-II" class="headerlink" title="227. 基本计算器 II"></a><a href="https://leetcode-cn.com/problems/basic-calculator-ii/" target="_blank" rel="noopener">227. 基本计算器 II</a></h1><p><strong>题目描述：</strong>实现一个基本的计算器来计算一个简单的字符串表达式的值。</p>
+<p>字符串表达式仅包含非负整数，<code>+</code>， <code>-</code> ，<code>*</code>，<code>/</code> 四种运算符和<strong>空格</strong> <code></code>。 整数除法仅保留整数部分。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: &quot;3+2*2&quot;</span><br><span class="line">输出: 7</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: &quot; 3&#x2F;2 &quot;</span><br><span class="line">输出: 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 3:</span><br><span class="line"></span><br><span class="line">输入: &quot; 3+5 &#x2F; 2 &quot;</span><br><span class="line">输出: 5</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="二刷"><a href="#二刷" class="headerlink" title="二刷"></a>二刷</h2><p>实现的没有下面简洁，学习一下，注意四点：</p>
+<ol>
+<li>第一遍只计算乘除，第二遍再计算加减</li>
+<li>减可以转换为加相反数</li>
+<li>数字可能是多位的比如43这种，遇到数字需要要一直向后直到不是数字</li>
+<li>i多++了一次，后面要i–；</li>
+</ol>
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>用一个栈来存储操作数，以计算32+2*2为例，首先lastOp为’+’，计算出tempNum为32，所以将32入栈，然后下一次循环将lastOp改为’+’，再计算出tempNum为2，所以2入栈，下一次循环lastOp改为<code>&#39;×&#39;</code>,计算出tempNum为2，所以计算res(×，2，2)，将结果4入栈，最后所有结果相加即可。</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public int calculate(String s) &#123;</span><br><span class="line">        Stack&lt;Integer&gt; numStack&#x3D;new Stack&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;lastOp记录操作符，初始为&#39;+&#39;</span><br><span class="line">        char lastOp&#x3D;&#39;+&#39;;</span><br><span class="line">        char[] arr &#x3D; s.toCharArray();</span><br><span class="line">        for(int i&#x3D;0;i&lt;arr.length;i++)&#123;</span><br><span class="line">        	&#x2F;&#x2F;空格直接进入下次循环</span><br><span class="line">            if(arr[i]&#x3D;&#x3D;&#39; &#39;) continue;</span><br><span class="line">            &#x2F;&#x2F;如果是数字首先要把连续的数字变成十进制储存起来</span><br><span class="line">            if(Character.isDigit(arr[i]))&#123;</span><br><span class="line">                int tempNum&#x3D;arr[i]-&#39;0&#39;;</span><br><span class="line">                while (++i&lt;arr.length&amp;&amp;Character.isDigit(arr[i]))&#123;</span><br><span class="line">                    tempNum&#x3D;10*tempNum+arr[i]-&#39;0&#39;;</span><br><span class="line">                &#125;i--;  &#x2F;&#x2F;此处i要--，因为刚跳出上面循环的i指向的不是数字，要么是空格，					要么是操作符，要在下次循环时处理，而下次循环开始i要再++，所以先--</span><br><span class="line">                if(lastOp &#x3D;&#x3D; &#39;+&#39;) numStack.push(tempNum);</span><br><span class="line">                &#x2F;&#x2F;如果是&#39;-&#39;，则存入相反数</span><br><span class="line">                else if(lastOp &#x3D;&#x3D; &#39;-&#39;) numStack.push(-tempNum);</span><br><span class="line">                &#x2F;&#x2F;否则乘除就需要先计算</span><br><span class="line">                else numStack.push(res(lastOp, numStack.pop(), tempNum));</span><br><span class="line">                &#x2F;&#x2F;最后如果不是数字，则要更新操作符</span><br><span class="line">            &#125; else lastOp &#x3D; arr[i];</span><br><span class="line">        &#125;</span><br><span class="line">		&#x2F;&#x2F;所有结果相加</span><br><span class="line">        int ans &#x3D; 0;</span><br><span class="line">        for(int num : numStack) ans +&#x3D; num;</span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">    private int res(char op, int a, int b) &#123;</span><br><span class="line">        if (op &#x3D;&#x3D; &#39;*&#39;) return a * b;</span><br><span class="line">        else if (op &#x3D;&#x3D; &#39;&#x2F;&#39;) return a &#x2F; b;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)</li>
+<li><strong>空间复杂度：</strong>O(n)</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/234.%20%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -535,6 +1066,208 @@
 
 
 
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/240.%20%E6%90%9C%E7%B4%A2%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%20II/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/240.%20%E6%90%9C%E7%B4%A2%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%20II/" itemprop="url">240. 搜索二维矩阵 II</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="240-搜索二维矩阵-II"><a href="#240-搜索二维矩阵-II" class="headerlink" title="240. 搜索二维矩阵 II"></a><a href="https://leetcode-cn.com/problems/search-a-2d-matrix-ii/" target="_blank" rel="noopener">240. 搜索二维矩阵 II</a></h1><p><strong>题目描述：</strong></p>
+<p>编写一个高效的算法来搜索 m x n 矩阵 matrix 中的一个目标值 target。该矩阵具有以下特性：</p>
+<ul>
+<li>每行的元素从左到右升序排列。</li>
+<li>每列的元素从上到下升序排列。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">现有矩阵 matrix 如下：</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">  [1,   4,  7, 11, 15],</span><br><span class="line">  [2,   5,  8, 12, 19],</span><br><span class="line">  [3,   6,  9, 16, 22],</span><br><span class="line">  [10, 13, 14, 17, 24],</span><br><span class="line">  [18, 21, 23, 26, 30]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">给定 target &#x3D; 5，返回 true。</span><br><span class="line">给定 target &#x3D; 20，返回 false。</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="算法一：二分查找（在每一行中分别查找）"><a href="#算法一：二分查找（在每一行中分别查找）" class="headerlink" title="算法一：二分查找（在每一行中分别查找）"></a>算法一：二分查找（在每一行中分别查找）</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>由于数组中每一行是有序的，所以可以依次在每一行中用二分查找是否有目标元素存在</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public boolean searchMatrix(int[][] matrix, int target) &#123;</span><br><span class="line">        int m&#x3D;matrix.length;</span><br><span class="line">        if(m&#x3D;&#x3D;0) return false;</span><br><span class="line">        int n&#x3D;matrix[0].length;</span><br><span class="line">        for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">            int left&#x3D;0,right&#x3D;n-1;</span><br><span class="line">            &#x2F;&#x2F;二分查找要有等号</span><br><span class="line">            while (left&lt;&#x3D;right)&#123;</span><br><span class="line">                int mid&#x3D;(left+right)&#x2F;2;</span><br><span class="line">                if(matrix[i][mid]&#x3D;&#x3D;target) return true;</span><br><span class="line">                else if(matrix[i][mid]&lt;target)&#123;</span><br><span class="line">                    left&#x3D;mid+1;</span><br><span class="line">                &#125;else right&#x3D;mid-1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(mlogn)，其中m,n分别为二维数组的行数和列数</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+<h2 id="算法二：二分查找-数组分成四块"><a href="#算法二：二分查找-数组分成四块" class="headerlink" title="算法二：二分查找(数组分成四块)"></a>算法二：二分查找(数组分成四块)</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>将数组分成四块，left和right分别表示当前检查的数组的列的开头和结尾；up和down表示当前检查的数组的行的开头和结尾</li>
+<li>每次在中间一列中寻找是否有目标元素，如果有则返回true，否则寻找第一个比目标元素大的元素，则可以排除掉以其划分的左上元素和右下元素，所以可以排除两个区域，在剩下两个区域中寻找</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">private int[][] matrix;</span><br><span class="line">   private int target;</span><br><span class="line">   private boolean searchHelper(int left,int right,int up,int down)&#123;</span><br><span class="line">   	&#x2F;&#x2F;列或则行范围不合法</span><br><span class="line">       if(left&gt;right||up&gt;down) return false;</span><br><span class="line">       &#x2F;&#x2F;如果目标元素小于最左上元素，或者大于最右下元素，则不会有元素匹配</span><br><span class="line">       if(target&lt;matrix[up][left]||target&gt;matrix[down][right]) return false;</span><br><span class="line">       &#x2F;&#x2F;中间列</span><br><span class="line">       int mid&#x3D;(left+right)&#x2F;2;</span><br><span class="line">       int row&#x3D;up;</span><br><span class="line">       &#x2F;&#x2F;找到在中间列中第一个大于目标元素的行数</span><br><span class="line">       while (row&lt;&#x3D;down&amp;&amp;matrix[row][mid]&lt;&#x3D;target)&#123;</span><br><span class="line">           if(matrix[row][mid]&#x3D;&#x3D;target) return true;</span><br><span class="line">           row++;</span><br><span class="line">       &#125;</span><br><span class="line">       &#x2F;&#x2F;只用递归查找右上和左下即可</span><br><span class="line">       return searchHelper(left,mid-1,row,down)||searchHelper(mid+1,right,up,row-1);</span><br><span class="line">   &#125;</span><br><span class="line">   public boolean searchMatrix(int[][] matrix, int target) &#123;</span><br><span class="line">       this.matrix&#x3D;matrix;</span><br><span class="line">       this.target&#x3D;target;</span><br><span class="line">       int m&#x3D;matrix.length;</span><br><span class="line">       if(m&#x3D;&#x3D;0) return false;</span><br><span class="line">       int n&#x3D;matrix[0].length;</span><br><span class="line">       return searchHelper(0,n-1,0,m-1);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><p><strong>时间复杂度：</strong>O(nlogn)，为了将问题简单化假设m=n，则有时间复杂度</p>
+<p>T(n^2^)=2T(n^2^/4)+n</p>
+<p>​         =4T(n^2^/16)+2n</p>
+<p>​         =…….=2^k^T(n^2^/4^k^)+kn，假设n^2^/4^k^=1，可以得到2^k^=n，k=logn，所以T(n^2^)=nlogn</p>
+</li>
+<li><p><strong>空间复杂度：</strong>O(logn)</p>
+</li>
+</ul>
+<h2 id="算法四"><a href="#算法四" class="headerlink" title="算法四"></a>算法四</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>初始化一个指向数组坐下元素的指针(row,col)，每次将其与目标元素相比，如果大于目标元素，则row–，如果小于目标元素，则col++，相当于每次排除一行或者一列</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public boolean searchMatrix(int[][] matrix, int target) &#123;</span><br><span class="line">        int m&#x3D;matrix.length;</span><br><span class="line">        if(m&#x3D;&#x3D;0) return false;</span><br><span class="line">        int n&#x3D;matrix[0].length;</span><br><span class="line">        int row&#x3D;m-1,col&#x3D;0;</span><br><span class="line">        while (row&gt;&#x3D;0&amp;&amp;col&lt;n)&#123;</span><br><span class="line">            if(matrix[row][col]&#x3D;&#x3D;target) return true;</span><br><span class="line">            else if(matrix[row][col]&lt;target) col++;</span><br><span class="line">            else row--;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(m+n)，最坏情况下需要从左下角判断到右上角，由于每次只能向上走一行或者向右走一列，所以时间为m+n</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
 
           
         
@@ -874,208 +1607,6 @@
 <p><strong>算法分析：</strong></p>
 <ul>
 <li><strong>时间复杂度：</strong>O(n)</li>
-<li><strong>空间复杂度：</strong>O(1)</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/240.%20%E6%90%9C%E7%B4%A2%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%20II/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/240.%20%E6%90%9C%E7%B4%A2%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%20II/" itemprop="url">240. 搜索二维矩阵 II</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="240-搜索二维矩阵-II"><a href="#240-搜索二维矩阵-II" class="headerlink" title="240. 搜索二维矩阵 II"></a><a href="https://leetcode-cn.com/problems/search-a-2d-matrix-ii/" target="_blank" rel="noopener">240. 搜索二维矩阵 II</a></h1><p><strong>题目描述：</strong></p>
-<p>编写一个高效的算法来搜索 m x n 矩阵 matrix 中的一个目标值 target。该矩阵具有以下特性：</p>
-<ul>
-<li>每行的元素从左到右升序排列。</li>
-<li>每列的元素从上到下升序排列。</li>
-</ul>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">现有矩阵 matrix 如下：</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">  [1,   4,  7, 11, 15],</span><br><span class="line">  [2,   5,  8, 12, 19],</span><br><span class="line">  [3,   6,  9, 16, 22],</span><br><span class="line">  [10, 13, 14, 17, 24],</span><br><span class="line">  [18, 21, 23, 26, 30]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">给定 target &#x3D; 5，返回 true。</span><br><span class="line">给定 target &#x3D; 20，返回 false。</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="算法一：二分查找（在每一行中分别查找）"><a href="#算法一：二分查找（在每一行中分别查找）" class="headerlink" title="算法一：二分查找（在每一行中分别查找）"></a>算法一：二分查找（在每一行中分别查找）</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>由于数组中每一行是有序的，所以可以依次在每一行中用二分查找是否有目标元素存在</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public boolean searchMatrix(int[][] matrix, int target) &#123;</span><br><span class="line">        int m&#x3D;matrix.length;</span><br><span class="line">        if(m&#x3D;&#x3D;0) return false;</span><br><span class="line">        int n&#x3D;matrix[0].length;</span><br><span class="line">        for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">            int left&#x3D;0,right&#x3D;n-1;</span><br><span class="line">            &#x2F;&#x2F;二分查找要有等号</span><br><span class="line">            while (left&lt;&#x3D;right)&#123;</span><br><span class="line">                int mid&#x3D;(left+right)&#x2F;2;</span><br><span class="line">                if(matrix[i][mid]&#x3D;&#x3D;target) return true;</span><br><span class="line">                else if(matrix[i][mid]&lt;target)&#123;</span><br><span class="line">                    left&#x3D;mid+1;</span><br><span class="line">                &#125;else right&#x3D;mid-1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(mlogn)，其中m,n分别为二维数组的行数和列数</li>
-<li><strong>空间复杂度：</strong>O(1)</li>
-</ul>
-<h2 id="算法二：二分查找-数组分成四块"><a href="#算法二：二分查找-数组分成四块" class="headerlink" title="算法二：二分查找(数组分成四块)"></a>算法二：二分查找(数组分成四块)</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>将数组分成四块，left和right分别表示当前检查的数组的列的开头和结尾；up和down表示当前检查的数组的行的开头和结尾</li>
-<li>每次在中间一列中寻找是否有目标元素，如果有则返回true，否则寻找第一个比目标元素大的元素，则可以排除掉以其划分的左上元素和右下元素，所以可以排除两个区域，在剩下两个区域中寻找</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">private int[][] matrix;</span><br><span class="line">   private int target;</span><br><span class="line">   private boolean searchHelper(int left,int right,int up,int down)&#123;</span><br><span class="line">   	&#x2F;&#x2F;列或则行范围不合法</span><br><span class="line">       if(left&gt;right||up&gt;down) return false;</span><br><span class="line">       &#x2F;&#x2F;如果目标元素小于最左上元素，或者大于最右下元素，则不会有元素匹配</span><br><span class="line">       if(target&lt;matrix[up][left]||target&gt;matrix[down][right]) return false;</span><br><span class="line">       &#x2F;&#x2F;中间列</span><br><span class="line">       int mid&#x3D;(left+right)&#x2F;2;</span><br><span class="line">       int row&#x3D;up;</span><br><span class="line">       &#x2F;&#x2F;找到在中间列中第一个大于目标元素的行数</span><br><span class="line">       while (row&lt;&#x3D;down&amp;&amp;matrix[row][mid]&lt;&#x3D;target)&#123;</span><br><span class="line">           if(matrix[row][mid]&#x3D;&#x3D;target) return true;</span><br><span class="line">           row++;</span><br><span class="line">       &#125;</span><br><span class="line">       &#x2F;&#x2F;只用递归查找右上和左下即可</span><br><span class="line">       return searchHelper(left,mid-1,row,down)||searchHelper(mid+1,right,up,row-1);</span><br><span class="line">   &#125;</span><br><span class="line">   public boolean searchMatrix(int[][] matrix, int target) &#123;</span><br><span class="line">       this.matrix&#x3D;matrix;</span><br><span class="line">       this.target&#x3D;target;</span><br><span class="line">       int m&#x3D;matrix.length;</span><br><span class="line">       if(m&#x3D;&#x3D;0) return false;</span><br><span class="line">       int n&#x3D;matrix[0].length;</span><br><span class="line">       return searchHelper(0,n-1,0,m-1);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><p><strong>时间复杂度：</strong>O(nlogn)，为了将问题简单化假设m=n，则有时间复杂度</p>
-<p>T(n^2^)=2T(n^2^/4)+n</p>
-<p>​         =4T(n^2^/16)+2n</p>
-<p>​         =…….=2^k^T(n^2^/4^k^)+kn，假设n^2^/4^k^=1，可以得到2^k^=n，k=logn，所以T(n^2^)=nlogn</p>
-</li>
-<li><p><strong>空间复杂度：</strong>O(logn)</p>
-</li>
-</ul>
-<h2 id="算法四"><a href="#算法四" class="headerlink" title="算法四"></a>算法四</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>初始化一个指向数组坐下元素的指针(row,col)，每次将其与目标元素相比，如果大于目标元素，则row–，如果小于目标元素，则col++，相当于每次排除一行或者一列</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public boolean searchMatrix(int[][] matrix, int target) &#123;</span><br><span class="line">        int m&#x3D;matrix.length;</span><br><span class="line">        if(m&#x3D;&#x3D;0) return false;</span><br><span class="line">        int n&#x3D;matrix[0].length;</span><br><span class="line">        int row&#x3D;m-1,col&#x3D;0;</span><br><span class="line">        while (row&gt;&#x3D;0&amp;&amp;col&lt;n)&#123;</span><br><span class="line">            if(matrix[row][col]&#x3D;&#x3D;target) return true;</span><br><span class="line">            else if(matrix[row][col]&lt;target) col++;</span><br><span class="line">            else row--;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(m+n)，最坏情况下需要从左下角判断到右上角，由于每次只能向上走一行或者向右走一列，所以时间为m+n</li>
 <li><strong>空间复杂度：</strong>O(1)</li>
 </ul>
 
@@ -1472,511 +2003,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/279.%20%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/279.%20%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0/" itemprop="url">279. 完全平方数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="279-完全平方数"><a href="#279-完全平方数" class="headerlink" title="279. 完全平方数"></a><a href="https://leetcode-cn.com/problems/perfect-squares/" target="_blank" rel="noopener">279. 完全平方数</a></h1><p><strong>题目描述：</strong></p>
-<p>给定正整数 <em>n</em>，找到若干个完全平方数（比如 <code>1, 4, 9, 16, ...</code>）使得它们的和等于 <em>n</em>。你需要让组成和的完全平方数的个数最少。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: n &#x3D; 12</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 12 &#x3D; 4 + 4 + 4.</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: n &#x3D; 13</span><br><span class="line">输出: 2</span><br><span class="line">解释: 13 &#x3D; 4 + 9.</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>用一个长度为n+1的数组来维护对应索引能化成的最少完全平方数之和，每次更新前先将每次位置的值初始化为其索引，即res[i]=i，即完全平方数之和的上界(1+1+….+1)</li>
-<li>递推关系式为res[i]=min(res(i-j*j)+1)</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public int numSquares(int n) &#123;</span><br><span class="line">        int[] res&#x3D;new int[n+1];</span><br><span class="line">        for(int i&#x3D;1;i&lt;&#x3D;n;i++)&#123;</span><br><span class="line">            res[i]&#x3D;i;</span><br><span class="line">            for(int j&#x3D;1;i-j*j&gt;&#x3D;0;j++)&#123;</span><br><span class="line">                res[i]&#x3D;Math.min(res[i],res[i-j*j]+1);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res[n];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><p><strong>时间复杂度：</strong>O(n×sqrt(n))</p>
-</li>
-<li><p><strong>空间复杂度：</strong>O(n)</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/283.%20%E7%A7%BB%E5%8A%A8%E9%9B%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/283.%20%E7%A7%BB%E5%8A%A8%E9%9B%B6/" itemprop="url">283. 移动零</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="283-移动零"><a href="#283-移动零" class="headerlink" title="283. 移动零"></a><a href="https://leetcode-cn.com/problems/move-zeroes/" target="_blank" rel="noopener">283. 移动零</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个数组 <code>nums</code>，编写一个函数将所有 <code>0</code> 移动到数组的末尾，同时保持非零元素的相对顺序。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [0,1,0,3,12]</span><br><span class="line">输出: [1,3,12,0,0]</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="算法一：双指针"><a href="#算法一：双指针" class="headerlink" title="算法一：双指针"></a>算法一：双指针</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>分别用两个指针index和i指向非0数字所需要插入的索引和当前元素索引，index只在当前元素非0时才向后缩进</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public void moveZeroes(int[] nums) &#123;</span><br><span class="line">        int index&#x3D;0;</span><br><span class="line">        for(int i&#x3D;0;i&lt;nums.length;i++)&#123;</span><br><span class="line">        	&#x2F;&#x2F;非0元素才赋值，否则直接i++</span><br><span class="line">            if(nums[i]!&#x3D;0)&#123;</span><br><span class="line">                nums[index++]&#x3D;nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后将index之后的元素赋值为0</span><br><span class="line">        while (index&lt;nums.length)&#123;</span><br><span class="line">            nums[index++]&#x3D;0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(n)</li>
-<li><strong>空间复杂度：</strong>O(1)</li>
-</ul>
-<h2 id="算法二：统计0的个数"><a href="#算法二：统计0的个数" class="headerlink" title="算法二：统计0的个数"></a>算法二：统计0的个数</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>count统计到当前索引处之前的0元素个数，则当count大于0时，当前的非0元素应该左移count位才到达其最终位置，并且将此处的值赋值位0</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public void moveZeroes(int[] nums) &#123;</span><br><span class="line">        int count&#x3D;0;</span><br><span class="line">        for(int i&#x3D;0;i&lt;nums.length;i++)&#123;</span><br><span class="line">            if(nums[i]&#x3D;&#x3D;0) count++;</span><br><span class="line">            else if (count&gt;0)&#123;</span><br><span class="line">                nums[i-count]&#x3D;nums[i];</span><br><span class="line">                nums[i]&#x3D;0;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(n)</li>
-<li><strong>空间复杂度：</strong>O(1)</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/287.%20%E5%AF%BB%E6%89%BE%E9%87%8D%E5%A4%8D%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/287.%20%E5%AF%BB%E6%89%BE%E9%87%8D%E5%A4%8D%E6%95%B0/" itemprop="url">287. 寻找重复数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="287-寻找重复数"><a href="#287-寻找重复数" class="headerlink" title="287. 寻找重复数"></a><a href="https://leetcode-cn.com/problems/find-the-duplicate-number/" target="_blank" rel="noopener">287. 寻找重复数</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: [1,3,4,2,2]</span><br><span class="line">输出: 2</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: [3,1,3,4,2]</span><br><span class="line">输出: 3</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>不同与一般的二分查找去划分区间，此题是首先猜结果为数组元素的中位数1,2,…..,len-1的中位数mid，然后统计小于等于mid的元素个数，如果个数大于mid，则表示目标元素一定在中位数左边，否则在其右边</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public int findDuplicate(int[] nums) &#123;</span><br><span class="line">        int len&#x3D;nums.length;</span><br><span class="line">        &#x2F;&#x2F;数组元素取值范围为1,2,...,len-1</span><br><span class="line">        int left&#x3D;1,right&#x3D;len-1;</span><br><span class="line">        while (left&lt;right)&#123;</span><br><span class="line">            int mid&#x3D;(left+right)&#x2F;2;</span><br><span class="line">            int count&#x3D;0;</span><br><span class="line">            for(int num:nums)&#123;</span><br><span class="line">                if(num&lt;&#x3D;mid) count++;</span><br><span class="line">                if(count&gt;mid) right&#x3D;mid;</span><br><span class="line">                else left&#x3D;mid+1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return left;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><p><strong>时间复杂度：</strong>O(nlogn)，在二分法的内部有一个遍历数组的操作，所以为nlogn</p>
-</li>
-<li><p><strong>空间复杂度：</strong>O(1)</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2031,7 +2057,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">211</span>
+                  <span class="site-state-item-count">214</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2042,7 +2068,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2053,7 +2079,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2106,7 +2132,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

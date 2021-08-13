@@ -248,6 +248,497 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/05/28/%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E8%B7%AF%E5%BE%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/28/%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E8%B7%AF%E5%BE%84/" itemprop="url">矩阵中的路径</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-28T22:42:04+08:00">
+                2020-05-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%91%E6%8C%87offer/" itemprop="url" rel="index">
+                    <span itemprop="name">剑指offer</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向左，向右，向上，向下移动一个格子。如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。</p>
+<h1 id="DFS递归"><a href="#DFS递归" class="headerlink" title="DFS递归"></a>DFS递归</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">private boolean[] memo;</span><br><span class="line"></span><br><span class="line">   public boolean hasPath(char[] matrix, int rows, int cols, char[] str)</span><br><span class="line">   &#123;</span><br><span class="line"></span><br><span class="line">       for(int i&#x3D;0;i&lt;matrix.length;i++)&#123;</span><br><span class="line">           memo&#x3D;new boolean[matrix.length];</span><br><span class="line">           if(helper(matrix,rows,cols,str,i,0))</span><br><span class="line">               return true;</span><br><span class="line">       &#125;</span><br><span class="line">       return false;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   private boolean helper(char[] matrix, int rows, int cols, char[] str,int i,int index)&#123;</span><br><span class="line">       if(index&#x3D;&#x3D;str.length) return true;</span><br><span class="line">       if(i&lt;0||i&gt;&#x3D;matrix.length) return false;</span><br><span class="line">       if(memo[i]) return false;</span><br><span class="line">       if(matrix[i]!&#x3D;str[index]) return false;</span><br><span class="line">       memo[i]&#x3D;true;</span><br><span class="line">       return helper(matrix,rows,cols,str,i-1,index+1)||helper(matrix,rows,cols,str,i+1,index+1)||</span><br><span class="line">               helper(matrix,rows,cols,str,i-cols,index+1)||helper(matrix,rows,cols,str,i+cols,index+1);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="DFS递归-1"><a href="#DFS递归-1" class="headerlink" title="DFS递归"></a>DFS递归</h1><p>第二次写忘了在出栈时，让index–</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">public boolean hasPath(char[] matrix, int rows, int cols, char[] str)</span><br><span class="line">   &#123;</span><br><span class="line">       Stack&lt;Integer&gt; stack;</span><br><span class="line">       int len&#x3D;rows*cols;</span><br><span class="line">       boolean[] memo;</span><br><span class="line">       for(int i&#x3D;0;i&lt;len;i++)&#123;</span><br><span class="line">       	&#x2F;&#x2F;index记录当前str的访问位置，需要回溯</span><br><span class="line">           int index&#x3D;0;</span><br><span class="line">           if(matrix[i]!&#x3D;str[0]) continue;</span><br><span class="line">           stack&#x3D;new Stack&lt;&gt;();</span><br><span class="line">           memo&#x3D;new boolean[len];</span><br><span class="line">           stack.push(i);</span><br><span class="line">           memo[i]&#x3D;true;</span><br><span class="line">           index++;</span><br><span class="line">           while(!stack.isEmpty())&#123;</span><br><span class="line">               if(index&#x3D;&#x3D;str.length) return true;</span><br><span class="line">               int num&#x3D;stack.peek();</span><br><span class="line">               if(num%cols!&#x3D;0&amp;&amp;!memo[num-1]&amp;&amp;matrix[num-1]&#x3D;&#x3D;str[index])&#123;</span><br><span class="line">                   stack.push(num-1);</span><br><span class="line">                   memo[num-1]&#x3D;true;</span><br><span class="line">                   index++;</span><br><span class="line">                   continue;</span><br><span class="line">               &#125;</span><br><span class="line">               if((num+1)%cols!&#x3D;0&amp;&amp;!memo[num+1]&amp;&amp;matrix[num+1]&#x3D;&#x3D;str[index])&#123;</span><br><span class="line">                   stack.push(num+1);</span><br><span class="line">                   memo[num+1]&#x3D;true;</span><br><span class="line">                   index++;</span><br><span class="line">                   continue;</span><br><span class="line">               &#125;</span><br><span class="line">               if((num-cols)&gt;&#x3D;0&amp;&amp;!memo[num-cols]&amp;&amp;matrix[num-cols]&#x3D;&#x3D;str[index])&#123;</span><br><span class="line">                   stack.push(num-cols);</span><br><span class="line">                   memo[num-cols]&#x3D;true;</span><br><span class="line">                   index++;</span><br><span class="line">                   continue;</span><br><span class="line">               &#125;</span><br><span class="line">               if((num+cols)&lt;len&amp;&amp;!memo[num+cols]&amp;&amp;matrix[num+cols]&#x3D;&#x3D;str[index])&#123;</span><br><span class="line">                   stack.push(num+cols);</span><br><span class="line">                   memo[num+cols]&#x3D;true;</span><br><span class="line">                   index++;</span><br><span class="line">                   continue;</span><br><span class="line">               &#125;</span><br><span class="line">               num&#x3D;stack.pop();</span><br><span class="line">               &#x2F;&#x2F;这里不要忘了index--</span><br><span class="line">               index--;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       return false;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/05/28/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E7%AC%ACK%E4%B8%AA%E8%8A%82%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/28/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E7%AC%ACK%E4%B8%AA%E8%8A%82%E7%82%B9/" itemprop="url">二叉搜索树的第K个节点</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-28T20:04:45+08:00">
+                2020-05-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%91%E6%8C%87offer/" itemprop="url" rel="index">
+                    <span itemprop="name">剑指offer</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一棵二叉搜索树，请找出其中的第k小的结点。例如， （5，3，7，2，4，6，8）  中，按结点数值大小顺序第三小结点的值为4。</p>
+<p><strong>第二次写问题出在不能将k放在参数中传递，因为是值传递，递归中值改变，原方法中k不会变，要把k设置成成员变量。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">private int k;</span><br><span class="line">   TreeNode KthNode(TreeNode pRoot, int k)</span><br><span class="line">   &#123;</span><br><span class="line">       this.k&#x3D;k;</span><br><span class="line">       return helper(pRoot);</span><br><span class="line">   &#125;</span><br><span class="line">   private TreeNode helper(TreeNode root)&#123;</span><br><span class="line">       if(root!&#x3D;null) &#123;</span><br><span class="line">           TreeNode left&#x3D;helper(root.left);</span><br><span class="line">           if(left!&#x3D;null) return left;</span><br><span class="line">           k--;</span><br><span class="line">           if (k &#x3D;&#x3D; 0) return root;</span><br><span class="line">           TreeNode right&#x3D;helper(root.right);</span><br><span class="line">           if(right!&#x3D;null) return right;</span><br><span class="line">       &#125;</span><br><span class="line">       return null;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/05/25/Integrating-Spatial-Configuration-into-Heatmap-Regression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/25/Integrating-Spatial-Configuration-into-Heatmap-Regression/" itemprop="url">Integrating Spatial Configuration into Heatmap Regression</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-25T19:31:14+08:00">
+                2020-05-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Integrating-Spatial-Configuration-into-Heatmap-Regression-Based-CNNs-for-Landmark-Localization-基于热图回归的CNN"><a href="#Integrating-Spatial-Configuration-into-Heatmap-Regression-Based-CNNs-for-Landmark-Localization-基于热图回归的CNN" class="headerlink" title="Integrating Spatial Configuration into Heatmap Regression Based CNNs for Landmark Localization  (基于热图回归的CNN)"></a>Integrating Spatial Configuration into Heatmap Regression Based CNNs for Landmark Localization  (基于热图回归的CNN)</h1><h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>在许多医学图像分析应用中，由于以下原因，只有有限数量的训练数据可用：</p>
+<ol>
+<li>图像获取成本以及专家需要的大量手动注释工作。</li>
+<li>训练小型卷积神经网络（CNN）等最新的机器学习方法数据集是一项艰巨的任务。</li>
+</ol>
+<p>在有关解剖点定位的这项工作中，我们提出了一种CNN网络，该网络学会了将定位任务分为两个更简单的子问题，从而减少了对大型训练数据集的总体需求。</p>
+<p>全卷积SpatialConfiguration-Net（SCN）通过将其两个组件的热图预测相乘并以端到端的方式训练网络来学习这种简化。</p>
+<p>因此，SCN将一个组件专用于局部准确但模棱两可的候选预测，而另一组件则通过合并地标的空间配置来提高对歧义性的鲁棒性。</p>
+<p>在我们广泛的实验评估中，我们表明，在各种尺寸受限的2D和3D定位点数据集（即手部X射线照片，侧位头颅图，手部MRI和脊柱CT）上，所提出的SCN在点定位误差方面优于相关方法。</p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>​        解剖点的定位是医学图像分析中的重要步骤，例如，基于可变形的统计模型执行分割，初始化基于特征的图像配准，对检测到的解剖结构（如椎骨）进行参数化建模。不幸的是，由于点定位的含糊不清，相似的结构经常会带来困难。 这样的歧义使得难以实现低的点定位误差，低的点定位误差被定义为对点误识别的高鲁棒性以及在每个所识别的点处的本地高精度。为了解决这些困难，主要使用基于机器学习的方法来自动定位图像中的解剖点。这些方法通常将局部点预测与明确的图形模型结合在一起，旨在将预测限制为可行的空间配置，如训练数据中所示。因此，通过将任务分为两个连续的步骤，简化了点定位问题。 第一步专用于局部准确但可能含糊的候选预测，而第二步中的图形模型则消除了模糊性，从而提高了对地标误识别的鲁棒性。</p>
+<p>​        计算机视觉的最新进展主要是由深度卷积神经网络（CNN）驱动的，因为它们具有自动从图像中学习重要特征的出色功能。他们不仅在许多计算机视觉任务中都改进了最新技术，而且在许多医学图像分析应用中。与使用先验知识构建点配置的手工模型的先前方法相反，深层的CNN架构依赖大量的训练数据来自动学习将预测限制为可行的模型。特别是在医学图像领域，要满足大量训练数据的要求具有挑战性，这有两个原因。首先，道德和财务方面的障碍阻碍了医学图像的大规模获取；其次，在有监督的环境中，需要训练有素的专家来创建事实真相注释，这通常是困难，昂贵和耗时的。因此，与计算机视觉任务相比，医学图像分析中基于CNN的方法必须能够处理明显更少的带注释的训练数据</p>
+<p>​        我们假设通过遵循手工图形模型探索的思想，可以减少CNN的大量训练数据需求。这样的模型结合了先验知识，即点的可行位置不是在图像空间中均匀分布，而是受其他解剖点的位置约束。因此，假设是，关于点的空间配置的现有知识可以使网络简化可行的解剖配置的基础分布的建模，因此需要较少的训练数据。尽管对空间配置的约束以前已在计算机视觉中使用（例如，用于语义分割或识别姿势），但它们仅用于改善基于CNN的关于对点误识别的鲁棒性的预测，而没有用于简化基于先验知识的预测任务 。在医学图像分析任务中，高局部精度与对点误识别的鲁棒性同等重要，因此尚未研究将解剖学地标的空间配置合并到CNN中以允许从有限的训练数据中学习。</p>
+<p>​        在本文中，我们证明了我们提出的两分量CNN可以通过学习从空间配置中受益来实现低界标定位误差，即使训练数据量有限。我们的SpatialConfiguration-Net（SCN）学会专用于一个组件来提供本地准确但潜在的模棱两可的候选预测，而另一个组件则用于关注<br>关于合并空间配置以通过消除歧义来提高针对地标性错误识别的鲁棒性。因此，将本地化任务分为两个简单的子问题，从而减少了对大型数据集的总体需求。在我们的定量评估中，我们证明了我们提出的方法是广泛适用的，并且在来自各种模式的四个大小受限的2D和3D医学图像分析数据集上优于最新技术，这些数据包括手部X光片，侧位头颅图，手部MRI 和脊柱CT。</p>
+<h3 id="1-1-相关工作"><a href="#1-1-相关工作" class="headerlink" title="1.1 相关工作"></a>1.1 相关工作</h3><p>解剖点定位的一种杰出策略是将局部特征响应与编码界标的全局空间配置的手工图形模型相结合。这种方法在医学图像分析中得到了广泛的应用，因为它们可以有效地捕获解剖学变化，而无需依赖训练数据集的大小，只要训练数据具有代表性即可。例如，刘等。 （2010）基于其他点的预测的相对位置，连续地限制点的搜索空间。 他们表明，这种限制大大减少了运行时间，同时还提供了出色的性能。整合全局形状信息的一种广泛使用的方法是使用点分布模型（Cootes等，1995）。 （2015）通过使用受约束的局部模型扩展了该策略，该模型在随机森林产生的局部特征响应的基础上迭代地完善了点配置（Breiman，2001），在2D手部和颅骨X光片上显示出最先进的性能。 医学图像分析中其他常用的图形模型是马尔可夫随机场（MRF）。它们已成功用于多种应用中的标志性定位，例如肺部分割（Ibragimov等人，2012），脑部定位（Toews和Arbel，2007），脊柱的检测（Glocker等人，2012）以及分析 全身CT扫描（Potesil等，2015），手部射线照相（Donner等，2013）<br>或牙齿MRI（Štern等，2016a）。尽管许多这些最近的工作仅使用随机森林框架来生成局部外观特征响应，但已改编了Criminisi等人的开创性工作。 （2013）关于器官边界框定位，首先根据全局外观特征稳健地限制预测区域，然后再基于局部特征进行精确定位。但是，它们的性能高度依赖于第一步是否提供可靠的预测，因为在第二步中只能提高准确性。 后来，为了消除局部外观特征响应中的假阳性预测，Urschler等。 （2018）将地标的空间配置整合到使用全球外观和几何特征的随机森林中。 因此，他们在单个统一的随机回归森林框架内模拟了MRF。</p>
+<p>​        借助像ImageNet（Russakovsky et al。，2015）这样的大型带注释的训练数据集，计算机视觉方法最近已经看到向深度学习和CNN的颠覆性转变。尽管在医学成像领域中通常带注释的训练图像数量有限，但是一些使用CNN的最新方法在解剖点定位中也显示出成功。对于椎骨的定位和识别，Chen等。 （2015年）提出了一个三阶段框架，该框架结合了用于粗略地标定位的随机森林，合并了邻近地标信息以完善其位置的形状模型以及用于识别地标的CNN。</p>
+<p>他们方法的缺点是他们仅使用2D CNN，因此无法从3D CNN可能发挥的全部体积信息中受益。张等。 （2017）从有限数量的大脑MR体积中同时检测数千个解剖点，方法是先将所有体积注册到模板体积，然后用单个CNN回归所有点坐标。但是，正如人体姿势估计方法（例如Toshev和Szegedy，2014）所观察到的，对坐标进行回归直接涉及从输入图像到点坐标的高度非线性映射（Pfister等人，2015）。</p>
+<p>​        汤普森等人而不是回归坐标。 （2014年）提出了一种基于回归热图图像的更简单的图像到图像映射，该映射对位于某个像素位置的界标的伪概率进行编码。因此，他们用于人体姿势估计的网络学会了在靠近目标地标的位置上产生高响应，而在错误位置上的响应却受到抑制。他们的工作还将CNN架构中的MRF模型的二进制术语整合到了一起。 然而，汤普森等。 （2014年）显示了点定位错误的缺点，这是因为他们的方法是在图像块上训练以预测热图，而单独训练的阶段仅在最后进行了微调。在我们的初步工作中（Payer等人，2016年），我们还使用了热图回归框架，但是，我们将地标的空间信息直接集成到了经过端到端训练的全卷积网络。 在那里，我们展示了即使在训练数据非常有限的情况下也可以实现良好性能的潜力。基于Payer等人提出的方法。 （2016），Yang等。 （2017）使用热图回归框架，通过将邻近地标的预训练模型纳入其CNN中来生成缺少响应的地标的预测。但是，与我们的方法（直接减少相似外观的地标上的假阳性反应）相比，他们的方法需要额外的后处理步骤才能消除假阳性反应。他们对网络进行预训练以同时对椎骨进行分类和定位，使用学到的权重使用完全卷积的网络生成响应，最后使用双向递归神经网络消除误报。 最近，Ghesu等人研究了一种不同的策略。 （2018，2019）。他们提议使用强化学习来生成指向寻找的点的导航轨迹。 他们方法的局限性在于计算量大的训练以及对非常大的数据集的需求。</p>
+<p>​        前面提到的CNN方法或者需要大量的训练数据，需要复杂的后处理，或者不能同时推广到2D和3D数据。 在本文中，我们提出了一个端到端的经过训练的全卷积网络，该网络可以在数量有限的训练数据的情况下在2D和3D应用程序中很好地工作，并且不需要任何特定于数据集的后处理。</p>
+<h3 id="1-2-贡献"><a href="#1-2-贡献" class="headerlink" title="1.2 贡献"></a>1.2 贡献</h3><p>​        我们建议将解剖点的空间配置合并到基于CNN的热图回归框架中，即使存在有限的训练数据集，该框架也可提供低的界标定位误差。在我们的单阶段方法中，网络本身学习将一个组件专用于本地准确但可能含糊的候选预测，而另一组件仅具有消除歧义的任务，以提高对点误识别的鲁棒性。通过单个优化过程并以端到端的方式进行训练，我们完全卷积的SCN的局部外观和空间配置组件都集中于两个更简单的子问题，这些子问题分别需要较少的训练数据。因此，减少了从大型数据集学习的总体需求。</p>
+<p>​        这项工作中提出的方法将我们的初步MICCAI论文（Payer等人，2016）扩展如下：</p>
+<ul>
+<li><p>我们修改目标函数，以便分别学习每个地标的最佳热图目标函数， 取决于网络的预测置信度（请参阅第2.1节）</p>
+</li>
+<li><p>我们更改了局部外观组件的CNN结构，以更好地考虑不同比例下的图像外观特征，以回归生成局部精确候选预测的热图（请参阅第2.2.2节）。</p>
+</li>
+<li><p>我们改进了空间配置组件，以允许地标配置之间有更多变化，从而显示出消除局部相似结构的歧义的好处，尤其是对棘手的任务（如椎骨识别和定位）特别需要（请参阅第2.2.3节）</p>
+</li>
+<li><p>我们展示了SCN在二维（即手部X光片和侧位头影）以及3D（即手部MRI和脊柱CT）的多种医学影像数据集中的广泛适用性</p>
+</li>
+<li><p>我们报告了所有调查数据集上的地标定位误差方面最新的最新结果，包括ISBI 2015颅骨X射线图像分析挑战赛（Wang等人，2016）和MICCAI CSI 2014椎骨定位和识别 挑战涉及来自Glocker等人的病理性脊柱CT。 （2013）。</p>
+</li>
+</ul>
+<p>通过在端到端训练有素的卷积CNN框架中回归每个地标的热图来解剖点定位。 在我们提出的SpatialConfiguration-Net（SCN）中，两个组件通过乘法进行交互，以使局部外观组件着重于局部准确但模棱两可的候选预测，而空间配置组件着重于减少歧义以提高对地标误识别的鲁棒性。</p>
+<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627092748519.png" alt="image-20200627092748519"></p>
+<h3 id="2-方法"><a href="#2-方法" class="headerlink" title="2.方法"></a>2.方法</h3><p>​        为了在训练数据集有限的情况下降低地标定位误差，我们提出的SCN体系结构直接结合了两个交互组件的相应输出。如图1所示，当以端到端的方式训练基于热图回归的全卷积网络体系结构（第2.1节）时，通过将来自两个组件的预测相乘，可以实现这些组件的交互。由于这种相互作用，我们的SCN学会专用于其局部外观分量来提供局部准确但潜在的模棱两可的候选预测，而其空间配置分量则致力于通过消除歧义来提高对点误识别的鲁棒性（请参阅第2.2节）。当通过乘法结合时，这种相互作用导致低的点定位误差，即，对点误识别的高鲁棒性以及在每个识别的点处的高局部精度。</p>
+<h4 id="2-1-使用CNN回归热图"><a href="#2-1-使用CNN回归热图" class="headerlink" title="2.1 使用CNN回归热图"></a>2.1 使用CNN回归热图</h4><p>​        虽然直接回归地标坐标的CNN（Toshev and Szegedy，2014; Zhang et al。，2017）需要密集的层且具有许多网络参数才能对高度非线性且难以学习的图像进行坐标映射建模，但我们的方法基于回归热图图像 （Tompson et al。，2014），它对位于某个像素位置的点的伪概率进行编码。通过启用图像到图像的映射，由于减少了网络权重并因此降低了计算复杂度，因此我们受益于使用全卷积网络（Shelhamer et al。，2017）。</p>
+<p>​        N为点总数，目标维点L<del>i</del>的d维热图图像g<del>i</del>（x）：R^d^→R，i =</p>
+<p>{1,….，坐标为x ∗ i∈R^d^的N}被定义为高斯函数：</p>
+<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627093504530.png" alt="image-20200627093504530"></p>
+<p>因此，靠近目标坐标x<del>i</del>∈R^d^的热图像素具有较高的值，该值在远离x <del>i</del>处平滑但迅速减小。我们引入了比例因子γ以避免训练期间由于高斯函数的其他非常小的值引起的数值不稳定。 对于每个维度d，标准偏差σ<del>i</del>定义地标L<del>i</del>的热图图像中高斯函数的峰宽。</p>
+<p>​        不仅与我们之前的工作（Payer等人，2016）不同，而且与其他基于热图的方法（例如，Tompson等人，2014）不同，我们将σ<del>i</del>视为g<del>i</del>的未知参数，以便对其进行学习。 在训练CNN期间，除了网络权重w和偏差b之外。因此，我们可以根据网络的预测置信度分别学习每个地标的最佳热图峰宽。</p>
+<p>​        网络通过最小化预测的热图之间的差异来学习同时回归N个热图</p>
+<p>h<del>i</del>（x; w，b）和所有点L<del>i</del>的对应目标热图g<del>i</del>（x;σ<del>i</del>）：</p>
+<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094103413.png" alt="image-20200627094103413"></p>
+<p>这个新颖的目标函数通过涉及热图峰宽σ=（σ<del>1</del>，…，σ<del>N</del>）^T^的L<del>2</del>范数的正则化项在（Payer等人，2016）上扩展。由于σ是可学习的网络参数，因此当σi→∞导致gi（x;σi）≈0时，该术语避免了平凡的解决方案。因子α定义了热图峰宽σ受罚的强度，并且λ控制了影响 网络权重w的L2范数的。</p>
+<p>​        在（2）中，hi（x; w，b）和gi（x;σi）的L2距离与惩罚σ相互抵触。 为了使（2）最小，前一项优选σ较大，而后一项则使σ尽可能小。网络会使预测点的热图峰宽较窄（确信预测正确），而不确定点的峰宽较宽（例如难以确定的点）。因此，如图2所示，网络学习了在生成过平滑的，可能不准确的预测的大σi和导致潜在的高度准确的响应但附近有多个峰值的小σi之间的最佳折衷。在网络推断中，我们通过获取热图具有最高值的坐标来获得每个地标L<del>i</del>的预测坐标x^i^∈R^d^：</p>
+<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094735894.png" alt="image-20200627094735894"></p>
+<p>点Li的缩放区域针对不同σi的示例热图输出。 上图显示选择固定σi太小时的多个峰； 中间的图像显示了学习到的σi= 2.16的响应； 下图显示了对于太大的固定σi而言，响应过于平滑。 目标坐标x ∗ i用表示，预测坐标xˆi用表示。</p>
+<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094924916.png" alt="image-20200627094924916"></p>
+<h4 id="2-2-SpatialConfiguration-Net"><a href="#2-2-SpatialConfiguration-Net" class="headerlink" title="2.2 SpatialConfiguration-Net"></a>2.2 SpatialConfiguration-Net</h4><p>​        用于热图回归的SCN的基本概念是其两个组件之间的相互作用，分别表示局部外观和空间配置（见图3）。在第2.2.1节中，我们解释了两个组件如何相互作用以将本地化任务简化为两个子问题。 尽管两个相互作用的组件在结构上原则上是灵活的，但在2.2.2和2.2.3节中，我们将针对这两个组件描述我们特别建议的体系结构。</p>
+<p>我们提议的SCN的示意图。 在局部外观组件中，将输入图像I转换为HLA，代表N个点中每一个的局部外观热图。 黑色虚线表示HLA用作空间配置组件的输入，其中HLA转换为空间配置热图HSC。 HLA和HSC的乘积产生最终的热图H。 箭头表示连接，即</p>
+<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627095535655.png" alt="image-20200627095535655"></p>
+<h5 id="2-2-1局部外观⇔空间配置"><a href="#2-2-1局部外观⇔空间配置" class="headerlink" title="2.2.1局部外观⇔空间配置"></a>2.2.1局部外观⇔空间配置</h5><p>​        对于N个点，预测热图集H = {hi（x）| i = 1。 。 。 N}通过逐元素乘法获得。两个组件的相应热图输出：</p>
+<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627095315909.png" alt="image-20200627095315909"></p>
+<p>由于符号的容易性，此处省略了网络权重w和偏置b。 热图hLA i（x）和hSC i（x）分别是每个地标Li的局部外观和空间配置分量的输出。</p>
+<p>​        这两个分量通过（4）中的乘法进行交互。 这种乘法对于SCN学习定位任务的简化至关重要，因为它迫使两个分量都对目标界标x ∗ i的位置产生响应，即hLA i（x）和hSC i（x） 传递x接近x ∗ i的响应，而在其他所有位置上，只要另一个组件没有响应，一个组件就可以响应。因此，只要空间配置组件对局部相似结构的位置没有响应，局部外观组件就可以集中精力将输入图像转换为目标界标x ∗ i位置处的局部高精度响应，无需抑制局部相似的结构。 另一方面，只要局部外观分量在x ∗ i的位置上产生局部高度精确的响应，空间配置分量就可以集中精力通过消除局部外观分量的输出中的假阳性响应来区分局部相似的结构。 ，而无需高度精确地定位x ∗ i，无需抑制局部相似的结构。 另一方面，只要局部外观分量在x ∗ i的位置上产生局部高度精确的响应，空间配置分量就可以集中精力通过消除局部外观分量的输出中的假阳性响应来区分局部相似的结构。 ，而无需高度精确地定位x ∗ i。</p>
+<p>​        相比之下，先前的工作（Tompson等人，2014； Pfister等人，2015）的目的是同时解决地标错误识别的稳健性以及每个网络组件中所识别点的局部精度，但缺点是无法简化 本地化任务。 另一方面，我们的体系结构导致了一个解决方案，其中两个组件都面临着更简单的任务，可以从少量的培训数据中学习。</p>
+<h5 id="2-2-2-Local-appearance"><a href="#2-2-2-Local-appearance" class="headerlink" title="2.2.2 Local appearance"></a>2.2.2 Local appearance</h5><p>​        由于（4）中的乘法，局部外观分量的主要焦点是将输入图像I转换为一组局部精确但可能含糊的热图HLA = {hLA i（x）| i = 1。 。 。 N}。因此，对于每个点Li，局部外观分量生成热图输出hLA i（x），仅在点坐标x ∗ i的附近，类似于高斯目标gi（x）。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/05/25/%E5%AF%B9%E7%A7%B0%E7%9A%84%E4%BA%8C%E5%8F%89%E6%A0%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1582,521 +2073,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/05/24/%E7%BC%93%E5%AD%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/24/%E7%BC%93%E5%AD%98/" itemprop="url">缓存</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-24T11:12:05+08:00">
-                2020-05-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%93%E5%AD%98/" itemprop="url" rel="index">
-                    <span itemprop="name">缓存</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="一-缓存特征"><a href="#一-缓存特征" class="headerlink" title="一.缓存特征"></a>一.缓存特征</h1><h2 id="命中率"><a href="#命中率" class="headerlink" title="命中率"></a>命中率</h2><p>当某个请求能够通过访问缓存而得到响应时，称为缓存命中。</p>
-<p>缓存命中率越高，缓存的利用率也就越高。</p>
-<h2 id="最大空间"><a href="#最大空间" class="headerlink" title="最大空间"></a>最大空间</h2><p>缓存通常位于内存中，内存的空间通常比磁盘空间小的多，因此缓存的最大空间不可能非常大。</p>
-<p>当缓存存放的数据量超过最大空间时，就需要淘汰部分数据来存放新到达的数据。</p>
-<h2 id="淘汰策略"><a href="#淘汰策略" class="headerlink" title="淘汰策略"></a>淘汰策略</h2><ul>
-<li>FIFO（First In First Out）：先进先出策略，在实时性的场景下，需要经常访问最新的数据，那么就可以使用 FIFO，使得最先进入的数据（最晚的数据）被淘汰。</li>
-<li>LRU（Least Recently Used）：最近最久未使用策略，优先淘汰最久未使用的数据，也就是上次被访问时间距离现在最久的数据。该策略可以保证内存中的数据都是热点数据，也就是经常被访问的数据，从而保证缓存命中率。</li>
-<li>LFU（Least Frequently Used）：最不经常使用策略，优先淘汰一段时间内使用次数最少的数据。</li>
-</ul>
-<h1 id="二-缓存位置"><a href="#二-缓存位置" class="headerlink" title="二.缓存位置"></a>二.缓存位置</h1><h2 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h2><p>当 HTTP 响应允许进行缓存时，浏览器会将 HTML、CSS、JavaScript、图片等静态资源进行缓存。</p>
-<h2 id="ISP"><a href="#ISP" class="headerlink" title="ISP"></a>ISP</h2><p>网络服务提供商（ISP）是网络访问的第一跳，通过将数据缓存在 ISP 中能够大大提高用户的访问速度。</p>
-<h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>反向代理位于服务器之前，请求与响应都需要经过反向代理。通过将数据缓存在反向代理，在用户请求反向代理时就可以直接使用缓存进行响应。</p>
-<h2 id="本地缓存"><a href="#本地缓存" class="headerlink" title="本地缓存"></a>本地缓存</h2><p>使用 Guava Cache 将数据缓存在服务器本地内存中，服务器代码可以直接读取本地内存中的缓存，速度非常快。</p>
-<h2 id="分布式缓存"><a href="#分布式缓存" class="headerlink" title="分布式缓存"></a>分布式缓存</h2><p>使用 Redis、Memcache 等分布式缓存将数据缓存在分布式缓存系统中。</p>
-<p>相对于本地缓存来说，分布式缓存单独部署，可以根据需求分配硬件资源。不仅如此，服务器集群都可以访问分布式缓存，而本地缓存需要在服务器集群之间进行同步，实现难度和性能开销上都非常大。</p>
-<h2 id="数据库缓存"><a href="#数据库缓存" class="headerlink" title="数据库缓存"></a>数据库缓存</h2><p>MySQL 等数据库管理系统具有自己的查询缓存机制来提高查询效率。</p>
-<h2 id="java内部的缓存"><a href="#java内部的缓存" class="headerlink" title="java内部的缓存"></a>java内部的缓存</h2><p>Java 为了优化空间，提高字符串、基本数据类型包装类的创建效率，设计了字符串常量池及 Byte、Short、Character、Integer、Long、Boolean 这六种包装类缓冲池。</p>
-<h2 id="CPU多级缓存"><a href="#CPU多级缓存" class="headerlink" title="CPU多级缓存"></a>CPU多级缓存</h2><p>CPU 为了解决运算速度与主存 IO 速度不匹配的问题，引入了多级缓存结构，同时使用 MESI 等缓存一致性协议来解决多核 CPU 缓存数据一致性的问题。</p>
-<h1 id="三-CDN"><a href="#三-CDN" class="headerlink" title="三.CDN"></a>三.CDN</h1><p>内容分发网络（Content distribution network，CDN）是一种互连的网络系统，它利用更靠近用户的服务器从而更快更可靠地将 HTML、CSS、JavaScript、音乐、图片、视频等静态资源分发给用户。</p>
-<p>CDN 主要有以下优点：</p>
-<ul>
-<li>更快地将数据分发给用户；</li>
-<li>通过部署多台服务器，从而提高系统整体的带宽性能；</li>
-<li>多台服务器可以看成是一种冗余机制，从而具有高可用性。</li>
-</ul>
-<p><img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/15313ed8-a520-4799-a300-2b6b36be314f.jpg" alt="img"></p>
-<h1 id="四-缓存问题"><a href="#四-缓存问题" class="headerlink" title="四.缓存问题"></a>四.缓存问题</h1><h2 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h2><p>指的是对某个一定不存在的数据进行请求，该请求将会穿透缓存到达数据库。</p>
-<p>解决方案：</p>
-<ul>
-<li>对这些不存在的数据缓存一个空数据；</li>
-<li>对这类请求进行过滤。</li>
-</ul>
-<h2 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h2><p>指的是由于数据没有被加载到缓存中，或者缓存数据在同一时间大面积失效（过期），又或者缓存服务器宕机，导致大量的请求都到达数据库。</p>
-<p>在有缓存的系统中，系统非常依赖于缓存，缓存分担了很大一部分的数据请求。当发生缓存雪崩时，数据库无法处理这么大的请求，导致数据库崩溃。</p>
-<p>解决方案：</p>
-<ul>
-<li>为了防止缓存在同一时间大面积过期导致的缓存雪崩，可以通过观察用户行为，合理设置缓存过期时间来实现；</li>
-<li>为了防止缓存服务器宕机出现的缓存雪崩，可以使用分布式缓存，分布式缓存中每一个节点只缓存部分的数据，当某个节点宕机时可以保证其它节点的缓存仍然可用。</li>
-<li>也可以进行缓存预热，避免在系统刚启动不久由于还未将大量数据进行缓存而导致缓存雪崩。</li>
-</ul>
-<h2 id="缓存一致性"><a href="#缓存一致性" class="headerlink" title="缓存一致性"></a>缓存一致性</h2><p>缓存一致性要求数据更新的同时缓存数据也能够实时更新。</p>
-<p>解决方案：</p>
-<ul>
-<li>在数据更新的同时立即去更新缓存；</li>
-<li>在读缓存之前先判断缓存是否是最新的，如果不是最新的先进行更新。</li>
-</ul>
-<p>要保证缓存一致性需要付出很大的代价，缓存数据最好是那些对一致性要求不高的数据，允许缓存数据存在一些脏数据。</p>
-<h2 id="缓存无底洞"><a href="#缓存无底洞" class="headerlink" title="缓存无底洞"></a>缓存无底洞</h2><p>指的是为了满足业务要求添加了大量缓存节点，但是性能不但没有好转反而下降了的现象。</p>
-<p>产生原因：缓存系统通常采用 hash 函数将 key 映射到对应的缓存节点，随着缓存节点数目的增加，键值分布到更多的节点上，导致客户端一次批量操作会涉及多次网络操作，这意味着批量操作的耗时会随着节点数目的增加而不断增大。此外，网络连接数变多，对节点的性能也有一定影响。</p>
-<p>解决方案：</p>
-<ul>
-<li>优化批量数据操作命令；</li>
-<li>减少网络通信次数；</li>
-<li>降低接入成本，使用长连接 / 连接池，NIO 等。</li>
-</ul>
-<h1 id="五-数据分布"><a href="#五-数据分布" class="headerlink" title="五.数据分布"></a>五.数据分布</h1><h2 id="哈希分布"><a href="#哈希分布" class="headerlink" title="哈希分布"></a>哈希分布</h2><p>哈希分布就是将数据计算哈希值之后，按照哈希值分配到不同的节点上。例如有 N 个节点，数据的主键为 key，则将该数据分配的节点序号为：hash(key)%N。</p>
-<p><strong>传统的哈希分布算法存在一个问题：当节点数量变化时，也就是 N 值变化，那么几乎所有的数据都需要重新分布，将导致大量的数据迁移。</strong></p>
-<h2 id="顺序分布"><a href="#顺序分布" class="headerlink" title="顺序分布"></a>顺序分布</h2><p>将数据划分为多个连续的部分，按数据的 ID 或者时间分布到不同节点上。例如 User 表的 ID 范围为 1 ~ 7000，使用顺序分布可以将其划分成多个子表，对应的主键范围为 1 ~ 1000，1001 ~ 2000，…，6001 ~ 7000。</p>
-<p>顺序分布相比于哈希分布的主要优点如下：</p>
-<ul>
-<li>能保持数据原有的顺序；</li>
-<li>并且能够准确控制每台服务器存储的数据量，从而使得存储空间的利用率最大。</li>
-</ul>
-<h1 id="六-一致性哈希"><a href="#六-一致性哈希" class="headerlink" title="六.一致性哈希"></a>六.一致性哈希</h1><p>Distributed Hash Table（DHT） 是一种哈希分布方式，其目的是为了克服传统哈希分布在服务器节点数量变化时大量数据迁移的问题。</p>
-<h2 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h2><p>将哈希空间 [0, 2n-1] 看成一个哈希环，每个服务器节点都配置到哈希环上。每个数据对象通过哈希取模得到哈希值之后，存放到哈希环中顺时针方向第一个大于等于该哈希值的节点上。</p>
-<p><img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/68b110b9-76c6-4ee2-b541-4145e65adb3e.jpg" alt="img"></p>
-<p>一致性哈希<strong>在增加或者删除节点时只会影响到哈希环中相邻的节点</strong>，例如下图中新增节点 X，只需要将它前一个节点 C 上的数据重新进行分布即可，对于节点 A、B、D 都没有影响。</p>
-<p><img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/66402828-fb2b-418f-83f6-82153491bcfe.jpg" alt="img"></p>
-<h2 id="虚拟节点"><a href="#虚拟节点" class="headerlink" title="虚拟节点"></a>虚拟节点</h2><p>上面描述的一致性哈希存在数据分布不均匀的问题，节点存储的数据量有可能会存在很大的不同。</p>
-<p>数据不均匀主要是因为节点在哈希环上分布的不均匀，这种情况在节点数量很少的情况下尤其明显。</p>
-<p>解决方式是通过增加虚拟节点，然后将虚拟节点映射到真实节点上。虚拟节点的数量比真实节点来得多，那么虚拟节点在哈希环上分布的均匀性就会比原来的真实节点好，从而使得数据分布也更加均匀。</p>
-<h1 id="七-LRU"><a href="#七-LRU" class="headerlink" title="七.LRU"></a>七.LRU</h1><p>以下是基于 双向链表 + HashMap 的 LRU 算法实现，对算法的解释如下：</p>
-<ul>
-<li>访问某个节点时，将其从原来的位置删除，并重新插入到链表头部。这样就能保证链表尾部存储的就是最近最久未使用的节点，当节点数量大于缓存最大空间时就淘汰链表尾部的节点。</li>
-<li>为了使删除操作时间复杂度为 O(1)，就不能采用遍历的方式找到某个节点。HashMap 存储着 Key 到节点的映射，通过 Key 就能以 O(1) 的时间得到节点，然后再以 O(1) 的时间将其从双向队列中删除。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">public class LRU&lt;K, V&gt; implements Iterable&lt;K&gt; &#123;</span><br><span class="line"></span><br><span class="line">    private Node head;</span><br><span class="line">    private Node tail;</span><br><span class="line">    private HashMap&lt;K, Node&gt; map;</span><br><span class="line">    private int maxSize;</span><br><span class="line"></span><br><span class="line">    private class Node &#123;</span><br><span class="line"></span><br><span class="line">        Node pre;</span><br><span class="line">        Node next;</span><br><span class="line">        K k;</span><br><span class="line">        V v;</span><br><span class="line"></span><br><span class="line">        public Node(K k, V v) &#123;</span><br><span class="line">            this.k &#x3D; k;</span><br><span class="line">            this.v &#x3D; v;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public LRU(int maxSize) &#123;</span><br><span class="line"></span><br><span class="line">        this.maxSize &#x3D; maxSize;</span><br><span class="line">        this.map &#x3D; new HashMap&lt;&gt;(maxSize * 4 &#x2F; 3);</span><br><span class="line"></span><br><span class="line">        head &#x3D; new Node(null, null);</span><br><span class="line">        tail &#x3D; new Node(null, null);</span><br><span class="line"></span><br><span class="line">        head.next &#x3D; tail;</span><br><span class="line">        tail.pre &#x3D; head;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public V get(K key) &#123;</span><br><span class="line"></span><br><span class="line">        if (!map.containsKey(key)) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Node node &#x3D; map.get(key);</span><br><span class="line">        unlink(node);</span><br><span class="line">        appendHead(node);</span><br><span class="line"></span><br><span class="line">        return node.v;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public void put(K key, V value) &#123;</span><br><span class="line"></span><br><span class="line">        if (map.containsKey(key)) &#123;</span><br><span class="line">            Node node &#x3D; map.get(key);</span><br><span class="line">            unlink(node);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Node node &#x3D; new Node(key, value);</span><br><span class="line">        map.put(key, node);</span><br><span class="line">        appendHead(node);</span><br><span class="line"></span><br><span class="line">        if (map.size() &gt; maxSize) &#123;</span><br><span class="line">            Node toRemove &#x3D; removeTail();</span><br><span class="line">            map.remove(toRemove.k);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    private void unlink(Node node) &#123;</span><br><span class="line"></span><br><span class="line">        Node pre &#x3D; node.pre;</span><br><span class="line">        Node next &#x3D; node.next;</span><br><span class="line"></span><br><span class="line">        pre.next &#x3D; next;</span><br><span class="line">        next.pre &#x3D; pre;</span><br><span class="line"></span><br><span class="line">        node.pre &#x3D; null;</span><br><span class="line">        node.next &#x3D; null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    private void appendHead(Node node) &#123;</span><br><span class="line">        Node next &#x3D; head.next;</span><br><span class="line">        node.next &#x3D; next;</span><br><span class="line">        next.pre &#x3D; node;</span><br><span class="line">        node.pre &#x3D; head;</span><br><span class="line">        head.next &#x3D; node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    private Node removeTail() &#123;</span><br><span class="line"></span><br><span class="line">        Node node &#x3D; tail.pre;</span><br><span class="line"></span><br><span class="line">        Node pre &#x3D; node.pre;</span><br><span class="line">        tail.pre &#x3D; pre;</span><br><span class="line">        pre.next &#x3D; tail;</span><br><span class="line"></span><br><span class="line">        node.pre &#x3D; null;</span><br><span class="line">        node.next &#x3D; null;</span><br><span class="line"></span><br><span class="line">        return node;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/05/24/%E5%92%8C%E4%B8%BAS%E7%9A%84%E8%BF%9E%E7%BB%AD%E6%AD%A3%E6%95%B0%E5%BA%8F%E5%88%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/24/%E5%92%8C%E4%B8%BAS%E7%9A%84%E8%BF%9E%E7%BB%AD%E6%AD%A3%E6%95%B0%E5%BA%8F%E5%88%97/" itemprop="url">和为S的连续正数序列</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-24T10:49:02+08:00">
-                2020-05-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%91%E6%8C%87offer/" itemprop="url" rel="index">
-                    <span itemprop="name">剑指offer</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>小明很喜欢数学,有一天他在做数学作业时,要求计算出9~16的和,他马上就写出了正确答案是100。但是他并不满足于此,他在想究竟有多少种连续的正数序列的和为100(至少包括两个数)。没多久,他就得到另一组连续正数和为100的序列:18,19,20,21,22。现在把问题交给你,你能不能也很快的找出所有和为S的连续正数序列? Good Luck!</p>
-<h2 id="输出描述"><a href="#输出描述" class="headerlink" title="输出描述:"></a>输出描述:</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输出所有和为S的连续正数序列。序列内按照从小至大的顺序，序列间按照开始数字从小到大的顺序</span><br></pre></td></tr></table></figure>
-
-
-
-<p>第二次写的时候想出来的方法，更容易理解。</p>
-<p>从1开始依次计算以每一个数作为开头能否求出和为S，如果能就加入。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public ArrayList&lt;ArrayList&lt;Integer&gt; &gt; FindContinuousSequence(int sum) &#123;</span><br><span class="line">       ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">        for(int i&#x3D;1;i&lt;&#x3D;sum&#x2F;2;i++)&#123;</span><br><span class="line">            find(i,sum,new ArrayList(),res);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private void find(int start,int sum,ArrayList&lt;Integer&gt; list,ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res)&#123;</span><br><span class="line">        while(sum&gt;0)&#123;</span><br><span class="line">            sum-&#x3D;start;</span><br><span class="line">            list.add(start);</span><br><span class="line">            start++;</span><br><span class="line">        &#125;</span><br><span class="line">        if(sum&#x3D;&#x3D;0)&#123;</span><br><span class="line">            res.add(new ArrayList(list));</span><br><span class="line">        &#125;</span><br><span class="line">        list.clear();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/05/24/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/24/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/" itemprop="url">平衡二叉树</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-24T10:29:17+08:00">
-                2020-05-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%91%E6%8C%87offer/" itemprop="url" rel="index">
-                    <span itemprop="name">剑指offer</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>输入一棵二叉树，判断该二叉树是否是平衡二叉树。</p>
-<p>在这里，我们只需要考虑其平衡性，不需要考虑其是不是排序二叉树</p>
-<p>第二次写忘了加上下面的第8，10行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public boolean IsBalanced_Solution(TreeNode root) &#123;</span><br><span class="line">        return treeHeight(root)!&#x3D;-1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private int treeHeight(TreeNode root)&#123;</span><br><span class="line">        if(root&#x3D;&#x3D;null) return 0;</span><br><span class="line">        int left&#x3D;treeHeight(root.left);</span><br><span class="line">        if(left&#x3D;&#x3D;-1) return -1;</span><br><span class="line">        int right&#x3D;treeHeight(root.right);</span><br><span class="line">        if(right&#x3D;&#x3D;-1) return -1;</span><br><span class="line">        if(Math.abs(left-right)&gt;1) return -1;</span><br><span class="line">        return Math.max(left,right)+1;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2151,7 +2127,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">211</span>
+                  <span class="site-state-item-count">214</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2162,7 +2138,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2173,7 +2149,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2226,7 +2202,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

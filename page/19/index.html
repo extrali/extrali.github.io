@@ -248,6 +248,511 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/279.%20%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/279.%20%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0/" itemprop="url">279. 完全平方数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="279-完全平方数"><a href="#279-完全平方数" class="headerlink" title="279. 完全平方数"></a><a href="https://leetcode-cn.com/problems/perfect-squares/" target="_blank" rel="noopener">279. 完全平方数</a></h1><p><strong>题目描述：</strong></p>
+<p>给定正整数 <em>n</em>，找到若干个完全平方数（比如 <code>1, 4, 9, 16, ...</code>）使得它们的和等于 <em>n</em>。你需要让组成和的完全平方数的个数最少。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: n &#x3D; 12</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 12 &#x3D; 4 + 4 + 4.</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: n &#x3D; 13</span><br><span class="line">输出: 2</span><br><span class="line">解释: 13 &#x3D; 4 + 9.</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>用一个长度为n+1的数组来维护对应索引能化成的最少完全平方数之和，每次更新前先将每次位置的值初始化为其索引，即res[i]=i，即完全平方数之和的上界(1+1+….+1)</li>
+<li>递推关系式为res[i]=min(res(i-j*j)+1)</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public int numSquares(int n) &#123;</span><br><span class="line">        int[] res&#x3D;new int[n+1];</span><br><span class="line">        for(int i&#x3D;1;i&lt;&#x3D;n;i++)&#123;</span><br><span class="line">            res[i]&#x3D;i;</span><br><span class="line">            for(int j&#x3D;1;i-j*j&gt;&#x3D;0;j++)&#123;</span><br><span class="line">                res[i]&#x3D;Math.min(res[i],res[i-j*j]+1);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res[n];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><p><strong>时间复杂度：</strong>O(n×sqrt(n))</p>
+</li>
+<li><p><strong>空间复杂度：</strong>O(n)</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/283.%20%E7%A7%BB%E5%8A%A8%E9%9B%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/283.%20%E7%A7%BB%E5%8A%A8%E9%9B%B6/" itemprop="url">283. 移动零</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="283-移动零"><a href="#283-移动零" class="headerlink" title="283. 移动零"></a><a href="https://leetcode-cn.com/problems/move-zeroes/" target="_blank" rel="noopener">283. 移动零</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个数组 <code>nums</code>，编写一个函数将所有 <code>0</code> 移动到数组的末尾，同时保持非零元素的相对顺序。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [0,1,0,3,12]</span><br><span class="line">输出: [1,3,12,0,0]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法一：双指针"><a href="#算法一：双指针" class="headerlink" title="算法一：双指针"></a>算法一：双指针</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>分别用两个指针index和i指向非0数字所需要插入的索引和当前元素索引，index只在当前元素非0时才向后缩进</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public void moveZeroes(int[] nums) &#123;</span><br><span class="line">        int index&#x3D;0;</span><br><span class="line">        for(int i&#x3D;0;i&lt;nums.length;i++)&#123;</span><br><span class="line">        	&#x2F;&#x2F;非0元素才赋值，否则直接i++</span><br><span class="line">            if(nums[i]!&#x3D;0)&#123;</span><br><span class="line">                nums[index++]&#x3D;nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后将index之后的元素赋值为0</span><br><span class="line">        while (index&lt;nums.length)&#123;</span><br><span class="line">            nums[index++]&#x3D;0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+<h2 id="算法二：统计0的个数"><a href="#算法二：统计0的个数" class="headerlink" title="算法二：统计0的个数"></a>算法二：统计0的个数</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>count统计到当前索引处之前的0元素个数，则当count大于0时，当前的非0元素应该左移count位才到达其最终位置，并且将此处的值赋值位0</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public void moveZeroes(int[] nums) &#123;</span><br><span class="line">        int count&#x3D;0;</span><br><span class="line">        for(int i&#x3D;0;i&lt;nums.length;i++)&#123;</span><br><span class="line">            if(nums[i]&#x3D;&#x3D;0) count++;</span><br><span class="line">            else if (count&gt;0)&#123;</span><br><span class="line">                nums[i-count]&#x3D;nums[i];</span><br><span class="line">                nums[i]&#x3D;0;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/287.%20%E5%AF%BB%E6%89%BE%E9%87%8D%E5%A4%8D%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/287.%20%E5%AF%BB%E6%89%BE%E9%87%8D%E5%A4%8D%E6%95%B0/" itemprop="url">287. 寻找重复数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="287-寻找重复数"><a href="#287-寻找重复数" class="headerlink" title="287. 寻找重复数"></a><a href="https://leetcode-cn.com/problems/find-the-duplicate-number/" target="_blank" rel="noopener">287. 寻找重复数</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: [1,3,4,2,2]</span><br><span class="line">输出: 2</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: [3,1,3,4,2]</span><br><span class="line">输出: 3</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>不同与一般的二分查找去划分区间，此题是首先猜结果为数组元素的中位数1,2,…..,len-1的中位数mid，然后统计小于等于mid的元素个数，如果个数大于mid，则表示目标元素一定在中位数左边，否则在其右边</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public int findDuplicate(int[] nums) &#123;</span><br><span class="line">        int len&#x3D;nums.length;</span><br><span class="line">        &#x2F;&#x2F;数组元素取值范围为1,2,...,len-1</span><br><span class="line">        int left&#x3D;1,right&#x3D;len-1;</span><br><span class="line">        while (left&lt;right)&#123;</span><br><span class="line">            int mid&#x3D;(left+right)&#x2F;2;</span><br><span class="line">            int count&#x3D;0;</span><br><span class="line">            for(int num:nums)&#123;</span><br><span class="line">                if(num&lt;&#x3D;mid) count++;</span><br><span class="line">                if(count&gt;mid) right&#x3D;mid;</span><br><span class="line">                else left&#x3D;mid+1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return left;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><p><strong>时间复杂度：</strong>O(nlogn)，在二分法的内部有一个遍历数组的操作，所以为nlogn</p>
+</li>
+<li><p><strong>空间复杂度：</strong>O(1)</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/55.%20%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1572,567 +2077,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/79.%20%E5%8D%95%E8%AF%8D%E6%90%9C%E7%B4%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/79.%20%E5%8D%95%E8%AF%8D%E6%90%9C%E7%B4%A2/" itemprop="url">79. 单词搜索</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="79-单词搜索"><a href="#79-单词搜索" class="headerlink" title="79. 单词搜索"></a><a href="https://leetcode-cn.com/problems/word-search/" target="_blank" rel="noopener">79. 单词搜索</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个二维网格和一个单词，找出该单词是否存在于网格中。</p>
-<p>单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">board &#x3D;</span><br><span class="line">[</span><br><span class="line">  [&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;E&#39;],</span><br><span class="line">  [&#39;S&#39;,&#39;F&#39;,&#39;C&#39;,&#39;S&#39;],</span><br><span class="line">  [&#39;A&#39;,&#39;D&#39;,&#39;E&#39;,&#39;E&#39;]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">给定 word &#x3D; &quot;ABCCED&quot;, 返回 true.</span><br><span class="line">给定 word &#x3D; &quot;SEE&quot;, 返回 true.</span><br><span class="line">给定 word &#x3D; &quot;ABCB&quot;, 返回 false.</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="算法一：回溯法"><a href="#算法一：回溯法" class="headerlink" title="算法一：回溯法"></a>算法一：回溯法</h2><p><strong>算法思路：</strong></p>
-<ul>
-<li>相邻的单元格也就是上下左右四个方向的单元格，因此可以分别向四个方向回溯，只要有一个方向成功，则返回成功</li>
-<li>由于同一单元格的字母不允许使用多次，所以使用一个visited数组来记录当前单元格是否被访问</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;枚举类型，用来表示当前单元格是否被访问</span><br><span class="line">private enum Visited&#123;</span><br><span class="line">        YES,NO;</span><br><span class="line">    &#125;</span><br><span class="line">    public boolean exist(char[][] board, String word) &#123;</span><br><span class="line">        int m&#x3D;board.length;</span><br><span class="line">        int n&#x3D;board[0].length;</span><br><span class="line">        boolean flag&#x3D;false;</span><br><span class="line">        &#x2F;&#x2F;visited数组记录目标元素是否被访问</span><br><span class="line">        Visited[][] visited&#x3D;new Visited[m][n];</span><br><span class="line">        &#x2F;&#x2F;对于数组中的每一个元素开始</span><br><span class="line">        for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">            for(int j&#x3D;0;j&lt;n;j++)&#123;</span><br><span class="line">            	&#x2F;&#x2F;若首字母相同，则进入下面的判断</span><br><span class="line">                if(board[i][j]&#x3D;&#x3D;word.charAt(0)) &#123;</span><br><span class="line">                	&#x2F;&#x2F;首先要对visited数组初始化</span><br><span class="line">                    for (int i2 &#x3D; 0; i2 &lt; m; i2++) &#123;</span><br><span class="line">                        for (int j2 &#x3D; 0; j2 &lt; n; j2++) &#123;</span><br><span class="line">                            visited[i2][j2] &#x3D; Visited.NO;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    &#x2F;&#x2F;然后调用BTrace函数，若结果为真，则直接返回即可</span><br><span class="line">                    if (BTrace(board, word, i, j, visited)) &#123;</span><br><span class="line">                        flag &#x3D; true;</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return flag;</span><br><span class="line">    &#125;</span><br><span class="line">    public boolean BTrace(char[][] board,String word,int i,int j,Visited[][] visited)&#123;</span><br><span class="line">        int m&#x3D;board.length;</span><br><span class="line">        int n&#x3D;board[0].length;</span><br><span class="line">        &#x2F;&#x2F;首先要置visited[i][j]为已访问，但是过当前元素的字符串可能并不匹配目标字符串，即当返			回false时，要将visited[i][j]再令为NO，不能在return true时再置visited[i][j]为		  已访问，因为此时可能会存在元素的重复使用</span><br><span class="line">        visited[i][j]&#x3D;Visited.YES;</span><br><span class="line">        &#x2F;&#x2F;如果i,j不满足边界条件或者第一个字母不等时，则直接返回false</span><br><span class="line">        if(i&lt;0||j&lt;0||i&gt;&#x3D;m||j&gt;&#x3D;n||board[i][j]!&#x3D;word.charAt(0))&#123;</span><br><span class="line">            visited[i][j]&#x3D;Visited.NO;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">        	&#x2F;&#x2F;否则，当word长度为1时，表示已经匹配，返回true</span><br><span class="line">            if(word.length()&#x3D;&#x3D;1)&#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;flag_d表示字符串向下延申，其他同理</span><br><span class="line">            boolean flag_d&#x3D;false;</span><br><span class="line">            boolean flag_u&#x3D;false;</span><br><span class="line">            boolean flag_l&#x3D;false;</span><br><span class="line">            boolean flag_r&#x3D;false;</span><br><span class="line">            &#x2F;&#x2F;如果下面一位元素位置不越界并且未被访问时，向下回溯，下面同理</span><br><span class="line">            if(i+1&lt;m&amp;&amp;visited[i+1][j]&#x3D;&#x3D;Visited.NO) &#123;</span><br><span class="line">                flag_d &#x3D; BTrace(board, word.substring(1), i + 1, j, visited);</span><br><span class="line">            &#125;</span><br><span class="line">            if(j+1&lt;n&amp;&amp;visited[i][j+1]&#x3D;&#x3D;Visited.NO) &#123;</span><br><span class="line">                flag_r &#x3D; BTrace(board, word.substring(1), i, j + 1, visited);</span><br><span class="line">            &#125;</span><br><span class="line">            if(i-1&gt;&#x3D;0&amp;&amp;visited[i-1][j]&#x3D;&#x3D;Visited.NO) &#123;</span><br><span class="line">                flag_u &#x3D; BTrace(board, word.substring(1), i - 1, j, visited);</span><br><span class="line">            &#125;</span><br><span class="line">            if(j-1&gt;&#x3D;0&amp;&amp;visited[i][j-1]&#x3D;&#x3D;Visited.NO) &#123;</span><br><span class="line">                flag_l &#x3D; BTrace(board, word.substring(1), i, j - 1, visited);</span><br><span class="line">            &#125;</span><br><span class="line">			&#x2F;&#x2F;如果四个方向都不能延申，则返回false</span><br><span class="line">            if(flag_l&#x3D;&#x3D;false&amp;&amp;flag_d&#x3D;&#x3D;false&amp;&amp;flag_r&#x3D;&#x3D;false&amp;&amp;flag_u&#x3D;&#x3D;false)&#123;</span><br><span class="line">                visited[i][j]&#x3D;Visited.NO;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">            	&#x2F;&#x2F;否则只要存在一个方向可以延申，则返回true</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(n^4^)</li>
-<li><strong>空间复杂度：</strong>O(n^2^)</li>
-</ul>
-<h2 id="算法二：DFS"><a href="#算法二：DFS" class="headerlink" title="算法二：DFS"></a>算法二：DFS</h2><p><strong>算法描述：</strong></p>
-<ul>
-<li>其实是基于上面算法的改进，首先针对上面的时间复杂度问题，由于每次循环时我都重置了数组记录为未访问，所以增加了新的时间负担，这里引入了一个新的方法叫 <strong>状态重置</strong>，因为每次换一个起始点开始判断时，marked数组都需要重置,而且可以用boolean类型代替上面的类型即可</li>
-<li>第二就是方向，可以用方向数组代替，使代码更加简洁</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;marked数组记录是否被访问</span><br><span class="line">private boolean[][] marked;</span><br><span class="line">&#x2F;&#x2F;direction为方向数组</span><br><span class="line">   private int[][] direction&#x3D;&#123;&#123;-1,0&#125;,&#123;0,-1&#125;,&#123;1,0&#125;,&#123;0,1&#125;&#125;;</span><br><span class="line">   private int m;</span><br><span class="line">   private int n;</span><br><span class="line">   private char[][] board;</span><br><span class="line">   private String word;</span><br><span class="line">   public boolean exist(char[][] board, String word) &#123;</span><br><span class="line">       this.m&#x3D;board.length;</span><br><span class="line">       this.n&#x3D;board[0].length;</span><br><span class="line">       this.board&#x3D;board;</span><br><span class="line">       this.word&#x3D;word;</span><br><span class="line">       marked&#x3D;new boolean[m][n];</span><br><span class="line">       for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">           for(int j&#x3D;0;j&lt;n;j++)&#123;</span><br><span class="line">               if(DFS(i,j,0))&#123;</span><br><span class="line">                   return true;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       return false;</span><br><span class="line">   &#125;</span><br><span class="line">   &#x2F;&#x2F;x,y表示数组的起始坐标，start表示字符串的当前检验索引，从0开始</span><br><span class="line">   private boolean DFS(int x,int y,int start)&#123;</span><br><span class="line">   	&#x2F;&#x2F;如果检验的是最后一个字母直接返回是否相等即可</span><br><span class="line">       if(start&#x3D;&#x3D;word.length()-1)&#123;</span><br><span class="line">           return word.charAt(start)&#x3D;&#x3D;board[x][y];</span><br><span class="line">       &#125;</span><br><span class="line">       &#x2F;&#x2F;否则，不是最后一个字母，若不等直接返回false，若相等则进入下面</span><br><span class="line">       if(board[x][y]&#x3D;&#x3D;word.charAt(start))&#123;</span><br><span class="line">       	&#x2F;&#x2F;首先标记为已访问</span><br><span class="line">           marked[x][y]&#x3D;true;</span><br><span class="line">           &#x2F;&#x2F;从四个方向开始回溯递归</span><br><span class="line">           for(int k&#x3D;0;k&lt;4;k++)&#123;</span><br><span class="line">               int newX&#x3D;x+direction[k][0];</span><br><span class="line">               int newY&#x3D;y+direction[k][1];</span><br><span class="line">               &#x2F;&#x2F;如果newX和newY还在范围内，并且未被访问过</span><br><span class="line">               if(inArea(newX,newY)&amp;&amp;!marked[newX][newY]&amp;&amp;DFS(newX,newY,start+1))&#123;</span><br><span class="line">                   return true;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">           &#x2F;&#x2F;最后没有返回true，则状态重置为false</span><br><span class="line">           marked[x][y]&#x3D;false;</span><br><span class="line">       &#125;</span><br><span class="line">       return false;</span><br><span class="line">   &#125;</span><br><span class="line">   private boolean inArea(int x,int y)&#123;</span><br><span class="line">       return x&gt;&#x3D;0&amp;&amp;y&gt;&#x3D;0&amp;&amp;x&lt;m&amp;&amp;y&lt;n;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>说明：</strong>此处说一下 <strong>状态重置</strong>，由于要保证每次循环时将marked数组重置，首先每次先将marked数组置为true，即已访问，然后在返回false时再将marked数组置为false</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/88.%20%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/88.%20%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84/" itemprop="url">88. 合并两个有序数组</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="88-合并两个有序数组"><a href="#88-合并两个有序数组" class="headerlink" title="88. 合并两个有序数组"></a><a href="https://leetcode-cn.com/problems/merge-sorted-array/" target="_blank" rel="noopener">88. 合并两个有序数组</a></h1><p><strong>题目描述：</strong></p>
-<p>给定两个有序整数数组 <em>nums1</em> 和 <em>nums2*，将 *nums2</em> 合并到 <em>nums1</em> 中<em>，</em>使得 <em>num1</em> 成为一个有序数组。</p>
-<p><strong>说明：</strong></p>
-<ul>
-<li>初始化 nums1 和 nums2 的元素数量分别为 m 和 n。</li>
-<li>你可以假设 nums1 有足够的空间（空间大小大于或等于 m + n）来保存 nums2 中的元素。</li>
-</ul>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">nums1 &#x3D; [1,2,3,0,0,0], m &#x3D; 3</span><br><span class="line">nums2 &#x3D; [2,5,6],       n &#x3D; 3</span><br><span class="line"></span><br><span class="line">输出: [1,2,2,3,5,6]</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="算法一：从前向后"><a href="#算法一：从前向后" class="headerlink" title="算法一：从前向后"></a>算法一：从前向后</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>从前到后依次比较两个数组中的元素，但需要额外申请一个数组存放</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public void merge(int[] nums1, int m, int[] nums2, int n) &#123;</span><br><span class="line">        int i&#x3D;0,j&#x3D;0,k&#x3D;0;</span><br><span class="line">        &#x2F;&#x2F;nums临时存放复制过来的元素</span><br><span class="line">        int[] nums&#x3D;new int[m+n];</span><br><span class="line">        &#x2F;&#x2F;当两个数组都还没有遍历到最后时</span><br><span class="line">        while(i&lt;m&amp;&amp;j&lt;n)&#123;</span><br><span class="line">            if(nums1[i]&gt;nums2[j])&#123;</span><br><span class="line">                nums[k]&#x3D;nums2[j];</span><br><span class="line">                j++;</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                nums[k]&#x3D;nums1[i];</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            k++;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;若第一个数组还有多的元素</span><br><span class="line">        while(i&lt;m)&#123;</span><br><span class="line">            nums[k]&#x3D;nums1[i];</span><br><span class="line">            k++;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;若第二个数组还有多的元素</span><br><span class="line">        while(j&lt;n)&#123;</span><br><span class="line">            nums[k]&#x3D;nums2[j];</span><br><span class="line">            k++;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后将nums数组中的元素逐个复制到nums1中</span><br><span class="line">        for(int l&#x3D;0;l&lt;m+n;l++)&#123;</span><br><span class="line">            nums1[l]&#x3D;nums[l];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(m+n)</li>
-<li><strong>空间复杂度：</strong>O(m+n)</li>
-</ul>
-<h2 id="算法二：从后向前"><a href="#算法二：从后向前" class="headerlink" title="算法二：从后向前"></a>算法二：从后向前</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>由于从前向后需要额外申请空间，所以想到从后向前</li>
-<li>因为在合并前的元素索引位置i<del>1</del>一定小等于合并后的位置i<del>2</del>，所以不会导致之前的元素因覆盖而丢失</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public void merge(int[] nums1, int m, int[] nums2, int n) &#123;</span><br><span class="line">		&#x2F;&#x2F;从后向前</span><br><span class="line">        int i&#x3D;m-1,j&#x3D;n-1,k&#x3D;m+n-1;</span><br><span class="line">        while(i&gt;&#x3D;0&amp;&amp;j&gt;&#x3D;0)&#123;</span><br><span class="line">            if(nums1[i]&gt;nums2[j])&#123;</span><br><span class="line">                nums1[k]&#x3D;nums1[i];</span><br><span class="line">                i--;</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                nums1[k]&#x3D;nums2[j];</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">            k--;</span><br><span class="line">        &#125;</span><br><span class="line">        while(i&gt;&#x3D;0)&#123;</span><br><span class="line">            nums1[k]&#x3D;nums1[i];</span><br><span class="line">            i--;</span><br><span class="line">            k--;</span><br><span class="line">        &#125;</span><br><span class="line">        while(j&gt;&#x3D;0)&#123;</span><br><span class="line">            nums1[k]&#x3D;nums2[j];</span><br><span class="line">            j--;</span><br><span class="line">            k--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(m+n)</li>
-<li><strong>空间复杂度：</strong>O(1)</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/98.%20%E9%AA%8C%E8%AF%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/98.%20%E9%AA%8C%E8%AF%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/" itemprop="url">98. 验证二叉搜索树</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="98-验证二叉搜索树"><a href="#98-验证二叉搜索树" class="headerlink" title="98. 验证二叉搜索树"></a><a href="https://leetcode-cn.com/problems/validate-binary-search-tree/" target="_blank" rel="noopener">98. 验证二叉搜索树</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个二叉树，判断其是否是一个有效的二叉搜索树。</p>
-<p>假设一个二叉搜索树具有如下特征：</p>
-<p>节点的左子树只包含小于当前节点的数。<br>节点的右子树只包含大于当前节点的数。<br>所有左子树和右子树自身必须也是二叉搜索树。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入:</span><br><span class="line">    2</span><br><span class="line">   &#x2F; \</span><br><span class="line">  1   3</span><br><span class="line">输出: true</span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入:</span><br><span class="line">    5</span><br><span class="line">   &#x2F; \</span><br><span class="line">  1   4</span><br><span class="line">     &#x2F; \</span><br><span class="line">    3   6</span><br><span class="line">输出: false</span><br><span class="line">解释: 输入为: [5,1,4,null,null,3,6]。</span><br><span class="line">     根节点的值为 5 ，但是其右子节点值为 4 。</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="算法一：中序遍历"><a href="#算法一：中序遍历" class="headerlink" title="算法一：中序遍历"></a>算法一：中序遍历</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>用lastNode指向前一个被访问的节点，node指向当前被访问的节点</li>
-<li>在中序遍历的顺序下，二叉排序树一定是升序排列的，所以可以检查是否有逆序存在即可</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public boolean isValidBST(TreeNode root) &#123;</span><br><span class="line">		&#x2F;&#x2F;lastNode指向上一个被访问节点的val域，初始为一个很小的数</span><br><span class="line">        double lastNode&#x3D;-Double.MAX_VALUE;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack&#x3D;new Stack&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;node指向当前被访问的节点</span><br><span class="line">        TreeNode node&#x3D;root;</span><br><span class="line">        while(node!&#x3D;null||!stack.isEmpty())&#123;</span><br><span class="line">            while(node!&#x3D;null)&#123;</span><br><span class="line">                stack.push(node);</span><br><span class="line">                node&#x3D;node.left;</span><br><span class="line">            &#125;</span><br><span class="line">            node&#x3D;stack.pop();</span><br><span class="line">            &#x2F;&#x2F;如果当前节点val小于等于前一个节点，即逆序则返回false</span><br><span class="line">            if(node.val&lt;&#x3D;lastNode)&#123;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;更新lastNode的值</span><br><span class="line">            lastNode&#x3D;node.val;</span><br><span class="line">            node&#x3D;node.right;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后若没有逆序存在则返回会true</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(n)</li>
-<li><strong>空间复杂度：</strong>O(n)</li>
-</ul>
-<h2 id="算法二：递归"><a href="#算法二：递归" class="headerlink" title="算法二：递归"></a>算法二：递归</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>要判断以root为根的树为二叉排序树，只要root大于左子树上最大的节点，小于右子树上最小的节点</li>
-<li>然后递归判断左子树和右子树</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">public boolean isValidBST(TreeNode root) &#123;</span><br><span class="line">		&#x2F;&#x2F;flag记录以root为根的树是否是二叉排序树，默认是true</span><br><span class="line">        boolean flag&#x3D;true;</span><br><span class="line">        &#x2F;&#x2F;left记录以root的左子树为根的树是否为二叉排序树</span><br><span class="line">        boolean left&#x3D;true;</span><br><span class="line">        &#x2F;&#x2F;right记录以root的右子树为根的树是否为二叉排序树</span><br><span class="line">        boolean right&#x3D;true;</span><br><span class="line">        if(root!&#x3D;null)&#123;</span><br><span class="line">        	&#x2F;&#x2F;递归判断是左子树</span><br><span class="line">            left&#x3D;isValidBST(root.left);</span><br><span class="line">            &#x2F;&#x2F;如果左子树为空或者root大于左边最大的，并且右子树为空或者root小于右边最小</span><br><span class="line">            if((getMax(root.left)&#x3D;&#x3D;null||root.val&gt;getMax(root.left).val)&amp;&amp;(getMin(root.right)&#x3D;&#x3D;null||root.val&lt;getMin(root.right).val))&#123;</span><br><span class="line">                flag&#x3D;true;</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                flag&#x3D;false;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;递归判断右子树</span><br><span class="line">            right&#x3D;isValidBST(root.right);</span><br><span class="line">        &#125;</span><br><span class="line">        return flag&amp;&amp;left&amp;&amp;right;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;getMax返回以root为根的子树的最大节点</span><br><span class="line">    private TreeNode getMax(TreeNode root)&#123;</span><br><span class="line">          if(root&#x3D;&#x3D;null)&#123;</span><br><span class="line">              return null;</span><br><span class="line">          &#125;</span><br><span class="line">          &#x2F;&#x2F;最右边节点为最大</span><br><span class="line">          while(root.right!&#x3D;null)&#123;</span><br><span class="line">              root&#x3D;root.right;</span><br><span class="line">          &#125;</span><br><span class="line">          return root;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;getMin返回以root为根的子树的最小节点</span><br><span class="line">    private TreeNode getMin(TreeNode root)&#123;</span><br><span class="line">        if(root&#x3D;&#x3D;null)&#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最左边节点最小</span><br><span class="line">        while(root.left!&#x3D;null)&#123;</span><br><span class="line">            root&#x3D;root.left;</span><br><span class="line">        &#125;</span><br><span class="line">        return root;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="算法三：递归"><a href="#算法三：递归" class="headerlink" title="算法三：递归"></a>算法三：递归</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>上面算法的简介版，由于上面每次都要去计算最小节点和最大节点非常麻烦，所以想到可以将树的上界和下界存储在参数中传递，随时更新</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public boolean isValidBST(TreeNode root) &#123;</span><br><span class="line">		&#x2F;&#x2F;初始不知道上下界，所以为null</span><br><span class="line">        return helper(root, null, null);</span><br><span class="line">    &#125;</span><br><span class="line">	&#x2F;&#x2F;lower表示下界，upper表示上界</span><br><span class="line">    private boolean helper(TreeNode root, Integer lower, Integer upper) &#123;</span><br><span class="line">    	&#x2F;&#x2F;root为空，返回true</span><br><span class="line">        if(root&#x3D;&#x3D;null) return true;</span><br><span class="line">        &#x2F;&#x2F;如果lower不为空且逆序，则返回false，下同</span><br><span class="line">        if(lower!&#x3D;null&amp;&amp;root.val&lt;&#x3D;lower) return false;</span><br><span class="line">        if(upper!&#x3D;null&amp;&amp;root.val&gt;&#x3D;upper) return false;</span><br><span class="line">        &#x2F;&#x2F;递归判断左子树，此时更新上界为root.val</span><br><span class="line">        if(!helper(root.left,lower,root.val)) return false;</span><br><span class="line">        &#x2F;&#x2F;递归判断右子树，此时更新下界为root.val</span><br><span class="line">        if(!helper(root.right,root.val,upper)) return false;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(n)</li>
-<li><strong>空间复杂度：</strong>O(n)</li>
-</ul>
-<h2 id="算法四：迭代"><a href="#算法四：迭代" class="headerlink" title="算法四：迭代"></a>算法四：迭代</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>将上面的算法改为迭代形式，分别用三个链表存储根节点，上界，下界</li>
-<li>用深度优先遍历，依次判断每一个节点是否满足条件</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;stack存储节点</span><br><span class="line">LinkedList&lt;TreeNode&gt; stack&#x3D;new LinkedList&lt;&gt;();</span><br><span class="line">&#x2F;&#x2F;uppers和lowers分别存储对应的上界与下界</span><br><span class="line">   LinkedList&lt;Integer&gt; uppers&#x3D;new LinkedList&lt;&gt;(),lowers&#x3D;new LinkedList&lt;&gt;();</span><br><span class="line">   &#x2F;&#x2F;三个链表的入栈操作</span><br><span class="line">   private void update(TreeNode root,Integer lower,Integer upper)&#123;</span><br><span class="line">       stack.add(root);</span><br><span class="line">       lowers.add(lower);</span><br><span class="line">       uppers.add(upper);</span><br><span class="line">   &#125;</span><br><span class="line"> public boolean isValidBST(TreeNode root) &#123;</span><br><span class="line">     Integer lower&#x3D;null,upper&#x3D;null,val;</span><br><span class="line">     update(root,lower,upper);</span><br><span class="line">     while(!stack.isEmpty())&#123;</span><br><span class="line">         root&#x3D;stack.poll();</span><br><span class="line">         lower&#x3D;lowers.poll();</span><br><span class="line">         upper&#x3D;uppers.poll();</span><br><span class="line">         if(root&#x3D;&#x3D;null) continue;</span><br><span class="line">         val&#x3D;root.val;</span><br><span class="line">         if (lower !&#x3D; null &amp;&amp; val &lt;&#x3D; lower) return false;</span><br><span class="line">         if (upper !&#x3D; null &amp;&amp; val &gt;&#x3D; upper) return false;</span><br><span class="line">         update(root.right,val,upper);</span><br><span class="line">         update(root.left,lower,val);</span><br><span class="line">     &#125;</span><br><span class="line">     return true;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(n)</li>
-<li><strong>空间复杂度：</strong>O(n)</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2187,7 +2131,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">211</span>
+                  <span class="site-state-item-count">214</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2198,7 +2142,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2209,7 +2153,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2262,7 +2206,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

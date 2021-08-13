@@ -248,7 +248,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/155.%20%E6%9C%80%E5%B0%8F%E6%A0%88/">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/152.%20%E4%B9%98%E7%A7%AF%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%88%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黎达">
@@ -267,7 +267,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/11/155.%20%E6%9C%80%E5%B0%8F%E6%A0%88/" itemprop="url">155. 最小栈</a></h1>
+                <a class="post-title-link" href="/2020/04/11/152.%20%E4%B9%98%E7%A7%AF%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%88%97/" itemprop="url">152. 乘积最大子序列</a></h1>
         
 
         <div class="post-meta">
@@ -341,34 +341,37 @@
       
         
           
-            <h1 id="155-最小栈"><a href="#155-最小栈" class="headerlink" title="155. 最小栈"></a><a href="https://leetcode-cn.com/problems/min-stack/" target="_blank" rel="noopener">155. 最小栈</a></h1><p><strong>题目描述：</strong></p>
-<p>设计一个支持 push，pop，top 操作，并能在<strong>常数时间</strong>内检索到最小元素的栈。</p>
+            <h1 id="152-乘积最大子序列"><a href="#152-乘积最大子序列" class="headerlink" title="152. 乘积最大子序列"></a><a href="https://leetcode-cn.com/problems/maximum-product-subarray/" target="_blank" rel="noopener">152. 乘积最大子序列</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个整数数组 <code>nums</code> ，找出一个序列中乘积最大的连续子序列（该序列至少包含一个数）。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: [2,3,-2,4]</span><br><span class="line">输出: 6</span><br><span class="line">解释: 子数组 [2,3] 有最大乘积 6。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: [-2,0,-1]</span><br><span class="line">输出: 0</span><br><span class="line">解释: 结果不能为 2, 因为 [-2,-1] 不是子数组。</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p><strong>算法思想：</strong></p>
 <ul>
-<li>push(x) – 将元素 x 推入栈中。</li>
-<li>pop() – 删除栈顶的元素。</li>
-<li>top() – 获取栈顶元素。</li>
-<li>getMin() – 检索栈中的最小元素。</li>
-</ul>
-<h2 id="算法一：辅助栈与数据栈同步"><a href="#算法一：辅助栈与数据栈同步" class="headerlink" title="算法一：辅助栈与数据栈同步"></a>算法一：辅助栈与数据栈同步</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>因为要在常数时间内完成返回最小元素的操作，所以想到用一个栈来记录最小元素，辅助栈与数据栈同步，在插入元素时，同时在辅助栈中插入此时的最小元素，由于在插入之前，辅助栈顶的元素为插入之前的最小元素，所以只需要将其和新插入的元素相比，谁更小来确定谁是最小元素</li>
-<li>在出栈时，两个栈要同步出栈</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">Stack&lt;Integer&gt; stack;</span><br><span class="line">&#x2F;&#x2F;min为辅助栈</span><br><span class="line">   Stack&lt;Integer&gt; min;</span><br><span class="line">   public MinStack() &#123;</span><br><span class="line">       stack&#x3D;new Stack&lt;&gt;();</span><br><span class="line">       min&#x3D;new Stack&lt;&gt;();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public void push(int x) &#123;</span><br><span class="line">       stack.push(x);</span><br><span class="line">       &#x2F;&#x2F;插入两者中较小的</span><br><span class="line">       if(min.isEmpty()||min.peek()&gt;x)&#123;</span><br><span class="line">           min.push(x);</span><br><span class="line">       &#125;else &#123;</span><br><span class="line">           min.push(min.peek());</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public void pop() &#123;</span><br><span class="line">   &#x2F;&#x2F;同步出栈</span><br><span class="line">       if(!stack.isEmpty()) &#123;</span><br><span class="line">           stack.pop();</span><br><span class="line">           min.pop();</span><br><span class="line">       &#125;else &#123;</span><br><span class="line">           throw new RuntimeException(&quot;栈为空，非法操作&quot;);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public int top() &#123;</span><br><span class="line">       if(!stack.isEmpty()) &#123;</span><br><span class="line">           return stack.peek();</span><br><span class="line">       &#125;else &#123;</span><br><span class="line">           throw new RuntimeException(&quot;栈为空，非法操作&quot;);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public int getMin() &#123;</span><br><span class="line">       if(!min.isEmpty()) &#123;</span><br><span class="line">           return min.peek();</span><br><span class="line">       &#125;</span><br><span class="line">       else &#123;</span><br><span class="line">           throw new RuntimeException(&quot;栈为空，非法操作&quot;);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="算法二：数据栈与辅助栈不同步"><a href="#算法二：数据栈与辅助栈不同步" class="headerlink" title="算法二：数据栈与辅助栈不同步"></a>算法二：数据栈与辅助栈不同步</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>在插入元素时有区别，辅助栈并不总是直接插入元素，而是在当前需要插入的元素小于等于辅助栈顶元素时才将该元素插入辅助栈中</li>
-<li>在出栈时，需要比较从数据栈中出的元素是否等于辅助栈顶元素，等于时辅助栈顶元素才出栈</li>
+<li>用一个数组res，其中res[i]表示在nums数组中从nums[i]开始并且必须包括该元素的连续子序列最大乘积(约定只能向后延申)</li>
+<li>以数组{-4,-3,-2}为例，res[2]=-2，res[1]=-3×-2=6，res[0]=-4×-3=12，则最后的 结果必定为数组中的最大元素</li>
+<li>第一次想的递归关系是只依靠于res数组，从后向前递推有res[i]=Math.max(nums[i],nums[i]×res[i+1])，但是问题在于如果nums[i]为负，那么会得出错误的结果，还是以上面的例子为例，根据res[1]=6会得出，res[0]=-4错误，因此想到引入一个数组min来记录以对应元素开头并且必须包括该元素的最小乘积</li>
+<li>对于字符串a<del>0</del>,a<del>1</del>,…,a<del>i</del>,a<del>i+1</del>,….，若记a<del>i+1</del>,….，为字符串s，则字符串a<del>i</del>,a<del>i+1</del>,….，的最大子序列和的取值只有三种可能：<ol>
+<li>nums[i]</li>
+<li>nums[i]*res[i+1]</li>
+<li>nums[i]*min[i+1]</li>
+</ol>
+</li>
 </ul>
 <p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">Stack&lt;Integer&gt; stack;</span><br><span class="line">    Stack&lt;Integer&gt; min;</span><br><span class="line">    public MinStack2() &#123;</span><br><span class="line">        stack&#x3D;new Stack&lt;&gt;();</span><br><span class="line">        min&#x3D;new Stack&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void push(int x) &#123;</span><br><span class="line">        stack.push(x);</span><br><span class="line">        &#x2F;&#x2F;插入的元素小于等于栈顶元素时才插入</span><br><span class="line">        if(min.isEmpty()||min.peek()&gt;&#x3D;x)&#123;</span><br><span class="line">            min.push(x);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void pop() &#123;</span><br><span class="line">        if(!stack.isEmpty()) &#123;</span><br><span class="line">            int pop&#x3D;stack.pop();</span><br><span class="line">            &#x2F;&#x2F;出栈的元素等于辅助栈顶元素时才出辅助栈</span><br><span class="line">            if(pop&#x3D;&#x3D;min.peek()) &#123;</span><br><span class="line">                min.pop();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            throw new RuntimeException(&quot;栈为空，非法操作&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int top() &#123;</span><br><span class="line">        if(!stack.isEmpty()) &#123;</span><br><span class="line">            return stack.peek();</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            throw new RuntimeException(&quot;栈为空，非法操作&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getMin() &#123;</span><br><span class="line">        if(!min.isEmpty()) &#123;</span><br><span class="line">            return min.peek();</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            throw new RuntimeException(&quot;栈为空，非法操作&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public int maxProduct(int[] nums) &#123;</span><br><span class="line">        if(nums&#x3D;&#x3D;null||nums.length&#x3D;&#x3D;0) return 0;</span><br><span class="line">        int len&#x3D;nums.length;</span><br><span class="line">        int[] res&#x3D;new int[len];</span><br><span class="line">        int[] min&#x3D;new int[len];</span><br><span class="line">        &#x2F;&#x2F;递推起点</span><br><span class="line">        res[len-1]&#x3D;nums[len-1];</span><br><span class="line">        min[len-1]&#x3D;nums[len-1];</span><br><span class="line">        for(int i&#x3D;len-2;i&gt;&#x3D;0;i--)&#123;</span><br><span class="line">&#x2F;&#x2F;更新res和min的值            res[i]&#x3D;Math.max(Math.max(nums[i],nums[i]*res[i+1]),nums[i]*min[i+1]);</span><br><span class="line">            min[i]&#x3D;Math.min(Math.min(nums[i],nums[i]*res[i+1]),nums[i]*min[i+1]);</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;下面寻找res数组中的最大元素即为所求</span><br><span class="line">        int max&#x3D;Integer.MIN_VALUE;</span><br><span class="line">        for(int i&#x3D;0;i&lt;res.length;i++)&#123;</span><br><span class="line">            if(res[i]&gt;max) max&#x3D;res[i];</span><br><span class="line">        &#125;</span><br><span class="line">        return max;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)</li>
+<li><strong>空间复杂度：</strong>O(n)</li>
+</ul>
 
           
         
@@ -605,7 +608,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/166.%20%E5%88%86%E6%95%B0%E5%88%B0%E5%B0%8F%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/148.%20%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黎达">
@@ -624,7 +627,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/11/166.%20%E5%88%86%E6%95%B0%E5%88%B0%E5%B0%8F%E6%95%B0/" itemprop="url">166. 分数到小数</a></h1>
+                <a class="post-title-link" href="/2020/04/11/148.%20%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/" itemprop="url">148. 排序链表</a></h1>
         
 
         <div class="post-meta">
@@ -698,24 +701,200 @@
       
         
           
-            <h1 id="166-分数到小数"><a href="#166-分数到小数" class="headerlink" title="166. 分数到小数"></a><a href="https://leetcode-cn.com/problems/fraction-to-recurring-decimal/" target="_blank" rel="noopener">166. 分数到小数</a></h1><p><strong>题目描述：</strong></p>
-<p>给定两个整数，分别表示分数的分子 numerator 和分母 denominator，以字符串形式返回小数。</p>
-<p>如果小数部分为循环小数，则将循环的部分括在括号内。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: numerator &#x3D; 1, denominator &#x3D; 2</span><br><span class="line">输出: &quot;0.5&quot;</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: numerator &#x3D; 2, denominator &#x3D; 1</span><br><span class="line">输出: &quot;2&quot;</span><br><span class="line"></span><br><span class="line">示例 3:</span><br><span class="line"></span><br><span class="line">输入: numerator &#x3D; 2, denominator &#x3D; 3</span><br><span class="line">输出: &quot;0.(6)&quot;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="长除法"><a href="#长除法" class="headerlink" title="长除法"></a>长除法</h2><p><strong>算法思想：</strong></p>
+            <h1 id="148-排序链表"><a href="#148-排序链表" class="headerlink" title="148. 排序链表"></a><a href="https://leetcode-cn.com/problems/sort-list/" target="_blank" rel="noopener">148. 排序链表</a></h1><p><strong>题目描述：</strong></p>
+<p>在 <em>O</em>(<em>n</em> log <em>n</em>) 时间复杂度和常数级空间复杂度下，对链表进行排序。</p>
+<h2 id="归并排序（递归）"><a href="#归并排序（递归）" class="headerlink" title="归并排序（递归）"></a>归并排序（递归）</h2><p><strong>算法思想：</strong></p>
 <ul>
-<li>对于循环小数，其核心思想是<strong>当商出现循环时，余数也会循环</strong>，所以只要记录下余数出现循环的位置即可</li>
-<li>用一个哈希表存储余数是哪一位商对应的</li>
+<li>归并排序将数组不停的二分直到只有一个元素，然后再合并，所以归并排序涉及分与和的过程</li>
+<li>对于链表的二分，可以通过快慢指针来实现，注意fast的初值为fast=head.next，这是因为考虑只有两个节点的情况，如果fast初值取为head，则在fast到达终点时slow也到达终点，二分失败</li>
 </ul>
 <p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public String fractionToDecimal(int numerator, int denominator) &#123;</span><br><span class="line">        if(numerator&#x3D;&#x3D;0) return &quot;0&quot;;</span><br><span class="line">        if(denominator&#x3D;&#x3D;0) throw new RuntimeException(&quot;操作非法&quot;);</span><br><span class="line">        StringBuilder res&#x3D;new StringBuilder();</span><br><span class="line">        &#x2F;&#x2F;异或，表示只有一个为负的情况</span><br><span class="line">        if(numerator&lt;0^denominator&lt;0) res.append(&#39;-&#39;);</span><br><span class="line">        Long dividend&#x3D;Math.abs(Long.valueOf(numerator));</span><br><span class="line">        Long divisor&#x3D;Math.abs(Long.valueOf(denominator));</span><br><span class="line">        res.append(dividend&#x2F;divisor);</span><br><span class="line">        long remainder&#x3D;dividend%divisor;</span><br><span class="line">        &#x2F;&#x2F;余数为0直接返回</span><br><span class="line">        if(remainder&#x3D;&#x3D;0) return res.toString();</span><br><span class="line">        &#x2F;&#x2F;否则表示余数不为0，则肯定有小数部分</span><br><span class="line">        res.append(&#39;.&#39;);</span><br><span class="line">        Map&lt;Long,Integer&gt; map&#x3D;new HashMap&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;当余数不为0时循环，若是有限小数，则会最终因为余数为0，跳出循环；无限循环小数则因			  为下面的break跳出</span><br><span class="line">        while (remainder!&#x3D;0)&#123;</span><br><span class="line">        	&#x2F;&#x2F;判断余数是否出现循环</span><br><span class="line">            if(map.containsKey(remainder))&#123;</span><br><span class="line">                res.insert(map.get(remainder),&quot;(&quot;);</span><br><span class="line">                res.append(&#39;)&#39;);</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            map.put(remainder,res.length());</span><br><span class="line">            remainder*&#x3D;10;</span><br><span class="line">            res.append(String.valueOf(remainder&#x2F;divisor));</span><br><span class="line">            remainder%&#x3D;divisor;</span><br><span class="line">        &#125;</span><br><span class="line">        return res.toString();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">public ListNode sortList(ListNode head) &#123;</span><br><span class="line">        if(head&#x3D;&#x3D;null||head.next&#x3D;&#x3D;null) return head;</span><br><span class="line">        &#x2F;&#x2F;fast初值为head.next</span><br><span class="line">        ListNode fast&#x3D;head.next,slow&#x3D;head;</span><br><span class="line">        while(fast!&#x3D;null&amp;&amp;fast.next!&#x3D;null)&#123;</span><br><span class="line">            fast&#x3D;fast.next.next;</span><br><span class="line">            slow&#x3D;slow.next;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;去rhead为右半边链表的起始节点</span><br><span class="line">        ListNode rhead&#x3D;slow.next;</span><br><span class="line">        &#x2F;&#x2F;将两个链表断开</span><br><span class="line">        slow.next&#x3D;null;</span><br><span class="line">        &#x2F;&#x2F;递归对两个链表排序</span><br><span class="line">        ListNode left &#x3D; sortList(head);</span><br><span class="line">        ListNode right &#x3D; sortList(rhead);</span><br><span class="line">        &#x2F;&#x2F;下面将两个有序链表合并起来</span><br><span class="line">        ListNode res&#x3D;new ListNode(0);</span><br><span class="line">        ListNode p&#x3D;res;</span><br><span class="line">        while (left!&#x3D;null&amp;&amp;right!&#x3D;null)&#123;</span><br><span class="line">            if(left.val&lt;right.val)&#123;</span><br><span class="line">                p.next&#x3D;left;</span><br><span class="line">                p&#x3D;p.next;</span><br><span class="line">                left&#x3D;left.next;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                p.next&#x3D;right;</span><br><span class="line">                p&#x3D;p.next;</span><br><span class="line">                right&#x3D;right.next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        while(left!&#x3D;null)&#123;</span><br><span class="line">            p.next&#x3D;left;</span><br><span class="line">            p&#x3D;p.next;</span><br><span class="line">            left&#x3D;left.next;</span><br><span class="line">        &#125;</span><br><span class="line">        while(right!&#x3D;null)&#123;</span><br><span class="line">            p.next&#x3D;right;</span><br><span class="line">            p&#x3D;p.next;</span><br><span class="line">            right&#x3D;right.next;</span><br><span class="line">        &#125;</span><br><span class="line">        return res.next;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(nlogn)</li>
+<li><strong>空间复杂度：</strong>O(logn)</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/160.%20%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/160.%20%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/" itemprop="url">160. 相交链表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="160-相交链表"><a href="#160-相交链表" class="headerlink" title="160. 相交链表"></a><a href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists/" target="_blank" rel="noopener">160. 相交链表</a></h1><p><strong>题目描述：</strong></p>
+<p>编写一个程序，找到两个单链表相交的起始节点。</p>
+<p>如下面的两个链表<strong>：</strong></p>
+<p><img src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2018/12/14/160_statement.png" alt="img"></p>
+<p>在节点 c1 开始相交。</p>
+<h2 id="算法一：用集合存储"><a href="#算法一：用集合存储" class="headerlink" title="算法一：用集合存储"></a>算法一：用集合存储</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>对A链先遍历一遍，然后将其中的节点都存储在一个集合中，然后再遍历第二个链表B，寻找其中在集合中出现的第一个节点即为所求</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public ListNode getIntersectionNode(ListNode headA, ListNode headB) &#123;</span><br><span class="line">        List&lt;ListNode&gt; listA&#x3D;new LinkedList&lt;&gt;();</span><br><span class="line">        ListNode p&#x3D;headA;</span><br><span class="line">        &#x2F;&#x2F;首先将A链中的节点存储到集合中</span><br><span class="line">        while (p!&#x3D;null)&#123;</span><br><span class="line">            listA.add(p);</span><br><span class="line">            p&#x3D;p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        p&#x3D;headB;</span><br><span class="line">        while (p!&#x3D;null)&#123;</span><br><span class="line">            if(listA.contains(p)) return p;</span><br><span class="line">            p&#x3D;p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(m+n)，其中m，n分别为A链和B链的长度</li>
+<li><strong>空间复杂度：</strong>O(m)</li>
+</ul>
+<h2 id="算法二：双指针法"><a href="#算法二：双指针法" class="headerlink" title="算法二：双指针法"></a>算法二：双指针法</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>首先提供一个寻找一对<strong>长短链之间长度差</strong>的方法，用两个指针分别指向两链的头部，然后同时向后移动，当一个指针到达尾部时，另一个指针距离尾部的距离就是长度差</li>
+<li>然后通过拼接链表的方法，使得在短链走到末尾时进入长链，长链到末尾时进入短链，如下图：</li>
+</ul>
+<p><img src="https://pic.leetcode-cn.com/5651993ddb76ae6a42f0b338aec9382206f567041113f49d6ca670832ac75791-Picture1.png" alt="Picture1.png"></p>
+<p>图中的相交点即为p==q时的点，若无相交点则会最终走完两个链，返回null</p>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public ListNode getIntersectionNode(ListNode headA, ListNode headB) &#123;</span><br><span class="line">        ListNode p&#x3D;headA,q&#x3D;headB;</span><br><span class="line">        while (p!&#x3D;q)&#123;</span><br><span class="line">            p&#x3D;p&#x3D;&#x3D;null?headB:p.next;</span><br><span class="line">            q&#x3D;q&#x3D;&#x3D;null?headA:q.next;</span><br><span class="line">        &#125;</span><br><span class="line">        return p;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(m+n)，其中m，n分别为A链和B链的长度</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
 
           
         
@@ -944,6 +1123,175 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/155.%20%E6%9C%80%E5%B0%8F%E6%A0%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/155.%20%E6%9C%80%E5%B0%8F%E6%A0%88/" itemprop="url">155. 最小栈</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="155-最小栈"><a href="#155-最小栈" class="headerlink" title="155. 最小栈"></a><a href="https://leetcode-cn.com/problems/min-stack/" target="_blank" rel="noopener">155. 最小栈</a></h1><p><strong>题目描述：</strong></p>
+<p>设计一个支持 push，pop，top 操作，并能在<strong>常数时间</strong>内检索到最小元素的栈。</p>
+<ul>
+<li>push(x) – 将元素 x 推入栈中。</li>
+<li>pop() – 删除栈顶的元素。</li>
+<li>top() – 获取栈顶元素。</li>
+<li>getMin() – 检索栈中的最小元素。</li>
+</ul>
+<h2 id="算法一：辅助栈与数据栈同步"><a href="#算法一：辅助栈与数据栈同步" class="headerlink" title="算法一：辅助栈与数据栈同步"></a>算法一：辅助栈与数据栈同步</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>因为要在常数时间内完成返回最小元素的操作，所以想到用一个栈来记录最小元素，辅助栈与数据栈同步，在插入元素时，同时在辅助栈中插入此时的最小元素，由于在插入之前，辅助栈顶的元素为插入之前的最小元素，所以只需要将其和新插入的元素相比，谁更小来确定谁是最小元素</li>
+<li>在出栈时，两个栈要同步出栈</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">Stack&lt;Integer&gt; stack;</span><br><span class="line">&#x2F;&#x2F;min为辅助栈</span><br><span class="line">   Stack&lt;Integer&gt; min;</span><br><span class="line">   public MinStack() &#123;</span><br><span class="line">       stack&#x3D;new Stack&lt;&gt;();</span><br><span class="line">       min&#x3D;new Stack&lt;&gt;();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public void push(int x) &#123;</span><br><span class="line">       stack.push(x);</span><br><span class="line">       &#x2F;&#x2F;插入两者中较小的</span><br><span class="line">       if(min.isEmpty()||min.peek()&gt;x)&#123;</span><br><span class="line">           min.push(x);</span><br><span class="line">       &#125;else &#123;</span><br><span class="line">           min.push(min.peek());</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public void pop() &#123;</span><br><span class="line">   &#x2F;&#x2F;同步出栈</span><br><span class="line">       if(!stack.isEmpty()) &#123;</span><br><span class="line">           stack.pop();</span><br><span class="line">           min.pop();</span><br><span class="line">       &#125;else &#123;</span><br><span class="line">           throw new RuntimeException(&quot;栈为空，非法操作&quot;);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public int top() &#123;</span><br><span class="line">       if(!stack.isEmpty()) &#123;</span><br><span class="line">           return stack.peek();</span><br><span class="line">       &#125;else &#123;</span><br><span class="line">           throw new RuntimeException(&quot;栈为空，非法操作&quot;);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public int getMin() &#123;</span><br><span class="line">       if(!min.isEmpty()) &#123;</span><br><span class="line">           return min.peek();</span><br><span class="line">       &#125;</span><br><span class="line">       else &#123;</span><br><span class="line">           throw new RuntimeException(&quot;栈为空，非法操作&quot;);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="算法二：数据栈与辅助栈不同步"><a href="#算法二：数据栈与辅助栈不同步" class="headerlink" title="算法二：数据栈与辅助栈不同步"></a>算法二：数据栈与辅助栈不同步</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>在插入元素时有区别，辅助栈并不总是直接插入元素，而是在当前需要插入的元素小于等于辅助栈顶元素时才将该元素插入辅助栈中</li>
+<li>在出栈时，需要比较从数据栈中出的元素是否等于辅助栈顶元素，等于时辅助栈顶元素才出栈</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">Stack&lt;Integer&gt; stack;</span><br><span class="line">    Stack&lt;Integer&gt; min;</span><br><span class="line">    public MinStack2() &#123;</span><br><span class="line">        stack&#x3D;new Stack&lt;&gt;();</span><br><span class="line">        min&#x3D;new Stack&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void push(int x) &#123;</span><br><span class="line">        stack.push(x);</span><br><span class="line">        &#x2F;&#x2F;插入的元素小于等于栈顶元素时才插入</span><br><span class="line">        if(min.isEmpty()||min.peek()&gt;&#x3D;x)&#123;</span><br><span class="line">            min.push(x);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void pop() &#123;</span><br><span class="line">        if(!stack.isEmpty()) &#123;</span><br><span class="line">            int pop&#x3D;stack.pop();</span><br><span class="line">            &#x2F;&#x2F;出栈的元素等于辅助栈顶元素时才出辅助栈</span><br><span class="line">            if(pop&#x3D;&#x3D;min.peek()) &#123;</span><br><span class="line">                min.pop();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            throw new RuntimeException(&quot;栈为空，非法操作&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int top() &#123;</span><br><span class="line">        if(!stack.isEmpty()) &#123;</span><br><span class="line">            return stack.peek();</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            throw new RuntimeException(&quot;栈为空，非法操作&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getMin() &#123;</span><br><span class="line">        if(!min.isEmpty()) &#123;</span><br><span class="line">            return min.peek();</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            throw new RuntimeException(&quot;栈为空，非法操作&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/171.%20Excel%E8%A1%A8%E5%88%97%E5%BA%8F%E5%8F%B7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1104,7 +1452,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/172.%20%E9%98%B6%E4%B9%98%E5%90%8E%E7%9A%84%E9%9B%B6/">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/166.%20%E5%88%86%E6%95%B0%E5%88%B0%E5%B0%8F%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黎达">
@@ -1123,7 +1471,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/11/172.%20%E9%98%B6%E4%B9%98%E5%90%8E%E7%9A%84%E9%9B%B6/" itemprop="url">172. 阶乘后的零</a></h1>
+                <a class="post-title-link" href="/2020/04/11/166.%20%E5%88%86%E6%95%B0%E5%88%B0%E5%B0%8F%E6%95%B0/" itemprop="url">166. 分数到小数</a></h1>
         
 
         <div class="post-meta">
@@ -1197,348 +1545,23 @@
       
         
           
-            <h1 id="172-阶乘后的零"><a href="#172-阶乘后的零" class="headerlink" title="172. 阶乘后的零"></a><a href="https://leetcode-cn.com/problems/factorial-trailing-zeroes/" target="_blank" rel="noopener">172. 阶乘后的零</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个整数 <em>n</em>，返回 <em>n</em>! 结果尾数中零的数量。</p>
+            <h1 id="166-分数到小数"><a href="#166-分数到小数" class="headerlink" title="166. 分数到小数"></a><a href="https://leetcode-cn.com/problems/fraction-to-recurring-decimal/" target="_blank" rel="noopener">166. 分数到小数</a></h1><p><strong>题目描述：</strong></p>
+<p>给定两个整数，分别表示分数的分子 numerator 和分母 denominator，以字符串形式返回小数。</p>
+<p>如果小数部分为循环小数，则将循环的部分括在括号内。</p>
 <p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: 3</span><br><span class="line">输出: 0</span><br><span class="line">解释: 3! &#x3D; 6, 尾数中没有零。</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: 5</span><br><span class="line">输出: 1</span><br><span class="line">解释: 5! &#x3D; 120, 尾数中有 1 个零.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: numerator &#x3D; 1, denominator &#x3D; 2</span><br><span class="line">输出: &quot;0.5&quot;</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: numerator &#x3D; 2, denominator &#x3D; 1</span><br><span class="line">输出: &quot;2&quot;</span><br><span class="line"></span><br><span class="line">示例 3:</span><br><span class="line"></span><br><span class="line">输入: numerator &#x3D; 2, denominator &#x3D; 3</span><br><span class="line">输出: &quot;0.(6)&quot;</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p><strong>算法思想：</strong></p>
+
+
+<h2 id="长除法"><a href="#长除法" class="headerlink" title="长除法"></a>长除法</h2><p><strong>算法思想：</strong></p>
 <ul>
-<li>尾数上有0，首先想到是乘了一个10，但是5！=120有一个0，这是因为5*2=10，所以后面多了一个0，因此想到可以去统计其中5的个数</li>
-<li>但需要注意的是，5，10，15，20，25，…，中25可以分解为5*5，所以其中是有两个5的，会给尾数带来两个0而不是一个0；同理125=5×5×5，所以有三个5</li>
-<li>所以最后的结果可以表示为n/5+n/25+n/125+…..(注意n/25前面没有乘2，因为再算n/5时已经算了一遍，所以补上一遍就可以了，后面一样)</li>
+<li>对于循环小数，其核心思想是<strong>当商出现循环时，余数也会循环</strong>，所以只要记录下余数出现循环的位置即可</li>
+<li>用一个哈希表存储余数是哪一位商对应的</li>
 </ul>
 <p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public int trailingZeroes(int n) &#123;</span><br><span class="line">        int res&#x3D;0;</span><br><span class="line">        while (n&gt;0)&#123;</span><br><span class="line">            res+&#x3D;n&#x2F;5;</span><br><span class="line">            n&#x3D;n&#x2F;5;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(logn),底数为5</li>
-<li><strong>空间复杂度：</strong>O(1)</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/189.%20%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/189.%20%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/" itemprop="url">189. 旋转数组</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="189-旋转数组"><a href="#189-旋转数组" class="headerlink" title="189. 旋转数组"></a><a href="https://leetcode-cn.com/problems/rotate-array/" target="_blank" rel="noopener">189. 旋转数组</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个数组，将数组中的元素向右移动 <em>k</em> 个位置，其中 <em>k</em> 是非负数。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: [1,2,3,4,5,6,7] 和 k &#x3D; 3</span><br><span class="line">输出: [5,6,7,1,2,3,4]</span><br><span class="line">解释:</span><br><span class="line">向右旋转 1 步: [7,1,2,3,4,5,6]</span><br><span class="line">向右旋转 2 步: [6,7,1,2,3,4,5]</span><br><span class="line">向右旋转 3 步: [5,6,7,1,2,3,4]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: [-1,-100,3,99] 和 k &#x3D; 2</span><br><span class="line">输出: [3,99,-1,-100]</span><br><span class="line">解释: </span><br><span class="line">向右旋转 1 步: [99,-1,-100,3]</span><br><span class="line">向右旋转 2 步: [3,99,-1,-100]</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="算法：反转"><a href="#算法：反转" class="headerlink" title="算法：反转"></a>算法：反转</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>以[1,2,3,4,5,6,7]为例，右移3个位置，可以先将[5,6,7]和[1,2,3,4]分别翻转得到[4,3,2,1,7,6,5]，然后再整体反转得到[5,6,7,1,2,3,4]即为最终结果</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public void rotate(int[] nums, int k) &#123;</span><br><span class="line">        int len&#x3D;nums.length;</span><br><span class="line">        &#x2F;&#x2F;k先取模</span><br><span class="line">        k&#x3D;k%len;</span><br><span class="line">        &#x2F;&#x2F;分别反转</span><br><span class="line">        reverse(nums,0,len-k-1);</span><br><span class="line">        reverse(nums,len-k,len-1);</span><br><span class="line">        reverse(nums,0,len-1);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;反转函数</span><br><span class="line">    private void reverse(int[] nums,int start,int end)&#123;</span><br><span class="line">        while (start&lt;end)&#123;</span><br><span class="line">            int temp&#x3D;nums[start];</span><br><span class="line">            nums[start]&#x3D;nums[end];</span><br><span class="line">            nums[end]&#x3D;temp;</span><br><span class="line">            start++;</span><br><span class="line">            end--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(n)</li>
-<li><strong>空间复杂度：</strong>O(1)</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/190.%20%E9%A2%A0%E5%80%92%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BD%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/190.%20%E9%A2%A0%E5%80%92%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BD%8D/" itemprop="url">190. 颠倒二进制位</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="190-颠倒二进制位"><a href="#190-颠倒二进制位" class="headerlink" title="190. 颠倒二进制位"></a><a href="https://leetcode-cn.com/problems/reverse-bits/" target="_blank" rel="noopener">190. 颠倒二进制位</a></h1><p><strong>题目描述：</strong></p>
-<p>颠倒给定的 32 位无符号整数的二进制位。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入: 00000010100101000001111010011100</span><br><span class="line">输出: 00111001011110000010100101000000</span><br><span class="line">解释: 输入的二进制串 00000010100101000001111010011100 表示无符号整数 43261596，</span><br><span class="line">      因此返回 964176192，其二进制表示形式为 00111001011110000010100101000000。</span><br><span class="line">      </span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：11111111111111111111111111111101</span><br><span class="line">输出：10111111111111111111111111111111</span><br><span class="line">解释：输入的二进制串 11111111111111111111111111111101 表示无符号整数 4294967293，</span><br><span class="line">      因此返回 3221225471 其二进制表示形式为 10101111110010110010011101101001。</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>颠倒32位无符号整数的二进制可以通过将从低位开始之后的每一位插入在其低位的后面，以1010为例，先插入0，然后在0后面插入1，接着是0和1，得到0101</li>
-<li><strong>需要注意的是位运算是以补码作为运算的</strong></li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public int reverseBits(int n) &#123;</span><br><span class="line">        int count&#x3D;0;</span><br><span class="line">        int res&#x3D;0;</span><br><span class="line">        &#x2F;&#x2F;因为是以补码作为运算，所以要循环32位</span><br><span class="line">        while (count&lt;32)&#123;</span><br><span class="line">        	&#x2F;&#x2F;为插入下一位做好准备，留下一个空位</span><br><span class="line">            res&#x3D;res&lt;&lt;1;</span><br><span class="line">            &#x2F;&#x2F;得到n的最后一位，并将其插入res的末位</span><br><span class="line">            res|&#x3D;n&amp;1;</span><br><span class="line">            &#x2F;&#x2F;n右移一位</span><br><span class="line">            n&#x3D;n&gt;&gt;1;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public String fractionToDecimal(int numerator, int denominator) &#123;</span><br><span class="line">        if(numerator&#x3D;&#x3D;0) return &quot;0&quot;;</span><br><span class="line">        if(denominator&#x3D;&#x3D;0) throw new RuntimeException(&quot;操作非法&quot;);</span><br><span class="line">        StringBuilder res&#x3D;new StringBuilder();</span><br><span class="line">        &#x2F;&#x2F;异或，表示只有一个为负的情况</span><br><span class="line">        if(numerator&lt;0^denominator&lt;0) res.append(&#39;-&#39;);</span><br><span class="line">        Long dividend&#x3D;Math.abs(Long.valueOf(numerator));</span><br><span class="line">        Long divisor&#x3D;Math.abs(Long.valueOf(denominator));</span><br><span class="line">        res.append(dividend&#x2F;divisor);</span><br><span class="line">        long remainder&#x3D;dividend%divisor;</span><br><span class="line">        &#x2F;&#x2F;余数为0直接返回</span><br><span class="line">        if(remainder&#x3D;&#x3D;0) return res.toString();</span><br><span class="line">        &#x2F;&#x2F;否则表示余数不为0，则肯定有小数部分</span><br><span class="line">        res.append(&#39;.&#39;);</span><br><span class="line">        Map&lt;Long,Integer&gt; map&#x3D;new HashMap&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;当余数不为0时循环，若是有限小数，则会最终因为余数为0，跳出循环；无限循环小数则因			  为下面的break跳出</span><br><span class="line">        while (remainder!&#x3D;0)&#123;</span><br><span class="line">        	&#x2F;&#x2F;判断余数是否出现循环</span><br><span class="line">            if(map.containsKey(remainder))&#123;</span><br><span class="line">                res.insert(map.get(remainder),&quot;(&quot;);</span><br><span class="line">                res.append(&#39;)&#39;);</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            map.put(remainder,res.length());</span><br><span class="line">            remainder*&#x3D;10;</span><br><span class="line">            res.append(String.valueOf(remainder&#x2F;divisor));</span><br><span class="line">            remainder%&#x3D;divisor;</span><br><span class="line">        &#125;</span><br><span class="line">        return res.toString();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 
           
@@ -1765,7 +1788,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/191.%20%E4%BD%8D1%E7%9A%84%E4%B8%AA%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/172.%20%E9%98%B6%E4%B9%98%E5%90%8E%E7%9A%84%E9%9B%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黎达">
@@ -1784,7 +1807,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/11/191.%20%E4%BD%8D1%E7%9A%84%E4%B8%AA%E6%95%B0/" itemprop="url">191. 位1的个数</a></h1>
+                <a class="post-title-link" href="/2020/04/11/172.%20%E9%98%B6%E4%B9%98%E5%90%8E%E7%9A%84%E9%9B%B6/" itemprop="url">172. 阶乘后的零</a></h1>
         
 
         <div class="post-meta">
@@ -1858,59 +1881,27 @@
       
         
           
-            <h1 id="191-位1的个数"><a href="#191-位1的个数" class="headerlink" title="191. 位1的个数"></a><a href="https://leetcode-cn.com/problems/number-of-1-bits/" target="_blank" rel="noopener">191. 位1的个数</a></h1><p><strong>题目描述：</strong></p>
-<p>编写一个函数，输入是一个无符号整数，返回其二进制表达式中数字位数为 ‘1’ 的个数（也被称为<a href="https://baike.baidu.com/item/汉明重量" target="_blank" rel="noopener">汉明重量</a>）。</p>
+            <h1 id="172-阶乘后的零"><a href="#172-阶乘后的零" class="headerlink" title="172. 阶乘后的零"></a><a href="https://leetcode-cn.com/problems/factorial-trailing-zeroes/" target="_blank" rel="noopener">172. 阶乘后的零</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个整数 <em>n</em>，返回 <em>n</em>! 结果尾数中零的数量。</p>
 <p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：00000000000000000000000000001011</span><br><span class="line">输出：3</span><br><span class="line">解释：输入的二进制串 00000000000000000000000000001011 中，共有三位为 &#39;1&#39;。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：00000000000000000000000010000000</span><br><span class="line">输出：1</span><br><span class="line">解释：输入的二进制串 00000000000000000000000010000000 中，共有一位为 &#39;1&#39;。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 3：</span><br><span class="line"></span><br><span class="line">输入：11111111111111111111111111111101</span><br><span class="line">输出：31</span><br><span class="line">解释：输入的二进制串 11111111111111111111111111111101 中，共有 31 位为 &#39;1&#39;。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: 3</span><br><span class="line">输出: 0</span><br><span class="line">解释: 3! &#x3D; 6, 尾数中没有零。</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: 5</span><br><span class="line">输出: 1</span><br><span class="line">解释: 5! &#x3D; 120, 尾数中有 1 个零.</span><br></pre></td></tr></table></figure>
 
 
 
-
-
-<h2 id="算法一：位运算"><a href="#算法一：位运算" class="headerlink" title="算法一：位运算"></a>算法一：位运算</h2><p><strong>算法思想：</strong></p>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p><strong>算法思想：</strong></p>
 <ul>
-<li>依次将n与1按位求与，得到最后一位，如果是1结果++，然后将n左移一位再判断下一位</li>
+<li>尾数上有0，首先想到是乘了一个10，但是5！=120有一个0，这是因为5*2=10，所以后面多了一个0，因此想到可以去统计其中5的个数</li>
+<li>但需要注意的是，5，10，15，20，25，…，中25可以分解为5*5，所以其中是有两个5的，会给尾数带来两个0而不是一个0；同理125=5×5×5，所以有三个5</li>
+<li>所以最后的结果可以表示为n/5+n/25+n/125+…..(注意n/25前面没有乘2，因为再算n/5时已经算了一遍，所以补上一遍就可以了，后面一样)</li>
 </ul>
 <p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public int hammingWeight(int n) &#123;</span><br><span class="line">        int count&#x3D;0;</span><br><span class="line">        int res&#x3D;0;</span><br><span class="line">        while (count&lt;32)&#123;</span><br><span class="line">        	&#x2F;&#x2F;最后一位是1，结果++</span><br><span class="line">            if((n&amp;1)&#x3D;&#x3D;1) res++;</span><br><span class="line">            &#x2F;&#x2F;n右移一位</span><br><span class="line">            n&gt;&gt;&#x3D;1;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public int trailingZeroes(int n) &#123;</span><br><span class="line">        int res&#x3D;0;</span><br><span class="line">        while (n&gt;0)&#123;</span><br><span class="line">            res+&#x3D;n&#x2F;5;</span><br><span class="line">            n&#x3D;n&#x2F;5;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 
 
 <p><strong>算法分析：</strong></p>
 <ul>
-<li><strong>时间复杂度：</strong>O(1)，上面的循环执行32次，常数次幂</li>
-<li><strong>空间复杂度：</strong>O(1)</li>
-</ul>
-<h2 id="算法二：位掩码"><a href="#算法二：位掩码" class="headerlink" title="算法二：位掩码"></a>算法二：位掩码</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>采用掩码的方式，例如001，010，100，与掩码按位与可以得到对应位的数字，如果最终结果不为0，则结果++</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; you need to treat n as an unsigned value</span><br><span class="line">    public int hammingWeight(int n) &#123;</span><br><span class="line">        int count&#x3D;0;</span><br><span class="line">        &#x2F;&#x2F;mask为掩码</span><br><span class="line">        int mask&#x3D;1;</span><br><span class="line">        int res&#x3D;0;</span><br><span class="line">        while (count&lt;32)&#123;</span><br><span class="line">            if((n&amp;mask)!&#x3D;0) res++;</span><br><span class="line">            &#x2F;&#x2F;mask每次左移一位得到下一位的掩码</span><br><span class="line">            mask&lt;&lt;&#x3D;1;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(1)，上面的循环执行32次，常数次幂</li>
-<li><strong>空间复杂度：</strong>O(1)</li>
-</ul>
-<h2 id="算法三：n与n-1的按位与"><a href="#算法三：n与n-1的按位与" class="headerlink" title="算法三：n与n-1的按位与"></a>算法三：n与n-1的按位与</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li><p>n与n-1的按位与有如下图的规律：</p>
-<p><img src="https://pic.leetcode-cn.com/abfd6109e7482d70d20cb8fc1d632f90eacf1b5e89dfecb2e523da1bcb562f66-image.png" alt="image.png"></p>
-</li>
-<li><p>可以发现n&amp;(n-1)后与原结果相比，只是少了最低位的一个1，因此可以不停的将取n&amp;(n-1)，直到n为0，表示已经没有1了</p>
-</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public int hammingWeight(int n) &#123;</span><br><span class="line">        int res&#x3D;0;</span><br><span class="line">        while (n!&#x3D;0)&#123;</span><br><span class="line">            res++;</span><br><span class="line">            n&#x3D;n&amp;(n-1);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(1)，上面的循环的次数为n中1的个数，所以最大为32次，也是常数次幂</li>
+<li><strong>时间复杂度：</strong>O(logn),底数为5</li>
 <li><strong>空间复杂度：</strong>O(1)</li>
 </ul>
 
@@ -2002,7 +1993,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">211</span>
+                  <span class="site-state-item-count">214</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2013,7 +2004,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2024,7 +2015,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2077,7 +2068,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

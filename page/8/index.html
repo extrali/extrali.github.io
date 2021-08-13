@@ -248,6 +248,479 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/06/01/%E6%AF%94%E7%89%B9%E4%BD%8D%E8%AE%A1%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/01/%E6%AF%94%E7%89%B9%E4%BD%8D%E8%AE%A1%E6%95%B0/" itemprop="url">比特位计数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-01T09:59:03+08:00">
+                2020-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="338-比特位计数"><a href="#338-比特位计数" class="headerlink" title="338. 比特位计数"></a><a href="https://leetcode-cn.com/problems/counting-bits/" target="_blank" rel="noopener">338. 比特位计数</a></h1><p>给定一个非负整数 <strong>num</strong>。对于 <strong>0 ≤ i ≤ num</strong> 范围中的每个数字 <strong>i</strong> ，计算其二进制数中的 1 的数目并将它们作为数组返回。</p>
+<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>n&amp;(n-1)表示的是去掉n的最后一个1，所以有memo[n]=memo[n&amp;(n-1)]+1;</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public int[] countBits(int num) &#123;</span><br><span class="line">        int[] memo&#x3D;new int[num+1];</span><br><span class="line">        memo[0]&#x3D;0;</span><br><span class="line">        for(int i&#x3D;1;i&lt;memo.length;i++)&#123;</span><br><span class="line">            memo[i]&#x3D;memo[i&amp;(i-1)]+1;</span><br><span class="line">        &#125;</span><br><span class="line">        return memo;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/06/01/%E6%9C%80%E5%A4%A7%E5%8D%95%E8%AF%8D%E9%95%BF%E5%BA%A6%E4%B9%98%E7%A7%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/01/%E6%9C%80%E5%A4%A7%E5%8D%95%E8%AF%8D%E9%95%BF%E5%BA%A6%E4%B9%98%E7%A7%AF/" itemprop="url">最大单词长度乘积</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-01T09:42:57+08:00">
+                2020-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="318-最大单词长度乘积"><a href="#318-最大单词长度乘积" class="headerlink" title="318. 最大单词长度乘积"></a><a href="https://leetcode-cn.com/problems/maximum-product-of-word-lengths/" target="_blank" rel="noopener">318. 最大单词长度乘积</a></h1><p>给定一个字符串数组 words，找到 length(word[i]) * length(word[j]) 的最大值，并且这两个单词不含有公共字母。你可以认为每个单词只包含小写字母。如果不存在这样的两个单词，返回 0。</p>
+<h1 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h1><p><strong>算法思想：</strong></p>
+<ul>
+<li>关键在于怎么判断两个字符串是否有公共字母，可以用32位整数来表示，对应位数代表对应的字母是否存在即可。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public int maxProduct(String[] words) &#123;</span><br><span class="line">        if(words&#x3D;&#x3D;null||words.length&#x3D;&#x3D;0) return 0;</span><br><span class="line">        int len&#x3D;words.length;</span><br><span class="line">        int[] mask&#x3D;new int[len];</span><br><span class="line">        for(int i&#x3D;0;i&lt;len;i++)&#123;</span><br><span class="line">            for(int j&#x3D;0;j&lt;words[i].length();j++)&#123;</span><br><span class="line">            	&#x2F;&#x2F;注意这里是|，而不能是+，否则例如&quot;aaa&quot;，+则会进位</span><br><span class="line">                mask[i]+&#x3D;1&lt;&lt;(words[i].charAt(j)-&#39;a&#39;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        int max&#x3D;0;</span><br><span class="line">        for(int i&#x3D;0;i&lt;len;i++)&#123;</span><br><span class="line">            for(int j&#x3D;i+1;j&lt;len;j++)&#123;</span><br><span class="line">                if((mask[i]&amp;mask[j])&#x3D;&#x3D;0)&#123;</span><br><span class="line">                    max&#x3D;Math.max(max,words[i].length()*words[j].length());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return max;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/05/31/49.%20%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D%E5%88%86%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/31/49.%20%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D%E5%88%86%E7%BB%84/" itemprop="url">49. 字母异位词分组</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-31T17:51:24+08:00">
+                2020-05-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="49-字母异位词分组"><a href="#49-字母异位词分组" class="headerlink" title="49. 字母异位词分组"></a><a href="https://leetcode-cn.com/problems/group-anagrams/" target="_blank" rel="noopener">49. 字母异位词分组</a></h1><p><strong>题目描述：</strong></p>
+<blockquote>
+<p>给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。</p>
+</blockquote>
+<hr>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">示例:</span><br><span class="line"></span><br><span class="line">输入: [&quot;eat&quot;, &quot;tea&quot;, &quot;tan&quot;, &quot;ate&quot;, &quot;nat&quot;, &quot;bat&quot;],</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">  [&quot;ate&quot;,&quot;eat&quot;,&quot;tea&quot;],</span><br><span class="line">  [&quot;nat&quot;,&quot;tan&quot;],</span><br><span class="line">  [&quot;bat&quot;]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<p><strong>说明：</strong></p>
+<ul>
+<li>所有输入均为小写字母。</li>
+<li>不考虑答案输出的顺序。</li>
+</ul>
+<h2 id="算法一：按排序数组分类"><a href="#算法一：按排序数组分类" class="headerlink" title="算法一：按排序数组分类"></a>算法一：按排序数组分类</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>维护一个map集合，其中键的值为排序后的字符串，则同一个list集合中的字符串显然键值也相同。</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;List&lt;String&gt;&gt; groupAnagrams(String[] strs) &#123;</span><br><span class="line">        if(strs&#x3D;&#x3D;null||strs.length&#x3D;&#x3D;0) return new ArrayList&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;map集合维护映射关系</span><br><span class="line">        Map&lt;String,List&lt;String&gt;&gt; map&#x3D;new HashMap&lt;&gt;();</span><br><span class="line">        for(String s:strs)&#123;</span><br><span class="line">        	&#x2F;&#x2F;因为Arrays.sort()方法只能对数组排序，所以先转换位字符数组</span><br><span class="line">            char[] chars&#x3D;s.toCharArray();</span><br><span class="line">            &#x2F;&#x2F;按字母升序排序</span><br><span class="line">            Arrays.sort(chars);</span><br><span class="line">            &#x2F;&#x2F;再将字符数组转换为字符串</span><br><span class="line">            String key&#x3D;String.valueOf(chars);</span><br><span class="line">            &#x2F;&#x2F;如果再map中没有对应key，则将key和一个空的集合添加进去</span><br><span class="line">            if(!map.containsKey(key)) map.put(key,new ArrayList&lt;&gt;());</span><br><span class="line">            相对应的key的集合中添加字符串</span><br><span class="line">            map.get(key).add(s);</span><br><span class="line">        &#125;</span><br><span class="line">        map.values()方法返回的是一个collection类型，需要将其转换为List类型</span><br><span class="line">        return new ArrayList&lt;&gt;(map.values());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>注意：</strong>将<code>map.values()转换为list时，不能使用强制类型转换，会报错</code></p>
+<h1 id="算法二：按计数分类"><a href="#算法二：按计数分类" class="headerlink" title="算法二：按计数分类"></a>算法二：按计数分类</h1><p><strong>算法思想：</strong></p>
+<ul>
+<li>维护一个数组，其长度为26，相应索引处的值表示对应的字符的个数，例如： <code>counts[0]表示的是字符&#39;a&#39;的个数</code></li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;List&lt;String&gt;&gt; groupAnagrams(String[] strs) &#123;</span><br><span class="line">       if(strs&#x3D;&#x3D;null||strs.length&#x3D;&#x3D;0) return new ArrayList&lt;&gt;();</span><br><span class="line">       Map&lt;String,List&lt;String&gt;&gt; map&#x3D;new HashMap&lt;&gt;();</span><br><span class="line">       &#x2F;&#x2F;counts数组记录对应字符个数，对应同一个key的字符串有着同样的counts数组</span><br><span class="line">       int[] counts&#x3D;new int[26];</span><br><span class="line">       for(String s:strs)&#123;</span><br><span class="line">       	&#x2F;&#x2F;将counts的元素覆盖为0，初始化</span><br><span class="line">           Arrays.fill(counts,0);</span><br><span class="line">           for(int i&#x3D;0;i&lt;s.length();i++)&#123;</span><br><span class="line">               counts[s.charAt(i)-&#39;a&#39;]++;</span><br><span class="line">           &#125;</span><br><span class="line">           StringBuilder sb&#x3D;new StringBuilder();</span><br><span class="line">           for(int i&#x3D;0;i&lt;26;i++)&#123;</span><br><span class="line">               sb.append(counts[i]);</span><br><span class="line">           &#125;</span><br><span class="line">           String key&#x3D;sb.toString();</span><br><span class="line">           if(!map.containsKey(key)) map.put(key,new ArrayList&lt;&gt;());</span><br><span class="line">           map.get(key).add(s);</span><br><span class="line">       &#125;</span><br><span class="line">       return new ArrayList&lt;&gt;(map.values());</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>注意：</strong>  <code>Arrays.fill(counts,0)表示的是将counts中的元素用0覆盖，用来每次循环给数组初始化</code></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/05/30/%E5%90%88%E5%B9%B6k%E4%B8%AA%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1339,497 +1812,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/05/28/%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E8%B7%AF%E5%BE%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/28/%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E8%B7%AF%E5%BE%84/" itemprop="url">矩阵中的路径</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-28T22:42:04+08:00">
-                2020-05-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%91%E6%8C%87offer/" itemprop="url" rel="index">
-                    <span itemprop="name">剑指offer</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向左，向右，向上，向下移动一个格子。如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。</p>
-<h1 id="DFS递归"><a href="#DFS递归" class="headerlink" title="DFS递归"></a>DFS递归</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">private boolean[] memo;</span><br><span class="line"></span><br><span class="line">   public boolean hasPath(char[] matrix, int rows, int cols, char[] str)</span><br><span class="line">   &#123;</span><br><span class="line"></span><br><span class="line">       for(int i&#x3D;0;i&lt;matrix.length;i++)&#123;</span><br><span class="line">           memo&#x3D;new boolean[matrix.length];</span><br><span class="line">           if(helper(matrix,rows,cols,str,i,0))</span><br><span class="line">               return true;</span><br><span class="line">       &#125;</span><br><span class="line">       return false;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   private boolean helper(char[] matrix, int rows, int cols, char[] str,int i,int index)&#123;</span><br><span class="line">       if(index&#x3D;&#x3D;str.length) return true;</span><br><span class="line">       if(i&lt;0||i&gt;&#x3D;matrix.length) return false;</span><br><span class="line">       if(memo[i]) return false;</span><br><span class="line">       if(matrix[i]!&#x3D;str[index]) return false;</span><br><span class="line">       memo[i]&#x3D;true;</span><br><span class="line">       return helper(matrix,rows,cols,str,i-1,index+1)||helper(matrix,rows,cols,str,i+1,index+1)||</span><br><span class="line">               helper(matrix,rows,cols,str,i-cols,index+1)||helper(matrix,rows,cols,str,i+cols,index+1);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="DFS递归-1"><a href="#DFS递归-1" class="headerlink" title="DFS递归"></a>DFS递归</h1><p>第二次写忘了在出栈时，让index–</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">public boolean hasPath(char[] matrix, int rows, int cols, char[] str)</span><br><span class="line">   &#123;</span><br><span class="line">       Stack&lt;Integer&gt; stack;</span><br><span class="line">       int len&#x3D;rows*cols;</span><br><span class="line">       boolean[] memo;</span><br><span class="line">       for(int i&#x3D;0;i&lt;len;i++)&#123;</span><br><span class="line">       	&#x2F;&#x2F;index记录当前str的访问位置，需要回溯</span><br><span class="line">           int index&#x3D;0;</span><br><span class="line">           if(matrix[i]!&#x3D;str[0]) continue;</span><br><span class="line">           stack&#x3D;new Stack&lt;&gt;();</span><br><span class="line">           memo&#x3D;new boolean[len];</span><br><span class="line">           stack.push(i);</span><br><span class="line">           memo[i]&#x3D;true;</span><br><span class="line">           index++;</span><br><span class="line">           while(!stack.isEmpty())&#123;</span><br><span class="line">               if(index&#x3D;&#x3D;str.length) return true;</span><br><span class="line">               int num&#x3D;stack.peek();</span><br><span class="line">               if(num%cols!&#x3D;0&amp;&amp;!memo[num-1]&amp;&amp;matrix[num-1]&#x3D;&#x3D;str[index])&#123;</span><br><span class="line">                   stack.push(num-1);</span><br><span class="line">                   memo[num-1]&#x3D;true;</span><br><span class="line">                   index++;</span><br><span class="line">                   continue;</span><br><span class="line">               &#125;</span><br><span class="line">               if((num+1)%cols!&#x3D;0&amp;&amp;!memo[num+1]&amp;&amp;matrix[num+1]&#x3D;&#x3D;str[index])&#123;</span><br><span class="line">                   stack.push(num+1);</span><br><span class="line">                   memo[num+1]&#x3D;true;</span><br><span class="line">                   index++;</span><br><span class="line">                   continue;</span><br><span class="line">               &#125;</span><br><span class="line">               if((num-cols)&gt;&#x3D;0&amp;&amp;!memo[num-cols]&amp;&amp;matrix[num-cols]&#x3D;&#x3D;str[index])&#123;</span><br><span class="line">                   stack.push(num-cols);</span><br><span class="line">                   memo[num-cols]&#x3D;true;</span><br><span class="line">                   index++;</span><br><span class="line">                   continue;</span><br><span class="line">               &#125;</span><br><span class="line">               if((num+cols)&lt;len&amp;&amp;!memo[num+cols]&amp;&amp;matrix[num+cols]&#x3D;&#x3D;str[index])&#123;</span><br><span class="line">                   stack.push(num+cols);</span><br><span class="line">                   memo[num+cols]&#x3D;true;</span><br><span class="line">                   index++;</span><br><span class="line">                   continue;</span><br><span class="line">               &#125;</span><br><span class="line">               num&#x3D;stack.pop();</span><br><span class="line">               &#x2F;&#x2F;这里不要忘了index--</span><br><span class="line">               index--;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       return false;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/05/28/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E7%AC%ACK%E4%B8%AA%E8%8A%82%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/28/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E7%AC%ACK%E4%B8%AA%E8%8A%82%E7%82%B9/" itemprop="url">二叉搜索树的第K个节点</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-28T20:04:45+08:00">
-                2020-05-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%91%E6%8C%87offer/" itemprop="url" rel="index">
-                    <span itemprop="name">剑指offer</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一棵二叉搜索树，请找出其中的第k小的结点。例如， （5，3，7，2，4，6，8）  中，按结点数值大小顺序第三小结点的值为4。</p>
-<p><strong>第二次写问题出在不能将k放在参数中传递，因为是值传递，递归中值改变，原方法中k不会变，要把k设置成成员变量。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">private int k;</span><br><span class="line">   TreeNode KthNode(TreeNode pRoot, int k)</span><br><span class="line">   &#123;</span><br><span class="line">       this.k&#x3D;k;</span><br><span class="line">       return helper(pRoot);</span><br><span class="line">   &#125;</span><br><span class="line">   private TreeNode helper(TreeNode root)&#123;</span><br><span class="line">       if(root!&#x3D;null) &#123;</span><br><span class="line">           TreeNode left&#x3D;helper(root.left);</span><br><span class="line">           if(left!&#x3D;null) return left;</span><br><span class="line">           k--;</span><br><span class="line">           if (k &#x3D;&#x3D; 0) return root;</span><br><span class="line">           TreeNode right&#x3D;helper(root.right);</span><br><span class="line">           if(right!&#x3D;null) return right;</span><br><span class="line">       &#125;</span><br><span class="line">       return null;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/05/25/Integrating-Spatial-Configuration-into-Heatmap-Regression/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/25/Integrating-Spatial-Configuration-into-Heatmap-Regression/" itemprop="url">Integrating Spatial Configuration into Heatmap Regression</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-25T19:31:14+08:00">
-                2020-05-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
-                    <span itemprop="name">论文</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Integrating-Spatial-Configuration-into-Heatmap-Regression-Based-CNNs-for-Landmark-Localization-基于热图回归的CNN"><a href="#Integrating-Spatial-Configuration-into-Heatmap-Regression-Based-CNNs-for-Landmark-Localization-基于热图回归的CNN" class="headerlink" title="Integrating Spatial Configuration into Heatmap Regression Based CNNs for Landmark Localization  (基于热图回归的CNN)"></a>Integrating Spatial Configuration into Heatmap Regression Based CNNs for Landmark Localization  (基于热图回归的CNN)</h1><h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>在许多医学图像分析应用中，由于以下原因，只有有限数量的训练数据可用：</p>
-<ol>
-<li>图像获取成本以及专家需要的大量手动注释工作。</li>
-<li>训练小型卷积神经网络（CNN）等最新的机器学习方法数据集是一项艰巨的任务。</li>
-</ol>
-<p>在有关解剖点定位的这项工作中，我们提出了一种CNN网络，该网络学会了将定位任务分为两个更简单的子问题，从而减少了对大型训练数据集的总体需求。</p>
-<p>全卷积SpatialConfiguration-Net（SCN）通过将其两个组件的热图预测相乘并以端到端的方式训练网络来学习这种简化。</p>
-<p>因此，SCN将一个组件专用于局部准确但模棱两可的候选预测，而另一组件则通过合并地标的空间配置来提高对歧义性的鲁棒性。</p>
-<p>在我们广泛的实验评估中，我们表明，在各种尺寸受限的2D和3D定位点数据集（即手部X射线照片，侧位头颅图，手部MRI和脊柱CT）上，所提出的SCN在点定位误差方面优于相关方法。</p>
-<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>​        解剖点的定位是医学图像分析中的重要步骤，例如，基于可变形的统计模型执行分割，初始化基于特征的图像配准，对检测到的解剖结构（如椎骨）进行参数化建模。不幸的是，由于点定位的含糊不清，相似的结构经常会带来困难。 这样的歧义使得难以实现低的点定位误差，低的点定位误差被定义为对点误识别的高鲁棒性以及在每个所识别的点处的本地高精度。为了解决这些困难，主要使用基于机器学习的方法来自动定位图像中的解剖点。这些方法通常将局部点预测与明确的图形模型结合在一起，旨在将预测限制为可行的空间配置，如训练数据中所示。因此，通过将任务分为两个连续的步骤，简化了点定位问题。 第一步专用于局部准确但可能含糊的候选预测，而第二步中的图形模型则消除了模糊性，从而提高了对地标误识别的鲁棒性。</p>
-<p>​        计算机视觉的最新进展主要是由深度卷积神经网络（CNN）驱动的，因为它们具有自动从图像中学习重要特征的出色功能。他们不仅在许多计算机视觉任务中都改进了最新技术，而且在许多医学图像分析应用中。与使用先验知识构建点配置的手工模型的先前方法相反，深层的CNN架构依赖大量的训练数据来自动学习将预测限制为可行的模型。特别是在医学图像领域，要满足大量训练数据的要求具有挑战性，这有两个原因。首先，道德和财务方面的障碍阻碍了医学图像的大规模获取；其次，在有监督的环境中，需要训练有素的专家来创建事实真相注释，这通常是困难，昂贵和耗时的。因此，与计算机视觉任务相比，医学图像分析中基于CNN的方法必须能够处理明显更少的带注释的训练数据</p>
-<p>​        我们假设通过遵循手工图形模型探索的思想，可以减少CNN的大量训练数据需求。这样的模型结合了先验知识，即点的可行位置不是在图像空间中均匀分布，而是受其他解剖点的位置约束。因此，假设是，关于点的空间配置的现有知识可以使网络简化可行的解剖配置的基础分布的建模，因此需要较少的训练数据。尽管对空间配置的约束以前已在计算机视觉中使用（例如，用于语义分割或识别姿势），但它们仅用于改善基于CNN的关于对点误识别的鲁棒性的预测，而没有用于简化基于先验知识的预测任务 。在医学图像分析任务中，高局部精度与对点误识别的鲁棒性同等重要，因此尚未研究将解剖学地标的空间配置合并到CNN中以允许从有限的训练数据中学习。</p>
-<p>​        在本文中，我们证明了我们提出的两分量CNN可以通过学习从空间配置中受益来实现低界标定位误差，即使训练数据量有限。我们的SpatialConfiguration-Net（SCN）学会专用于一个组件来提供本地准确但潜在的模棱两可的候选预测，而另一个组件则用于关注<br>关于合并空间配置以通过消除歧义来提高针对地标性错误识别的鲁棒性。因此，将本地化任务分为两个简单的子问题，从而减少了对大型数据集的总体需求。在我们的定量评估中，我们证明了我们提出的方法是广泛适用的，并且在来自各种模式的四个大小受限的2D和3D医学图像分析数据集上优于最新技术，这些数据包括手部X光片，侧位头颅图，手部MRI 和脊柱CT。</p>
-<h3 id="1-1-相关工作"><a href="#1-1-相关工作" class="headerlink" title="1.1 相关工作"></a>1.1 相关工作</h3><p>解剖点定位的一种杰出策略是将局部特征响应与编码界标的全局空间配置的手工图形模型相结合。这种方法在医学图像分析中得到了广泛的应用，因为它们可以有效地捕获解剖学变化，而无需依赖训练数据集的大小，只要训练数据具有代表性即可。例如，刘等。 （2010）基于其他点的预测的相对位置，连续地限制点的搜索空间。 他们表明，这种限制大大减少了运行时间，同时还提供了出色的性能。整合全局形状信息的一种广泛使用的方法是使用点分布模型（Cootes等，1995）。 （2015）通过使用受约束的局部模型扩展了该策略，该模型在随机森林产生的局部特征响应的基础上迭代地完善了点配置（Breiman，2001），在2D手部和颅骨X光片上显示出最先进的性能。 医学图像分析中其他常用的图形模型是马尔可夫随机场（MRF）。它们已成功用于多种应用中的标志性定位，例如肺部分割（Ibragimov等人，2012），脑部定位（Toews和Arbel，2007），脊柱的检测（Glocker等人，2012）以及分析 全身CT扫描（Potesil等，2015），手部射线照相（Donner等，2013）<br>或牙齿MRI（Štern等，2016a）。尽管许多这些最近的工作仅使用随机森林框架来生成局部外观特征响应，但已改编了Criminisi等人的开创性工作。 （2013）关于器官边界框定位，首先根据全局外观特征稳健地限制预测区域，然后再基于局部特征进行精确定位。但是，它们的性能高度依赖于第一步是否提供可靠的预测，因为在第二步中只能提高准确性。 后来，为了消除局部外观特征响应中的假阳性预测，Urschler等。 （2018）将地标的空间配置整合到使用全球外观和几何特征的随机森林中。 因此，他们在单个统一的随机回归森林框架内模拟了MRF。</p>
-<p>​        借助像ImageNet（Russakovsky et al。，2015）这样的大型带注释的训练数据集，计算机视觉方法最近已经看到向深度学习和CNN的颠覆性转变。尽管在医学成像领域中通常带注释的训练图像数量有限，但是一些使用CNN的最新方法在解剖点定位中也显示出成功。对于椎骨的定位和识别，Chen等。 （2015年）提出了一个三阶段框架，该框架结合了用于粗略地标定位的随机森林，合并了邻近地标信息以完善其位置的形状模型以及用于识别地标的CNN。</p>
-<p>他们方法的缺点是他们仅使用2D CNN，因此无法从3D CNN可能发挥的全部体积信息中受益。张等。 （2017）从有限数量的大脑MR体积中同时检测数千个解剖点，方法是先将所有体积注册到模板体积，然后用单个CNN回归所有点坐标。但是，正如人体姿势估计方法（例如Toshev和Szegedy，2014）所观察到的，对坐标进行回归直接涉及从输入图像到点坐标的高度非线性映射（Pfister等人，2015）。</p>
-<p>​        汤普森等人而不是回归坐标。 （2014年）提出了一种基于回归热图图像的更简单的图像到图像映射，该映射对位于某个像素位置的界标的伪概率进行编码。因此，他们用于人体姿势估计的网络学会了在靠近目标地标的位置上产生高响应，而在错误位置上的响应却受到抑制。他们的工作还将CNN架构中的MRF模型的二进制术语整合到了一起。 然而，汤普森等。 （2014年）显示了点定位错误的缺点，这是因为他们的方法是在图像块上训练以预测热图，而单独训练的阶段仅在最后进行了微调。在我们的初步工作中（Payer等人，2016年），我们还使用了热图回归框架，但是，我们将地标的空间信息直接集成到了经过端到端训练的全卷积网络。 在那里，我们展示了即使在训练数据非常有限的情况下也可以实现良好性能的潜力。基于Payer等人提出的方法。 （2016），Yang等。 （2017）使用热图回归框架，通过将邻近地标的预训练模型纳入其CNN中来生成缺少响应的地标的预测。但是，与我们的方法（直接减少相似外观的地标上的假阳性反应）相比，他们的方法需要额外的后处理步骤才能消除假阳性反应。他们对网络进行预训练以同时对椎骨进行分类和定位，使用学到的权重使用完全卷积的网络生成响应，最后使用双向递归神经网络消除误报。 最近，Ghesu等人研究了一种不同的策略。 （2018，2019）。他们提议使用强化学习来生成指向寻找的点的导航轨迹。 他们方法的局限性在于计算量大的训练以及对非常大的数据集的需求。</p>
-<p>​        前面提到的CNN方法或者需要大量的训练数据，需要复杂的后处理，或者不能同时推广到2D和3D数据。 在本文中，我们提出了一个端到端的经过训练的全卷积网络，该网络可以在数量有限的训练数据的情况下在2D和3D应用程序中很好地工作，并且不需要任何特定于数据集的后处理。</p>
-<h3 id="1-2-贡献"><a href="#1-2-贡献" class="headerlink" title="1.2 贡献"></a>1.2 贡献</h3><p>​        我们建议将解剖点的空间配置合并到基于CNN的热图回归框架中，即使存在有限的训练数据集，该框架也可提供低的界标定位误差。在我们的单阶段方法中，网络本身学习将一个组件专用于本地准确但可能含糊的候选预测，而另一组件仅具有消除歧义的任务，以提高对点误识别的鲁棒性。通过单个优化过程并以端到端的方式进行训练，我们完全卷积的SCN的局部外观和空间配置组件都集中于两个更简单的子问题，这些子问题分别需要较少的训练数据。因此，减少了从大型数据集学习的总体需求。</p>
-<p>​        这项工作中提出的方法将我们的初步MICCAI论文（Payer等人，2016）扩展如下：</p>
-<ul>
-<li><p>我们修改目标函数，以便分别学习每个地标的最佳热图目标函数， 取决于网络的预测置信度（请参阅第2.1节）</p>
-</li>
-<li><p>我们更改了局部外观组件的CNN结构，以更好地考虑不同比例下的图像外观特征，以回归生成局部精确候选预测的热图（请参阅第2.2.2节）。</p>
-</li>
-<li><p>我们改进了空间配置组件，以允许地标配置之间有更多变化，从而显示出消除局部相似结构的歧义的好处，尤其是对棘手的任务（如椎骨识别和定位）特别需要（请参阅第2.2.3节）</p>
-</li>
-<li><p>我们展示了SCN在二维（即手部X光片和侧位头影）以及3D（即手部MRI和脊柱CT）的多种医学影像数据集中的广泛适用性</p>
-</li>
-<li><p>我们报告了所有调查数据集上的地标定位误差方面最新的最新结果，包括ISBI 2015颅骨X射线图像分析挑战赛（Wang等人，2016）和MICCAI CSI 2014椎骨定位和识别 挑战涉及来自Glocker等人的病理性脊柱CT。 （2013）。</p>
-</li>
-</ul>
-<p>通过在端到端训练有素的卷积CNN框架中回归每个地标的热图来解剖点定位。 在我们提出的SpatialConfiguration-Net（SCN）中，两个组件通过乘法进行交互，以使局部外观组件着重于局部准确但模棱两可的候选预测，而空间配置组件着重于减少歧义以提高对地标误识别的鲁棒性。</p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627092748519.png" alt="image-20200627092748519"></p>
-<h3 id="2-方法"><a href="#2-方法" class="headerlink" title="2.方法"></a>2.方法</h3><p>​        为了在训练数据集有限的情况下降低地标定位误差，我们提出的SCN体系结构直接结合了两个交互组件的相应输出。如图1所示，当以端到端的方式训练基于热图回归的全卷积网络体系结构（第2.1节）时，通过将来自两个组件的预测相乘，可以实现这些组件的交互。由于这种相互作用，我们的SCN学会专用于其局部外观分量来提供局部准确但潜在的模棱两可的候选预测，而其空间配置分量则致力于通过消除歧义来提高对点误识别的鲁棒性（请参阅第2.2节）。当通过乘法结合时，这种相互作用导致低的点定位误差，即，对点误识别的高鲁棒性以及在每个识别的点处的高局部精度。</p>
-<h4 id="2-1-使用CNN回归热图"><a href="#2-1-使用CNN回归热图" class="headerlink" title="2.1 使用CNN回归热图"></a>2.1 使用CNN回归热图</h4><p>​        虽然直接回归地标坐标的CNN（Toshev and Szegedy，2014; Zhang et al。，2017）需要密集的层且具有许多网络参数才能对高度非线性且难以学习的图像进行坐标映射建模，但我们的方法基于回归热图图像 （Tompson et al。，2014），它对位于某个像素位置的点的伪概率进行编码。通过启用图像到图像的映射，由于减少了网络权重并因此降低了计算复杂度，因此我们受益于使用全卷积网络（Shelhamer et al。，2017）。</p>
-<p>​        N为点总数，目标维点L<del>i</del>的d维热图图像g<del>i</del>（x）：R^d^→R，i =</p>
-<p>{1,….，坐标为x ∗ i∈R^d^的N}被定义为高斯函数：</p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627093504530.png" alt="image-20200627093504530"></p>
-<p>因此，靠近目标坐标x<del>i</del>∈R^d^的热图像素具有较高的值，该值在远离x <del>i</del>处平滑但迅速减小。我们引入了比例因子γ以避免训练期间由于高斯函数的其他非常小的值引起的数值不稳定。 对于每个维度d，标准偏差σ<del>i</del>定义地标L<del>i</del>的热图图像中高斯函数的峰宽。</p>
-<p>​        不仅与我们之前的工作（Payer等人，2016）不同，而且与其他基于热图的方法（例如，Tompson等人，2014）不同，我们将σ<del>i</del>视为g<del>i</del>的未知参数，以便对其进行学习。 在训练CNN期间，除了网络权重w和偏差b之外。因此，我们可以根据网络的预测置信度分别学习每个地标的最佳热图峰宽。</p>
-<p>​        网络通过最小化预测的热图之间的差异来学习同时回归N个热图</p>
-<p>h<del>i</del>（x; w，b）和所有点L<del>i</del>的对应目标热图g<del>i</del>（x;σ<del>i</del>）：</p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094103413.png" alt="image-20200627094103413"></p>
-<p>这个新颖的目标函数通过涉及热图峰宽σ=（σ<del>1</del>，…，σ<del>N</del>）^T^的L<del>2</del>范数的正则化项在（Payer等人，2016）上扩展。由于σ是可学习的网络参数，因此当σi→∞导致gi（x;σi）≈0时，该术语避免了平凡的解决方案。因子α定义了热图峰宽σ受罚的强度，并且λ控制了影响 网络权重w的L2范数的。</p>
-<p>​        在（2）中，hi（x; w，b）和gi（x;σi）的L2距离与惩罚σ相互抵触。 为了使（2）最小，前一项优选σ较大，而后一项则使σ尽可能小。网络会使预测点的热图峰宽较窄（确信预测正确），而不确定点的峰宽较宽（例如难以确定的点）。因此，如图2所示，网络学习了在生成过平滑的，可能不准确的预测的大σi和导致潜在的高度准确的响应但附近有多个峰值的小σi之间的最佳折衷。在网络推断中，我们通过获取热图具有最高值的坐标来获得每个地标L<del>i</del>的预测坐标x^i^∈R^d^：</p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094735894.png" alt="image-20200627094735894"></p>
-<p>点Li的缩放区域针对不同σi的示例热图输出。 上图显示选择固定σi太小时的多个峰； 中间的图像显示了学习到的σi= 2.16的响应； 下图显示了对于太大的固定σi而言，响应过于平滑。 目标坐标x ∗ i用表示，预测坐标xˆi用表示。</p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094924916.png" alt="image-20200627094924916"></p>
-<h4 id="2-2-SpatialConfiguration-Net"><a href="#2-2-SpatialConfiguration-Net" class="headerlink" title="2.2 SpatialConfiguration-Net"></a>2.2 SpatialConfiguration-Net</h4><p>​        用于热图回归的SCN的基本概念是其两个组件之间的相互作用，分别表示局部外观和空间配置（见图3）。在第2.2.1节中，我们解释了两个组件如何相互作用以将本地化任务简化为两个子问题。 尽管两个相互作用的组件在结构上原则上是灵活的，但在2.2.2和2.2.3节中，我们将针对这两个组件描述我们特别建议的体系结构。</p>
-<p>我们提议的SCN的示意图。 在局部外观组件中，将输入图像I转换为HLA，代表N个点中每一个的局部外观热图。 黑色虚线表示HLA用作空间配置组件的输入，其中HLA转换为空间配置热图HSC。 HLA和HSC的乘积产生最终的热图H。 箭头表示连接，即</p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627095535655.png" alt="image-20200627095535655"></p>
-<h5 id="2-2-1局部外观⇔空间配置"><a href="#2-2-1局部外观⇔空间配置" class="headerlink" title="2.2.1局部外观⇔空间配置"></a>2.2.1局部外观⇔空间配置</h5><p>​        对于N个点，预测热图集H = {hi（x）| i = 1。 。 。 N}通过逐元素乘法获得。两个组件的相应热图输出：</p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627095315909.png" alt="image-20200627095315909"></p>
-<p>由于符号的容易性，此处省略了网络权重w和偏置b。 热图hLA i（x）和hSC i（x）分别是每个地标Li的局部外观和空间配置分量的输出。</p>
-<p>​        这两个分量通过（4）中的乘法进行交互。 这种乘法对于SCN学习定位任务的简化至关重要，因为它迫使两个分量都对目标界标x ∗ i的位置产生响应，即hLA i（x）和hSC i（x） 传递x接近x ∗ i的响应，而在其他所有位置上，只要另一个组件没有响应，一个组件就可以响应。因此，只要空间配置组件对局部相似结构的位置没有响应，局部外观组件就可以集中精力将输入图像转换为目标界标x ∗ i位置处的局部高精度响应，无需抑制局部相似的结构。 另一方面，只要局部外观分量在x ∗ i的位置上产生局部高度精确的响应，空间配置分量就可以集中精力通过消除局部外观分量的输出中的假阳性响应来区分局部相似的结构。 ，而无需高度精确地定位x ∗ i，无需抑制局部相似的结构。 另一方面，只要局部外观分量在x ∗ i的位置上产生局部高度精确的响应，空间配置分量就可以集中精力通过消除局部外观分量的输出中的假阳性响应来区分局部相似的结构。 ，而无需高度精确地定位x ∗ i。</p>
-<p>​        相比之下，先前的工作（Tompson等人，2014； Pfister等人，2015）的目的是同时解决地标错误识别的稳健性以及每个网络组件中所识别点的局部精度，但缺点是无法简化 本地化任务。 另一方面，我们的体系结构导致了一个解决方案，其中两个组件都面临着更简单的任务，可以从少量的培训数据中学习。</p>
-<h5 id="2-2-2-Local-appearance"><a href="#2-2-2-Local-appearance" class="headerlink" title="2.2.2 Local appearance"></a>2.2.2 Local appearance</h5><p>​        由于（4）中的乘法，局部外观分量的主要焦点是将输入图像I转换为一组局部精确但可能含糊的热图HLA = {hLA i（x）| i = 1。 。 。 N}。因此，对于每个点Li，局部外观分量生成热图输出hLA i（x），仅在点坐标x ∗ i的附近，类似于高斯目标gi（x）。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1884,7 +1866,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">211</span>
+                  <span class="site-state-item-count">214</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1895,7 +1877,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1906,7 +1888,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1959,7 +1941,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

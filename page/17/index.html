@@ -248,6 +248,522 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/189.%20%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/189.%20%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/" itemprop="url">189. 旋转数组</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="189-旋转数组"><a href="#189-旋转数组" class="headerlink" title="189. 旋转数组"></a><a href="https://leetcode-cn.com/problems/rotate-array/" target="_blank" rel="noopener">189. 旋转数组</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个数组，将数组中的元素向右移动 <em>k</em> 个位置，其中 <em>k</em> 是非负数。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: [1,2,3,4,5,6,7] 和 k &#x3D; 3</span><br><span class="line">输出: [5,6,7,1,2,3,4]</span><br><span class="line">解释:</span><br><span class="line">向右旋转 1 步: [7,1,2,3,4,5,6]</span><br><span class="line">向右旋转 2 步: [6,7,1,2,3,4,5]</span><br><span class="line">向右旋转 3 步: [5,6,7,1,2,3,4]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: [-1,-100,3,99] 和 k &#x3D; 2</span><br><span class="line">输出: [3,99,-1,-100]</span><br><span class="line">解释: </span><br><span class="line">向右旋转 1 步: [99,-1,-100,3]</span><br><span class="line">向右旋转 2 步: [3,99,-1,-100]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法：反转"><a href="#算法：反转" class="headerlink" title="算法：反转"></a>算法：反转</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>以[1,2,3,4,5,6,7]为例，右移3个位置，可以先将[5,6,7]和[1,2,3,4]分别翻转得到[4,3,2,1,7,6,5]，然后再整体反转得到[5,6,7,1,2,3,4]即为最终结果</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public void rotate(int[] nums, int k) &#123;</span><br><span class="line">        int len&#x3D;nums.length;</span><br><span class="line">        &#x2F;&#x2F;k先取模</span><br><span class="line">        k&#x3D;k%len;</span><br><span class="line">        &#x2F;&#x2F;分别反转</span><br><span class="line">        reverse(nums,0,len-k-1);</span><br><span class="line">        reverse(nums,len-k,len-1);</span><br><span class="line">        reverse(nums,0,len-1);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;反转函数</span><br><span class="line">    private void reverse(int[] nums,int start,int end)&#123;</span><br><span class="line">        while (start&lt;end)&#123;</span><br><span class="line">            int temp&#x3D;nums[start];</span><br><span class="line">            nums[start]&#x3D;nums[end];</span><br><span class="line">            nums[end]&#x3D;temp;</span><br><span class="line">            start++;</span><br><span class="line">            end--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/190.%20%E9%A2%A0%E5%80%92%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BD%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/190.%20%E9%A2%A0%E5%80%92%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BD%8D/" itemprop="url">190. 颠倒二进制位</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="190-颠倒二进制位"><a href="#190-颠倒二进制位" class="headerlink" title="190. 颠倒二进制位"></a><a href="https://leetcode-cn.com/problems/reverse-bits/" target="_blank" rel="noopener">190. 颠倒二进制位</a></h1><p><strong>题目描述：</strong></p>
+<p>颠倒给定的 32 位无符号整数的二进制位。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入: 00000010100101000001111010011100</span><br><span class="line">输出: 00111001011110000010100101000000</span><br><span class="line">解释: 输入的二进制串 00000010100101000001111010011100 表示无符号整数 43261596，</span><br><span class="line">      因此返回 964176192，其二进制表示形式为 00111001011110000010100101000000。</span><br><span class="line">      </span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：11111111111111111111111111111101</span><br><span class="line">输出：10111111111111111111111111111111</span><br><span class="line">解释：输入的二进制串 11111111111111111111111111111101 表示无符号整数 4294967293，</span><br><span class="line">      因此返回 3221225471 其二进制表示形式为 10101111110010110010011101101001。</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>颠倒32位无符号整数的二进制可以通过将从低位开始之后的每一位插入在其低位的后面，以1010为例，先插入0，然后在0后面插入1，接着是0和1，得到0101</li>
+<li><strong>需要注意的是位运算是以补码作为运算的</strong></li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public int reverseBits(int n) &#123;</span><br><span class="line">        int count&#x3D;0;</span><br><span class="line">        int res&#x3D;0;</span><br><span class="line">        &#x2F;&#x2F;因为是以补码作为运算，所以要循环32位</span><br><span class="line">        while (count&lt;32)&#123;</span><br><span class="line">        	&#x2F;&#x2F;为插入下一位做好准备，留下一个空位</span><br><span class="line">            res&#x3D;res&lt;&lt;1;</span><br><span class="line">            &#x2F;&#x2F;得到n的最后一位，并将其插入res的末位</span><br><span class="line">            res|&#x3D;n&amp;1;</span><br><span class="line">            &#x2F;&#x2F;n右移一位</span><br><span class="line">            n&#x3D;n&gt;&gt;1;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/191.%20%E4%BD%8D1%E7%9A%84%E4%B8%AA%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/191.%20%E4%BD%8D1%E7%9A%84%E4%B8%AA%E6%95%B0/" itemprop="url">191. 位1的个数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="191-位1的个数"><a href="#191-位1的个数" class="headerlink" title="191. 位1的个数"></a><a href="https://leetcode-cn.com/problems/number-of-1-bits/" target="_blank" rel="noopener">191. 位1的个数</a></h1><p><strong>题目描述：</strong></p>
+<p>编写一个函数，输入是一个无符号整数，返回其二进制表达式中数字位数为 ‘1’ 的个数（也被称为<a href="https://baike.baidu.com/item/汉明重量" target="_blank" rel="noopener">汉明重量</a>）。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：00000000000000000000000000001011</span><br><span class="line">输出：3</span><br><span class="line">解释：输入的二进制串 00000000000000000000000000001011 中，共有三位为 &#39;1&#39;。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：00000000000000000000000010000000</span><br><span class="line">输出：1</span><br><span class="line">解释：输入的二进制串 00000000000000000000000010000000 中，共有一位为 &#39;1&#39;。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 3：</span><br><span class="line"></span><br><span class="line">输入：11111111111111111111111111111101</span><br><span class="line">输出：31</span><br><span class="line">解释：输入的二进制串 11111111111111111111111111111101 中，共有 31 位为 &#39;1&#39;。</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="算法一：位运算"><a href="#算法一：位运算" class="headerlink" title="算法一：位运算"></a>算法一：位运算</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>依次将n与1按位求与，得到最后一位，如果是1结果++，然后将n左移一位再判断下一位</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public int hammingWeight(int n) &#123;</span><br><span class="line">        int count&#x3D;0;</span><br><span class="line">        int res&#x3D;0;</span><br><span class="line">        while (count&lt;32)&#123;</span><br><span class="line">        	&#x2F;&#x2F;最后一位是1，结果++</span><br><span class="line">            if((n&amp;1)&#x3D;&#x3D;1) res++;</span><br><span class="line">            &#x2F;&#x2F;n右移一位</span><br><span class="line">            n&gt;&gt;&#x3D;1;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(1)，上面的循环执行32次，常数次幂</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+<h2 id="算法二：位掩码"><a href="#算法二：位掩码" class="headerlink" title="算法二：位掩码"></a>算法二：位掩码</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>采用掩码的方式，例如001，010，100，与掩码按位与可以得到对应位的数字，如果最终结果不为0，则结果++</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; you need to treat n as an unsigned value</span><br><span class="line">    public int hammingWeight(int n) &#123;</span><br><span class="line">        int count&#x3D;0;</span><br><span class="line">        &#x2F;&#x2F;mask为掩码</span><br><span class="line">        int mask&#x3D;1;</span><br><span class="line">        int res&#x3D;0;</span><br><span class="line">        while (count&lt;32)&#123;</span><br><span class="line">            if((n&amp;mask)!&#x3D;0) res++;</span><br><span class="line">            &#x2F;&#x2F;mask每次左移一位得到下一位的掩码</span><br><span class="line">            mask&lt;&lt;&#x3D;1;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(1)，上面的循环执行32次，常数次幂</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+<h2 id="算法三：n与n-1的按位与"><a href="#算法三：n与n-1的按位与" class="headerlink" title="算法三：n与n-1的按位与"></a>算法三：n与n-1的按位与</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li><p>n与n-1的按位与有如下图的规律：</p>
+<p><img src="https://pic.leetcode-cn.com/abfd6109e7482d70d20cb8fc1d632f90eacf1b5e89dfecb2e523da1bcb562f66-image.png" alt="image.png"></p>
+</li>
+<li><p>可以发现n&amp;(n-1)后与原结果相比，只是少了最低位的一个1，因此可以不停的将取n&amp;(n-1)，直到n为0，表示已经没有1了</p>
+</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public int hammingWeight(int n) &#123;</span><br><span class="line">        int res&#x3D;0;</span><br><span class="line">        while (n!&#x3D;0)&#123;</span><br><span class="line">            res++;</span><br><span class="line">            n&#x3D;n&amp;(n-1);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(1)，上面的循环的次数为n中1的个数，所以最大为32次，也是常数次幂</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/202.%20%E5%BF%AB%E4%B9%90%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -940,6 +1456,174 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/208.%20%E5%AE%9E%E7%8E%B0%20Trie%20(%E5%89%8D%E7%BC%80%E6%A0%91)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/208.%20%E5%AE%9E%E7%8E%B0%20Trie%20(%E5%89%8D%E7%BC%80%E6%A0%91)/" itemprop="url">208. 实现 Trie (前缀树)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="208-实现-Trie-前缀树"><a href="#208-实现-Trie-前缀树" class="headerlink" title="208. 实现 Trie (前缀树)"></a><a href="https://leetcode-cn.com/problems/implement-trie-prefix-tree/" target="_blank" rel="noopener">208. 实现 Trie (前缀树)</a></h1><p><strong>题目描述：</strong></p>
+<p>实现一个 Trie (前缀树)，包含 <code>insert</code>, <code>search</code>, 和 <code>startsWith</code> 这三个操作</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Trie trie &#x3D; new Trie();</span><br><span class="line"></span><br><span class="line">trie.insert(&quot;apple&quot;);</span><br><span class="line">trie.search(&quot;apple&quot;);   &#x2F;&#x2F; 返回 true</span><br><span class="line">trie.search(&quot;app&quot;);     &#x2F;&#x2F; 返回 false</span><br><span class="line">trie.startsWith(&quot;app&quot;); &#x2F;&#x2F; 返回 true</span><br><span class="line">trie.insert(&quot;app&quot;);   </span><br><span class="line">trie.search(&quot;app&quot;);     &#x2F;&#x2F; 返回 true</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Trie树"><a href="#Trie树" class="headerlink" title="Trie树"></a>Trie树</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>构造一个新的树型数据结构，其输入多叉树，假设所有输入都是小写字母，最后是26叉树，每一个节点由两个字段构成：<ol>
+<li>26个指向字节的链接组成的数组</li>
+<li>标记当前节点是否为节点的布尔值</li>
+</ol>
+</li>
+</ul>
+<p><img src="https://pic.leetcode-cn.com/3463d9e7cb323911aa67cbd94910a34d88c9402a1ab41bbea10852cd0a74f2af-file_1562596867185" alt="无效的图片地址"></p>
+<p>​                                                  leet在该数据结构中的显示</p>
+<ul>
+<li><code>TrieNode</code>的实现如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class TrieNode&#123;</span><br><span class="line">        private TrieNode[] links;</span><br><span class="line">        private final int R&#x3D;26;</span><br><span class="line">        private boolean isEnd;</span><br><span class="line"></span><br><span class="line">        public TrieNode()&#123;</span><br><span class="line">            links&#x3D;new TrieNode[R];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public boolean containKey(char ch)&#123;</span><br><span class="line">            return links[ch-&#39;a&#39;]!&#x3D;null;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public TrieNode get(char ch)&#123;</span><br><span class="line">            return links[ch-&#39;a&#39;];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void put(char ch,TrieNode node)&#123;</span><br><span class="line">            links[ch-&#39;a&#39;]&#x3D;node;</span><br><span class="line">        &#125;</span><br><span class="line">        public void setEnd()&#123;</span><br><span class="line">            isEnd&#x3D;true;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public boolean isEnd()&#123;</span><br><span class="line">            return isEnd;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>最后的实现如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">private TrieNode root;</span><br><span class="line">    public Trie() &#123;</span><br><span class="line">        root&#x3D;new TrieNode();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;** Inserts a word into the trie. *&#x2F;</span><br><span class="line">    public void insert(String word) &#123;</span><br><span class="line">        TrieNode node&#x3D;root;</span><br><span class="line">        for(int i&#x3D;0;i&lt;word.length();i++)&#123;</span><br><span class="line">        	&#x2F;&#x2F;依次插入一个字母</span><br><span class="line">            if(node&#x3D;&#x3D;null||!node.containKey(word.charAt(i)))&#123;</span><br><span class="line">                node.put(word.charAt(i),new TrieNode());</span><br><span class="line">            &#125;</span><br><span class="line">            node&#x3D;node.get(word.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        node.setEnd();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;** Returns if the word is in the trie. *&#x2F;</span><br><span class="line">    public boolean search(String word) &#123;</span><br><span class="line">        TrieNode node&#x3D;root;</span><br><span class="line">        for(int i&#x3D;0;i&lt;word.length();i++)&#123;</span><br><span class="line">            if(!node.containKey(word.charAt(i))) return false;</span><br><span class="line">            node&#x3D;node.get(word.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后返回当前node是否是最后一位</span><br><span class="line">        return node.isEnd();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;** Returns if there is any word in the trie that starts with the given prefix. *&#x2F;</span><br><span class="line">    public boolean startsWith(String prefix) &#123;</span><br><span class="line">        TrieNode node&#x3D;root;</span><br><span class="line">        for(int i&#x3D;0;i&lt;prefix.length();i++)&#123;</span><br><span class="line">            if(!node.containKey(prefix.charAt(i))) return false;</span><br><span class="line">            node&#x3D;node.get(prefix.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;判断前缀直接返回true就可</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/206.%20%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1157,174 +1841,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/208.%20%E5%AE%9E%E7%8E%B0%20Trie%20(%E5%89%8D%E7%BC%80%E6%A0%91)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/208.%20%E5%AE%9E%E7%8E%B0%20Trie%20(%E5%89%8D%E7%BC%80%E6%A0%91)/" itemprop="url">208. 实现 Trie (前缀树)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="208-实现-Trie-前缀树"><a href="#208-实现-Trie-前缀树" class="headerlink" title="208. 实现 Trie (前缀树)"></a><a href="https://leetcode-cn.com/problems/implement-trie-prefix-tree/" target="_blank" rel="noopener">208. 实现 Trie (前缀树)</a></h1><p><strong>题目描述：</strong></p>
-<p>实现一个 Trie (前缀树)，包含 <code>insert</code>, <code>search</code>, 和 <code>startsWith</code> 这三个操作</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Trie trie &#x3D; new Trie();</span><br><span class="line"></span><br><span class="line">trie.insert(&quot;apple&quot;);</span><br><span class="line">trie.search(&quot;apple&quot;);   &#x2F;&#x2F; 返回 true</span><br><span class="line">trie.search(&quot;app&quot;);     &#x2F;&#x2F; 返回 false</span><br><span class="line">trie.startsWith(&quot;app&quot;); &#x2F;&#x2F; 返回 true</span><br><span class="line">trie.insert(&quot;app&quot;);   </span><br><span class="line">trie.search(&quot;app&quot;);     &#x2F;&#x2F; 返回 true</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Trie树"><a href="#Trie树" class="headerlink" title="Trie树"></a>Trie树</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>构造一个新的树型数据结构，其输入多叉树，假设所有输入都是小写字母，最后是26叉树，每一个节点由两个字段构成：<ol>
-<li>26个指向字节的链接组成的数组</li>
-<li>标记当前节点是否为节点的布尔值</li>
-</ol>
-</li>
-</ul>
-<p><img src="https://pic.leetcode-cn.com/3463d9e7cb323911aa67cbd94910a34d88c9402a1ab41bbea10852cd0a74f2af-file_1562596867185" alt="无效的图片地址"></p>
-<p>​                                                  leet在该数据结构中的显示</p>
-<ul>
-<li><code>TrieNode</code>的实现如下：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class TrieNode&#123;</span><br><span class="line">        private TrieNode[] links;</span><br><span class="line">        private final int R&#x3D;26;</span><br><span class="line">        private boolean isEnd;</span><br><span class="line"></span><br><span class="line">        public TrieNode()&#123;</span><br><span class="line">            links&#x3D;new TrieNode[R];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public boolean containKey(char ch)&#123;</span><br><span class="line">            return links[ch-&#39;a&#39;]!&#x3D;null;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public TrieNode get(char ch)&#123;</span><br><span class="line">            return links[ch-&#39;a&#39;];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void put(char ch,TrieNode node)&#123;</span><br><span class="line">            links[ch-&#39;a&#39;]&#x3D;node;</span><br><span class="line">        &#125;</span><br><span class="line">        public void setEnd()&#123;</span><br><span class="line">            isEnd&#x3D;true;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public boolean isEnd()&#123;</span><br><span class="line">            return isEnd;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>最后的实现如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">private TrieNode root;</span><br><span class="line">    public Trie() &#123;</span><br><span class="line">        root&#x3D;new TrieNode();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;** Inserts a word into the trie. *&#x2F;</span><br><span class="line">    public void insert(String word) &#123;</span><br><span class="line">        TrieNode node&#x3D;root;</span><br><span class="line">        for(int i&#x3D;0;i&lt;word.length();i++)&#123;</span><br><span class="line">        	&#x2F;&#x2F;依次插入一个字母</span><br><span class="line">            if(node&#x3D;&#x3D;null||!node.containKey(word.charAt(i)))&#123;</span><br><span class="line">                node.put(word.charAt(i),new TrieNode());</span><br><span class="line">            &#125;</span><br><span class="line">            node&#x3D;node.get(word.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        node.setEnd();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;** Returns if the word is in the trie. *&#x2F;</span><br><span class="line">    public boolean search(String word) &#123;</span><br><span class="line">        TrieNode node&#x3D;root;</span><br><span class="line">        for(int i&#x3D;0;i&lt;word.length();i++)&#123;</span><br><span class="line">            if(!node.containKey(word.charAt(i))) return false;</span><br><span class="line">            node&#x3D;node.get(word.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后返回当前node是否是最后一位</span><br><span class="line">        return node.isEnd();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;** Returns if there is any word in the trie that starts with the given prefix. *&#x2F;</span><br><span class="line">    public boolean startsWith(String prefix) &#123;</span><br><span class="line">        TrieNode node&#x3D;root;</span><br><span class="line">        for(int i&#x3D;0;i&lt;prefix.length();i++)&#123;</span><br><span class="line">            if(!node.containKey(prefix.charAt(i))) return false;</span><br><span class="line">            node&#x3D;node.get(prefix.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;判断前缀直接返回true就可</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/210.%20%E8%AF%BE%E7%A8%8B%E8%A1%A8%20II/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1470,537 +1986,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/215.%20%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E7%AC%ACK%E4%B8%AA%E6%9C%80%E5%A4%A7%E5%85%83%E7%B4%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/215.%20%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E7%AC%ACK%E4%B8%AA%E6%9C%80%E5%A4%A7%E5%85%83%E7%B4%A0/" itemprop="url">215. 数组中的第K个最大元素</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="215-数组中的第K个最大元素"><a href="#215-数组中的第K个最大元素" class="headerlink" title="215. 数组中的第K个最大元素"></a><a href="https://leetcode-cn.com/problems/kth-largest-element-in-an-array/" target="_blank" rel="noopener">215. 数组中的第K个最大元素</a></h1><p><strong>题目描述：</strong></p>
-<p>在未排序的数组中找到第 <strong>k</strong> 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: [3,2,1,5,6,4] 和 k &#x3D; 2</span><br><span class="line">输出: 5</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: [3,2,3,1,2,4,5,5,6] 和 k &#x3D; 4</span><br><span class="line">输出: 4</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="算法一：排序"><a href="#算法一：排序" class="headerlink" title="算法一：排序"></a>算法一：排序</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>直接排序，然后再返回第k大的</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public int findKthLargest(int[] nums, int k) &#123;</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        return nums[nums.length-k];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(nlogn)</li>
-<li><strong>空间复杂度：</strong>O(1)</li>
-</ul>
-<h2 id="算法二：快速选择"><a href="#算法二：快速选择" class="headerlink" title="算法二：快速选择"></a>算法二：快速选择</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>基于快速排序中的快速选择算法，每次将数组划分成两部分，每次可以确定两部分中间的哪个数是第几大的数，如果满足条件直接返回，否则可以按照大小淘汰掉一部分，在另一部分中寻找</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public int findKthLargest(int[] nums, int k) &#123;</span><br><span class="line">        int start&#x3D;0,end&#x3D;nums.length-1;</span><br><span class="line">        while (start&lt;end)&#123;</span><br><span class="line">            int low&#x3D;start,high&#x3D;end;</span><br><span class="line">            int compare&#x3D;nums[low];</span><br><span class="line">            while (low&lt;high)&#123;</span><br><span class="line">            	&#x2F;&#x2F;下面一定要有等号(nums[high]&gt;&#x3D;compare)</span><br><span class="line">                while (low&lt;high&amp;&amp;nums[high]&gt;&#x3D;compare) high--;</span><br><span class="line">                nums[low]&#x3D;nums[high];</span><br><span class="line">                while (low&lt;high&amp;&amp;nums[low]&lt;&#x3D;compare) low++;</span><br><span class="line">                nums[high]&#x3D;nums[low];</span><br><span class="line">            &#125;</span><br><span class="line">            nums[high]&#x3D;compare;</span><br><span class="line">            &#x2F;&#x2F;如果找到的是第k大的元素，直接返回</span><br><span class="line">            if(high-start&#x3D;&#x3D;end-start-k+1) return compare;</span><br><span class="line">            &#x2F;&#x2F;否则，如果在左边，更新end的值，同时也要用k减去右边部分元素个数</span><br><span class="line">            else if(high-start&gt;end-start-k+1)&#123;</span><br><span class="line">                k&#x3D;k-(end-high+1);</span><br><span class="line">                end&#x3D;high-1;</span><br><span class="line">                &#x2F;&#x2F;如果在右边，直接更新start</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                start&#x3D;high+1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return nums[end];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>最好情况下，一次划分一半，时间复杂度为n+n/2+n/4+……=2n，所以为O(n)，最坏情况下时间复杂度为O(n^2^)，平均下时间复杂度为O(n)</li>
-<li><strong>空间复杂度：</strong>O(1)</li>
-</ul>
-<h2 id="算法三：小根堆"><a href="#算法三：小根堆" class="headerlink" title="算法三：小根堆"></a>算法三：小根堆</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>维护一个小根堆，依次将数组中的元素加入堆中，堆顶为最小元素，当堆中元素个数大于k时，最小元素出堆，最后堆中只剩下k个元素，堆中剩下的元素一定大于之前出堆的元素，堆中的k个元素就是最大的k个元素，堆顶元素就是第k大的元素</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public int findKthLargest(int[] nums, int k) &#123;</span><br><span class="line">        &#x2F;&#x2F;PriorityQueue&lt;Integer&gt; heap&#x3D;new PriorityQueue&lt;&gt;(o1,o2 -&gt; o1-o2);</span><br><span class="line">        PriorityQueue&lt;Integer&gt; heap&#x3D;new PriorityQueue&lt;&gt;(new Comparator&lt;Integer&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public int compare(Integer o1, Integer o2) &#123;</span><br><span class="line">                return o1-o2;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        for(int n:nums)&#123;</span><br><span class="line">            heap.add(n);</span><br><span class="line">            if(heap.size()&gt;k) heap.poll();</span><br><span class="line">        &#125;</span><br><span class="line">        return heap.poll();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>说明：</strong></p>
-<ul>
-<li>java中用PriorityQueue来实现堆，其默认为小根堆，可以传入自定义的Comparator变成大根堆：<code>PriorityQueue&lt;Integer&gt; heap=new PriorityQueue&lt;&gt;(o1,o2 -&gt; o2-o1);</code></li>
-</ul>
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><p><strong>时间复杂度：</strong>O(nlogk)，像大小为 k 的堆中添加元素的时间复杂度为 O(logk)，我们将重复该操作 N 次，故总时间复杂度为 O(Nlogk)。</p>
-</li>
-<li><p><strong>空间复杂度：</strong>O(k)</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/217.%20%E5%AD%98%E5%9C%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/217.%20%E5%AD%98%E5%9C%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/" itemprop="url">217. 存在重复元素</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="217-存在重复元素"><a href="#217-存在重复元素" class="headerlink" title="217. 存在重复元素"></a><a href="https://leetcode-cn.com/problems/contains-duplicate/" target="_blank" rel="noopener">217. 存在重复元素</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个整数数组，判断是否存在重复元素。</p>
-<p>如果任何值在数组中出现至少两次，函数返回 true。如果数组中每个元素都不相同，则返回 false。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: [1,2,3,1]</span><br><span class="line">输出: true</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: [1,2,3,4]</span><br><span class="line">输出: false</span><br><span class="line"></span><br><span class="line">示例 3:</span><br><span class="line"></span><br><span class="line">输入: [1,1,1,3,3,4,3,2,4,2]</span><br><span class="line">输出: true</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>用一个哈希表存储已经访问过的元素若有重复直接返回true</li>
-<li>对于哈希表（Java 中的 HashSet 或 HashMap），<code>search</code> 和 <code>insert</code> 的平均时间复杂度为 <em>O</em>(1)</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public boolean containsDuplicate(int[] nums) &#123;</span><br><span class="line">        Set&lt;Integer&gt; set&#x3D;new HashSet&lt;&gt;();</span><br><span class="line">        for(int num:nums)&#123;</span><br><span class="line">            if(set.contains(num)) return true;</span><br><span class="line">            set.add(num);</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(n),<code>search</code> 和 <code>insert</code> 的平均时间复杂度为 <em>O</em>(1)</li>
-<li><strong>空间复杂度：</strong>O(n)</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/227.%20%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E5%99%A8%20II/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/227.%20%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E5%99%A8%20II/" itemprop="url">227. 基本计算器 II</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="227-基本计算器-II"><a href="#227-基本计算器-II" class="headerlink" title="227. 基本计算器 II"></a><a href="https://leetcode-cn.com/problems/basic-calculator-ii/" target="_blank" rel="noopener">227. 基本计算器 II</a></h1><p><strong>题目描述：</strong>实现一个基本的计算器来计算一个简单的字符串表达式的值。</p>
-<p>字符串表达式仅包含非负整数，<code>+</code>， <code>-</code> ，<code>*</code>，<code>/</code> 四种运算符和<strong>空格</strong> <code></code>。 整数除法仅保留整数部分。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: &quot;3+2*2&quot;</span><br><span class="line">输出: 7</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: &quot; 3&#x2F;2 &quot;</span><br><span class="line">输出: 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 3:</span><br><span class="line"></span><br><span class="line">输入: &quot; 3+5 &#x2F; 2 &quot;</span><br><span class="line">输出: 5</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="二刷"><a href="#二刷" class="headerlink" title="二刷"></a>二刷</h2><p>实现的没有下面简洁，学习一下，注意四点：</p>
-<ol>
-<li>第一遍只计算乘除，第二遍再计算加减</li>
-<li>减可以转换为加相反数</li>
-<li>数字可能是多位的比如43这种，遇到数字需要要一直向后直到不是数字</li>
-<li>i多++了一次，后面要i–；</li>
-</ol>
-<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>用一个栈来存储操作数，以计算32+2*2为例，首先lastOp为’+’，计算出tempNum为32，所以将32入栈，然后下一次循环将lastOp改为’+’，再计算出tempNum为2，所以2入栈，下一次循环lastOp改为<code>&#39;×&#39;</code>,计算出tempNum为2，所以计算res(×，2，2)，将结果4入栈，最后所有结果相加即可。</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public int calculate(String s) &#123;</span><br><span class="line">        Stack&lt;Integer&gt; numStack&#x3D;new Stack&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;lastOp记录操作符，初始为&#39;+&#39;</span><br><span class="line">        char lastOp&#x3D;&#39;+&#39;;</span><br><span class="line">        char[] arr &#x3D; s.toCharArray();</span><br><span class="line">        for(int i&#x3D;0;i&lt;arr.length;i++)&#123;</span><br><span class="line">        	&#x2F;&#x2F;空格直接进入下次循环</span><br><span class="line">            if(arr[i]&#x3D;&#x3D;&#39; &#39;) continue;</span><br><span class="line">            &#x2F;&#x2F;如果是数字首先要把连续的数字变成十进制储存起来</span><br><span class="line">            if(Character.isDigit(arr[i]))&#123;</span><br><span class="line">                int tempNum&#x3D;arr[i]-&#39;0&#39;;</span><br><span class="line">                while (++i&lt;arr.length&amp;&amp;Character.isDigit(arr[i]))&#123;</span><br><span class="line">                    tempNum&#x3D;10*tempNum+arr[i]-&#39;0&#39;;</span><br><span class="line">                &#125;i--;  &#x2F;&#x2F;此处i要--，因为刚跳出上面循环的i指向的不是数字，要么是空格，					要么是操作符，要在下次循环时处理，而下次循环开始i要再++，所以先--</span><br><span class="line">                if(lastOp &#x3D;&#x3D; &#39;+&#39;) numStack.push(tempNum);</span><br><span class="line">                &#x2F;&#x2F;如果是&#39;-&#39;，则存入相反数</span><br><span class="line">                else if(lastOp &#x3D;&#x3D; &#39;-&#39;) numStack.push(-tempNum);</span><br><span class="line">                &#x2F;&#x2F;否则乘除就需要先计算</span><br><span class="line">                else numStack.push(res(lastOp, numStack.pop(), tempNum));</span><br><span class="line">                &#x2F;&#x2F;最后如果不是数字，则要更新操作符</span><br><span class="line">            &#125; else lastOp &#x3D; arr[i];</span><br><span class="line">        &#125;</span><br><span class="line">		&#x2F;&#x2F;所有结果相加</span><br><span class="line">        int ans &#x3D; 0;</span><br><span class="line">        for(int num : numStack) ans +&#x3D; num;</span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">    private int res(char op, int a, int b) &#123;</span><br><span class="line">        if (op &#x3D;&#x3D; &#39;*&#39;) return a * b;</span><br><span class="line">        else if (op &#x3D;&#x3D; &#39;&#x2F;&#39;) return a &#x2F; b;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(n)</li>
-<li><strong>空间复杂度：</strong>O(n)</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2055,7 +2040,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">211</span>
+                  <span class="site-state-item-count">214</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2066,7 +2051,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2077,7 +2062,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2130,7 +2115,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

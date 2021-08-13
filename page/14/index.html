@@ -248,7 +248,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/105.%20%E4%BB%8E%E5%89%8D%E5%BA%8F%E4%B8%8E%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91/">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/101.%20%E5%AF%B9%E7%A7%B0%E4%BA%8C%E5%8F%89%E6%A0%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黎达">
@@ -267,7 +267,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/11/105.%20%E4%BB%8E%E5%89%8D%E5%BA%8F%E4%B8%8E%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91/" itemprop="url">105. 从前序与中序遍历序列构造二叉树</a></h1>
+                <a class="post-title-link" href="/2020/04/11/101.%20%E5%AF%B9%E7%A7%B0%E4%BA%8C%E5%8F%89%E6%A0%91/" itemprop="url">101. 对称二叉树</a></h1>
         
 
         <div class="post-meta">
@@ -341,27 +341,51 @@
       
         
           
-            <h1 id="105-从前序与中序遍历序列构造二叉树"><a href="#105-从前序与中序遍历序列构造二叉树" class="headerlink" title="105. 从前序与中序遍历序列构造二叉树"></a><a href="https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/" target="_blank" rel="noopener">105. 从前序与中序遍历序列构造二叉树</a></h1><p><strong>题目描述：</strong></p>
-<p>根据一棵树的前序遍历与中序遍历构造二叉树。</p>
-<p><strong>注意:</strong><br>你可以假设树中没有重复的元素。</p>
+            <h1 id="101-对称二叉树"><a href="#101-对称二叉树" class="headerlink" title="101. 对称二叉树"></a><a href="https://leetcode-cn.com/problems/symmetric-tree/" target="_blank" rel="noopener">101. 对称二叉树</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个二叉树，检查它是否是镜像对称的。</p>
 <p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">例如，给出</span><br><span class="line"></span><br><span class="line">前序遍历 preorder &#x3D; [3,9,20,15,7]</span><br><span class="line">中序遍历 inorder &#x3D; [9,3,15,20,7]</span><br><span class="line">返回如下的二叉树：</span><br><span class="line"></span><br><span class="line">    3</span><br><span class="line">   &#x2F; \</span><br><span class="line">  9  20</span><br><span class="line">    &#x2F;  \</span><br><span class="line">   15   7</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">例如，二叉树 [1,2,2,3,4,4,3] 是对称的。</span><br><span class="line"></span><br><span class="line">    1</span><br><span class="line">   &#x2F; \</span><br><span class="line">  2   2</span><br><span class="line"> &#x2F; \ &#x2F; \</span><br><span class="line">3  4 4  3</span><br><span class="line">但是下面这个 [1,2,2,null,3,null,3] 则不是镜像对称的:</span><br><span class="line"></span><br><span class="line">    1</span><br><span class="line">   &#x2F; \</span><br><span class="line">  2   2</span><br><span class="line">   \   \</span><br><span class="line">   3    3</span><br></pre></td></tr></table></figure>
+
+
 
 
 
 <h2 id="算法一：递归"><a href="#算法一：递归" class="headerlink" title="算法一：递归"></a>算法一：递归</h2><p><strong>算法思想：</strong></p>
 <ul>
-<li>通过先序遍历可以首先确认出根节点，然后再在中序遍历中寻找根节点的值，其左边和右边就分别是左子树与右子树</li>
-<li>通过更新左子树与右子树的先序遍历和中序遍历数组，可以递归计算左子树与右子树</li>
+<li>判断一颗树是否为镜像对称的，可以判断对称位置节点的值是否相等，对称位置也就是从根节点开始所走的路劲完全相反，例如 <code>root.left.right与root.right.left</code>就是对称节点</li>
+</ul>
+<ul>
+<li>如果同时满足下面的条件，两个树互为镜像：</li>
+</ul>
+<ol>
+<li>它们的两个根结点具有相同的值。</li>
+<li>每个树的右子树都与另一个树的左子树镜像对称。</li>
+</ol>
+<p><img src="https://pic.leetcode-cn.com/2c9a13df75821ba472de5267470481e48386ffa658b3f91a8acca5abfa43625d-file_1555698500306" alt="Push an element in stack"></p>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public boolean isSymmetric(TreeNode root) &#123;</span><br><span class="line">        if(root&#x3D;&#x3D;null) return true;</span><br><span class="line">        return isSame(root.left,root.right);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;判断分别以left，right为根的子树是否镜像对称</span><br><span class="line">    public boolean isSame(TreeNode left,TreeNode right)&#123;</span><br><span class="line">         if(left&#x3D;&#x3D;null&amp;&amp;right&#x3D;&#x3D;null) return true;</span><br><span class="line">         &#x2F;&#x2F;如果left与right中有且只有一个为null，返回false</span><br><span class="line">         if(left&#x3D;&#x3D;null||right&#x3D;&#x3D;null) return false;</span><br><span class="line">         &#x2F;&#x2F;两个根节点的值不相等</span><br><span class="line">         if(left.val!&#x3D;right.val) return false;</span><br><span class="line">         &#x2F;&#x2F;递归判断left的左子树与right的右子树是否镜像对称，下面类似</span><br><span class="line">         if(!isSame(left.left,right.right)) return false;</span><br><span class="line">         if(!isSame(left.right,right.left)) return false;</span><br><span class="line">         return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)，因为我们遍历整个输入树一次，所以总的运行时间为 O(n)，其中 n 是树中结点的总数。</li>
+<li><strong>空间复杂度：</strong>递归调用的次数受树的高度限制。在最糟糕情况下，树是线性的，其高度为 O(n)。因此，在最糟糕的情况下，由栈上的递归调用造成的空间复杂度为 O(n)。</li>
+</ul>
+<h2 id="算法二：迭代"><a href="#算法二：迭代" class="headerlink" title="算法二：迭代"></a>算法二：迭代</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>上面算法的迭代解法，由于上面的递归函数有两个参数left与right，所以想到用两个栈分别来存储这两个参数</li>
+<li>用深度优先的方式分别遍历两个子树</li>
 </ul>
 <p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public TreeNode buildTree(int[] preorder, int[] inorder) &#123;</span><br><span class="line">		&#x2F;&#x2F;将两个情况单独拉出来讨论</span><br><span class="line">        if(preorder.length&#x3D;&#x3D;0&amp;&amp;inorder.length&#x3D;&#x3D;0) return null;</span><br><span class="line">        if(preorder.length&#x3D;&#x3D;1&amp;&amp;inorder.length&#x3D;&#x3D;1) return new TreeNode(preorder[0]);</span><br><span class="line">        &#x2F;&#x2F;通过先序遍历确定根节点的值</span><br><span class="line">        TreeNode root&#x3D;new TreeNode(preorder[0]);</span><br><span class="line">        &#x2F;&#x2F;index记录根节点在中序遍历中的索引</span><br><span class="line">        int index&#x3D;0;</span><br><span class="line">        while(inorder[index]!&#x3D;preorder[0])&#123;</span><br><span class="line">            index++;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;分别表示左子树长度和右子树长度</span><br><span class="line">        int leftTreeSize&#x3D;index,rightTreeSize&#x3D;inorder.length-index-1;</span><br><span class="line">        int[] leftPreorder&#x3D;new int[leftTreeSize],rightPreorder&#x3D;new int[rightTreeSize],</span><br><span class="line">                leftInorder&#x3D;new int[leftTreeSize],rightInorder&#x3D;new int[rightTreeSize];</span><br><span class="line">        &#x2F;&#x2F;分别更新左子树先序遍历，右子树先序遍历，左子树中序遍历，右子树中序遍历数组</span><br><span class="line">        System.arraycopy(preorder,1,leftPreorder,0,leftTreeSize);</span><br><span class="line">        System.arraycopy(preorder,leftTreeSize+1,rightPreorder,0,rightTreeSize);</span><br><span class="line">        System.arraycopy(inorder,0,leftInorder,0,leftTreeSize);</span><br><span class="line">        System.arraycopy(inorder,leftTreeSize+1,rightInorder,0,rightTreeSize);</span><br><span class="line">        &#x2F;&#x2F;递归计算左子树与右子树</span><br><span class="line">        root.left&#x3D;buildTree(leftPreorder,leftInorder);</span><br><span class="line">        root.right&#x3D;buildTree(rightPreorder,rightInorder);</span><br><span class="line">        return root;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public boolean isSymmetric(TreeNode root) &#123;</span><br><span class="line">        if(root&#x3D;&#x3D;null) return true;</span><br><span class="line">        &#x2F;&#x2F;用两个栈分别存储需要去比较的两个子树</span><br><span class="line">        Stack&lt;TreeNode&gt; leftNodes&#x3D;new Stack&lt;&gt;(),rightNodes&#x3D;new Stack&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;初始为root的左子树与右子树</span><br><span class="line">        leftNodes.push(root.left);</span><br><span class="line">        rightNodes.push(root.right);</span><br><span class="line">        TreeNode left,right;</span><br><span class="line">        while(!leftNodes.isEmpty()&amp;&amp;!rightNodes.isEmpty())&#123;</span><br><span class="line">            left&#x3D;leftNodes.pop();</span><br><span class="line">            right&#x3D;rightNodes.pop();</span><br><span class="line">            if(left&#x3D;&#x3D;null&amp;&amp;right&#x3D;&#x3D;null) continue;</span><br><span class="line">            if(!isSame(left,right)) return false;</span><br><span class="line">            &#x2F;&#x2F;按顺序将left，right的左右子树存储到栈中</span><br><span class="line">            leftNodes.push(left.left);</span><br><span class="line">            rightNodes.push(right.right);</span><br><span class="line">            leftNodes.push(left.right);</span><br><span class="line">            rightNodes.push(right.left);</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后如果有一个栈没有遍历完，肯定不是镜像对称的，返回false(这一步是多余的，因为上面已			  经将这种情况考虑进去了)</span><br><span class="line">        if(!leftNodes.isEmpty()||!rightNodes.isEmpty())&#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;返回left与right的值是否相同</span><br><span class="line">    public boolean isSame(TreeNode left,TreeNode right)&#123;</span><br><span class="line">         if(left&#x3D;&#x3D;null&amp;&amp;right&#x3D;&#x3D;null) return true;</span><br><span class="line">         if(left&#x3D;&#x3D;null||right&#x3D;&#x3D;null) return false;</span><br><span class="line">         if(left.val!&#x3D;right.val) return false;</span><br><span class="line">         return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<p><strong>改进：</strong></p>
+<p><strong>复杂度分析：</strong></p>
 <ul>
-<li>上面的算法是通过复制数组的方式来实现的，会耗费更多时间，可以通过更改数组初始索引的方式来实现</li>
+<li><strong>时间复杂度：</strong>O(n)，因为我们遍历整个输入树一次，所以总的运行时间为 O(n)，其中 n 是树中结点的总数。</li>
+<li><strong>空间复杂度：</strong>搜索栈需要额外的空间。在最糟糕情况下，我们不得不向队列中插入 O(n) 个结点。因此，空间复杂度为 O(n)。</li>
 </ul>
 
           
@@ -525,6 +549,535 @@
 <p><strong>算法实现：</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public int maxDepth(TreeNode root) &#123;</span><br><span class="line">        if(root&#x3D;&#x3D;null) return 0;</span><br><span class="line">        Queue&lt;TreeNode&gt; queue&#x3D;new LinkedList&lt;&gt;();</span><br><span class="line">        queue.add(root);</span><br><span class="line">        &#x2F;&#x2F;depth记录高度</span><br><span class="line">        int depth&#x3D;0;</span><br><span class="line">        while(!queue.isEmpty())&#123;</span><br><span class="line">            int level_size&#x3D;queue.size();</span><br><span class="line">            for(int i&#x3D;0;i&lt;level_size;i++)&#123;</span><br><span class="line">                TreeNode node &#x3D; queue.poll();</span><br><span class="line">                if(node.left!&#x3D;null)&#123;</span><br><span class="line">                    queue.add(node.left);</span><br><span class="line">                &#125;</span><br><span class="line">                if(node.right!&#x3D;null)&#123;</span><br><span class="line">                    queue.add(node.right);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            depth++;</span><br><span class="line">        &#125;</span><br><span class="line">        return depth;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/103.%20%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%94%AF%E9%BD%BF%E5%BD%A2%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/103.%20%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%94%AF%E9%BD%BF%E5%BD%A2%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/" itemprop="url">103. 二叉树的锯齿形层次遍历</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="103-二叉树的锯齿形层次遍历"><a href="#103-二叉树的锯齿形层次遍历" class="headerlink" title="103. 二叉树的锯齿形层次遍历"></a><a href="https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/" target="_blank" rel="noopener">103. 二叉树的锯齿形层次遍历</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个二叉树，返回其节点值的锯齿形层次遍历。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">例如：</span><br><span class="line">给定二叉树 [3,9,20,null,null,15,7],</span><br><span class="line"></span><br><span class="line">    3</span><br><span class="line">   &#x2F; \</span><br><span class="line">  9  20</span><br><span class="line">    &#x2F;  \</span><br><span class="line">   15   7</span><br><span class="line">返回锯齿形层次遍历如下：</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">  [3],</span><br><span class="line">  [20,9],</span><br><span class="line">  [15,7]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法一：额外使用栈来实现偶数层的反转"><a href="#算法一：额外使用栈来实现偶数层的反转" class="headerlink" title="算法一：额外使用栈来实现偶数层的反转"></a>算法一：额外使用栈来实现偶数层的反转</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>同102题大致相同，不同的 是需要在偶数层实现翻转，所以想到用栈来实现，其他部分一样</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">List&lt;List&lt;Integer&gt;&gt; result&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">    public List&lt;List&lt;Integer&gt;&gt; zigzagLevelOrder(TreeNode root) &#123;</span><br><span class="line">        if(root&#x3D;&#x3D;null) return result;</span><br><span class="line">        int level&#x3D;0;</span><br><span class="line">        LinkedList&lt;TreeNode&gt; queue&#x3D;new LinkedList&lt;&gt;();</span><br><span class="line">        queue.add(root);</span><br><span class="line">        while(!queue.isEmpty())&#123;</span><br><span class="line">        	&#x2F;&#x2F;栈来实现翻转</span><br><span class="line">            Stack&lt;TreeNode&gt; stack&#x3D;new Stack&lt;&gt;();</span><br><span class="line">            if(level&#x3D;&#x3D;result.size())&#123;</span><br><span class="line">                result.add(new ArrayList&lt;&gt;());</span><br><span class="line">            &#125;</span><br><span class="line">            int level_size&#x3D;queue.size();</span><br><span class="line">            &#x2F;&#x2F;由于level从0开始，所以偶数层的level为奇数</span><br><span class="line">            if(level%2&#x3D;&#x3D;1) &#123;</span><br><span class="line">                for (int i &#x3D; 0; i &lt; level_size; i++) &#123;</span><br><span class="line">                	&#x2F;&#x2F;依次将出队的元素入栈</span><br><span class="line">                    TreeNode node &#x3D; queue.poll();</span><br><span class="line">                    stack.add(node);</span><br><span class="line">                    if (node.left !&#x3D; null) &#123;</span><br><span class="line">                        queue.add(node.left);</span><br><span class="line">                    &#125;</span><br><span class="line">                    if (node.right !&#x3D; null) &#123;</span><br><span class="line">                        queue.add(node.right);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F;然后再依次出栈即可实现翻转</span><br><span class="line">                while(!stack.isEmpty())&#123;</span><br><span class="line">                    result.get(level).add(stack.pop().val);</span><br><span class="line">                &#125;</span><br><span class="line">                level++;</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">            	&#x2F;&#x2F;奇数层的处理不变</span><br><span class="line">                for (int i &#x3D; 0; i &lt; level_size; i++) &#123;</span><br><span class="line">                    TreeNode node &#x3D; queue.poll();</span><br><span class="line">                    if (node.left !&#x3D; null) &#123;</span><br><span class="line">                        queue.add(node.left);</span><br><span class="line">                    &#125;</span><br><span class="line">                    if (node.right !&#x3D; null) &#123;</span><br><span class="line">                        queue.add(node.right);</span><br><span class="line">                    &#125;</span><br><span class="line">                    result.get(level).add(node.val);</span><br><span class="line">                &#125;</span><br><span class="line">                level++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">         return result;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>说明：</strong></p>
+<ul>
+<li>在思考过程中一直想到一种错误的算法，即通过LinkedList能够在队头和队尾操作的特性来实现双端队列</li>
+<li>如果是在奇数层则不需要额外操作，直接队尾进，队头出即可</li>
+<li>如果是在偶数层，我想的是从队头进，队头出模拟栈的作用来实现翻转，但是问题在于这样操作后先入队的是最右边节点的孩子，会导致在下一层的遍历中，还是从右边开始</li>
+</ul>
+<h2 id="算法二：递归算法"><a href="#算法二：递归算法" class="headerlink" title="算法二：递归算法"></a>算法二：递归算法</h2><p><strong>算法思路：</strong></p>
+<ul>
+<li>将上面的算法改为递归算法</li>
+<li><strong>学到一个新的方法，List的add()方法有一个带两个参数的方法list.add(int index,E element)，在特定的索引处添加element，所以可以通过list.add(0,element)来实现翻转</strong></li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">List&lt;List&lt;Integer&gt;&gt; result&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">    public List&lt;List&lt;Integer&gt;&gt; zigzagLevelOrder(TreeNode root) &#123;</span><br><span class="line">        if(root&#x3D;&#x3D;null) return result;</span><br><span class="line">        helper(root,0);</span><br><span class="line">         return result;</span><br><span class="line">     &#125;</span><br><span class="line">     private void helper(TreeNode root,int level)&#123;</span><br><span class="line">         if(level&#x3D;&#x3D;result.size())&#123;</span><br><span class="line">             result.add(new ArrayList&lt;&gt;());</span><br><span class="line">         &#125;</span><br><span class="line">         if(level%2&#x3D;&#x3D;0) &#123;</span><br><span class="line">             result.get(level).add(root.val);</span><br><span class="line">         &#125;else &#123;</span><br><span class="line">             result.get(level).add(0,root.val);</span><br><span class="line">         &#125;</span><br><span class="line">         if(root.left!&#x3D;null) &#123;</span><br><span class="line">             helper(root.left, level + 1);</span><br><span class="line">         &#125;</span><br><span class="line">         if(root.right!&#x3D;null) &#123;</span><br><span class="line">             helper(root.right, level + 1);</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/105.%20%E4%BB%8E%E5%89%8D%E5%BA%8F%E4%B8%8E%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/105.%20%E4%BB%8E%E5%89%8D%E5%BA%8F%E4%B8%8E%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91/" itemprop="url">105. 从前序与中序遍历序列构造二叉树</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="105-从前序与中序遍历序列构造二叉树"><a href="#105-从前序与中序遍历序列构造二叉树" class="headerlink" title="105. 从前序与中序遍历序列构造二叉树"></a><a href="https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/" target="_blank" rel="noopener">105. 从前序与中序遍历序列构造二叉树</a></h1><p><strong>题目描述：</strong></p>
+<p>根据一棵树的前序遍历与中序遍历构造二叉树。</p>
+<p><strong>注意:</strong><br>你可以假设树中没有重复的元素。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">例如，给出</span><br><span class="line"></span><br><span class="line">前序遍历 preorder &#x3D; [3,9,20,15,7]</span><br><span class="line">中序遍历 inorder &#x3D; [9,3,15,20,7]</span><br><span class="line">返回如下的二叉树：</span><br><span class="line"></span><br><span class="line">    3</span><br><span class="line">   &#x2F; \</span><br><span class="line">  9  20</span><br><span class="line">    &#x2F;  \</span><br><span class="line">   15   7</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法一：递归"><a href="#算法一：递归" class="headerlink" title="算法一：递归"></a>算法一：递归</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>通过先序遍历可以首先确认出根节点，然后再在中序遍历中寻找根节点的值，其左边和右边就分别是左子树与右子树</li>
+<li>通过更新左子树与右子树的先序遍历和中序遍历数组，可以递归计算左子树与右子树</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public TreeNode buildTree(int[] preorder, int[] inorder) &#123;</span><br><span class="line">		&#x2F;&#x2F;将两个情况单独拉出来讨论</span><br><span class="line">        if(preorder.length&#x3D;&#x3D;0&amp;&amp;inorder.length&#x3D;&#x3D;0) return null;</span><br><span class="line">        if(preorder.length&#x3D;&#x3D;1&amp;&amp;inorder.length&#x3D;&#x3D;1) return new TreeNode(preorder[0]);</span><br><span class="line">        &#x2F;&#x2F;通过先序遍历确定根节点的值</span><br><span class="line">        TreeNode root&#x3D;new TreeNode(preorder[0]);</span><br><span class="line">        &#x2F;&#x2F;index记录根节点在中序遍历中的索引</span><br><span class="line">        int index&#x3D;0;</span><br><span class="line">        while(inorder[index]!&#x3D;preorder[0])&#123;</span><br><span class="line">            index++;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;分别表示左子树长度和右子树长度</span><br><span class="line">        int leftTreeSize&#x3D;index,rightTreeSize&#x3D;inorder.length-index-1;</span><br><span class="line">        int[] leftPreorder&#x3D;new int[leftTreeSize],rightPreorder&#x3D;new int[rightTreeSize],</span><br><span class="line">                leftInorder&#x3D;new int[leftTreeSize],rightInorder&#x3D;new int[rightTreeSize];</span><br><span class="line">        &#x2F;&#x2F;分别更新左子树先序遍历，右子树先序遍历，左子树中序遍历，右子树中序遍历数组</span><br><span class="line">        System.arraycopy(preorder,1,leftPreorder,0,leftTreeSize);</span><br><span class="line">        System.arraycopy(preorder,leftTreeSize+1,rightPreorder,0,rightTreeSize);</span><br><span class="line">        System.arraycopy(inorder,0,leftInorder,0,leftTreeSize);</span><br><span class="line">        System.arraycopy(inorder,leftTreeSize+1,rightInorder,0,rightTreeSize);</span><br><span class="line">        &#x2F;&#x2F;递归计算左子树与右子树</span><br><span class="line">        root.left&#x3D;buildTree(leftPreorder,leftInorder);</span><br><span class="line">        root.right&#x3D;buildTree(rightPreorder,rightInorder);</span><br><span class="line">        return root;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>改进：</strong></p>
+<ul>
+<li>上面的算法是通过复制数组的方式来实现的，会耗费更多时间，可以通过更改数组初始索引的方式来实现</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/102.%20%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/102.%20%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/" itemprop="url">102. 二叉树的层次遍历</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="102-二叉树的层次遍历"><a href="#102-二叉树的层次遍历" class="headerlink" title="102. 二叉树的层次遍历"></a><a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal/" target="_blank" rel="noopener">102. 二叉树的层次遍历</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个二叉树，返回其按层次遍历的节点值。 （即逐层地，从左到右访问所有节点）。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">例如:</span><br><span class="line">给定二叉树: [3,9,20,null,null,15,7],</span><br><span class="line"></span><br><span class="line">    3</span><br><span class="line">   &#x2F; \</span><br><span class="line">  9  20</span><br><span class="line">    &#x2F;  \</span><br><span class="line">   15   7</span><br><span class="line">返回其层次遍历结果：</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">  [3],</span><br><span class="line">  [9,20],</span><br><span class="line">  [15,7]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法一：迭代"><a href="#算法一：迭代" class="headerlink" title="算法一：迭代"></a>算法一：迭代</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>层次遍历可以用队列来实现，由于要将同一层的节点存储在一个list中，所以想到用lastNode指向本层中的最后一个节点</li>
+<li>当访问到lastNode时就表明访问到了本层最后一个节点，需要更新结果result，以及初始化list，同时更新lastNode的值，此时队尾元素即为更新后的lastNode的值</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; result&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">        if(root&#x3D;&#x3D;null) return result;</span><br><span class="line">        LinkedList&lt;TreeNode&gt; queue&#x3D;new LinkedList&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;lastNode指向本层的最后一个节点</span><br><span class="line">        TreeNode node&#x3D;root,lastNode&#x3D;root;</span><br><span class="line">        queue.add(node);</span><br><span class="line">        List&lt;Integer&gt; list&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;当队列不为空时</span><br><span class="line">        while(!queue.isEmpty())&#123;</span><br><span class="line">            node&#x3D;queue.poll();</span><br><span class="line">            list.add(node.val);</span><br><span class="line">            &#x2F;&#x2F;如果左子树不为空，则将左子树添加到队列中</span><br><span class="line">            if(node.left!&#x3D;null)&#123;</span><br><span class="line">                queue.add(node.left);</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;右子树同理</span><br><span class="line">            if(node.right!&#x3D;null)&#123;</span><br><span class="line">                queue.add(node.right);</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;如果当前访问的节点为本层的最后一个节点</span><br><span class="line">            if(node&#x3D;&#x3D;lastNode)&#123;</span><br><span class="line">            	&#x2F;&#x2F;将list加入到result中</span><br><span class="line">                result.add(new ArrayList&lt;&gt;(list));</span><br><span class="line">                &#x2F;&#x2F;此时更新lastNode的值为队列中的队尾元素</span><br><span class="line">                lastNode&#x3D;queue.peekLast();</span><br><span class="line">                &#x2F;&#x2F;初始化list</span><br><span class="line">                list&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O<em>(</em>N)，因为每个节点恰好会被运算一次。</li>
+<li><strong>空间复杂度：</strong>O(N)，保存输出结果的数组包含 N 个节点的值。</li>
+</ul>
+<p><strong>说明：</strong></p>
+<ul>
+<li><p>本来想用Queue，但是由于要访问队列中的队尾元素，Queue好像没有对应的方法，所以用LinkedList</p>
+</li>
+<li><p>首先用的是LinkedList中的方法getLast()，但是当队列中没有元素时会报错NoSuchElementException，在jdk1.6后出现了替代方法peekLast()，在队列没有元素时返回null</p>
+</li>
+</ul>
+<h2 id="算法二：迭代改"><a href="#算法二：迭代改" class="headerlink" title="算法二：迭代改"></a>算法二：迭代改</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>上面的迭代算法中是用lastNode记录每一层的最后一个节点</li>
+<li>这里用第二种算法，用level记录每一层的层数，每一次循环遍历完一层的节点后再将层数加一，然后遍历下一层</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; result&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">        if(root&#x3D;&#x3D;null) return result;</span><br><span class="line">        LinkedList&lt;TreeNode&gt; queue&#x3D;new LinkedList&lt;&gt;();</span><br><span class="line">        TreeNode node&#x3D;root;</span><br><span class="line">        &#x2F;&#x2F;level记录当前遍历的层数，从0开始</span><br><span class="line">        int level&#x3D;0;</span><br><span class="line">        queue.add(node);</span><br><span class="line">        List&lt;Integer&gt; list&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">        while(!queue.isEmpty())&#123;</span><br><span class="line">            result.add(new ArrayList&lt;&gt;());</span><br><span class="line">            &#x2F;&#x2F;外层循环中，每一循环遍历一层的节点并将下一层的节点全部入队，所以每一次循环开始时队				 列长度即为这一层总的节点个数</span><br><span class="line">            int level_size&#x3D;queue.size();</span><br><span class="line">            &#x2F;&#x2F;循环遍历这一层的所有节点，并出队，然后将下一层节点入队</span><br><span class="line">            for(int i&#x3D;0;i&lt;level_size;i++)&#123;</span><br><span class="line">                node&#x3D;queue.poll();</span><br><span class="line">                result.get(level).add(node.val);</span><br><span class="line">                if(node.left!&#x3D;null)&#123;</span><br><span class="line">                    queue.add(node.left);</span><br><span class="line">                &#125;</span><br><span class="line">                if(node.right!&#x3D;null)&#123;</span><br><span class="line">                    queue.add(node.right);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;层数加一</span><br><span class="line">            level++;</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法三：递归"><a href="#算法三：递归" class="headerlink" title="算法三：递归"></a>算法三：递归</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>将上面的迭代算法改为递归算法，层次遍历按层数递归</li>
+<li>注意在遍历新的一层时要将result集合的大小更新</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">List&lt;List&lt;Integer&gt;&gt; result&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">    public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) &#123;</span><br><span class="line">        if(root&#x3D;&#x3D;null) return result;</span><br><span class="line">        helper(root,0);</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">	&#x2F;&#x2F;此方法将level层的root节点添加到对应的result的子集合中，并且递归将计算其左孩子与右孩子</span><br><span class="line">    private void helper(TreeNode root,int level)&#123;</span><br><span class="line">    	&#x2F;&#x2F;如果result的大小等于当前level，表示在递归计算新的一层，需要更新result的大小</span><br><span class="line">        if(result.size()&#x3D;&#x3D;level)&#123;</span><br><span class="line">            result.add(new ArrayList&lt;&gt;());</span><br><span class="line">        &#125;</span><br><span class="line">        result.get(level).add(root.val);</span><br><span class="line">        if(root.left!&#x3D;null)&#123;</span><br><span class="line">            helper(root.left,level+1);</span><br><span class="line">        &#125;</span><br><span class="line">        if(root.right!&#x3D;null)&#123;</span><br><span class="line">            helper(root.right,level+1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(N)，因为每个节点恰好会被运算一次。</li>
+<li><strong>空间复杂度</strong>：O(N)，保存输出结果的数组包含 <code>N</code> 个节点的值。</li>
+</ul>
 
           
         
@@ -948,171 +1501,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/118.%20%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/118.%20%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92/" itemprop="url">118. 杨辉三角</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="118-杨辉三角"><a href="#118-杨辉三角" class="headerlink" title="118. 杨辉三角"></a><a href="https://leetcode-cn.com/problems/pascals-triangle/" target="_blank" rel="noopener">118. 杨辉三角</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个非负整数 <em>numRows，*生成杨辉三角的前 *numRows</em> 行。</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/PascalTriangleAnimated2.gif" alt="img"></p>
-<p>在杨辉三角中，每个数是它左上方和右上方的数的和。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">示例:</span><br><span class="line"></span><br><span class="line">输入: 5</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">     [1],</span><br><span class="line">    [1,1],</span><br><span class="line">   [1,2,1],</span><br><span class="line">  [1,3,3,1],</span><br><span class="line"> [1,4,6,4,1]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法：</strong></p>
-<p><strong>算法描述：</strong></p>
-<ul>
-<li>动态规划，通过上一层的数字来递推下一层的，当numRows不为0时，选取第一层作为递推起点</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;List&lt;Integer&gt;&gt; generate(int numRows) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; res&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;0的情况单独拿出来</span><br><span class="line">        if(numRows&#x3D;&#x3D;0)&#123;</span><br><span class="line">            return res;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;第一行作为递推起点</span><br><span class="line">        res.add(new ArrayList&lt;&gt;());</span><br><span class="line">        res.get(0).add(1);</span><br><span class="line">        for(int i&#x3D;1;i&lt;numRows;i++)&#123;</span><br><span class="line">        	&#x2F;&#x2F;扩容</span><br><span class="line">            if(i&#x3D;&#x3D;res.size())&#123;</span><br><span class="line">                res.add(new ArrayList&lt;&gt;());</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;首尾的1单独加进去</span><br><span class="line">            res.get(i).add(1);</span><br><span class="line">            for(int j&#x3D;1;j&lt;i;j++)&#123;</span><br><span class="line">                res.get(i).add(res.get(i-1).get(j-1)+res.get(i-1).get(j));</span><br><span class="line">            &#125;</span><br><span class="line">            res.get(i).add(1);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(numRows^2^)</li>
-<li><strong>空间复杂度：</strong>O(numRows^2^)</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/121.%20%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1278,7 +1666,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/122.%20%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%20II/">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/118.%20%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黎达">
@@ -1297,7 +1685,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/11/122.%20%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%20II/" itemprop="url">122. 买卖股票的最佳时机 II</a></h1>
+                <a class="post-title-link" href="/2020/04/11/118.%20%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92/" itemprop="url">118. 杨辉三角</a></h1>
         
 
         <div class="post-meta">
@@ -1371,233 +1759,29 @@
       
         
           
-            <h1 id="122-买卖股票的最佳时机-II"><a href="#122-买卖股票的最佳时机-II" class="headerlink" title="122. 买卖股票的最佳时机 II"></a><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/" target="_blank" rel="noopener">122. 买卖股票的最佳时机 II</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。</p>
-<p>设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。</p>
-<p>注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</p>
+            <h1 id="118-杨辉三角"><a href="#118-杨辉三角" class="headerlink" title="118. 杨辉三角"></a><a href="https://leetcode-cn.com/problems/pascals-triangle/" target="_blank" rel="noopener">118. 杨辉三角</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个非负整数 <em>numRows，*生成杨辉三角的前 *numRows</em> 行。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/PascalTriangleAnimated2.gif" alt="img"></p>
+<p>在杨辉三角中，每个数是它左上方和右上方的数的和。</p>
 <p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: [7,1,5,3,6,4]</span><br><span class="line">输出: 7</span><br><span class="line">解释: 在第 2 天（股票价格 &#x3D; 1）的时候买入，在第 3 天（股票价格 &#x3D; 5）的时候卖出, 这笔交易所能获得利润 &#x3D; 5-1 &#x3D; 4 。</span><br><span class="line">     随后，在第 4 天（股票价格 &#x3D; 3）的时候买入，在第 5 天（股票价格 &#x3D; 6）的时候卖出, 这笔交易所能获得利润 &#x3D; 6-3 &#x3D; 3 。</span><br><span class="line">     </span><br><span class="line">     </span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: [1,2,3,4,5]</span><br><span class="line">输出: 4</span><br><span class="line">解释: 在第 1 天（股票价格 &#x3D; 1）的时候买入，在第 5 天 （股票价格 &#x3D; 5）的时候卖出, 这笔交易所能获得利润 &#x3D; 5-1 &#x3D; 4 。</span><br><span class="line">     注意你不能在第 1 天和第 2 天接连购买股票，之后再将它们卖出。</span><br><span class="line">     因为这样属于同时参与了多笔交易，你必须在再次购买前出售掉之前的股票。</span><br><span class="line">     </span><br><span class="line">     </span><br><span class="line">示例 3:</span><br><span class="line"></span><br><span class="line">输入: [7,6,4,3,1]</span><br><span class="line">输出: 0</span><br><span class="line">解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">示例:</span><br><span class="line"></span><br><span class="line">输入: 5</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">     [1],</span><br><span class="line">    [1,1],</span><br><span class="line">   [1,2,1],</span><br><span class="line">  [1,3,3,1],</span><br><span class="line"> [1,4,6,4,1]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="算法一"><a href="#算法一" class="headerlink" title="算法一"></a>算法一</h2><p><strong>算法思想：</strong></p>
+<p><strong>算法：</strong></p>
+<p><strong>算法描述：</strong></p>
 <ul>
-<li>在基于上一题的基础上，增加了多次交易条件，因此用maxProfit表示当前交易的最大利润，sumProfit表示多次交易的最大利润之和。</li>
-<li>由于两个交易之间不允许有交集，所以问题关键在于如何确定上一个交易的结束，此时选取的是尽量大的利润，假设两次交易的买入点和卖出点分别为i<del>1</del>,j<del>1</del>;i<del>2</del>,j<del>2</del>,必然满足j<del>1</del>&lt;i<del>2</del>,利润之和等于prices[j<del>2</del>]-prices[i<del>2</del>]+prices[j<del>1</del>]-prices[i<del>1</del>]=prices[j<del>2</del>]-prices[i<del>1</del>]+prices[j<del>1</del>]-prices[i<del>2</del>],可以看成在i<del>1</del>买入在j<del>2</del>卖出的利润再加上prices[j<del>1</del>]-prices[i<del>2</del>]，但是之所以将交易拆分成两次，可以得出这样的利润更大，所以有prices[j<del>1</del>]-prices[i<del>2</del>]&gt;0,即prices[j<del>1</del>]&gt;prices[i<del>2</del>]</li>
-<li>所以得出在交易的卖出点时如果后一天的价格小于等于卖出点的价格，那么就要结束上一次交易，进入下一层交易;第一次写的代码是没有等于的，只有小于的情况会结束上一次交易，这样会导致若存在两天的股票价格相同的情况时后一天因为利润与最大利润相同而无法结束交易(因为前一天已经更新了最大利润)，开始下一次交易</li>
+<li>动态规划，通过上一层的数字来递推下一层的，当numRows不为0时，选取第一层作为递推起点</li>
 </ul>
 <p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public int maxProfit(int[] prices) &#123;</span><br><span class="line">        if(prices.length&#x3D;&#x3D;0) return 0;</span><br><span class="line">        &#x2F;&#x2F;buy表示买入点，i表示卖出点，maxProfit表示当前最大利润，sumProfit表示最大利润之和</span><br><span class="line">        int buy&#x3D;0,i&#x3D;1,maxProfit&#x3D;0,sumProfit&#x3D;0;</span><br><span class="line">        while(i&lt;prices.length)&#123;</span><br><span class="line">        	&#x2F;&#x2F;profit表示当前利润</span><br><span class="line">            int profit&#x3D;prices[i]-prices[buy];</span><br><span class="line">            if(profit&lt;0)&#123;</span><br><span class="line">                buy&#x3D;i;</span><br><span class="line">            &#x2F;&#x2F;在得到最大利润的同时要考虑是否终止本次交易，卖出股票开始下一次交易</span><br><span class="line">            &#125;else if(profit&gt;maxProfit)&#123;</span><br><span class="line">                maxProfit&#x3D;profit;</span><br><span class="line">                &#x2F;&#x2F;如果卖出点的价格大于等于第二天的价格，完成当前交易</span><br><span class="line">                if(i+1&lt;prices.length&amp;&amp;prices[i]&gt;&#x3D;prices[i+1])&#123;</span><br><span class="line">                	&#x2F;&#x2F;更新sumProfit，maxProfit置为0，买入点置为第二天的位置，i也从第二天开始</span><br><span class="line">                    sumProfit+&#x3D;maxProfit;</span><br><span class="line">                    maxProfit&#x3D;0;</span><br><span class="line">                    buy&#x3D;i+1;</span><br><span class="line">                    i++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;由于最后一次交易可能并没有终止条件，导致maxProfit没有置为0，也要加上去</span><br><span class="line">        if(maxProfit&gt;0)&#123;</span><br><span class="line">            sumProfit+&#x3D;maxProfit;</span><br><span class="line">        &#125;</span><br><span class="line">        return sumProfit;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;List&lt;Integer&gt;&gt; generate(int numRows) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; res&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;0的情况单独拿出来</span><br><span class="line">        if(numRows&#x3D;&#x3D;0)&#123;</span><br><span class="line">            return res;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;第一行作为递推起点</span><br><span class="line">        res.add(new ArrayList&lt;&gt;());</span><br><span class="line">        res.get(0).add(1);</span><br><span class="line">        for(int i&#x3D;1;i&lt;numRows;i++)&#123;</span><br><span class="line">        	&#x2F;&#x2F;扩容</span><br><span class="line">            if(i&#x3D;&#x3D;res.size())&#123;</span><br><span class="line">                res.add(new ArrayList&lt;&gt;());</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;首尾的1单独加进去</span><br><span class="line">            res.get(i).add(1);</span><br><span class="line">            for(int j&#x3D;1;j&lt;i;j++)&#123;</span><br><span class="line">                res.get(i).add(res.get(i-1).get(j-1)+res.get(i-1).get(j));</span><br><span class="line">            &#125;</span><br><span class="line">            res.get(i).add(1);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 
 
 <p><strong>算法分析：</strong></p>
 <ul>
-<li><strong>时间复杂度：</strong>O(n)，一次遍历即可完成</li>
-<li><strong>空间复杂度：</strong>O(1)</li>
-</ul>
-<h2 id="算法二：峰谷法"><a href="#算法二：峰谷法" class="headerlink" title="算法二：峰谷法"></a>算法二：峰谷法</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li><p>从上面的算法思路中可以提炼一下思路，找买入点的过程其实就是找谷的过程，找卖出点的过程就是找其后面的峰的过程</p>
-</li>
-<li><p>假设给定的数组为：</p>
-<p>[7, 1, 5, 3, 6, 4]</p>
-<p>如果我们在图表上绘制给定数组中的数字，我们将会得到：</p>
-<p><img src="https://pic.leetcode-cn.com/d447f96d20d1cfded20a5d08993b3658ed08e295ecc9aea300ad5e3f4466e0fe-file_1555699515174" alt="Profit Graph"></p>
-</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public int maxProfit(int[] prices) &#123;</span><br><span class="line">        if(prices.length&#x3D;&#x3D;0) return 0;</span><br><span class="line">        int maxProfit&#x3D;0,i&#x3D;0;</span><br><span class="line">        &#x2F;&#x2F;取i&lt;prices.length会导致可能无法跳出循环，只取到i&#x3D;prices.length-2就可以了，因为里面			  的判断有prices[i+1],所以最后一个元素也参加了判断</span><br><span class="line">        while (i&lt;prices.length-1)&#123;</span><br><span class="line">        	&#x2F;&#x2F;寻找谷的过程，一定要取到大于等号，不能漏掉等号，下同</span><br><span class="line">            while(i&lt;prices.length-1&amp;&amp;prices[i]&gt;&#x3D;prices[i+1]) i++;</span><br><span class="line">            int vally&#x3D;prices[i];</span><br><span class="line">            while(i&lt;prices.length-1&amp;&amp;prices[i]&lt;&#x3D;prices[i+1]) i++;</span><br><span class="line">            int peak&#x3D;prices[i];</span><br><span class="line">            maxProfit+&#x3D;peak-vally;</span><br><span class="line">        &#125;</span><br><span class="line">        return maxProfit;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="算法三"><a href="#算法三" class="headerlink" title="算法三"></a>算法三</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li><p>是上一个算法的改进，只要连续的两个数字有后一个数字大于前一个数字，则将两数之差添加到最大利润中</p>
-</li>
-<li><p>这个例子可以更清楚地展现上述情况：</p>
-<p>[1, 7, 2, 3, 6, 7, 6, 7]</p>
-<p>与此数组对应的图形是：</p>
-<p><img src="https://pic.leetcode-cn.com/6eaf01901108809ca5dfeaef75c9417d6b287c841065525083d1e2aac0ea1de4-file_1555699697692" alt="Profit Graph"></p>
-</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public int maxProfit(int[] prices) &#123;</span><br><span class="line">        int maxProfit&#x3D;0;</span><br><span class="line">        for(int i&#x3D;0;i&lt;prices.length-1;i++)&#123;</span><br><span class="line">            if(prices[i]&lt;prices[i+1])&#123;</span><br><span class="line">                maxProfit+&#x3D;prices[i+1]-prices[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return maxProfit;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/125.%20%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E4%B8%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/125.%20%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E4%B8%B2/" itemprop="url">125. 验证回文串</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="125-验证回文串"><a href="#125-验证回文串" class="headerlink" title="125. 验证回文串"></a><a href="https://leetcode-cn.com/problems/valid-palindrome/" target="_blank" rel="noopener">125. 验证回文串</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。</p>
-<p><strong>说明：</strong>本题中，我们将空字符串定义为有效的回文串。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: &quot;A man, a plan, a canal: Panama&quot;</span><br><span class="line">输出: true</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: &quot;race a car&quot;</span><br><span class="line">输出: false</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="算法一：双指针法"><a href="#算法一：双指针法" class="headerlink" title="算法一：双指针法"></a>算法一：双指针法</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>使用两个指针分别从左边开始和从右边开始</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">public boolean isPalindrome(String s) &#123;</span><br><span class="line">		&#x2F;&#x2F;根据题意空串返回true</span><br><span class="line">        if(s&#x3D;&#x3D;null||s.length()&#x3D;&#x3D;0) return true;</span><br><span class="line">        int len&#x3D;s.length();</span><br><span class="line">        int left&#x3D;0,right&#x3D;len-1;</span><br><span class="line">        while(left&lt;right)&#123;</span><br><span class="line">        	&#x2F;&#x2F;如果当前字符不是字母或数字，就考虑下一个字符</span><br><span class="line">            while (!isVaild(s,left)) left++;</span><br><span class="line">            while (!isVaild(s,right)) right--;</span><br><span class="line">            &#x2F;&#x2F;如果有left&gt;right，那么就不需要再进行下面的判断了，返回true</span><br><span class="line">            if(left&gt;right) return true;</span><br><span class="line">            &#x2F;&#x2F;在两个字符不等时，还需要除去大小写不等的情况</span><br><span class="line">            if(s.charAt(left)!&#x3D;s.charAt(right)) &#123;</span><br><span class="line">                boolean flag&#x3D;false;</span><br><span class="line">                if (isCapital(s, left) &amp;&amp; s.charAt(left) + 32 &#x3D;&#x3D; s.charAt(right))&#123;flag&#x3D;true;&#125;</span><br><span class="line">                if(isCapital(s,right)&amp;&amp;s.charAt(right)+32&#x3D;&#x3D;s.charAt(left))&#123;flag&#x3D;true;&#125;</span><br><span class="line">                if(!flag) &#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            left++;</span><br><span class="line">            right--;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;方法中判断字符串在指定索引处是否为数字或字母</span><br><span class="line">    private boolean isVaild(String s,int index)&#123;</span><br><span class="line">    	&#x2F;&#x2F;如果index越界，返回true</span><br><span class="line">        if(index&gt;&#x3D;s.length()||index&lt;0) return true;</span><br><span class="line">        if(s.charAt(index)&gt;&#x3D;&#39;0&#39;&amp;&amp;s.charAt(index)&lt;&#x3D;&#39;9&#39;) return true;</span><br><span class="line">        if(s.charAt(index)&gt;&#x3D;&#39;a&#39;&amp;&amp;s.charAt(index)&lt;&#x3D;&#39;z&#39;) return true;</span><br><span class="line">        if(s.charAt(index)&gt;&#x3D;&#39;A&#39;&amp;&amp;s.charAt(index)&lt;&#x3D;&#39;Z&#39;) return true;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;方法判断是否为大写字母</span><br><span class="line">    private boolean isCapital(String s,int index)&#123;</span><br><span class="line">        if(s.charAt(index)&gt;&#x3D;&#39;A&#39;&amp;&amp;s.charAt(index)&lt;&#x3D;&#39;Z&#39;) return true;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="算法二：调用库函数"><a href="#算法二：调用库函数" class="headerlink" title="算法二：调用库函数"></a>算法二：调用库函数</h2><p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public boolean isPalindrome(String s) &#123;</span><br><span class="line">        if(s&#x3D;&#x3D;null||s.length()&#x3D;&#x3D;0) return true;</span><br><span class="line">        int len&#x3D;s.length();</span><br><span class="line">        int left&#x3D;0,right&#x3D;len-1;</span><br><span class="line">        while(left&lt;right)&#123;</span><br><span class="line">            while (left&lt;right&amp;&amp;!Character.isLetterOrDigit(s.charAt(left))) left++;</span><br><span class="line">            while (left&lt;right&amp;&amp;!Character.isLetterOrDigit(s.charAt(right))) right--;</span><br><span class="line">          if(Character.toLowerCase(s.charAt(left))!&#x3D;Character.toLowerCase(s.charAt(right))) return false;</span><br><span class="line">            left++;</span><br><span class="line">            right--;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>说明：</strong></p>
-<ul>
-<li><pre><code>Character.isLetter()可以判断字符是否为字母;Character.isDigit()可以判断字符是否为数字;
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-</span><br></pre></td></tr></table></figure>
-Character.toLowerCase()可以将大写字母转换为小写字母</code></pre></li>
+<li><strong>时间复杂度：</strong>O(numRows^2^)</li>
+<li><strong>空间复杂度：</strong>O(numRows^2^)</li>
 </ul>
 
           
@@ -1798,188 +1982,6 @@ Character.toLowerCase()可以将大写字母转换为小写字母</code></pre></
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/130.%20%E8%A2%AB%E5%9B%B4%E7%BB%95%E7%9A%84%E5%8C%BA%E5%9F%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/130.%20%E8%A2%AB%E5%9B%B4%E7%BB%95%E7%9A%84%E5%8C%BA%E5%9F%9F/" itemprop="url">130. 被围绕的区域</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="130-被围绕的区域"><a href="#130-被围绕的区域" class="headerlink" title="130. 被围绕的区域"></a><a href="https://leetcode-cn.com/problems/surrounded-regions/" target="_blank" rel="noopener">130. 被围绕的区域</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个二维的矩阵，包含 <code>&#39;X&#39;</code> 和 <code>&#39;O&#39;</code>（<strong>字母 O</strong>）。</p>
-<p>找到所有被 <code>&#39;X&#39;</code> 围绕的区域，并将这些区域里所有的 <code>&#39;O&#39;</code> 用 <code>&#39;X&#39;</code> 填充。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">示例:</span><br><span class="line"></span><br><span class="line">X X X X</span><br><span class="line">X O O X</span><br><span class="line">X X O X</span><br><span class="line">X O X X</span><br><span class="line">运行你的函数后，矩阵变为：</span><br><span class="line"></span><br><span class="line">X X X X</span><br><span class="line">X X X X</span><br><span class="line">X X X X</span><br><span class="line">X O X X</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>解释：</strong></p>
-<p>被围绕的区间不会存在于边界上，换句话说，任何边界上的 ‘O’ 都不会被填充为 ‘X’。 任何不在边界上，或不与边界上的 ‘O’ 相连的 ‘O’ 最终都会被填充为 ‘X’。如果两个元素在水平或垂直方向相邻，则称它们是“相连”的。</p>
-<h2 id="算法一：DFS递归"><a href="#算法一：DFS递归" class="headerlink" title="算法一：DFS递归"></a>算法一：DFS递归</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>首先类似于图中找联通区域，可以将与边界上的’O’相连的’O’看成一个连通区域，找到所有的连通区域，并将其值从’O’改变为一个特殊的值’#’，那么剩下来的’O’就是不与边界上的’O’相连的，直接将其令为‘X’即可，然后再将之前的’#’还原为‘O’即可</li>
-<li>寻找连通域的可以通过DFS和BFS实现，首先给出DFS的递归算法</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public void solve(char[][] board) &#123;</span><br><span class="line">            if(board&#x3D;&#x3D;null) return;</span><br><span class="line">            int m &#x3D; board.length;</span><br><span class="line">            if (m &#x3D;&#x3D; 0) return;</span><br><span class="line">            int n &#x3D; board[0].length;</span><br><span class="line">            for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">                for(int j&#x3D;0;j&lt;n;j++)&#123;</span><br><span class="line">                    boolean isEdge&#x3D;i&#x3D;&#x3D;0||i&#x3D;&#x3D;m-1||j&#x3D;&#x3D;0||j&#x3D;&#x3D;n-1;</span><br><span class="line">                    &#x2F;&#x2F;寻找边界上的&#39;O&#39;的连通区域</span><br><span class="line">                    if(isEdge&amp;&amp;board[i][j]&#x3D;&#x3D;&#39;O&#39;)&#123;</span><br><span class="line">                        dfs(board,i,j);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;后面再还原</span><br><span class="line">            for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">                for(int j&#x3D;0;j&lt;n;j++) &#123;</span><br><span class="line">                    if(board[i][j]&#x3D;&#x3D;&#39;O&#39;)&#123;</span><br><span class="line">                        board[i][j]&#x3D;&#39;X&#39;;</span><br><span class="line">                    &#125;</span><br><span class="line">                    if(board[i][j]&#x3D;&#x3D;&#39;#&#39;)&#123;</span><br><span class="line">                        board[i][j]&#x3D;&#39;O&#39;;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        private void dfs(char[][] board,int i,int j)&#123;</span><br><span class="line">        	&#x2F;&#x2F;索引越界和值为&#39;X&#39;的情况不需要处理，board[i][j]&#x3D;&#x3D;&#39;#&#39;表示已经处理过了，				防止再往回递归</span><br><span class="line">            if(i&lt;0||j&lt;0||i&gt;&#x3D;board.length||j&gt;&#x3D;board[0].length||board[i][j]&#x3D;&#x3D;&#39;X&#39;||board[i][j]&#x3D;&#x3D;&#39;#&#39;)&#123;</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;先处理i,j处的值，然后再分别向四个方向递归</span><br><span class="line">            board[i][j]&#x3D;&#39;#&#39;;</span><br><span class="line">            dfs(board,i-1,j);</span><br><span class="line">            dfs(board,i+1,j);</span><br><span class="line">            dfs(board,i,j-1);</span><br><span class="line">            dfs(board,i,j+1);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="算法二：DFS非递归"><a href="#算法二：DFS非递归" class="headerlink" title="算法二：DFS非递归"></a>算法二：DFS非递归</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>DFS非递归是通过栈来实现的</li>
-<li>在每次查看stack顶时，只是查看，而不出元素，因为DFS是先向一个方向往深处遍历，然后再回溯回来遍历其他方向，所以值访问过一个方向的元素还需要保存在stack中</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;定义一个内部类来存储横纵坐标</span><br><span class="line">public class Pos&#123;</span><br><span class="line">        int i;</span><br><span class="line">        int j;</span><br><span class="line">        public Pos(int i,int j)&#123;</span><br><span class="line">            this.i&#x3D;i;</span><br><span class="line">            this.j&#x3D;j;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">        public void solve(char[][] board) &#123;</span><br><span class="line">            if(board&#x3D;&#x3D;null) return;</span><br><span class="line">            int m &#x3D; board.length;</span><br><span class="line">            if (m &#x3D;&#x3D; 0) return;</span><br><span class="line">            int n &#x3D; board[0].length;</span><br><span class="line">            for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">                for(int j&#x3D;0;j&lt;n;j++)&#123;</span><br><span class="line">                    boolean isEdge&#x3D;i&#x3D;&#x3D;0||i&#x3D;&#x3D;m-1||j&#x3D;&#x3D;0||j&#x3D;&#x3D;n-1;</span><br><span class="line">                    if(isEdge&amp;&amp;board[i][j]&#x3D;&#x3D;&#39;O&#39;)&#123;</span><br><span class="line">                        dfs(board,i,j);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">                for(int j&#x3D;0;j&lt;n;j++) &#123;</span><br><span class="line">                    if(board[i][j]&#x3D;&#x3D;&#39;O&#39;)&#123;</span><br><span class="line">                        board[i][j]&#x3D;&#39;X&#39;;</span><br><span class="line">                    &#125;</span><br><span class="line">                    if(board[i][j]&#x3D;&#x3D;&#39;#&#39;)&#123;</span><br><span class="line">                        board[i][j]&#x3D;&#39;O&#39;;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        private void dfs(char[][] board,int i,int j)&#123;</span><br><span class="line">            Stack&lt;Pos&gt; stack&#x3D;new Stack&lt;&gt;();</span><br><span class="line">            stack.push(new Pos(i,j));</span><br><span class="line">            board[i][j]&#x3D;&#39;#&#39;;</span><br><span class="line">            while(!stack.isEmpty())&#123;</span><br><span class="line">            	&#x2F;&#x2F;只是访问，不出元素</span><br><span class="line">                Pos current&#x3D;stack.peek();</span><br><span class="line">                &#x2F;&#x2F;如果向上走是可以的，将上面的节点入栈，然后访问，continue表示下面几					 个方向的遍历先不进行，先去进行上面那个节点的遍历</span><br><span class="line">                if(current.i-1&gt;&#x3D;0&amp;&amp;board[current.i-1][current.j]&#x3D;&#x3D;&#39;O&#39;)&#123;</span><br><span class="line">                    stack.push(new Pos(current.i-1,current.j));</span><br><span class="line">                    board[current.i-1][current.j]&#x3D;&#39;#&#39;;</span><br><span class="line">                    continue;</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F;下</span><br><span class="line">                if (current.i + 1 &lt;&#x3D; board.length - 1</span><br><span class="line">                        &amp;&amp; board[current.i + 1][current.j] &#x3D;&#x3D; &#39;O&#39;) &#123;</span><br><span class="line">                    stack.push(new Pos(current.i + 1, current.j));</span><br><span class="line">                    board[current.i + 1][current.j] &#x3D; &#39;#&#39;;</span><br><span class="line">                    continue;</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F; 左</span><br><span class="line">                if (current.j - 1 &gt;&#x3D; 0</span><br><span class="line">                        &amp;&amp; board[current.i][current.j - 1] &#x3D;&#x3D; &#39;O&#39;) &#123;</span><br><span class="line">                    stack.push(new Pos(current.i, current.j - 1));</span><br><span class="line">                    board[current.i][current.j - 1] &#x3D; &#39;#&#39;;</span><br><span class="line">                    continue;</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F; 右</span><br><span class="line">                if (current.j + 1 &lt;&#x3D; board[0].length - 1</span><br><span class="line">                        &amp;&amp; board[current.i][current.j + 1] &#x3D;&#x3D; &#39;O&#39;) &#123;</span><br><span class="line">                    stack.push(new Pos(current.i, current.j + 1));</span><br><span class="line">                    board[current.i][current.j + 1] &#x3D; &#39;#&#39;;</span><br><span class="line">                    continue;</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F; 如果上下左右都搜索不到,本次搜索结束，弹出stack</span><br><span class="line">                stack.pop();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="算法三：BFS非递归"><a href="#算法三：BFS非递归" class="headerlink" title="算法三：BFS非递归"></a>算法三：BFS非递归</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>通过队列来实现，类似于树的层次遍历</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">public class Pos&#123;</span><br><span class="line">        int i;</span><br><span class="line">        int j;</span><br><span class="line">        public Pos(int i,int j)&#123;</span><br><span class="line">            this.i&#x3D;i;</span><br><span class="line">            this.j&#x3D;j;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">        public void solve(char[][] board) &#123;</span><br><span class="line">            if(board&#x3D;&#x3D;null) return;</span><br><span class="line">            int m &#x3D; board.length;</span><br><span class="line">            if (m &#x3D;&#x3D; 0) return;</span><br><span class="line">            int n &#x3D; board[0].length;</span><br><span class="line">            for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">                for(int j&#x3D;0;j&lt;n;j++)&#123;</span><br><span class="line">                    boolean isEdge&#x3D;i&#x3D;&#x3D;0||i&#x3D;&#x3D;m-1||j&#x3D;&#x3D;0||j&#x3D;&#x3D;n-1;</span><br><span class="line">                    if(isEdge&amp;&amp;board[i][j]&#x3D;&#x3D;&#39;O&#39;)&#123;</span><br><span class="line">                        dfs(board,i,j);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">                for(int j&#x3D;0;j&lt;n;j++) &#123;</span><br><span class="line">                    if(board[i][j]&#x3D;&#x3D;&#39;O&#39;)&#123;</span><br><span class="line">                        board[i][j]&#x3D;&#39;X&#39;;</span><br><span class="line">                    &#125;</span><br><span class="line">                    if(board[i][j]&#x3D;&#x3D;&#39;#&#39;)&#123;</span><br><span class="line">                        board[i][j]&#x3D;&#39;O&#39;;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        private void dfs(char[][] board,int i,int j)&#123;</span><br><span class="line">            Queue&lt;Pos&gt; queue&#x3D;new LinkedList&lt;&gt;();</span><br><span class="line">            queue.add(new Pos(i,j));</span><br><span class="line">            board[i][j]&#x3D;&#39;#&#39;;</span><br><span class="line">            while(!queue.isEmpty())&#123;</span><br><span class="line">            	&#x2F;&#x2F;每次要出队，然后将每个方向访问完后再去访问临近节点</span><br><span class="line">                Pos current&#x3D;queue.poll();</span><br><span class="line">                &#x2F;&#x2F;上</span><br><span class="line">                if(current.i-1&gt;&#x3D;0&amp;&amp;board[current.i-1][current.j]&#x3D;&#x3D;&#39;O&#39;)&#123;</span><br><span class="line">                    queue.add(new Pos(current.i-1,current.j));</span><br><span class="line">                    board[current.i-1][current.j]&#x3D;&#39;#&#39;;</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F;下</span><br><span class="line">                if (current.i + 1 &lt;&#x3D; board.length - 1</span><br><span class="line">                        &amp;&amp; board[current.i + 1][current.j] &#x3D;&#x3D; &#39;O&#39;) &#123;</span><br><span class="line">                    queue.add(new Pos(current.i + 1, current.j));</span><br><span class="line">                    board[current.i + 1][current.j] &#x3D; &#39;#&#39;;</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F; 左</span><br><span class="line">                if (current.j - 1 &gt;&#x3D; 0</span><br><span class="line">                        &amp;&amp; board[current.i][current.j - 1] &#x3D;&#x3D; &#39;O&#39;) &#123;</span><br><span class="line">                    queue.add(new Pos(current.i, current.j - 1));</span><br><span class="line">                    board[current.i][current.j - 1] &#x3D; &#39;#&#39;;</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F; 右</span><br><span class="line">                if (current.j + 1 &lt;&#x3D; board[0].length - 1</span><br><span class="line">                        &amp;&amp; board[current.i][current.j + 1] &#x3D;&#x3D; &#39;O&#39;) &#123;</span><br><span class="line">                    queue.add(new Pos(current.i, current.j + 1));</span><br><span class="line">                    board[current.i][current.j + 1] &#x3D; &#39;#&#39;;</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F; 如果上下左右都搜索不到,本次搜索结束，弹出stack</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2034,7 +2036,7 @@ Character.toLowerCase()可以将大写字母转换为小写字母</code></pre></
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">211</span>
+                  <span class="site-state-item-count">214</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2045,7 +2047,7 @@ Character.toLowerCase()可以将大写字母转换为小写字母</code></pre></
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2056,7 +2058,7 @@ Character.toLowerCase()可以将大写字母转换为小写字母</code></pre></
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2109,7 +2111,7 @@ Character.toLowerCase()可以将大写字母转换为小写字母</code></pre></
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
