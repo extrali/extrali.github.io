@@ -248,6 +248,713 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/01/08/53.%20%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/01/08/53.%20%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/" itemprop="url">53. 最大子序和</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-08T17:51:24+08:00">
+                2020-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="53-最大子序和"><a href="#53-最大子序和" class="headerlink" title="53. 最大子序和"></a><a href="https://leetcode-cn.com/problems/maximum-subarray/" target="_blank" rel="noopener">53. 最大子序和</a></h1><p><strong>题目描述：</strong><br>给定一个整数数组 <code>nums</code> ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">示例:</span><br><span class="line"></span><br><span class="line">输入: [-2,1,-3,4,-1,2,1,-5,4],</span><br><span class="line">输出: 6</span><br><span class="line">解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法一：暴力法（分别计算以数组中每一个元素为开头的连续子数组的最大和，然后取最大）"><a href="#算法一：暴力法（分别计算以数组中每一个元素为开头的连续子数组的最大和，然后取最大）" class="headerlink" title="算法一：暴力法（分别计算以数组中每一个元素为开头的连续子数组的最大和，然后取最大）"></a>算法一：暴力法（分别计算以数组中每一个元素为开头的连续子数组的最大和，然后取最大）</h2><p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public int maxSubArray(int[] nums) &#123;</span><br><span class="line">		&#x2F;&#x2F;max记录最终结果，temp记录以当前元素为开头的最大连续子数组和</span><br><span class="line">        int max&#x3D;Integer.MIN_VALUE,temp&#x3D;0;</span><br><span class="line">        &#x2F;&#x2F;对于以每一个元素为开头分别计算最大和</span><br><span class="line">        for(int i&#x3D;0;i&lt;nums.length;i++)&#123;</span><br><span class="line">            temp&#x3D;nums[i];</span><br><span class="line">            &#x2F;&#x2F;首先判断当前最大连续子序列和是否比最终结果大</span><br><span class="line">            if(temp&gt;max)&#123;</span><br><span class="line">                max&#x3D;temp;</span><br><span class="line">            &#125;</span><br><span class="line">            for(int j&#x3D;i+1;j&lt;nums.length;j++)&#123;</span><br><span class="line">            	&#x2F;&#x2F;如果当前子序列和小于0，则跳出循环</span><br><span class="line">                if(temp&lt;0)&#123;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                temp+&#x3D;nums[j];</span><br><span class="line">                &#x2F;&#x2F;此处判断两次并不多余，上面的判断是防止当j从i+1开始取值时没有进行一次循环，就会丢				  失掉此时的最大子序列和，而后面的是因为最大子序列和可能出现在求和的过程中，而不一					定是结尾</span><br><span class="line">                if(temp&gt;max)&#123;</span><br><span class="line">                    max&#x3D;temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return max;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="算法二：分治法"><a href="#算法二：分治法" class="headerlink" title="算法二：分治法"></a>算法二：分治法</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>分治法需要合并结果时，需要处理当最大和即不再左半边的数组，也不再右边边数组，而是横跨两个数组时的情况</li>
+<li>将数组分为两部分，索引为(left+right)/2的元素归到左边数组</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">public int maxSubArray(int[] nums) &#123;</span><br><span class="line">		&#x2F;&#x2F;将数组为空的情况单独拿出</span><br><span class="line">        if(nums.length&#x3D;&#x3D;0)&#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">        return maxArray(nums,0,nums.length-1);</span><br><span class="line">    &#125;</span><br><span class="line">    private int maxArray(int[] nums,int left,int right)&#123;</span><br><span class="line">    	&#x2F;&#x2F;递归出口，当数组只有一个元素时，直接返回</span><br><span class="line">        if(left&#x3D;&#x3D;right)&#123;</span><br><span class="line">            return nums[left];</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;左边数组的最大值</span><br><span class="line">        int leftMax&#x3D;maxArray(nums,left,(left+right)&#x2F;2);</span><br><span class="line">        &#x2F;&#x2F;右边数组的最大值</span><br><span class="line">        int rightMax&#x3D;maxArray(nums,(left+right)&#x2F;2+1,right);</span><br><span class="line">        &#x2F;&#x2F;lmax记录在左边元素中，包含其最右边元素时的最大和</span><br><span class="line">        int lmax&#x3D;Integer.MIN_VALUE;</span><br><span class="line">        &#x2F;&#x2F;ltemp则记录暂时的最大和</span><br><span class="line">        int ltemp&#x3D;0;</span><br><span class="line">        for(int i&#x3D;(left+right)&#x2F;2;i&gt;&#x3D;left;i--)&#123;</span><br><span class="line">            ltemp+&#x3D;nums[i];</span><br><span class="line">            if(ltemp&gt;lmax)&#123;</span><br><span class="line">                lmax&#x3D;ltemp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;rmax与rtemp同上</span><br><span class="line">        int rmax&#x3D;Integer.MIN_VALUE;</span><br><span class="line">        int rtemp&#x3D;0;</span><br><span class="line">        for(int i&#x3D;(left+right)&#x2F;2+1;i&lt;&#x3D;right;i++)&#123;</span><br><span class="line">            rtemp+&#x3D;nums[i];</span><br><span class="line">            if(rtemp&gt;rmax)&#123;</span><br><span class="line">                rmax&#x3D;rtemp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;middleMax表示横跨两边数组的最大值</span><br><span class="line">        int middleMax&#x3D;lmax+rmax;</span><br><span class="line">        &#x2F;&#x2F;返回三者中最大的元素即为最大和</span><br><span class="line">        return Math.max(Math.max(leftMax,rightMax),middleMax);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="算法三：贪心算法："><a href="#算法三：贪心算法：" class="headerlink" title="算法三：贪心算法："></a>算法三：贪心算法：</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>我自我感觉不太像是贪心算法，这样解释有点牵强，更像是换一种方法计算，第一种方法是分别计算以每一个元素为开头时的最大子序列和，则可以通过计算以每一个元素为结尾时的最大子序列和，以<code>nums[0]</code>为结尾的最大子序列和显然为自己，更一般的，以 <code>nums[i]</code>为结尾的最大子序列和有两种情况：<ol>
+<li>第一种是，以 <code>nums[i-1]</code>结尾的最大子序列和再加上<code>nums[i]</code></li>
+<li>第二种是，<code>nums[i]</code></li>
+</ol>
+</li>
+<li>任何其他情况都比这两种情况要小，有递推的关系在其中，更像是动态规划</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public int maxSubArray(int[] nums) &#123;</span><br><span class="line">        int n&#x3D;nums.length;</span><br><span class="line">        &#x2F;&#x2F;可以看出动态规划的初值，currSum记录以当前元素结尾的最大子序列和，maxSum则记录最终结果</span><br><span class="line">        int currSum&#x3D;nums[0],maxSum&#x3D;nums[0];</span><br><span class="line">        &#x2F;&#x2F;分别计算以每一个元素结尾时的最大子序列和</span><br><span class="line">        for(int i&#x3D;1;i&lt;n;i++)&#123;</span><br><span class="line">        	&#x2F;&#x2F;两种情况中的一种</span><br><span class="line">            currSum&#x3D;Math.max(currSum+nums[i],nums[i]);</span><br><span class="line">            &#x2F;&#x2F;更新maxSum的值</span><br><span class="line">            maxSum&#x3D;Math.max(maxSum,currSum);</span><br><span class="line">        &#125;</span><br><span class="line">        return maxSum;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法四：动态规划"><a href="#算法四：动态规划" class="headerlink" title="算法四：动态规划"></a>算法四：动态规划</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>其实和上面大致思路是一样，也是记录以当前元素结尾时的最大子序列和，但不同的是，将当前的最大子序列和记录在 <code>nums[i]</code>上</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public int maxSubArray(int[] nums) &#123;</span><br><span class="line">        int n&#x3D;nums.length;</span><br><span class="line">        &#x2F;&#x2F;动态规划的初值</span><br><span class="line">        int maxSum&#x3D;nums[0];</span><br><span class="line">        for(int i&#x3D;1;i&lt;n;i++)&#123;</span><br><span class="line">        	&#x2F;&#x2F;直接将以nums[i]结尾的最大子序列和存在nums[i]中</span><br><span class="line">            nums[i]&#x3D;Math.max(nums[i],nums[i-1]+nums[i]);</span><br><span class="line">            maxSum&#x3D;Math.max(nums[i],maxSum);</span><br><span class="line">        &#125;</span><br><span class="line">        return maxSum;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/01/08/54.%20%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/01/08/54.%20%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5/" itemprop="url">54. 螺旋矩阵</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-08T17:51:24+08:00">
+                2020-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="54-螺旋矩阵"><a href="#54-螺旋矩阵" class="headerlink" title="54. 螺旋矩阵"></a><a href="https://leetcode-cn.com/problems/spiral-matrix/" target="_blank" rel="noopener">54. 螺旋矩阵</a></h1><p><strong>题目描述：</strong><br>给定一个包含 <em>m</em> x <em>n</em> 个元素的矩阵（<em>m</em> 行, <em>n</em> 列），请按照顺时针螺旋顺序，返回矩阵中的所有元素。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入:</span><br><span class="line">[</span><br><span class="line"> [ 1, 2, 3 ],</span><br><span class="line"> [ 4, 5, 6 ],</span><br><span class="line"> [ 7, 8, 9 ]</span><br><span class="line">]</span><br><span class="line">输出: [1,2,3,6,9,8,7,4,5]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入:</span><br><span class="line">[</span><br><span class="line">  [1, 2, 3, 4],</span><br><span class="line">  [5, 6, 7, 8],</span><br><span class="line">  [9,10,11,12]</span><br><span class="line">]</span><br><span class="line">输出: [1,2,3,4,8,12,11,10,9,5,6,7]</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="二刷"><a href="#二刷" class="headerlink" title="二刷"></a>二刷</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>类似与dfs的思想，用到一个方向矩阵，同样需要一个矩阵表示当前元素是否被访问。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;Integer&gt; spiralOrder(int[][] matrix) &#123;</span><br><span class="line">        List&lt;Integer&gt; res&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">        if(matrix&#x3D;&#x3D;null||matrix.length&#x3D;&#x3D;0) return res;</span><br><span class="line">        int m&#x3D;matrix.length;</span><br><span class="line">        int n&#x3D;matrix[0].length;</span><br><span class="line">        boolean[][] visited&#x3D;new boolean[m][n];</span><br><span class="line">        int[][] direction&#x3D;&#123;&#123;0,1&#125;,&#123;1,0&#125;,&#123;0,-1&#125;,&#123;-1,0&#125;&#125;;</span><br><span class="line">        int total&#x3D;m*n,row&#x3D;0,col&#x3D;0;</span><br><span class="line">        int dir&#x3D;0;</span><br><span class="line">        for(int i&#x3D;0;i&lt;total;i++)&#123;</span><br><span class="line">            res.add(matrix[row][col]);</span><br><span class="line">            visited[row][col]&#x3D;true;</span><br><span class="line">            int newRow&#x3D;row+direction[dir][0],newCol&#x3D;col+direction[dir][1];</span><br><span class="line">            if(newRow&lt;0||newRow&gt;&#x3D;m||newCol&lt;0||newCol&gt;&#x3D;n||visited[newRow][newCol])&#123;</span><br><span class="line">                dir&#x3D;(dir+1)%4;</span><br><span class="line">                newRow&#x3D;row+direction[dir][0];</span><br><span class="line">                newCol&#x3D;col+direction[dir][1];</span><br><span class="line">            &#125;</span><br><span class="line">            row&#x3D;newRow;</span><br><span class="line">            col&#x3D;newCol;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="算法一：从外到内每层循环"><a href="#算法一：从外到内每层循环" class="headerlink" title="算法一：从外到内每层循环"></a>算法一：从外到内每层循环</h2><p><strong>算法描述：</strong></p>
+<ul>
+<li>从外到内每一次循环顺时针访问每一个元素，本意上看是不需要设置一个seen数组来存储每一个节点被访问的情况的，但是由于一些边界条件我没有处理好，所以加上了这个数组</li>
+<li>每一层分为四个方向的访问，每一次访问都留下这一行或者这一列的最后一个元素，这样每一层的四个方向的访问所访问的元素就是相同的数量。</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;Integer&gt; spiralOrder(int[][] matrix) &#123;</span><br><span class="line">        if(matrix&#x3D;&#x3D;null)&#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;Integer&gt; list&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;对于二维数组，m表示行数，n表示列数</span><br><span class="line">        int m&#x3D;matrix.length;</span><br><span class="line">        &#x2F;&#x2F;如果二维数组长度为0，返回空集合</span><br><span class="line">        if(m&#x3D;&#x3D;0)&#123;</span><br><span class="line">            return list;</span><br><span class="line">        &#125;</span><br><span class="line">        int n&#x3D;matrix[0].length;</span><br><span class="line">        &#x2F;&#x2F;seen数组记录每个元素被访问了没，默认为false表示为被访问</span><br><span class="line">        boolean[][] seen&#x3D;new boolean[m][n];</span><br><span class="line">        int seg&#x3D;Math.min(m,n);</span><br><span class="line">        &#x2F;&#x2F;index记录当前循环遍历的是哪一层</span><br><span class="line">        int index&#x3D;0;</span><br><span class="line">        for(;index&lt;&#x3D;seg&#x2F;2;index++) &#123;</span><br><span class="line">            for (int i &#x3D; index; i &lt; n - index - 1; i++) &#123;</span><br><span class="line">            	&#x2F;&#x2F;表示未被访问</span><br><span class="line">                if(seen[index][i]&#x3D;&#x3D;false) &#123;</span><br><span class="line">                    list.add(matrix[index][i]);</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F;将其置为访问</span><br><span class="line">                seen[index][i]&#x3D;true;</span><br><span class="line">            &#125;</span><br><span class="line">            for (int j &#x3D; index; j &lt; m - index - 1; j++) &#123;</span><br><span class="line">                if(seen[j][n - index - 1]&#x3D;&#x3D;false) &#123;</span><br><span class="line">                    list.add(matrix[j][n - index - 1]);</span><br><span class="line">                &#125;</span><br><span class="line">                seen[j][n - index - 1]&#x3D;true;</span><br><span class="line">            &#125;</span><br><span class="line">            for (int i &#x3D; n - index - 1; i &gt; index; i--) &#123;</span><br><span class="line">                if(seen[m - index - 1][i]&#x3D;&#x3D;false) &#123;</span><br><span class="line">                    list.add(matrix[m - index - 1][i]);</span><br><span class="line">                &#125;</span><br><span class="line">                seen[m - index - 1][i]&#x3D;true;</span><br><span class="line">            &#125;</span><br><span class="line">            for (int j &#x3D; m - index - 1; j &gt; index; j--) &#123;</span><br><span class="line">                if(seen[j][index]&#x3D;&#x3D;false) &#123;</span><br><span class="line">                    list.add(matrix[j][index]);</span><br><span class="line">                &#125;</span><br><span class="line">                seen[j][index]&#x3D;true;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后要判断最中心的元素是否被访问</span><br><span class="line">        index--;</span><br><span class="line">        if(seen[index][index]&#x3D;&#x3D;false)&#123;</span><br><span class="line">            list.add(matrix[index][index]);</span><br><span class="line">        &#125;</span><br><span class="line">        return list;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="算法二：用方向数来表示顺时针方向"><a href="#算法二：用方向数来表示顺时针方向" class="headerlink" title="算法二：用方向数来表示顺时针方向"></a>算法二：用方向数来表示顺时针方向</h2><p><strong>算法描述：</strong></p>
+<ul>
+<li>用两个数组来表示顺时针方向，同时用mr和nc分别来表示下一个要被访问元素的行和列，如果其已经被访问过，则表示要顺时针访问下一个元素了</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;Integer&gt; spiralOrder(int[][] matrix) &#123;</span><br><span class="line">        if(matrix&#x3D;&#x3D;null)&#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;Integer&gt; list&#x3D;new ArrayList&lt;&gt;();</span><br><span class="line">        int m&#x3D;matrix.length;</span><br><span class="line">        if(m&#x3D;&#x3D;0)&#123;</span><br><span class="line">            return list;</span><br><span class="line">        &#125;</span><br><span class="line">        int n&#x3D;matrix[0].length;</span><br><span class="line">        boolean[][] seen&#x3D;new boolean[m][n];</span><br><span class="line">        &#x2F;&#x2F;dm和dn表示顺时针方向数组</span><br><span class="line">        int[] dm&#x3D;new int[]&#123;0,1,0,-1&#125;;</span><br><span class="line">        int[] dn&#x3D;new int[]&#123;1,0,-1,0&#125;;</span><br><span class="line">        &#x2F;&#x2F;r和c分别表示当前元素的行和列，di表示当前进行到了顺时针数组中的哪一个方向</span><br><span class="line">        int r&#x3D;0,c&#x3D;0,di&#x3D;0;</span><br><span class="line">        for(int i&#x3D;0;i&lt;m*n;i++)&#123;</span><br><span class="line">            list.add(matrix[r][c]);</span><br><span class="line">            seen[r][c]&#x3D;true;</span><br><span class="line">            &#x2F;&#x2F;mr和nc表示下一个要被访问的元素的行和列</span><br><span class="line">            int mr&#x3D;r+dm[di];</span><br><span class="line">            int nc&#x3D;c+dn[di];</span><br><span class="line">            &#x2F;&#x2F;如果mr和nc没有越界并且未被访问过，则将其置为下一个要被访问的元素，否则取下一个方向的				元素为下一个要被访问的。</span><br><span class="line">            if(mr&gt;&#x3D;0&amp;&amp;mr&lt;m&amp;&amp;nc&gt;&#x3D;0&amp;&amp;nc&lt;n&amp;&amp;!seen[mr][nc])&#123;</span><br><span class="line">                r&#x3D;mr;</span><br><span class="line">                c&#x3D;nc;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">            	&#x2F;&#x2F;取模来表示方向变化</span><br><span class="line">                di&#x3D;(di+1)%4;</span><br><span class="line">                r+&#x3D;dm[di];</span><br><span class="line">                c+&#x3D;dn[di];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return list;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2019/12/24/11.%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/24/11.%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/" itemprop="url">11.盛最多水的容器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-24T17:51:24+08:00">
+                2019-12-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="11-盛最多水的容器"><a href="#11-盛最多水的容器" class="headerlink" title="11.盛最多水的容器"></a>11.盛最多水的容器</h1><p><strong>题目描述：</strong></p>
+<p>给定 n 个非负整数 a<sub>1</sub>，a<sub>2</sub>，…，a<sub>n</sub>，每个数代表坐标中的一个点 (i, a<sub>i</sub>) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, a<del>i</del>) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。</p>
+<hr>
+<p><strong>说明：</strong></p>
+<p> 你不能倾斜容器，且 <em>n</em> 的值至少为 2。 </p>
+<hr>
+<p> <img src="https://aliyun-lc-upload.oss-cn-hangzhou.aliyuncs.com/aliyun-lc-upload/uploads/2018/07/25/question_11.jpg" alt=""> </p>
+<blockquote>
+<p>图中垂直线代表输入数组 [1,8,6,2,5,4,8,3,7]。在此情况下，容器能够容纳水（表示为蓝色部分）的最大值为 49。 </p>
+</blockquote>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,8,6,2,5,4,8,3,7]</span><br><span class="line">输出: 49</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<p><strong>方法一：</strong></p>
+<ul>
+<li><p>暴力法</p>
+<p>对每一个矩形计算其面积，取其中最大的那一个</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class Solution1 &#123;</span><br><span class="line">    &#x2F;&#x2F;暴力法，对每一个矩形计算其面积，取其中最大的那一个</span><br><span class="line">    public int maxArea(int[] height)&#123;</span><br><span class="line">        int len&#x3D;height.length;</span><br><span class="line">        int max&#x3D;0;</span><br><span class="line">        for(int i&#x3D;0;i&lt;len-1;i++)&#123;</span><br><span class="line">            for(int j&#x3D;i+1;j&lt;len;j++)&#123;</span><br><span class="line">                int maxRef&#x3D;(j-i)*Math.min(height[i],height[j]);</span><br><span class="line">                if(maxRef&gt;max)&#123;</span><br><span class="line">                    max&#x3D;maxRef;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<hr>
+<p><strong>方法2：</strong></p>
+<ul>
+<li><p>双指针法</p>
+<p>分别用两个指针first和last指向最左边和最右边，max记录最大的矩阵面积，若first的高度小于last的高度，则first右移，否则last左移。</p>
+<blockquote>
+<p>1.大致证明一下，若移动较长的边，则之后的矩阵高度最大为较短边的高度，而长度又比移动前少一，所以面积一定比移动之前要小，所以移动较长的边没有意义。</p>
+<p>2.比较麻烦的是证明两条边的长度相同时随便移动任意一条边都可以，需要注意到当两边相同时，若要移动后的矩阵面积比之前要大，则新的边必须要比这两条等边的高度都要大，所以无论移动哪条边，这种情况都不会错过。</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class Solution2 &#123;</span><br><span class="line">    &#x2F;&#x2F;双指针法</span><br><span class="line">    public int maxArea(int[] height)&#123;</span><br><span class="line">        int len&#x3D;height.length;</span><br><span class="line">        int max&#x3D;0;</span><br><span class="line">        int first&#x3D;0;</span><br><span class="line">        int last&#x3D;len-1;</span><br><span class="line">        while(first&lt;last)&#123;</span><br><span class="line">            int maxRef&#x3D;(last-first)*Math.min(height[first],height[last]);</span><br><span class="line">            max&#x3D;Math.max(max,maxRef);</span><br><span class="line">            if(height[first]&gt;height[last])&#123;</span><br><span class="line">                last--;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                first++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2019/12/24/13.%20%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/24/13.%20%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/" itemprop="url">13. 罗马数字转整数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-24T17:51:24+08:00">
+                2019-12-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="13-罗马数字转整数"><a href="#13-罗马数字转整数" class="headerlink" title="13. 罗马数字转整数"></a><a href="https://leetcode-cn.com/problems/roman-to-integer/" target="_blank" rel="noopener">13. 罗马数字转整数</a></h1><p><strong>算法描述:</strong></p>
+<ul>
+<li>唯一需要注意的一点就是当左边的数字比右边要小时，计算结果是右边-左边<ul>
+<li>为了达到这个目的，我的设计是始终用一个整数 <code>prev</code>记录前一个数字的大小，用当前数字 <code>rev</code>与前一个数字相比，若<code>rev&gt;prev</code>，则 <code>result+=rev-2*prev;</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public int romanToInt(String s) &#123;</span><br><span class="line">        &#x2F;&#x2F;记录最终结果</span><br><span class="line">        int result&#x3D;0;</span><br><span class="line">        &#x2F;&#x2F;记录前一个结果</span><br><span class="line">        int prev&#x3D;10000;</span><br><span class="line">        &#x2F;&#x2F;map对应映射关系</span><br><span class="line">        Map&lt;Character,Integer&gt; map&#x3D;new HashMap&lt;&gt;();</span><br><span class="line">        map.put(&#39;I&#39;,1);</span><br><span class="line">        map.put(&#39;V&#39;,5);</span><br><span class="line">        map.put(&#39;X&#39;,10);</span><br><span class="line">        map.put(&#39;L&#39;,50);</span><br><span class="line">        map.put(&#39;C&#39;,100);</span><br><span class="line">        map.put(&#39;D&#39;,500);</span><br><span class="line">        map.put(&#39;M&#39;,1000);</span><br><span class="line">        for(int i&#x3D;0;i&lt;s.length();i++)&#123;</span><br><span class="line">            &#x2F;&#x2F;rev记录当前数字</span><br><span class="line">            int rev&#x3D;map.get(s.charAt(i));</span><br><span class="line">            &#x2F;&#x2F;如果右边数字比左边大</span><br><span class="line">            if(rev&gt;prev)&#123;</span><br><span class="line">                result+&#x3D;rev-2*prev;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                result+&#x3D;rev;</span><br><span class="line">            &#125;</span><br><span class="line">            prev&#x3D;rev;</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2019/12/24/14.%20%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%89%8D%E7%BC%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1295,717 +2002,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2019/12/24/29.%20%E4%B8%A4%E6%95%B0%E7%9B%B8%E9%99%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/24/29.%20%E4%B8%A4%E6%95%B0%E7%9B%B8%E9%99%A4/" itemprop="url">29. 两数相除</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-24T17:51:24+08:00">
-                2019-12-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="29-两数相除"><a href="#29-两数相除" class="headerlink" title="29. 两数相除"></a><a href="https://leetcode-cn.com/problems/divide-two-integers/" target="_blank" rel="noopener">29. 两数相除</a></h1><p><strong>题目描述：</strong></p>
-<blockquote>
-<p>给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。</p>
-<p>返回被除数 dividend 除以除数 divisor 得到的商。</p>
-</blockquote>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: dividend &#x3D; 10, divisor &#x3D; 3</span><br><span class="line">输出: 3</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: dividend &#x3D; 7, divisor &#x3D; -3</span><br><span class="line">输出: -2</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>说明：</strong></p>
-<ul>
-<li>被除数和除数均为 32 位有符号整数。</li>
-<li>除数不为 0。</li>
-<li>假设我们的环境只能存储 32 位有符号整数，其数值范围是 [−2^31^,  2^31^ − 1]。本题中，如果除法结果溢出，则返回 2^31^ − 1。</li>
-</ul>
-<hr>
-<hr>
-<p><strong>算法思路：</strong></p>
-<ul>
-<li>由于正数操作的话，考虑越界情况比较复杂，所以全部转换成为负数处理</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public int divide(int dividend, int divisor)&#123;</span><br><span class="line">		&#x2F;&#x2F;^为异或符号，即dividend和divisor同号时，sign为false</span><br><span class="line">        boolean sign &#x3D; (dividend &gt; 0) ^ (divisor &gt; 0);</span><br><span class="line">        int result &#x3D; 0;</span><br><span class="line">        &#x2F;&#x2F;全部转换为负数操作</span><br><span class="line">        if(dividend&gt;0) &#123;</span><br><span class="line">            dividend &#x3D; -dividend;</span><br><span class="line">        &#125;</span><br><span class="line">        if(divisor&gt;0) divisor &#x3D; -divisor;</span><br><span class="line">        while(dividend &lt;&#x3D; divisor) &#123;</span><br><span class="line">            int temp_result &#x3D; -1;</span><br><span class="line">            int temp_divisor &#x3D; divisor;</span><br><span class="line">            &#x2F;&#x2F;左移一位即表示乘以2</span><br><span class="line">            while(dividend &lt;&#x3D; (temp_divisor &lt;&lt; 1)) &#123;</span><br><span class="line">                if(temp_divisor &lt;&#x3D; (Integer.MIN_VALUE &gt;&gt; 1))break;</span><br><span class="line">                temp_result &#x3D; temp_result &lt;&lt; 1;</span><br><span class="line">                temp_divisor &#x3D; temp_divisor &lt;&lt; 1;</span><br><span class="line">            &#125;</span><br><span class="line">            dividend &#x3D; dividend - temp_divisor;</span><br><span class="line">            result +&#x3D; temp_result;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;如果最后结果为整数时</span><br><span class="line">        if(!sign) &#123;</span><br><span class="line">        	&#x2F;&#x2F;越界了</span><br><span class="line">            if(result &lt;&#x3D; Integer.MIN_VALUE) return Integer.MAX_VALUE;</span><br><span class="line">            result &#x3D; - result;</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2019/12/24/33.%20%E6%90%9C%E7%B4%A2%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/24/33.%20%E6%90%9C%E7%B4%A2%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84/" itemprop="url">33. 搜索旋转排序数组</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-24T17:51:24+08:00">
-                2019-12-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="33-搜索旋转排序数组"><a href="#33-搜索旋转排序数组" class="headerlink" title="33. 搜索旋转排序数组"></a><a href="https://leetcode-cn.com/problems/search-in-rotated-sorted-array/" target="_blank" rel="noopener">33. 搜索旋转排序数组</a></h1><p><strong>题目描述：</strong></p>
-<blockquote>
-<p>假设按照升序排序的数组在预先未知的某个点上进行了旋转。</p>
-<p>( 例如，数组 [0,1,2,4,5,6,7] 可能变为 <strong>[4,5,6,7,0,1,2]</strong> )。</p>
-<p>搜索一个给定的目标值，如果数组中存在这个目标值，则返回它的索引，否则返回 -1 。</p>
-<p>你可以假设数组中不存在重复的元素。</p>
-<p>你的算法时间复杂度必须是 O(log n) 级别。</p>
-</blockquote>
-<hr>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: nums &#x3D; [4,5,6,7,0,1,2], target &#x3D; 0</span><br><span class="line">输出: 4</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: nums &#x3D; [4,5,6,7,0,1,2], target &#x3D; 3</span><br><span class="line">输出: -1</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p><strong>算法思路：</strong></p>
-<ol>
-<li>找到旋转点的下标，也就是数组中最小元素的索引<ul>
-<li>用二分法查找，如果有 <code>nums[left]&lt;nums[right]，则原数组并没有旋转，即依然是整体单增的</code></li>
-<li>由于数组的左右两个部分都是单增的，所以若存在一点使得 <code>nums[pivot]&gt;nums[pivot+1](即违反了单增)，则可以得到pivot+1为最小元素的索引</code></li>
-<li>否则，若 <code>nums[pivot] &lt; nums[left]</code>，则表示pivot在右边的有序数组中，显然旋转点在其左边，所以令 <code>right = pivot - 1;</code></li>
-<li>否则，令 <code>left = pivot + 1;</code></li>
-</ul>
-</li>
-<li>若 <code>nums为空或者长度为0，则返回-1；若nums长度为1，则直接将nums[0]与target相比</code><ul>
-<li>首先得到整个数组的旋转点索引，若其为0，则表示没有旋转，则整个数组有序，直接对整个数组进行二分查找；</li>
-<li>否则，将<code>target与nums[0]进行比较，如果target&lt;nums[0]，则表示target在右边的有序数组中</code></li>
-<li>否则，target在左边的有序数组中。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;寻找旋转点的索引</span><br><span class="line">private int find_rotate_index(int left,int right,int[] nums)&#123;</span><br><span class="line">		&#x2F;&#x2F;表示整个数组单增，返回0</span><br><span class="line">        if(nums[left]&lt;nums[right])&#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;二分查找</span><br><span class="line">        while(left&lt;&#x3D;right)&#123;</span><br><span class="line">            int pivot&#x3D;(left+right)&#x2F;2;</span><br><span class="line">            if(nums[pivot]&gt;nums[pivot+1])&#123;</span><br><span class="line">                return pivot+1;</span><br><span class="line">            &#125;else if (nums[pivot]&lt;nums[left])&#123;</span><br><span class="line">                right&#x3D;pivot-1;</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                left&#x3D;pivot+1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;二分查找算法</span><br><span class="line">    private int search(int left,int right,int[] nums,int target)&#123;</span><br><span class="line">        while(left&lt;&#x3D;right)&#123;</span><br><span class="line">            int mid&#x3D;(left+right)&#x2F;2;</span><br><span class="line">            if(nums[mid]&#x3D;&#x3D;target)&#123;</span><br><span class="line">                return mid;</span><br><span class="line">            &#125;else if(nums[mid]&gt;target)&#123;</span><br><span class="line">                right&#x3D;mid-1;</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                left&#x3D;mid+1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;没有找到，返回-1</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br><span class="line">    public int search ( int[] nums, int target)&#123;</span><br><span class="line">        int n &#x3D; nums.length;</span><br><span class="line">		&#x2F;&#x2F;特殊情况单独考虑</span><br><span class="line">        if (nums&#x3D;&#x3D;null||n &#x3D;&#x3D; 0)</span><br><span class="line">            return -1;</span><br><span class="line">        if (n &#x3D;&#x3D; 1)</span><br><span class="line">            return nums[0] &#x3D;&#x3D; target ? 0 : -1;</span><br><span class="line">        &#x2F;&#x2F;得到旋转点坐标</span><br><span class="line">        int rotate_index &#x3D; find_rotate_index(0, n - 1, nums);</span><br><span class="line">        &#x2F;&#x2F;旋转点坐标为0，表示没有旋转，对整个数组二分查找</span><br><span class="line">        if(rotate_index&#x3D;&#x3D;0)&#123;</span><br><span class="line">            return search(0,n-1,nums,target);</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            if(target&#x3D;&#x3D;nums[rotate_index])&#123;</span><br><span class="line">                return rotate_index;</span><br><span class="line">            &#125;else if (target&lt;nums[0])&#123;</span><br><span class="line">                return search(rotate_index,n-1,nums,target);</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                return search(0,rotate_index-1,nums,target);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<p><strong>注意：</strong></p>
-<ul>
-<li><strong>对于二分查找需要注意的是，初始时，left的值为0，right的值为<code>nums.length-1</code></strong></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2019/12/24/34.%20%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E5%85%83%E7%B4%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%92%8C%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E4%BD%8D%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/24/34.%20%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E5%85%83%E7%B4%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%92%8C%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E4%BD%8D%E7%BD%AE/" itemprop="url">34. 在排序数组中查找元素的第一个和最后一个位置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-24T17:51:24+08:00">
-                2019-12-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="34-在排序数组中查找元素的第一个和最后一个位置"><a href="#34-在排序数组中查找元素的第一个和最后一个位置" class="headerlink" title="34. 在排序数组中查找元素的第一个和最后一个位置"></a><a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/" target="_blank" rel="noopener">34. 在排序数组中查找元素的第一个和最后一个位置</a></h1><p><strong>题目描述：</strong></p>
-<blockquote>
-<p>给定一个按照升序排列的整数数组 <code>nums</code>，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。</p>
-<p>你的算法时间复杂度必须是 O(log n) 级别。</p>
-<p>如果数组中不存在目标值，返回 [-1, -1]。</p>
-</blockquote>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: nums &#x3D; [5,7,7,8,8,10], target &#x3D; 8</span><br><span class="line">输出: [3,4]</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: nums &#x3D; [5,7,7,8,8,10], target &#x3D; 6</span><br><span class="line">输出: [-1,-1]</span><br></pre></td></tr></table></figure>
-
-
-
-<hr>
-<h2 id="算法1："><a href="#算法1：" class="headerlink" title="算法1："></a>算法1：</h2><p><strong>算法思路：</strong></p>
-<ul>
-<li>方法 <code>searchMin</code>和 <code>searchMax</code>分别用二分法来计算开始位置和结束位置</li>
-</ul>
-<hr>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">public int[] searchRange(int[] nums, int target) &#123;</span><br><span class="line">        int len&#x3D;nums.length;</span><br><span class="line">        &#x2F;&#x2F;数组长度为0</span><br><span class="line">        if(len&#x3D;&#x3D;0)&#123;</span><br><span class="line">            return new int[]&#123;-1,-1&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;没有找到terget元素</span><br><span class="line">        if(searchMin(nums,target,0,len-1)&#x3D;&#x3D;Integer.MAX_VALUE)&#123;</span><br><span class="line">            return new int[]&#123;-1,-1&#125;;</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            return new int[]&#123;searchMin(nums,target,0,len-1),searchMax(nums,target,0,len-1)&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;计算开始位置</span><br><span class="line">    private int searchMin(int[] nums,int target,int left,int right)&#123;</span><br><span class="line">    	&#x2F;&#x2F;注意用的是if，而不是while，因为在里面用的是递归</span><br><span class="line">        if(left&lt;&#x3D;right)&#123;</span><br><span class="line">            int mid&#x3D;(left+right)&#x2F;2;</span><br><span class="line">            &#x2F;&#x2F;左半边的开始位置</span><br><span class="line">            int leftMin&#x3D;searchMin(nums,target,left,mid-1);</span><br><span class="line">            &#x2F;&#x2F;右半边的开始位置，之所以要把右边加进去，是因为target可能不在左边，而在右边</span><br><span class="line">            int rightMin&#x3D;searchMin(nums,target,mid+1,right);</span><br><span class="line">            int min&#x3D;Math.min(leftMin,rightMin);</span><br><span class="line">            if(nums[mid]&#x3D;&#x3D;target)&#123;</span><br><span class="line">               return Math.min(min,mid);</span><br><span class="line">            &#125;</span><br><span class="line">            return min;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;若没有找到，则返回一个最大的数</span><br><span class="line">        return Integer.MAX_VALUE;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;计算结束位置</span><br><span class="line">    private int searchMax(int[] nums,int target,int left,int right)&#123;</span><br><span class="line">        if(left&lt;&#x3D;right)&#123;</span><br><span class="line">            int mid&#x3D;(left+right)&#x2F;2;</span><br><span class="line">            &#x2F;&#x2F;左半边的结束位置</span><br><span class="line">            int leftMax&#x3D;searchMax(nums,target,left,mid-1);</span><br><span class="line">            &#x2F;&#x2F;右半边的结束位置</span><br><span class="line">            int rightMax&#x3D;searchMax(nums,target,mid+1,right);</span><br><span class="line">            int max&#x3D;Math.max(leftMax,rightMax);</span><br><span class="line">            if(nums[mid]&#x3D;&#x3D;target)&#123;</span><br><span class="line">                return Math.max(max,mid);</span><br><span class="line">            &#125;</span><br><span class="line">            return max;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;若没有找到，则返回一个最小的数</span><br><span class="line">        return Integer.MIN_VALUE;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法效率很差，但是时间复杂度依然是<code>O(logn)</code></strong></p>
-<h2 id="算法2："><a href="#算法2：" class="headerlink" title="算法2："></a>算法2：</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>基于二分查找的改进，只不过当 <code>nums[mid]==target时还不能立即停止</code>,还需要继续搜索直到 <code>lo==hi</code>为止</li>
-<li><code>left</code> 参数的引入，它是一个 boolean 类型的变量，指示我们在遇到 <code>target == nums[mid]</code> 时应该做什么。如果 <code>left</code> 为 <code>true</code> ，那么我们递归查询左区间，否则递归右区间。考虑如果我们在下标为 i 处遇到了 <code>target</code> ，最左边的 <code>target</code> 一定不会出现在下标大于 i 的位置，所以我们永远不需要考虑右子区间。当求最右下标时，道理同样适用。</li>
-</ul>
-<hr>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;left的真假代表了当nums[mid]&#x3D;&#x3D;target时不同的处理策略</span><br><span class="line">private int extremeInsertionIndex(int[] nums, int target, boolean left) &#123;</span><br><span class="line">        int lo&#x3D;0,hi&#x3D;nums.length;</span><br><span class="line">        while(lo&lt;hi)&#123;</span><br><span class="line">            int mid&#x3D;(lo+hi)&#x2F;2;</span><br><span class="line">            &#x2F;&#x2F;当left为true时，表示相等时仍要去左边寻找</span><br><span class="line">            &#x2F;&#x2F;left为false时，表示相等时去右边寻找</span><br><span class="line">            if(nums[mid]&gt;target||left&amp;&amp;nums[mid]&#x3D;&#x3D;target)&#123;</span><br><span class="line">                hi&#x3D;mid;</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                lo&#x3D;mid+1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;当lo&#x3D;&#x3D;hi时结束循环，返回lo</span><br><span class="line">        return lo;</span><br><span class="line">    &#125;</span><br><span class="line">    public int[] searchRange(int[] nums, int target) &#123;</span><br><span class="line">        int[] result&#x3D;new int[]&#123;-1,-1&#125;;</span><br><span class="line">        int leftIdx&#x3D;extremeInsertionIndex(nums,target,true);</span><br><span class="line">        &#x2F;&#x2F;leftIdx&#x3D;&#x3D;nums.length表示每次nums[mid]与target进行比较时，都是target更大，所以             &#x2F;&#x2F;lo&#x3D;mid+1，nums[lefttIdx]!&#x3D;target如nums&#x3D;&#123;1,3,3,3,5&#125;,而target&#x3D;2这种情况</span><br><span class="line">        if(leftIdx&#x3D;&#x3D;nums.length||nums[leftIdx]!&#x3D;target)&#123;</span><br><span class="line">            return result;</span><br><span class="line">        &#125;</span><br><span class="line">        result[0]&#x3D;leftIdx;</span><br><span class="line">        &#x2F;&#x2F;下面结果需要减一</span><br><span class="line">        result[1]&#x3D;extremeInsertionIndex(nums,target,false)-1;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2019/12/24/38.%20%E6%8A%A5%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/24/38.%20%E6%8A%A5%E6%95%B0/" itemprop="url">38. 报数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-24T17:51:24+08:00">
-                2019-12-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="38-报数"><a href="#38-报数" class="headerlink" title="38. 报数"></a><a href="https://leetcode-cn.com/problems/count-and-say/" target="_blank" rel="noopener">38. 报数</a></h1><p><strong>题目描述：</strong></p>
-<blockquote>
-<p>报数序列是一个整数序列，按照其中的整数的顺序进行报数，得到下一个数。其前五项如下：</p>
-<ol>
-<li>1</li>
-<li>11</li>
-<li>21</li>
-<li>1211</li>
-<li>111221</li>
-</ol>
-<p>1 被读作  “one 1”  (“一个一”) , 即 11。<br>11 被读作 “two 1s” (“两个一”）, 即 21。<br>21 被读作 “one 2”,  “one 1” （”一个二” ,  “一个一”) , 即 1211。</p>
-<p>给定一个正整数 n（1 ≤ n ≤ 30），输出报数序列的第 n 项。</p>
-<p>注意：整数顺序将表示为一个字符串。</p>
-</blockquote>
-<hr>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: 1</span><br><span class="line">输出: &quot;1&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: 4</span><br><span class="line">输出: &quot;1211&quot;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="算法一："><a href="#算法一：" class="headerlink" title="算法一："></a>算法一：</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>很显然存在递推关系，所以很明显要用动态规划，虽然递推关系不太能直接用公式来描述</li>
-<li>递推关系： <code>strs[n]中的字符确定方法为：strs[n-1]中的连续字符个数+这个字符</code></li>
-<li>递推起点为 <code>strs[0]和strs[1]</code></li>
-</ul>
-<ol>
-<li>确定递推起点 <code>strs[0]和strs[1]</code></li>
-<li>逐个向后推，递推关系如上表示</li>
-<li>最后返回 <code>strs[n-1]，因为编号从0开始</code></li>
-</ol>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public String countAndSay(int n) &#123;</span><br><span class="line">        if(n&#x3D;&#x3D;1) return &quot;1&quot;;</span><br><span class="line">        if(n&#x3D;&#x3D;2) return &quot;11&quot;;</span><br><span class="line">        &#x2F;&#x2F;用数组去存放递推的结果</span><br><span class="line">        String[] strs&#x3D;new String[n];</span><br><span class="line">        &#x2F;&#x2F;递推起点</span><br><span class="line">        strs[0]&#x3D;&quot;1&quot;;</span><br><span class="line">        strs[1]&#x3D;&quot;11&quot;;</span><br><span class="line">        &#x2F;&#x2F;依次递推从2到n-1的每一个字符串</span><br><span class="line">        for(int i&#x3D;2;i&lt;n;i++)&#123;</span><br><span class="line">        	&#x2F;&#x2F;k记录strs[i-1]中正在被计算个数的字符索引，从0开始</span><br><span class="line">            int k&#x3D;0;</span><br><span class="line">            &#x2F;&#x2F;必须初始化为空字符串，否则会出现空指针异常</span><br><span class="line">            strs[i]&#x3D;&quot;&quot;;</span><br><span class="line">            &#x2F;&#x2F;用j来跟随相同的字符，若相同则++</span><br><span class="line">            int j&#x3D;0;</span><br><span class="line">            while(j&lt;strs[i-1].length()) &#123;</span><br><span class="line">            	&#x2F;&#x2F;num记录相同字符的个数</span><br><span class="line">                int num&#x3D;0;</span><br><span class="line">                &#x2F;&#x2F;当字符相同时，num++，j++</span><br><span class="line">                while (j&lt;strs[i-1].length()&amp;&amp;strs[i - 1].charAt(j) &#x3D;&#x3D; strs[i - 1].charAt(k)) &#123;</span><br><span class="line">                    num++;</span><br><span class="line">                    j++;</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F;当字符不同后跳出上面的循环，此时需要更新strs[i]的值</span><br><span class="line">                strs[i] &#x3D; strs[i].concat(&quot;&quot; + num + strs[i - 1].charAt(k));</span><br><span class="line">                &#x2F;&#x2F;将j的值赋给为k，以记录下一次循环所要计算的字符的重复个数</span><br><span class="line">                k &#x3D; j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后返回结果</span><br><span class="line">        return strs[n-1];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p><strong>分析：</strong></p>
-<blockquote>
-<p>虽然看似在算法中有三个循环的嵌套，但其实最里面两层循环加起来只会执行n<del>i</del>次，n<del>i</del>为<code>strs[i-1].length</code>,所以总时间复杂度为O(n<del>i</del>*n)</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2060,7 +2056,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">214</span>
+                  <span class="site-state-item-count">218</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2082,7 +2078,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

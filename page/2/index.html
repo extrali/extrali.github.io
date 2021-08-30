@@ -248,6 +248,655 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/07/16/120-%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/16/120-%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" itemprop="url">120.三角形最小路径和</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-16T10:15:47+08:00">
+                2020-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="120-三角形最小路径和"><a href="#120-三角形最小路径和" class="headerlink" title="120. 三角形最小路径和"></a><a href="https://leetcode-cn.com/problems/triangle/" target="_blank" rel="noopener">120. 三角形最小路径和</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。</p>
+<p>相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点。</p>
+<p>例如，给定三角形：</p>
+<p>[<br>     [2],<br>    [3,4],<br>   [6,5,7],<br>  [4,1,8,3]<br>]<br>自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。</p>
+<h2 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>依次去计算每一种路径可能的结果，然后取最小</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">private int res&#x3D;Integer.MAX_VALUE;</span><br><span class="line"></span><br><span class="line">   public int minimumTotal(List&lt;List&lt;Integer&gt;&gt; triangle) &#123;</span><br><span class="line">       if(triangle&#x3D;&#x3D;null||triangle.size()&#x3D;&#x3D;0) return 0;</span><br><span class="line">       helper(triangle,0,0,0,triangle.size());</span><br><span class="line">       return res;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   private void helper(List&lt;List&lt;Integer&gt;&gt; triangle,int i,int j,int sum,int size)&#123;</span><br><span class="line">       if(i&#x3D;&#x3D;size) &#123;</span><br><span class="line">           res&#x3D;Math.min(res,sum);</span><br><span class="line">           return;</span><br><span class="line">       &#125;</span><br><span class="line">       int num&#x3D;triangle.get(i).get(j);</span><br><span class="line">       sum+&#x3D;num;</span><br><span class="line">       helper(triangle,i+1,j,sum,size);</span><br><span class="line">       helper(triangle,i+1,j+1,sum,size);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>超时</p>
+<p><strong>时间复杂度：</strong>O(2^n^)，从最上面向下看，每次都有两个分支，所以就不停乘以2，最后得出2^n^</p>
+<p><strong>空间复杂度：</strong>O(n)，递归调用的空间复杂度</p>
+<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li><p>用dp[i][j]来记录从最上面到第i行第j个的最小路径和，则有如下的递推关系式：</p>
+<p><code>dp[i][j]=Math.min(dp[i-1][j-1],dp[i-1][j])+nums[i][j]</code></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public int minimumTotal(List&lt;List&lt;Integer&gt;&gt; triangle) &#123;</span><br><span class="line">        if(triangle&#x3D;&#x3D;null||triangle.size()&#x3D;&#x3D;0) return 0;</span><br><span class="line">        int n&#x3D;triangle.size();</span><br><span class="line">        int[][] dp&#x3D;new int[n][n];</span><br><span class="line">        dp[0][0]&#x3D;triangle.get(0).get(0);</span><br><span class="line">        for(int i&#x3D;1;i&lt;n;i++)&#123;</span><br><span class="line">            List&lt;Integer&gt; list&#x3D;triangle.get(i);</span><br><span class="line">            int size&#x3D;list.size();</span><br><span class="line">            &#x2F;&#x2F;0和size-1要单独出来算，避免越界</span><br><span class="line">            dp[i][0]&#x3D;dp[i-1][0]+list.get(0);</span><br><span class="line">            for(int j&#x3D;1;j&lt;size-1;j++)&#123;</span><br><span class="line">                dp[i][j]&#x3D;Math.min(dp[i-1][j-1],dp[i-1][j])+list.get(j);</span><br><span class="line">            &#125;</span><br><span class="line">            dp[i][size-1]&#x3D;dp[i-1][size-2]+list.get(size-1);</span><br><span class="line">        &#125;</span><br><span class="line">        int res&#x3D;Integer.MAX_VALUE;</span><br><span class="line">        for(int i&#x3D;0;i&lt;n;i++)&#123;</span><br><span class="line">            res&#x3D;Math.min(res,dp[n-1][i]);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>时间复杂度：</strong>O(n^2^)</p>
+<p><strong>空间复杂度：</strong>O(n^2^)</p>
+<h2 id="空间优化"><a href="#空间优化" class="headerlink" title="空间优化"></a>空间优化</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>从上面的递推关系式<code>dp[i][j]=Math.min(dp[i-1][j-1],dp[i-1][j])+nums[i][j]</code>可以发现dp[i][j]的计算只和i-1行的状态有关，所以不需要去存储前面i-1行之前的数据，所以可以用一个二维矩阵来存储dp[2][n]，其中一行存储上一行的，一行存储这一行的，然后交替使用。</li>
+<li>更好的改进是只使用dp[n]的数组，由于计算dp[n]需要用到dp[n]与dp[n-1]，所以如果正着从1开始算，那么就会因为dp[n-1]已经被更新了，而无法得到正确的结果，所以可以倒着算，计算dp[n]时只更新了dp[n+1]以及其向后的，dp[n]和dp[n-1]还存储着上一行的数据。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public int minimumTotal(List&lt;List&lt;Integer&gt;&gt; triangle) &#123;</span><br><span class="line">        if(triangle&#x3D;&#x3D;null||triangle.size()&#x3D;&#x3D;0) return 0;</span><br><span class="line">        int n&#x3D;triangle.size();</span><br><span class="line">        int[] dp&#x3D;new int[n];</span><br><span class="line">        dp[0]&#x3D;triangle.get(0).get(0);</span><br><span class="line">        for(int i&#x3D;1;i&lt;n;i++)&#123;</span><br><span class="line">            List&lt;Integer&gt; list&#x3D;triangle.get(i);</span><br><span class="line">            int size&#x3D;list.size();</span><br><span class="line">            &#x2F;&#x2F;从后向前算</span><br><span class="line">            dp[size-1]&#x3D;dp[size-2]+list.get(size-1);</span><br><span class="line">            for(int j&#x3D;size-2;j&gt;0;j--)&#123;</span><br><span class="line">                dp[j]&#x3D;Math.min(dp[j],dp[j-1])+list.get(j);</span><br><span class="line">            &#125;</span><br><span class="line">            dp[0]&#x3D;dp[0]+list.get(0);</span><br><span class="line">        &#125;</span><br><span class="line">        int res&#x3D;Integer.MAX_VALUE;</span><br><span class="line">        for(int i&#x3D;0;i&lt;n;i++)&#123;</span><br><span class="line">            res&#x3D;Math.min(res,dp[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>时间复杂度：</strong>O(n^2^)</p>
+<p><strong>空间复杂度：</strong>O(n)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/07/10/151-%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/10/151-%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D/" itemprop="url">151.翻转字符串里的单词</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-10T20:56:51+08:00">
+                2020-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="151-翻转字符串里的单词"><a href="#151-翻转字符串里的单词" class="headerlink" title="151. 翻转字符串里的单词"></a><a href="https://leetcode-cn.com/problems/reverse-words-in-a-string/" target="_blank" rel="noopener">151. 翻转字符串里的单词</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个字符串，逐个翻转字符串中的每个单词。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入: &quot;the sky is blue&quot;</span><br><span class="line">输出: &quot;blue is sky the&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入: &quot;  hello world!  &quot;</span><br><span class="line">输出: &quot;world! hello&quot;</span><br><span class="line">解释: 输入字符串可以在前面或者后面包含多余的空格，但是反转后的字符不能包括。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 3：</span><br><span class="line"></span><br><span class="line">输入: &quot;a good   example&quot;</span><br><span class="line">输出: &quot;example good a&quot;</span><br><span class="line">解释: 如果两个单词间有多余的空格，将反转后单词间的空格减少到只含一个。</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>算法思想：</strong></p>
+<ul>
+<li>用StringBuilder开始从后向前拼接，需要解决一下几点：<ol>
+<li>字符串前面和后面的多余空格需要消除</li>
+<li>单词中间多余的空格需要消除</li>
+</ol>
+</li>
+<li>从末尾向前遍历，每次拼接一个单词，然后拼上一个空格</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public String reverseWords(String s) &#123;</span><br><span class="line">        if(s&#x3D;&#x3D;null||s.length()&#x3D;&#x3D;0) return s;</span><br><span class="line">        StringBuilder res&#x3D;new StringBuilder();</span><br><span class="line">        int i&#x3D;s.length()-1;</span><br><span class="line">        while(i&gt;&#x3D;0&amp;&amp;s.charAt(i)&#x3D;&#x3D;&#39; &#39;) i--;</span><br><span class="line">        &#x2F;&#x2F;全是空格的情况，返回空串</span><br><span class="line">        if(i&#x3D;&#x3D;-1) return &quot;&quot;;</span><br><span class="line">        while(i&gt;&#x3D;0)&#123;</span><br><span class="line">            int r&#x3D;i;</span><br><span class="line">            &#x2F;&#x2F;找到单词的左边界</span><br><span class="line">            while(i&gt;&#x3D;0&amp;&amp;s.charAt(i)!&#x3D;&#39; &#39;) i--;</span><br><span class="line">            res.append(s.substring(i+1,r+1));</span><br><span class="line">            res.append(&#39; &#39;);</span><br><span class="line">            &#x2F;&#x2F;寻找下一个单词的右边界</span><br><span class="line">            while(i&gt;&#x3D;0&amp;&amp;s.charAt(i)&#x3D;&#x3D;&#39; &#39;) i--;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后一个单词多加了一个空格，需要删掉</span><br><span class="line">        res.deleteCharAt(res.length()-1);</span><br><span class="line">        return res.toString();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/07/10/63-%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84II/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/10/63-%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84II/" itemprop="url">63.不同路径II</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-10T17:52:18+08:00">
+                2020-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="63-不同路径-II"><a href="#63-不同路径-II" class="headerlink" title="63. 不同路径 II"></a><a href="https://leetcode-cn.com/problems/unique-paths-ii/" target="_blank" rel="noopener">63. 不同路径 II</a></h1><p><strong>题目描述:</strong></p>
+<p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。</p>
+<p>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。</p>
+<p>现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？</p>
+<p>网格中的障碍物和空位置分别用 1 和 0 来表示。</p>
+<p>说明：m 和 n 的值均不超过 100。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入:</span><br><span class="line">[</span><br><span class="line">  [0,0,0],</span><br><span class="line">  [0,1,0],</span><br><span class="line">  [0,0,0]</span><br><span class="line">]</span><br><span class="line">输出: 2</span><br><span class="line">解释:</span><br><span class="line">3x3 网格的正中间有一个障碍物。</span><br><span class="line">从左上角到右下角一共有 2 条不同的路径：</span><br><span class="line">1. 向右 -&gt; 向右 -&gt; 向下 -&gt; 向下</span><br><span class="line">2. 向下 -&gt; 向下 -&gt; 向右 -&gt; 向右</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>需要去处理障碍物时的情况，用0来表示某个位置不可到达，则其余递推关系是不变的</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public int uniquePathsWithObstacles(int[][] obstacleGrid) &#123;</span><br><span class="line">        int m&#x3D;obstacleGrid.length,n&#x3D;obstacleGrid[0].length;</span><br><span class="line">        int[][] dp&#x3D;new int[m][n];</span><br><span class="line">        for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">            for(int j&#x3D;0;j&lt;n;j++)&#123;</span><br><span class="line">                if(i&#x3D;&#x3D;0&amp;&amp;j&#x3D;&#x3D;0)&#123;</span><br><span class="line">                    dp[i][j]&#x3D;obstacleGrid[0][0]&#x3D;&#x3D;1?0:1;</span><br><span class="line">                    continue;</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F;如果当前有障碍物，则dp为0</span><br><span class="line">                if(obstacleGrid[i][j]&#x3D;&#x3D;1)</span><br><span class="line">                    dp[i][j]&#x3D;0;</span><br><span class="line">                else&#123;</span><br><span class="line">                    if(i-1&gt;&#x3D;0&amp;&amp;j-1&gt;&#x3D;0)&#123;</span><br><span class="line">                        dp[i][j]&#x3D;dp[i-1][j]+dp[i][j-1];</span><br><span class="line">                    &#125;else if(i&#x3D;&#x3D;0)&#123;</span><br><span class="line">                        dp[i][j]&#x3D;dp[i][j-1];</span><br><span class="line">                    &#125;else dp[i][j]&#x3D;dp[i-1][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return dp[m-1][n-1];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/07/10/1013-%E5%B0%86%E6%95%B0%E7%BB%84%E5%88%86%E6%88%90%E5%92%8C%E7%9B%B8%E7%AD%89%E7%9A%84%E4%B8%89%E4%B8%AA%E9%83%A8%E5%88%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/10/1013-%E5%B0%86%E6%95%B0%E7%BB%84%E5%88%86%E6%88%90%E5%92%8C%E7%9B%B8%E7%AD%89%E7%9A%84%E4%B8%89%E4%B8%AA%E9%83%A8%E5%88%86/" itemprop="url">1013.将数组分成和相等的三个部分</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-10T16:30:05+08:00">
+                2020-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1013-将数组分成和相等的三个部分"><a href="#1013-将数组分成和相等的三个部分" class="headerlink" title="1013. 将数组分成和相等的三个部分"></a><a href="https://leetcode-cn.com/problems/partition-array-into-three-parts-with-equal-sum/" target="_blank" rel="noopener">1013. 将数组分成和相等的三个部分</a></h1><p><strong>题目描述：</strong></p>
+<p>给你一个整数数组 A，只有可以将其划分为三个和相等的非空部分时才返回 true，否则返回 false。</p>
+<p>形式上，如果可以找出索引 i+1 &lt; j 且满足 A[0] + A[1] + … + A[i] == A[i+1] + A[i+2] + … + A[j-1] == A[j] + A[j-1] + … + A[A.length - 1] 就可以将数组三等分。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：[0,2,1,-6,6,-7,9,1,2,0,1]</span><br><span class="line">输出：true</span><br><span class="line">解释：0 + 2 + 1 &#x3D; -6 + 6 - 7 + 9 + 1 &#x3D; 2 + 0 + 1</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：[0,2,1,-6,6,7,9,-1,2,0,1]</span><br><span class="line">输出：false</span><br><span class="line"></span><br><span class="line">示例 3：</span><br><span class="line"></span><br><span class="line">输入：[3,3,6,5,-2,2,5,1,-9,4]</span><br><span class="line">输出：true</span><br><span class="line">解释：3 + 3 &#x3D; 6 &#x3D; 5 - 2 + 2 + 5 + 1 - 9 + 4</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>算法思想：</strong></p>
+<ul>
+<li>思路很清晰，就是有些错误容易犯，先计算整个数组的和，然后/3，从0开始向后去找到第一个和为sum/3的索引，再从后面去找第二个….</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public boolean canThreePartsEqualSum(int[] A) &#123;</span><br><span class="line">       int sum&#x3D;0;</span><br><span class="line">       for(int num:A)&#123;</span><br><span class="line">           sum+&#x3D;num;</span><br><span class="line">       &#125;</span><br><span class="line">       if(sum%3!&#x3D;0) return false;</span><br><span class="line">       int i&#x3D;0,sum1&#x3D;0,sum2&#x3D;0;</span><br><span class="line">       while(i&lt;A.length)&#123;</span><br><span class="line">           sum1+&#x3D;A[i++];</span><br><span class="line">           if(sum1&#x3D;&#x3D;sum&#x2F;3)</span><br><span class="line">               break;</span><br><span class="line">       &#125;</span><br><span class="line">       while(i&lt;A.length)&#123;</span><br><span class="line">           sum2+&#x3D;A[i++];</span><br><span class="line">           if(sum2&#x3D;&#x3D;sum&#x2F;3)</span><br><span class="line">               break;</span><br><span class="line">       &#125;</span><br><span class="line">       &#x2F;&#x2F;最后返回i是否&lt;A.length</span><br><span class="line">       return i&lt;A.length;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/07/10/6-Z%E5%AD%97%E5%BD%A2%E5%8F%98%E6%8D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1211,719 +1860,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/07/09/%E9%9D%A2%E8%AF%95%E9%A2%9817-13-%E6%81%A2%E5%A4%8D%E7%A9%BA%E6%A0%BC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/09/%E9%9D%A2%E8%AF%95%E9%A2%9817-13-%E6%81%A2%E5%A4%8D%E7%A9%BA%E6%A0%BC/" itemprop="url">面试题17.13.恢复空格</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-09T11:01:11+08:00">
-                2020-07-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="面试题-17-13-恢复空格"><a href="#面试题-17-13-恢复空格" class="headerlink" title="面试题 17.13. 恢复空格"></a><a href="https://leetcode-cn.com/problems/re-space-lcci/" target="_blank" rel="noopener">面试题 17.13. 恢复空格</a></h1><p><strong>题目描述：</strong><br>哦，不！你不小心把一个长篇文章中的空格、标点都删掉了，并且大写也弄成了小写。像句子”I reset the computer. It still didn’t boot!”已经变成了”iresetthecomputeritstilldidntboot”。在处理标点符号和大小写之前，你得先把它断成词语。当然了，你有一本厚厚的词典dictionary，不过，有些词没在词典里。假设文章用sentence表示，设计一个算法，把文章断开，要求未识别的字符最少，返回未识别的字符数。</p>
-<p>注意：本题相对原题稍作改动，只需返回未识别的字符数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">示例：</span><br><span class="line"></span><br><span class="line">输入：</span><br><span class="line">dictionary &#x3D; [&quot;looked&quot;,&quot;just&quot;,&quot;like&quot;,&quot;her&quot;,&quot;brother&quot;]</span><br><span class="line">sentence &#x3D; &quot;jesslookedjustliketimherbrother&quot;</span><br><span class="line">输出： 7</span><br><span class="line">解释： 断句后为&quot;jess looked just like tim her brother&quot;，共7个未识别字符。</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="哈希-动态规划"><a href="#哈希-动态规划" class="headerlink" title="哈希+动态规划"></a>哈希+动态规划</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>用哈希表来判断一个字符串书否在原字典中</li>
-<li>dp[i]表示字符串到第i个下标处最少未识别的字符数，则如果从j到i处的子串在字典中，则有dp[i]=min(dp[j-1])，否则的话dp[i]=dp[j]+i-j</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public int respace(String[] dictionary, String sentence) &#123;</span><br><span class="line">        if(sentence&#x3D;&#x3D;null||sentence.length()&#x3D;&#x3D;0) return 0;</span><br><span class="line">        int[] dp&#x3D;new int[sentence.length()];</span><br><span class="line">        &#x2F;&#x2F;哈希表用于判断</span><br><span class="line">        Set&lt;String&gt; set&#x3D;new HashSet&lt;&gt;();</span><br><span class="line">        for(String s:dictionary)&#123;</span><br><span class="line">            set.add(s);</span><br><span class="line">        &#125;</span><br><span class="line">        for(int i&#x3D;0;i&lt;dp.length;i++)&#123;</span><br><span class="line">        	&#x2F;&#x2F;初始化为i+1，表示每个元素都不匹配</span><br><span class="line">            dp[i]&#x3D;i+1;</span><br><span class="line">            &#x2F;&#x2F;这里j从i开始才行</span><br><span class="line">            for(int j&#x3D;i;j&gt;&#x3D;0;j--)&#123;</span><br><span class="line">                dp[i]&#x3D;Math.min(dp[i],dp[j]+i-j);</span><br><span class="line">                if(set.contains(sentence.substring(j,i+1)))&#123;</span><br><span class="line">                    dp[i]&#x3D;Math.min(dp[i],j&gt;0?dp[j-1]:0);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return dp[dp.length-1];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>时间复杂度：</strong>O(n^2^)</p>
-<p><strong>空间复杂度：</strong>O(n)</p>
-<p><strong>错误点：</strong></p>
-<ol>
-<li>没有加上14行，也就是少了在不匹配时的递推；</li>
-<li>13行处的j从i-1开始导致取子串substring(j,i+1)时，丢掉了长度为1的子串</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/07/08/143-%E9%87%8D%E6%8E%92%E9%93%BE%E8%A1%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/08/143-%E9%87%8D%E6%8E%92%E9%93%BE%E8%A1%A8/" itemprop="url">143.重排链表</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-08T21:35:16+08:00">
-                2020-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="143-重排链表"><a href="#143-重排链表" class="headerlink" title="143. 重排链表"></a><a href="https://leetcode-cn.com/problems/reorder-list/" target="_blank" rel="noopener">143. 重排链表</a></h1><p><strong>算法思想：</strong></p>
-<p>给定一个单链表 L：L0→L1→…→Ln-1→Ln ，<br>将其重新排列后变为： L0→Ln→L1→Ln-1→L2→Ln-2→…</p>
-<p>你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">给定链表 1-&gt;2-&gt;3-&gt;4, 重新排列为 1-&gt;4-&gt;2-&gt;3.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">给定链表 1-&gt;2-&gt;3-&gt;4-&gt;5, 重新排列为 1-&gt;5-&gt;2-&gt;4-&gt;3.</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>使用哈希表强制给每个节点安排一个下标，这样来实现随机获取，然后双指针即可。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public void reorderList(ListNode head) &#123;</span><br><span class="line">        if(head&#x3D;&#x3D;null) return;</span><br><span class="line">        Map&lt;Integer,ListNode&gt; map&#x3D;new HashMap&lt;&gt;();</span><br><span class="line">        ListNode p&#x3D;head;</span><br><span class="line">        int i&#x3D;0;</span><br><span class="line">        while(p!&#x3D;null)&#123;</span><br><span class="line">            map.put(i++,p);</span><br><span class="line">            p&#x3D;p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        int l&#x3D;0,r&#x3D;i-1;</span><br><span class="line">        ListNode Head&#x3D;new ListNode(0),tail&#x3D;Head;</span><br><span class="line">        while(l&lt;r)&#123;</span><br><span class="line">            tail.next&#x3D;map.get(l);</span><br><span class="line">            tail&#x3D;tail.next;</span><br><span class="line">            tail.next&#x3D;map.get(r);</span><br><span class="line">            tail&#x3D;tail.next;</span><br><span class="line">            l++;</span><br><span class="line">            r--;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后如果是奇数个节点的情况，最中间那个还需要加进去</span><br><span class="line">        if(l&#x3D;&#x3D;r)&#123;</span><br><span class="line">            tail.next&#x3D;map.get(l);</span><br><span class="line">            tail&#x3D;tail.next;</span><br><span class="line">        &#125;</span><br><span class="line">        tail.next&#x3D;null;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="逆转链表"><a href="#逆转链表" class="headerlink" title="逆转链表"></a>逆转链表</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>从中间将后一半的链表逆转，然后再依次拼接即可</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public void reorderList(ListNode head) &#123;</span><br><span class="line">        if(head&#x3D;&#x3D;null) return;</span><br><span class="line">        ListNode p&#x3D;head,q&#x3D;head,prev&#x3D;head;</span><br><span class="line">        while(p!&#x3D;null&amp;&amp;p.next!&#x3D;null)&#123;</span><br><span class="line">            p&#x3D;p.next.next;</span><br><span class="line">            prev&#x3D;q;</span><br><span class="line">            q&#x3D;q.next;</span><br><span class="line">        &#125;</span><br><span class="line">        prev.next&#x3D;null;</span><br><span class="line">        ListNode Head&#x3D;reverse(q);</span><br><span class="line">        p&#x3D;head;</span><br><span class="line">        q&#x3D;Head;</span><br><span class="line">        ListNode memo&#x3D;new ListNode(0),tail&#x3D;memo;</span><br><span class="line">        while(p!&#x3D;null&amp;&amp;q!&#x3D;null)&#123;</span><br><span class="line">            tail.next&#x3D;p;</span><br><span class="line">            tail&#x3D;tail.next;</span><br><span class="line">            p&#x3D;p.next;</span><br><span class="line">            tail.next&#x3D;q;</span><br><span class="line">            tail&#x3D;tail.next;</span><br><span class="line">            q&#x3D;q.next;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后如果q不为null，则右半边多了一个节点，也要拼接上</span><br><span class="line">        if(q!&#x3D;null)&#123;</span><br><span class="line">            tail.next&#x3D;q;</span><br><span class="line">            tail&#x3D;tail.next;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后tail.next&#x3D;null不能丢，防止链表出现环</span><br><span class="line">        tail.next&#x3D;null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private ListNode reverse(ListNode head)&#123;</span><br><span class="line">        if(head&#x3D;&#x3D;null||head.next&#x3D;&#x3D;null) return head;</span><br><span class="line">        ListNode p&#x3D;head,q&#x3D;head.next;</span><br><span class="line">        p.next&#x3D;null;</span><br><span class="line">        ListNode Head&#x3D;reverse(q);</span><br><span class="line">        q.next&#x3D;p;</span><br><span class="line">        return Head;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>错误1：</strong>将17行的<code>p=p.next</code>写到了19行，导致p取到的值是刚插进去的q</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/07/08/1332-%E5%88%A0%E9%99%A4%E5%9B%9E%E6%96%87%E5%BA%8F%E5%88%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/08/1332-%E5%88%A0%E9%99%A4%E5%9B%9E%E6%96%87%E5%BA%8F%E5%88%97/" itemprop="url">1332.删除回文序列</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-08T19:33:14+08:00">
-                2020-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="1332-删除回文子序列"><a href="#1332-删除回文子序列" class="headerlink" title="1332. 删除回文子序列"></a><a href="https://leetcode-cn.com/problems/remove-palindromic-subsequences/" target="_blank" rel="noopener">1332. 删除回文子序列</a></h1><p><strong>题目描述：</strong></p>
-<p>给你一个字符串 s，它仅由字母 ‘a’ 和 ‘b’ 组成。每一次删除操作都可以从 s 中删除一个回文 子序列。</p>
-<p>返回删除给定字符串中所有字符（字符串为空）的最小删除次数。</p>
-<p>「子序列」定义：如果一个字符串可以通过删除原字符串某些字符而不改变原字符顺序得到，那么这个字符串就是原字符串的一个子序列。</p>
-<p>「回文」定义：如果一个字符串向后和向前读是一致的，那么这个字符串就是一个回文。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：s &#x3D; &quot;ababa&quot;</span><br><span class="line">输出：1</span><br><span class="line">解释：字符串本身就是回文序列，只需要删除一次。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：s &#x3D; &quot;abb&quot;</span><br><span class="line">输出：2</span><br><span class="line">解释：&quot;abb&quot; -&gt; &quot;bb&quot; -&gt; &quot;&quot;. </span><br><span class="line">先删除回文子序列 &quot;a&quot;，然后再删除 &quot;bb&quot;。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 3：</span><br><span class="line"></span><br><span class="line">输入：s &#x3D; &quot;baabb&quot;</span><br><span class="line">输出：2</span><br><span class="line">解释：&quot;baabb&quot; -&gt; &quot;b&quot; -&gt; &quot;&quot;. </span><br><span class="line">先删除回文子序列 &quot;baab&quot;，然后再删除 &quot;b&quot;。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 4：</span><br><span class="line"></span><br><span class="line">输入：s &#x3D; &quot;&quot;</span><br><span class="line">输出：0</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p><strong>算法思想：</strong></p>
-<ul>
-<li>这题有点抖机灵，最后结果只有三种情况：<ol>
-<li>如果为空串，则结果为0；</li>
-<li>如果字符串本身回文，则为1；</li>
-<li>否则，结果为2.(因为字符串种只包含’a’和’b’，所以先删除a，再删除b即可)</li>
-</ol>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public int removePalindromeSub(String s) &#123;</span><br><span class="line">        if(s&#x3D;&#x3D;null||s.length()&#x3D;&#x3D;0) return 0;</span><br><span class="line">        int l&#x3D;0,r&#x3D;s.length()-1;</span><br><span class="line">        while(l&lt;r)&#123;</span><br><span class="line">            if(s.charAt(l)!&#x3D;s.charAt(r))</span><br><span class="line">                return 2;</span><br><span class="line">            l++;</span><br><span class="line">            r--;</span><br><span class="line">        &#125;</span><br><span class="line">        return 1;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/07/08/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/08/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/" itemprop="url">面试总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-08T16:03:17+08:00">
-                2020-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="7-06字节客户端一面二面三面"><a href="#7-06字节客户端一面二面三面" class="headerlink" title="7.06字节客户端一面二面三面"></a>7.06字节客户端一面二面三面</h1><p>一面二面三面一起的，一二面录音了，三面忘了，算法题放一起</p>
-<p><strong>算法题：</strong></p>
-<ol>
-<li>旋转数组的查找</li>
-<li>两个线程轮流打印奇数偶数</li>
-<li>有序数组查找一个元素第一次出现的位置</li>
-<li>单例</li>
-<li>域名反转(<a href="http://www.toutiao.com-&gt;com.toutiao.www" target="_blank" rel="noopener">www.toutiao.com-&gt;com.toutiao.www</a>)</li>
-<li>三面算法题在下面</li>
-</ol>
-<h2 id="一面-41min"><a href="#一面-41min" class="headerlink" title="一面(41min)"></a>一面(41min)</h2><ol>
-<li>自我介绍</li>
-<li>问性格，怎么不做算法？？？</li>
-<li>计算机基础咋学的？</li>
-<li>HTTP有哪些方法？</li>
-<li>get和post的区别？有说到get是幂等的，然后面试官问如果在两个get期间数据库发生改变了那结果还是一样吗？(不一样)。那怎么是幂等的。说我是不是在网上哪随便看到的(对对对，不敢反驳)</li>
-<li>比如我要去换一个头像是用get还是post？</li>
-<li>HTTP和HTTPS</li>
-<li>SSL握手过程，然后问我第一次握手是什么加密，第二次握手怎么加密</li>
-<li>对称加密的安全性</li>
-<li>操作系统层面的线程同步</li>
-<li>信号量和互斥量的区别</li>
-<li>synchronized介绍</li>
-<li>两个线程轮流打印奇数和偶数(我讲了通过信号量去实现，可能没讲太清楚，面试官就让我写一下，说用信号量写也可以，但我更希望你用锁去实现，然后用锁写的)。</li>
-<li>wait()和sleep()的区别</li>
-<li>hashcode场景，然后问了hashMap</li>
-<li>数据库</li>
-<li>事务</li>
-<li>脏读，怎么解决脏读(怎么加锁)</li>
-<li>类加载过程</li>
-<li>ClassLoader的作用，双亲委派</li>
-<li>算法怎么样(果然认怂，基础一点的还行)</li>
-<li>反问</li>
-</ol>
-<h2 id="二面-35min"><a href="#二面-35min" class="headerlink" title="二面(35min)"></a>二面(35min)</h2><ol>
-<li>问项目，项目细节，项目背景</li>
-<li>ArrayList和LinkedList的区别</li>
-<li>HashMap的put()流程，扩容</li>
-<li>设计模式知道哪些，讲一下单例，写一下(双重检查)</li>
-<li>volatile的作用</li>
-<li>双重检查的用处，假如不要第一次if判断会有什么问题</li>
-<li>夸我讲的好！问我咋学的这些</li>
-<li>快速排序讲一哈，时间复杂度，怎么使得快排避免O(n^2^)复杂度</li>
-<li>写题，两道，自己写例子测试测试</li>
-</ol>
-<h2 id="三面-记得多少写多少吧"><a href="#三面-记得多少写多少吧" class="headerlink" title="三面(记得多少写多少吧)"></a>三面(记得多少写多少吧)</h2><p>三面面试官口头禅：好的OK了解</p>
-<ol>
-<li>前面都是聊天，问团队合作，实验室情况，问了实验室的项目</li>
-<li>然后画风突转就问技术问题了，输入网址访问的过程，然后一点一点详细问</li>
-<li>DNS解析过程，DNS劫持了解吗，浏览器渲染页面的过程(???)，HTML和JS讲一下(???)</li>
-<li>然后就是一道算法题</li>
-</ol>
-<p><img src="https://i.loli.net/2020/07/08/Rk36PjlhVm1D94q.png" alt="image-20200708165103773.png"></p>
-<p>给定一个只有数字的字符串，输出一共有多少种可能的结果</p>
-<p>一直想着在整个字符串上dp</p>
-<p>面试官提示1：不同的字符之间有什么关系(感觉面试官前面的提示都太隐晦了，在这浪费了一些时间)</p>
-<p>拆分之后我给出了一个dp递推式，但是不太对，有重复。</p>
-<p>面试官提示2：怎么解决重复(这里又卡了一会)</p>
-<p>最后给出了dp关系式，但是没给多少时间写，没写完，只能写个大致，给出dp递推式后主要问题就是怎么去解决越界的问题，是每次都判断还是多申请几个空间这样，当时应该想一想再写的，有点慌。</p>
-<p><strong>最后面试官评价：</strong></p>
-<ol>
-<li>这题本身有难度，你有在和我一起思考</li>
-<li>代码能力需要加强。</li>
-</ol>
-<p><strong>算法思想：</strong></p>
-<ul>
-<li><p>首先第一点，字符串拆分成相同字符的集合，例如”2222333477”拆分成“2222”，“333”，“4”，“77”，则最终结果为这四个字符串的可能的乘积。</p>
-</li>
-<li><p>然后就是对于只有一种字符的字符串怎么计算结果，先只考虑3个的情况，以’2‘为例，则最后的结尾字符只能是A，B或C，如果以A结尾，则字符串可以看成前i-1个和最后一个的组合；如果以B结尾，则可以看成前i-2和最后两个的组合；如果以C结尾，则可以看成前i-3和最后三个的组合：</p>
-<p>例如：“22222222”，可能的情况如果以A结尾，则为”2222222“+A；</p>
-<p>如果以B结尾，则为”222222“+B；如果以C结尾，则为”22222“+C</p>
-<p>所以有递推关系式dp[i]=dp[i-1]+dp[i-2]+dp[i-3]</p>
-<p>那么对于四种字符的情况就是dp[i-1]+dp[i-2]+dp[i-3]+dp[i-4]</p>
-</li>
-<li><p>实现上来看，各种字符之前没有区别，结果只和长度有关，但是7和9例外，所以只需要确定长度和mode即可确定结果，在实现上用了dp_3表示三种字符的递推结果，dp_4表示四种字符，同时为了避免重复计算，用i_3计算当前dp_3计算到哪了，i_4表示当前dp_4计算到哪了</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">private static int[] dp_3;</span><br><span class="line"></span><br><span class="line">   private static int i_3;</span><br><span class="line"></span><br><span class="line">   private static int[] dp_4;</span><br><span class="line"></span><br><span class="line">   private static int i_4;</span><br><span class="line"></span><br><span class="line">   private static int convert(String str)&#123;</span><br><span class="line">       dp_3&#x3D;new int[Math.max(str.length(),3)];</span><br><span class="line">       dp_4&#x3D;new int[Math.max(str.length(),4)];</span><br><span class="line">       &#x2F;&#x2F;前几位直接给出</span><br><span class="line">       dp_3[0]&#x3D;1;</span><br><span class="line">       dp_3[1]&#x3D;2;</span><br><span class="line">       dp_3[2]&#x3D;4;</span><br><span class="line">       i_3&#x3D;3;</span><br><span class="line">       dp_4[0]&#x3D;1;</span><br><span class="line">       dp_4[1]&#x3D;2;</span><br><span class="line">       dp_4[2]&#x3D;4;</span><br><span class="line">       dp_4[3]&#x3D;8;</span><br><span class="line">       i_4&#x3D;4;</span><br><span class="line">       char[] chars&#x3D;str.toCharArray();</span><br><span class="line">       int l&#x3D;0,r&#x3D;0,res&#x3D;1;</span><br><span class="line">       while(r&lt;chars.length)&#123;</span><br><span class="line">       	&#x2F;&#x2F;寻找相同字符的区间</span><br><span class="line">           while(r&lt;chars.length&amp;&amp;chars[r]&#x3D;&#x3D;chars[l]) r++;</span><br><span class="line">           int num&#x3D;getDp(r-1-l,chars[l]&#x3D;&#x3D;&#39;7&#39;||chars[l]&#x3D;&#x3D;&#39;9&#39;?1:0);</span><br><span class="line">           res*&#x3D;num;</span><br><span class="line">           l&#x3D;r;</span><br><span class="line">       &#125;</span><br><span class="line">       return res;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;mode用来表示哪种情况，如果是&#39;7&#39;或&#39;9&#39;则为1</span><br><span class="line">   private static int getDp(int len,int mode)&#123;</span><br><span class="line">       if(mode&#x3D;&#x3D;0)&#123;</span><br><span class="line">           if(dp_3[len]!&#x3D;0) return dp_3[len];</span><br><span class="line">           &#x2F;&#x2F;从i_3开始向后算</span><br><span class="line">           for(int i&#x3D;i_3;i&lt;&#x3D;len;i++)&#123;</span><br><span class="line">               dp_3[i]&#x3D;dp_3[i-1]+dp_3[i-2]+dp_3[i-3];</span><br><span class="line">           &#125;</span><br><span class="line">           i_3&#x3D;len;</span><br><span class="line">           return dp_3[len];</span><br><span class="line">       &#125;else &#123;</span><br><span class="line">           if(dp_4[len]!&#x3D;0) return dp_4[len];</span><br><span class="line">           for(int i&#x3D;i_4;i&lt;&#x3D;len;i++)&#123;</span><br><span class="line">               dp_4[i]&#x3D;dp_4[i-1]+dp_4[i-2]+dp_4[i-3]+dp_4[i-4];</span><br><span class="line">           &#125;</span><br><span class="line">           i_4&#x3D;len;</span><br><span class="line">           return dp_4[len];</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1978,7 +1914,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">214</span>
+                  <span class="site-state-item-count">218</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2000,7 +1936,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

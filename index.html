@@ -248,6 +248,1242 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/08/29/Spark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/08/29/Spark/" itemprop="url">Spark</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-29T23:30:52+08:00">
+                2021-08-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-Spark概述"><a href="#1-Spark概述" class="headerlink" title="1 Spark概述"></a>1 Spark概述</h1><h2 id="1-1-Spark是什么"><a href="#1-1-Spark是什么" class="headerlink" title="1.1 Spark是什么"></a>1.1 Spark是什么</h2><p>Spark 是一种基于内存的快速、通用、可扩展的大数据分析<strong>计算引擎</strong>。  </p>
+<h2 id="1-2-Spark-and-Hadoop"><a href="#1-2-Spark-and-Hadoop" class="headerlink" title="1.2 Spark and Hadoop"></a>1.2 Spark and Hadoop</h2><p>在之前的学习中， Hadoop 的 MapReduce 是大家广为熟知的计算框架，那为什么咱们还要学习<strong>新的计算框架 Spark</strong> 呢，这里就不得不提到 Spark 和 Hadoop 的关系。  </p>
+<p><strong>Hadoop</strong></p>
+<ul>
+<li>Hadoop 是由 java 语言编写的，在分布式服务器集群上存储海量数据并运行分布式分析应用的开源框架</li>
+<li>作为 Hadoop 分布式文件系统， <strong>HDFS</strong> 处于 Hadoop 生态圈的最下层，存储着所有的数 据 ，支 持 着 Hadoop 的 所 有 服 务 。 它 的 理 论 基 础 源 于 Google 的TheGoogleFileSystem 这篇论文，它是 GFS 的开源实现。</li>
+<li><strong>MapReduce</strong> 是一种编程模型， Hadoop 根据 Google 的 MapReduce 论文将其实现，作为 Hadoop 的分布式计算模型，是 Hadoop 的核心。基于这个框架，分布式并行程序的编写变得异常简单。综合了 HDFS 的分布式存储和 MapReduce 的分布式计<br>算， Hadoop 在处理海量数据时， 性能横向扩展变得非常容易。</li>
+<li><strong>HBase</strong> 是对 Google 的 Bigtable 的开源实现，但又和 Bigtable 存在许多不同之处。HBase 是一个基于 HDFS 的分布式数据库，擅长实时地随机读/写超大规模数据集。它也是 Hadoop 非常重要的组件。  </li>
+</ul>
+<p><strong>Spark</strong></p>
+<ul>
+<li>Spark 是一种由 <strong>Scala</strong> 语言开发的快速、通用、可扩展的大数据分析引擎</li>
+<li>Spark Core 中提供了 Spark 最基础与最核心的功能</li>
+<li>Spark SQL 是 Spark 用来操作结构化数据的组件。通过 Spark SQL，用户可以使用SQL 或者 Apache Hive 版本的 SQL 方言（HQL）来查询数据。</li>
+<li>Spark Streaming 是 Spark 平台上针对实时数据进行<strong>流式计算</strong>的组件，提供了丰富的处理数据流的 API。  </li>
+</ul>
+<p>由上面的信息可以获知， Spark 出现的时间相对较晚，并且主要功能主要是用于数据计算，所以其实 Spark 一直被认为是 Hadoop 框架的升级版。  </p>
+<h2 id="1-3-Spark-or-Hadoop"><a href="#1-3-Spark-or-Hadoop" class="headerlink" title="1.3 Spark or Hadoop"></a>1.3 Spark or Hadoop</h2><p>Hadoop 的 <strong>MR 框架和 Spark 框架</strong>都是数据处理框架，那么我们在使用时如何选择呢？  </p>
+<ul>
+<li>Hadoop MapReduce 由于其设计初衷并不是为了满足循环迭代式数据流处理，因此在多并行运行的数据可复用场景（如：机器学习、图挖掘算法、交互式数据挖掘算法）中存在诸多计算效率等问题。所以 Spark 应运而生， Spark 就是在传统的 MapReduce 计算框架的基础上，利用其计算过程的优化，从而大大加快了数据分析、挖掘的运行和读写速度，并将计算单元缩小到更适合并行计算和重复使用的 RDD 计算模型。</li>
+<li>机器学习中 ALS、凸优化梯度下降等。这些都需要基于数据集或者数据集的衍生数据反复查询反复操作。 MR 这种模式不太合适，即使多 MR 串行处理，性能和时间也是一个问题。数据的共享依赖于磁盘。另外一种是交互式数据挖掘， MR 显然不擅长。而Spark 所基于的 scala 语言恰恰擅长函数的处理。    </li>
+<li>Spark 是一个分布式数据快速分析项目。它的核心技术是<strong>弹性分布式数据集</strong>（Resilient Distributed Datasets），提供了比 MapReduce 丰富的模型，可以快速在内存中对数据集进行多次迭代，来支持复杂的数据挖掘算法和图形计算算法。  </li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/08/29/Zookeeper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/08/29/Zookeeper/" itemprop="url">zookeeper</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-29T16:45:38+08:00">
+                2021-08-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-Zookeeper入门"><a href="#1-Zookeeper入门" class="headerlink" title="1 Zookeeper入门"></a>1 Zookeeper入门</h1><h2 id="1-1-概述"><a href="#1-1-概述" class="headerlink" title="1.1 概述"></a>1.1 概述</h2><p>Zookeeper 是一个开源的分布式的，为分布式框架提供协调服务的 Apache 项目。  </p>
+<p><img src="https://i.loli.net/2021/08/29/G8wMgyoR3hPKeCH.png" alt="image-20210829170800334"></p>
+<h2 id="1-2-特点"><a href="#1-2-特点" class="headerlink" title="1.2 特点"></a>1.2 特点</h2><p><img src="https://i.loli.net/2021/08/29/CAsXa3iEpebLNhu.png" alt="image-20210829172306485"></p>
+<h2 id="1-3-数据结构"><a href="#1-3-数据结构" class="headerlink" title="1.3 数据结构"></a>1.3 数据结构</h2><p>​    ZooKeeper 数据模型的结构与 Unix 文件系统很类似，整体上可以看作是一棵树，每个节点称做一个 ZNode。每一个 ZNode 默认能够存储 <strong>1MB</strong> 的数据，<strong>每个 ZNode 都可以通过其路径唯一标识</strong>。  </p>
+<p><img src="https://i.loli.net/2021/08/29/op2xURLIHDZPsSG.png" alt="image-20210829172522549"></p>
+<h2 id="1-4-应用场景"><a href="#1-4-应用场景" class="headerlink" title="1.4 应用场景"></a>1.4 应用场景</h2><p>提供的服务包括：<strong>统一命名服务</strong>、<strong>统一配置管理</strong>、<strong>统一集群管理</strong>、<strong>服务器节点动态上下线</strong>、<strong>软负载均衡</strong>等。  </p>
+<p><img src="https://i.loli.net/2021/08/29/P5GeN16VgCwtaYO.png" alt="image-20210829172609144"></p>
+<p><img src="https://i.loli.net/2021/08/29/IJ7U85RKxbXmB3Y.png" alt="image-20210829172904548"></p>
+<p><img src="https://i.loli.net/2021/08/29/NcLZ2SxioJMsUYm.png" alt="image-20210829174416869"></p>
+<p><img src="https://i.loli.net/2021/08/29/wlO1NQCRYSgUTGq.png" alt="image-20210829174440337"></p>
+<h1 id="2-Zookeeper集群操作"><a href="#2-Zookeeper集群操作" class="headerlink" title="2 Zookeeper集群操作"></a>2 Zookeeper集群操作</h1><h2 id="2-1-集群操作"><a href="#2-1-集群操作" class="headerlink" title="2.1 集群操作"></a>2.1 集群操作</h2><h3 id="2-1-1-选举机制"><a href="#2-1-1-选举机制" class="headerlink" title="2.1.1 选举机制"></a>2.1.1 选举机制</h3><p><img src="https://i.loli.net/2021/08/29/gZdvFLCXUyKoWS3.png" alt="image-20210829211053805"></p>
+<ol>
+<li>服务器1启动， 发起一次选举。 服务器1投自己一票。 此时服务器1票数一票， 不够半数以上（ 3票） ， 选举无法完成， 服务器1状态保持为<strong>LOOKING</strong>；</li>
+<li>服务器2启动， 再发起一次选举。 服务器1和2分别投自己一票并交换选票信息： 此时<strong>服务器1发现服务器2的myid比自己目前投票推举的（服务器1）大</strong>， <strong>更改选票为推举服务器2</strong>。 此时服务器1票数0票， 服务器2票数2票， 没有半数以上结果， 选举无法完成， 服务器1， 2状态保持LOOKING</li>
+<li>服务器3启动， 发起一次选举。 此时服务器1和2都会更改选票为服务器3。 此次投票结果：服务器1为0票， 服务器2为0票， 服务器3为3票。 此时服务器3的票数已经超过半数， 服务器3当选Leader。 <strong>服务器1， 2更改状态为FOLLOWING</strong>， <strong>服务器3更改状态为LEADING</strong>。</li>
+<li>服务器4启动， 发起一次选举。 <strong>此时服务器1， 2， 3已经不是LOOKING状态， 不会更改选票信息</strong>。 交换选票信息结果：服务器3为3票， 服务器4为1票。 此时服务器4服从多数， 更改选票信息为服务器3， 并更改状态为FOLLOWING；</li>
+<li>服务器5启动， 同4一样当小弟。  </li>
+</ol>
+<p><strong>非第一次启动：</strong></p>
+<ol>
+<li><p>当ZooKeeper集群中的一台服务器出现以下两种情况之一时， 就会开始进入Leader选举：</p>
+<ul>
+<li>服务器初始化启动。</li>
+<li>服务器运行期间无法和Leader保持连接。  </li>
+</ul>
+</li>
+<li><p>而当一台机器进入Leader选举流程时，当前集群也可能会处于以下两种状态：</p>
+<ul>
+<li><p>集群中本来就已经存在一个Leader。<br>对于第一种已经存在Leader的情况，机器试图去选举Leader时，会被告知当前服务器的Leader信息，对于该机器来说，仅仅需要和Leader机器建立连接，并进行状态同步即可。  </p>
+</li>
+<li><p>集群中确实不存在Leader。</p>
+<p>假设ZooKeeper由5台服务器组成， SID分别为1、 2、 3、 4、 5， ZXID分别为8、 8、 8、 7、 7，并且此时SID为3的服务器是Leader。某一时刻，3和5服务器出现故障，因此开始进行Leader选举。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">						（EPOCH， ZXID， SID ）</span><br><span class="line">SID为1、 2、 4的机器投票情况： （1， 8， 1） （1， 8， 2） （1， 7， 4）</span><br></pre></td></tr></table></figure>
+
+<p>选举Leader规则：</p>
+<ol>
+<li>EPOCH大的直接胜出 ；</li>
+<li><strong>EPOCH相同，事务id大的胜出</strong> ；</li>
+<li>事务id相同，服务器id大的胜出  。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-2-客户端命令行操作"><a href="#2-2-客户端命令行操作" class="headerlink" title="2.2 客户端命令行操作"></a>2.2 客户端命令行操作</h2><h3 id="2-2-1-命令行语法"><a href="#2-2-1-命令行语法" class="headerlink" title="2.2.1 命令行语法"></a>2.2.1 命令行语法</h3><table>
+<thead>
+<tr>
+<th>命令基本语法</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>help</td>
+<td>显示所有操作命令</td>
+</tr>
+<tr>
+<td>ls path</td>
+<td>使用 ls 命令来查看当前 znode 的子节点 [可监听] <br />-w  监听子节点变化 <br />-s   附加次级信息</td>
+</tr>
+<tr>
+<td>create</td>
+<td>普通创建 <br />-s 含有序列 <br />-e 临时（重启或者超时消失）</td>
+</tr>
+<tr>
+<td>get path</td>
+<td>获得节点的值 [可监听] <br />-w 监听节点内容变化 <br />-s 附加次级信息</td>
+</tr>
+<tr>
+<td>set</td>
+<td>设置节点的具体值</td>
+</tr>
+<tr>
+<td>stat</td>
+<td>查看节点状态</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>删除节点</td>
+</tr>
+<tr>
+<td>deleteall</td>
+<td>递归删除节点</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-2-znode节点信息"><a href="#2-2-2-znode节点信息" class="headerlink" title="2.2.2 znode节点信息"></a>2.2.2 znode节点信息</h3><p><strong>查看当前节点详细信息</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[zk: hadoop102:2181(CONNECTED) 5] ls -s &#x2F;</span><br><span class="line">[zookeeper]cZxid &#x3D; 0x0</span><br><span class="line">ctime &#x3D; Thu Jan 01 08:00:00 CST 1970</span><br><span class="line">mZxid &#x3D; 0x0</span><br><span class="line">mtime &#x3D; Thu Jan 01 08:00:00 CST 1970</span><br><span class="line">pZxid &#x3D; 0x0</span><br><span class="line">cversion &#x3D; -1</span><br><span class="line">dataVersion &#x3D; 0</span><br><span class="line">aclVersion &#x3D; 0</span><br><span class="line">ephemeralOwner &#x3D; 0x0</span><br><span class="line">dataLength &#x3D; 0</span><br><span class="line">numChildren &#x3D; 1</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><strong>czxid： 创建节点的事务 zxid</strong><br>每次修改 ZooKeeper 状态都会产生一个 ZooKeeper 事务 ID。事务 ID 是 ZooKeeper 中所有修改总的次序。每次修改都有唯一的 zxid，如果 zxid1 小于 zxid2，那么 zxid1 在 zxid2 之前发生。  </li>
+<li><strong>ctime： znode 被创建的毫秒数</strong>（从 1970 年开始）  </li>
+<li>mzxid： <strong>znode 最后更新的事务 zxid</strong>  </li>
+<li>mtime： znode 最后修改的毫秒数（从 1970 年开始） </li>
+<li>pZxid： <strong>znode 最后更新的子节点 zxid</strong>  </li>
+<li>cversion： znode 子节点变化号， znode 子节点修改次数  </li>
+<li><strong>dataversion： znode 数据变化号</strong>  </li>
+<li>aclVersion： znode 访问控制列表的变化号</li>
+<li>ephemeralOwner： 如果是临时节点，这个是 znode 拥有者的 session id。如果不是临时节点则是 0。  </li>
+<li><strong>dataLength： znode 的数据长度</strong></li>
+<li><strong>numChildren： znode 子节点数量</strong>  </li>
+</ol>
+<h3 id="2-2-3-节点类型（持久-短暂-有序号-无序号）"><a href="#2-2-3-节点类型（持久-短暂-有序号-无序号）" class="headerlink" title="2.2.3 节点类型（持久/短暂/有序号/无序号）"></a>2.2.3 节点类型（持久/短暂/有序号/无序号）</h3><p><img src="https://i.loli.net/2021/08/29/D5g3AMzpsLGv9uk.png" alt="image-20210829220856006"></p>
+<h3 id="2-2-4-监听器原理"><a href="#2-2-4-监听器原理" class="headerlink" title="2.2.4 监听器原理"></a>2.2.4 监听器原理</h3><p>客户端注册监听它关心的目录节点，当目录节点发生变化（数据改变、节点删除、子目录节点增加删除）时， ZooKeeper 会通知客户端。<strong>监听机制保证 ZooKeeper 保存的任何的数据的任何改变都能快速的响应到监听了该节点的应用程序</strong>。  </p>
+<p><img src="https://i.loli.net/2021/08/29/pwxWdQe7vcOkNuX.png" alt="image-20210829221239963"></p>
+<p>在hadoop103再多次修改/sanguo的值， hadoop104上不会再收到监听。因为<strong>注册一次，只能监听一次。想再次监听，需要再次注册。</strong>  </p>
+<h1 id="3-Zookeeper分布式锁案例"><a href="#3-Zookeeper分布式锁案例" class="headerlink" title="3 Zookeeper分布式锁案例"></a>3 Zookeeper分布式锁案例</h1><p>什么叫做分布式锁呢？<br>比如说”进程 1”在使用该资源的时候，会先去获得锁， “进程 1”获得锁以后会对该资源保持独占，这样其他进程就无法访问该资源， “进程 1”用完该资源以后就将锁释放掉，让其他进程来获得锁，那么通过这个锁机制，我们就能保证了分布式系统中多个进程能够有序的访问该临界资源。那么我们把这个<strong>分布式环境</strong>下的这个锁叫作分布式锁  </p>
+<p><img src="https://i.loli.net/2021/08/29/qlWVpOb1FDa284B.png" alt="image-20210829223733257"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">package com.hust.zookeeper.lock;</span><br><span class="line"></span><br><span class="line">import org.apache.zookeeper.*;</span><br><span class="line">import org.apache.zookeeper.data.Stat;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.util.Collections;</span><br><span class="line">import java.util.List;</span><br><span class="line">import java.util.concurrent.CountDownLatch;</span><br><span class="line"></span><br><span class="line">public class DistributedLock &#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; zookeeper server 列表</span><br><span class="line">    private String connectString &#x3D;</span><br><span class="line">            &quot;hadoop102:2181,hadoop103:2181,hadoop104:2181&quot;;</span><br><span class="line">    &#x2F;&#x2F; 超时时间</span><br><span class="line">    private int sessionTimeout &#x3D; 2000;</span><br><span class="line">    private ZooKeeper zk;</span><br><span class="line">    private String rootNode &#x3D; &quot;locks&quot;;</span><br><span class="line">    private String subNode &#x3D; &quot;seq-&quot;;</span><br><span class="line">    &#x2F;&#x2F; 当前 client 等待的子节点</span><br><span class="line">    private String waitPath;</span><br><span class="line">    &#x2F;&#x2F;ZooKeeper 连接</span><br><span class="line">    private CountDownLatch connectLatch &#x3D; new CountDownLatch(1);</span><br><span class="line">    &#x2F;&#x2F;ZooKeeper 节点等待</span><br><span class="line">    private CountDownLatch waitLatch &#x3D; new CountDownLatch(1);</span><br><span class="line">    &#x2F;&#x2F; 当前 client 创建的子节点</span><br><span class="line">    private String currentNode;</span><br><span class="line"></span><br><span class="line">    public DistributedLock() throws IOException, InterruptedException, KeeperException &#123;</span><br><span class="line">        zk &#x3D; new ZooKeeper(connectString, sessionTimeout, new</span><br><span class="line">                Watcher() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public void process(WatchedEvent event) &#123;</span><br><span class="line">						&#x2F;&#x2F; 连接建立时, 打开 latch, 唤醒 wait 在该 latch 上的线程</span><br><span class="line">                        if (event.getState() &#x3D;&#x3D;</span><br><span class="line">                                Event.KeeperState.SyncConnected) &#123;</span><br><span class="line">                            connectLatch.countDown();</span><br><span class="line">                        &#125;</span><br><span class="line">						&#x2F;&#x2F; 发生了 waitPath 的删除事件</span><br><span class="line">                        if (event.getType() &#x3D;&#x3D;</span><br><span class="line">                                Event.EventType.NodeDeleted &amp;&amp; event.getPath().equals(waitPath))</span><br><span class="line">                        &#123;</span><br><span class="line">                            waitLatch.countDown();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">        &#x2F;&#x2F; 等待连接建立</span><br><span class="line">        connectLatch.await();</span><br><span class="line">		&#x2F;&#x2F;获取根节点状态</span><br><span class="line">        Stat stat &#x3D; zk.exists(&quot;&#x2F;&quot; + rootNode, false);</span><br><span class="line">		&#x2F;&#x2F;如果根节点不存在，则创建根节点，根节点类型为永久节点</span><br><span class="line">        if (stat &#x3D;&#x3D; null) &#123;</span><br><span class="line">            System.out.println(&quot;根节点不存在&quot;);</span><br><span class="line">            zk.create(&quot;&#x2F;&quot; + rootNode, new byte[0],</span><br><span class="line">                    ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 加锁方法</span><br><span class="line">    public void zkLock() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">			&#x2F;&#x2F;在根节点下创建临时顺序节点，返回值为创建的节点路径</span><br><span class="line">            currentNode &#x3D; zk.create(&quot;&#x2F;&quot; + rootNode + &quot;&#x2F;&quot; + subNode,</span><br><span class="line">                    null, ZooDefs.Ids.OPEN_ACL_UNSAFE,</span><br><span class="line">                    CreateMode.EPHEMERAL_SEQUENTIAL);</span><br><span class="line">			&#x2F;&#x2F; wait 一小会, 让结果更清晰一些</span><br><span class="line">            Thread.sleep(10);</span><br><span class="line">			&#x2F;&#x2F; 注意, 没有必要监听&quot;&#x2F;locks&quot;的子节点的变化情况</span><br><span class="line">            List&lt;String&gt; childrenNodes &#x3D; zk.getChildren(&quot;&#x2F;&quot; +</span><br><span class="line">                    rootNode, false);</span><br><span class="line">			&#x2F;&#x2F; 列表中只有一个子节点, 那肯定就是 currentNode , 说明client 获得锁</span><br><span class="line">            if (childrenNodes.size() &#x3D;&#x3D; 1) &#123;</span><br><span class="line">                return;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">				&#x2F;&#x2F;对根节点下的所有临时顺序节点进行从小到大排序</span><br><span class="line">                Collections.sort(childrenNodes);</span><br><span class="line">				&#x2F;&#x2F;当前节点名称</span><br><span class="line">                String thisNode &#x3D; currentNode.substring((&quot;&#x2F;&quot; +</span><br><span class="line">                        rootNode + &quot;&#x2F;&quot;).length());</span><br><span class="line">				&#x2F;&#x2F;获取当前节点的位置</span><br><span class="line">                int index &#x3D; childrenNodes.indexOf(thisNode);</span><br><span class="line">                if (index &#x3D;&#x3D; -1) &#123;</span><br><span class="line">                    System.out.println(&quot;数据异常&quot;);</span><br><span class="line">                &#125; else if (index &#x3D;&#x3D; 0) &#123;</span><br><span class="line">					&#x2F;&#x2F; index &#x3D;&#x3D; 0, 说明 thisNode 在列表中最小, 当前client 获得锁</span><br><span class="line">                    return;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">					&#x2F;&#x2F; 获得排名比 currentNode 前 1 位的节点</span><br><span class="line">                    this.waitPath &#x3D; &quot;&#x2F;&quot; + rootNode + &quot;&#x2F;&quot; +</span><br><span class="line">                            childrenNodes.get(index - 1);</span><br><span class="line">					&#x2F;&#x2F; 在 waitPath 上注册监听器, 当 waitPath 被删除时,zookeeper 会回调监听器的 process 方法</span><br><span class="line">                    zk.getData(waitPath, true, new Stat());</span><br><span class="line">					&#x2F;&#x2F;进入等待锁状态</span><br><span class="line">                    waitLatch.await();</span><br><span class="line">                    return;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (KeeperException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 解锁方法</span><br><span class="line">    public void zkUnlock() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            zk.delete(this.currentNode, -1);</span><br><span class="line">        &#125; catch (InterruptedException | KeeperException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-1-Curator-框架实现分布式锁案例"><a href="#3-1-Curator-框架实现分布式锁案例" class="headerlink" title="3.1 Curator 框架实现分布式锁案例"></a>3.1 Curator 框架实现分布式锁案例</h2><ol>
+<li><p>原生的 Java API 开发存在的问题</p>
+<ol>
+<li><strong>会话连接是异步的，需要自己去处理</strong>。比如使用 CountDownLatch</li>
+<li>Watch 需要重复注册，不然就不能生效</li>
+<li>开发的复杂性还是比较高的</li>
+<li>不支持多节点删除和创建。需要自己去递归  </li>
+</ol>
+</li>
+<li><p>Curator 是一个专门解决<strong>分布式锁的框架</strong>，解决了原生 Java API 开发分布式遇到的问题。<br>详情请查看官方文档： <a href="https://curator.apache.org/index.html" target="_blank" rel="noopener">https://curator.apache.org/index.html</a>  </p>
+</li>
+</ol>
+<h1 id="4-面试重点"><a href="#4-面试重点" class="headerlink" title="4 面试重点"></a>4 面试重点</h1><h2 id="4-1-选举机制"><a href="#4-1-选举机制" class="headerlink" title="4.1 选举机制"></a>4.1 选举机制</h2><p><strong>半数机制，超过半数的投票通过，即通过</strong>。</p>
+<ol>
+<li>第一次启动选举规则：<br>投票过半数时， 服务器 id 大的胜出</li>
+<li>第二次启动选举规则：<ol>
+<li>EPOCH 大的直接胜出</li>
+<li>EPOCH 相同，事务 id 大的胜出</li>
+<li>事务 id 相同，服务器 id 大的胜出  </li>
+</ol>
+</li>
+</ol>
+<h2 id="4-2-生产集群安装多少zk合适"><a href="#4-2-生产集群安装多少zk合适" class="headerlink" title="4.2 生产集群安装多少zk合适"></a>4.2 生产集群安装多少zk合适</h2><p>安装<strong>奇数台</strong>。<br>生产经验：</p>
+<ul>
+<li>10 台服务器： 3 台 zk；</li>
+<li>20 台服务器： 5 台 zk；</li>
+<li>100 台服务器： 11 台 zk；</li>
+<li>200 台服务器： 11 台 zk<br>服务器台数多：好处，提高可靠性；坏处：提高通信延时  </li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/08/28/Hive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/08/28/Hive/" itemprop="url">Hive</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-28T16:33:48+08:00">
+                2021-08-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-Hive基础概念"><a href="#1-Hive基础概念" class="headerlink" title="1 Hive基础概念"></a>1 Hive基础概念</h1><h2 id="1-1-什么是Hive"><a href="#1-1-什么是Hive" class="headerlink" title="1.1 什么是Hive"></a>1.1 什么是Hive</h2><ol>
+<li><p>hive简介</p>
+<ul>
+<li>Hive：由 Facebook 开源用于解决海量<strong>结构化</strong>日志的数据统计工具。</li>
+<li>Hive 是基于 Hadoop 的一个数据仓库工具，可以将<strong>结构化的数据文件映射为一张表</strong>，并提供<strong>类 SQL</strong> 查询功能。  </li>
+</ul>
+</li>
+<li><p>hive本质</p>
+<p>将 HQL 转化成 MapReduce 程序 </p>
+<ul>
+<li>Hive 处理的数据存储在 HDFS </li>
+<li>Hive 分析数据底层的实现是 MapReduce </li>
+<li>执行程序运行在 Yarn 上 </li>
+</ul>
+</li>
+</ol>
+<h2 id="1-2-Hive优缺点"><a href="#1-2-Hive优缺点" class="headerlink" title="1.2 Hive优缺点"></a>1.2 Hive优缺点</h2><h3 id="1-2-1-优点"><a href="#1-2-1-优点" class="headerlink" title="1.2.1 优点"></a>1.2.1 优点</h3><ol>
+<li>操作接口采用<strong>类 SQL</strong> 语法，提供快速开发的能力（简单、容易上手）。</li>
+<li>避免了去写 MapReduce，减少开发人员的学习成本。</li>
+<li>Hive 的执行延迟比较高，因此 Hive 常用于数据分析，对实时性要求不高的场合。</li>
+<li>Hive 优势在于处理大数据，对于处理小数据没有优势，因为 Hive 的执行延迟比较高。</li>
+<li>Hive 支持用户自定义函数，用户可以根据自己的需求来实现自己的函数。  </li>
+</ol>
+<h3 id="1-2-2-缺点"><a href="#1-2-2-缺点" class="headerlink" title="1.2.2 缺点"></a>1.2.2 缺点</h3><ol>
+<li>Hive 的 HQL 表达能力有限 <ul>
+<li>迭代式算法无法表达。</li>
+<li>数据挖掘方面不擅长， 由于 MapReduce 数据处理流程的限制，效率更高的算法却无法实现。  </li>
+</ul>
+</li>
+<li>Hive的效率比较低<ul>
+<li>Hive 自动生成的 MapReduce 作业，通常情况下不够智能化  </li>
+<li>Hive 调优比较困难，粒度较粗  </li>
+</ul>
+</li>
+</ol>
+<h2 id="1-3-Hive架构"><a href="#1-3-Hive架构" class="headerlink" title="1.3 Hive架构"></a>1.3 Hive架构</h2><p><img src="https://i.loli.net/2021/08/28/R8zTNq4bIrVpcmu.png" alt="image-20210828164005216"></p>
+<ol>
+<li><p>用户接口：client</p>
+<p>CLI（command-line interface）、 JDBC/ODBC(jdbc 访问 hive)、 WEBUI（浏览器访问 hive）  </p>
+</li>
+<li><p>元数据：Metastore</p>
+<p>元数据包括：表名、表所属的数据库（默认是 default）、表的拥有者、列/分区字段、表的类型（是否是外部表）、表的数据所在目录等；  </p>
+<p>*<em>默认存储在自带的 derby 数据库中，推荐使用 MySQL 存储 Metastore  *</em></p>
+</li>
+<li><p>Hadoop </p>
+<p>使用 HDFS 进行存储，使用 MapReduce 进行计算。  </p>
+</li>
+<li><p>驱动器：Driver</p>
+<ul>
+<li>解析器（SQL Parser）：将 SQL 字符串转换成抽象语法树 AST，这一步一般都用第三方工具库完成，比如 antlr；对 AST 进行语法分析，比如表是否存在、字段是否存在、 SQL语义是否有误。</li>
+<li>编译器（Physical Plan）：将 AST 编译生成逻辑执行计划。</li>
+<li>优化器（Query Optimizer）：对逻辑执行计划进行优化。</li>
+<li>执行器（Execution）：把逻辑执行计划转换成可以运行的物理计划。对于 Hive 来说， 就是 MR/Spark。  </li>
+</ul>
+</li>
+</ol>
+<h1 id="2-Hive数据类型"><a href="#2-Hive数据类型" class="headerlink" title="2 Hive数据类型"></a>2 Hive数据类型</h1><h2 id="2-1-基本数据类型"><a href="#2-1-基本数据类型" class="headerlink" title="2.1 基本数据类型"></a>2.1 基本数据类型</h2><table>
+<thead>
+<tr>
+<th>Hive 数据类型</th>
+<th>Java 数据类型</th>
+<th>长度</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TINYINT</td>
+<td>byte</td>
+<td>1byte 有符号整数</td>
+<td>20</td>
+</tr>
+<tr>
+<td>SMALINT</td>
+<td>short</td>
+<td>2byte 有符号整数</td>
+<td>20</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>int</td>
+<td>4byte 有符号整数</td>
+<td>20</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>long</td>
+<td>8byte 有符号整数</td>
+<td>20</td>
+</tr>
+<tr>
+<td>BOOLEAN</td>
+<td>boolean</td>
+<td>布尔类型， true 或者 false</td>
+<td>TRUE FALSE</td>
+</tr>
+<tr>
+<td>FLOAT</td>
+<td>float</td>
+<td>单精度浮点数</td>
+<td>3.14159</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>double</td>
+<td>双精度浮点数</td>
+<td>3.14159</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>string</td>
+<td>字符系列。可以指定字 符集。可以使用单引号或者双 引号。</td>
+<td>‘ now is the time ’ “for all good men”</td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td>时间类型</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>BINARY</td>
+<td>字节数组</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>对于 Hive 的 String 类型相当于数据库的 varchar 类型，该类型是一个可变的字符串，不过它不能声明其中最多能存储多少个字符，理论上它可以存储 2GB 的字符数。 </p>
+<h2 id="2-2-集合数据类型"><a href="#2-2-集合数据类型" class="headerlink" title="2.2 集合数据类型"></a>2.2 集合数据类型</h2><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>描述</th>
+<th>语法示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>STRUCT</td>
+<td>和 c 语言中的 struct 类似，都可以通过“点”符号访问元素内容。例如，如果某个列的数据类型是 STRUCT{first STRING, last STRING},那么第 1 个元素可以通过字段.first 来 引用。</td>
+<td>struct() 例 如 struct&lt;street:string, city:string&gt;</td>
+</tr>
+<tr>
+<td>MAP</td>
+<td>MAP 是一组键-值对元组集合，使用数组表示法可以 访问数据。例如，如果某个列的数据类型是 MAP，其中键 -&gt;值对是’ first’ -&gt;’ John’和’ last’ -&gt;’ Doe’，那么可以 通过字段名[‘last’ ]获取最后一个元素</td>
+<td>map() 例如 map&lt;string, int&gt;</td>
+</tr>
+<tr>
+<td>ARRAY</td>
+<td>数组是一组具有相同类型和名称的变量的集合。这些 变量称为数组的元素，每个数组元素都有一个编号，编号从 零开始。例如，数组值为[‘John’ , ‘Doe’ ]，那么第 2 个 元素可以通过数组名[1]进行引用。</td>
+<td>Array() 例如 array<string></td>
+</tr>
+</tbody></table>
+<p>Hive 有三种复杂数据类型 ARRAY、 MAP 和 STRUCT。 ARRAY 和 MAP 与 Java 中的 Array和 Map 类似，而 STRUCT 与 C 语言中的 Struct 类似，它封装了一个命名字段集合，复杂数据类型允许任意层次的嵌套。  </p>
+<ol>
+<li><p>案例实操</p>
+<ol>
+<li><p>假设某表有如下一行， 我们用 JSON 格式来表示其数据结构。在 Hive 下访问的格式为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;: &quot;songsong&quot;,</span><br><span class="line">    &quot;friends&quot;: [&quot;bingbing&quot; , &quot;lili&quot;] , &#x2F;&#x2F;列表 Array,</span><br><span class="line">    &quot;children&quot;: &#123; &#x2F;&#x2F;键值 Map,</span><br><span class="line">        &quot;xiao song&quot;: 18 ,</span><br><span class="line">        &quot;xiaoxiao song&quot;: 19</span><br><span class="line">    &#125;</span><br><span class="line">    &quot;address&quot;: &#123; &#x2F;&#x2F;结构 Struct,</span><br><span class="line">        &quot;street&quot;: &quot;hui long guan&quot;,</span><br><span class="line">        &quot;city&quot;: &quot;beijing&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>基于上述数据结构， 我们在 Hive 里创建对应的表， 并导入数据。  </p>
+<p>创建本地测试文件 test.txt </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">songsong,bingbing_lili,xiao song:18_xiaoxiao song:19,hui long guan_beijing</span><br><span class="line">yangyang,caicai_susu,xiao yang:18_xiaoxiao yang:19,chao yang_beijing</span><br></pre></td></tr></table></figure>
+
+<p>注意： MAP， STRUCT 和 ARRAY 里的元素间关系都可以用同一个字符表示， 这里用“_”。  </p>
+</li>
+<li><p>Hive 上创建测试表 test  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">create table test(</span><br><span class="line">    name string,</span><br><span class="line">    friends array&lt;string&gt;,</span><br><span class="line">    children map&lt;string, int&gt;,</span><br><span class="line">    address struct&lt;street:string, city:string&gt;</span><br><span class="line">)</span><br><span class="line">row format delimited fields terminated by &#39;,&#39;</span><br><span class="line">collection items terminated by &#39;_&#39;</span><br><span class="line">map keys terminated by &#39;:&#39;</span><br><span class="line">lines terminated by &#39;\n&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>字段解释：</p>
+<p>row format delimited fields terminated by ‘,’             – 列分隔符 </p>
+<p>collection items terminated by ‘_’                                 –MAP STRUCT 和 ARRAY 的分隔符(数据分割符号)</p>
+<p>map keys terminated by ‘:’                                             – MAP 中的 key 与 value 的分隔符<br>lines terminated by ‘\n’;                                                  – 行分隔符</p>
+</li>
+<li><p>导入文本数据到测试表</p>
+<p><code>load data local inpath &#39;/opt/module/hive/datas/test.txt&#39; into table test;</code></p>
+</li>
+<li><p>访问三种集合列里的数据，以下分别是 ARRAY， MAP， STRUCT 的访问方式 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select friends[1],children[&#39;xiao song&#39;],address.city from</span><br><span class="line">test where name&#x3D;&quot;songsong&quot;;</span><br><span class="line">OK</span><br><span class="line">_c0 _c1 city</span><br><span class="line">lili 18 beijing</span><br><span class="line">Time taken: 0.076 seconds, Fetched: 1 row(s)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="2-3-类型转化"><a href="#2-3-类型转化" class="headerlink" title="2.3 类型转化"></a>2.3 类型转化</h2><p>Hive 的原子数据类型是可以进行<strong>隐式转换</strong>的，类似于 Java 的类型转换，例如某表达式使用 INT 类型， TINYINT 会自动转换为 INT 类型，但是 Hive 不会进行反向转化，例如，某表达式使用 TINYINT 类型， INT 不会自动转换为 TINYINT 类型，它会返回错误，除非使用 CAST<br>操作。  </p>
+<ol>
+<li><p>隐式类型转化规则</p>
+<ul>
+<li>任何整数类型都可以隐式地转换为一个范围更广的类型，如 TINYINT 可以转换成INT， INT 可以转换成 BIGINT。</li>
+<li>所有整数类型、 FLOAT 和 STRING 类型都可以隐式地转换成 DOUBLE。</li>
+<li>TINYINT、 SMALLINT、 INT 都可以转换为 FLOAT。</li>
+<li>BOOLEAN 类型不可以转换为任何其它的类型。  </li>
+</ul>
+</li>
+<li><p>可以使用 <strong>CAST</strong> 操作显示进行数据类型转换  </p>
+<p>例如 CAST(‘1’ AS INT)将把字符串’1’ 转换成整数 1；如果强制类型转换失败，如执行CAST(‘X’ AS INT)，表达式返回空值 NULL。  </p>
+</li>
+</ol>
+<h1 id="3-DDL数据定义"><a href="#3-DDL数据定义" class="headerlink" title="3 DDL数据定义"></a>3 DDL数据定义</h1><h2 id="3-1-创建表"><a href="#3-1-创建表" class="headerlink" title="3.1 创建表"></a>3.1 创建表</h2><ol>
+<li><p>建表语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CREATE [EXTERNAL] TABLE [IF NOT EXISTS] table_name</span><br><span class="line">[(col_name data_type [COMMENT col_comment], ...)]</span><br><span class="line">[COMMENT table_comment]</span><br><span class="line">[PARTITIONED BY (col_name data_type [COMMENT col_comment], ...)]</span><br><span class="line">[CLUSTERED BY (col_name, col_name, ...)</span><br><span class="line">[SORTED BY (col_name [ASC|DESC], ...)] INTO num_buckets BUCKETS]</span><br><span class="line">[ROW FORMAT row_format]</span><br><span class="line">[STORED AS file_format]</span><br><span class="line">[LOCATION hdfs_path]</span><br><span class="line">[TBLPROPERTIES (property_name&#x3D;property_value, ...)]</span><br><span class="line">[AS select_statement]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>字段解释说明</p>
+<ul>
+<li><p><strong>EXTERNAL</strong> 关键字可以让用户创建一个外部表，在建表的同时可以指定一个指向实际数据的路径（LOCATION） ， 在删除表的时候，内部表的元数据和数据会被一起删除，而外部表只删除元数据，不删除数据。  </p>
+</li>
+<li><p><strong>PARTITIONED BY</strong> 创建分区表  </p>
+</li>
+<li><p><strong>CLUSTERED BY</strong> 创建分桶表  </p>
+</li>
+<li><p>ROW FORMAT DELIMITED [FIELDS TERMINATED BY char] [COLLECTION ITEMS TERMINATED BY char]<br>[MAP KEYS TERMINATED BY char] [LINES TERMINATED BY char]<br>| SERDE serde_name [WITH SERDEPROPERTIES (property_name=property_value,<br>property_name=property_value, …)]  </p>
+<p><strong>SerDe 是 Serialize/Deserilize 的简称， hive 使用 Serde 进行行对象的序列与反序列化。</strong>  </p>
+</li>
+<li><p>STORED AS 指定存储文件类型<br>常用的存储文件类型： SEQUENCEFILE（二进制序列文件）、 TEXTFILE（文本）、 RCFILE（列式存储格式文件）<br>如果文件数据是纯文本，可以使用STORED AS TEXTFILE。如果数据需要压缩，使用 STORED AS SEQUENCEFILE。</p>
+</li>
+<li><p>LOCATION ：指定表在 HDFS 上的存储位置。</p>
+</li>
+<li><p>AS：后跟查询语句， 根据查询结果创建表。</p>
+</li>
+<li><p>LIKE 允许用户复制现有的表结构，但是不复制数据。    </p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="4-DML数据操作"><a href="#4-DML数据操作" class="headerlink" title="4. DML数据操作"></a>4. DML数据操作</h1><h2 id="4-1-数据导入"><a href="#4-1-数据导入" class="headerlink" title="4.1 数据导入"></a>4.1 数据导入</h2><h3 id="4-1-1-向表中装载数据（Load）"><a href="#4-1-1-向表中装载数据（Load）" class="headerlink" title="4.1.1 向表中装载数据（Load）"></a>4.1.1 向表中装载数据（Load）</h3><ol>
+<li><p>语法</p>
+<p><code>load data [local] inpath &#39;数据的 path&#39; [overwrite] into table student [partition (partcol1=val1,…)];</code></p>
+</li>
+</ol>
+<h3 id="4-1-2-创建表时通过-Location-指定加载数据路径"><a href="#4-1-2-创建表时通过-Location-指定加载数据路径" class="headerlink" title="4.1.2 创建表时通过 Location 指定加载数据路径"></a>4.1.2 创建表时通过 Location 指定加载数据路径</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; create external table if not exists student5(</span><br><span class="line">id int, name string</span><br><span class="line">)</span><br><span class="line">row format delimited fields terminated by &#39;\t&#39;</span><br><span class="line">location &#39;&#x2F;student;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-3-Import-数据到指定-Hive-表中"><a href="#4-1-3-Import-数据到指定-Hive-表中" class="headerlink" title="4.1.3 Import 数据到指定 Hive 表中"></a>4.1.3 Import 数据到指定 Hive 表中</h3><p><code>import table student2 from &#39;/user/hive/warehouse/export/student&#39;;</code></p>
+<h2 id="4-2-数据导出"><a href="#4-2-数据导出" class="headerlink" title="4.2 数据导出"></a>4.2 数据导出</h2><h3 id="4-2-1-Insert导出"><a href="#4-2-1-Insert导出" class="headerlink" title="4.2.1 Insert导出"></a>4.2.1 Insert导出</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hive(default)&gt;insert overwrite local directory</span><br><span class="line">&#39;&#x2F;opt&#x2F;module&#x2F;hive&#x2F;data&#x2F;export&#x2F;student1&#39;</span><br><span class="line">ROW FORMAT DELIMITED FIELDS TERMINATED BY &#39;\t&#39;</span><br><span class="line">select * from student;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-2-Hive-Shell命令导出"><a href="#4-2-2-Hive-Shell命令导出" class="headerlink" title="4.2.2 Hive Shell命令导出"></a>4.2.2 Hive Shell命令导出</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[atguigu@hadoop102 hive]$ bin&#x2F;hive -e &#39;select * from default.student;&#39; &gt;</span><br><span class="line">&#x2F;opt&#x2F;module&#x2F;hive&#x2F;data&#x2F;export&#x2F;student4.txt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-3-Export导出到HDFS上"><a href="#4-2-3-Export导出到HDFS上" class="headerlink" title="4.2.3 Export导出到HDFS上"></a>4.2.3 Export导出到HDFS上</h3><p><code>(defahiveult)&gt; export table default.student to &#39;/user/hive/warehouse/export/student&#39;;</code></p>
+<h1 id="5-查询"><a href="#5-查询" class="headerlink" title="5. 查询"></a>5. 查询</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT [ALL | DISTINCT] select_expr, select_expr, ...</span><br><span class="line">FROM table_reference</span><br><span class="line">[WHERE where_condition]</span><br><span class="line">[GROUP BY col_list]</span><br><span class="line">[ORDER BY col_list]</span><br><span class="line">[CLUSTER BY col_list</span><br><span class="line">| [DISTRIBUTE BY col_list] [SORT BY col_list]</span><br><span class="line">]</span><br><span class="line">[LIMIT number]</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-1-每个-Reduce-内部排序（Sort-By）"><a href="#5-1-每个-Reduce-内部排序（Sort-By）" class="headerlink" title="5.1 每个 Reduce 内部排序（Sort By）"></a>5.1 每个 Reduce 内部排序（Sort By）</h2><p>Sort By： 对于大规模的数据集 order by 的效率非常低。在很多情况下， 并不需要全局排序， 此时可以使用 sort by。<br><strong>Sort by 为每个 reducer 产生一个排序文件。 每个 Reducer 内部进行排序， 对全局结果集来说不是排序。</strong>  </p>
+<h2 id="5-2-分区-Distribute-by"><a href="#5-2-分区-Distribute-by" class="headerlink" title="5.2 分区(Distribute by)"></a>5.2 分区(Distribute by)</h2><p>Distribute By： 在有些情况下， 我们需要<strong>控制某个特定行应该到哪个 reducer</strong>， 通常是为了进行后续的聚集操作。 distribute by 子句可以做这件事。 distribute by 类似 MR 中 partition（自定义分区） ，进行分区，结合 sort by 使用。  </p>
+<ol>
+<li><p>案例实操</p>
+<ul>
+<li><p>先按照部门编号分区，再按照员工编号降序排序。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; set mapreduce.job.reduces&#x3D;3;</span><br><span class="line">hive (default)&gt; insert overwrite local directory</span><br><span class="line">&#39;&#x2F;opt&#x2F;module&#x2F;data&#x2F;distribute-result&#39; </span><br><span class="line">select * from emp </span><br><span class="line">distribute by deptno </span><br><span class="line">sort by empno desc;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>distribute by 的分区规则是根据分区字段的 hash 码与 reduce 的个数进行模除后，余数相同的分到一个区。</li>
+<li>Hive 要求 DISTRIBUTE BY 语句要写在 SORT BY 语句之前。  </li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="5-3-Cluster-By"><a href="#5-3-Cluster-By" class="headerlink" title="5.3 Cluster By"></a>5.3 Cluster By</h2><p>当 distribute by 和 sorts by 字段相同时，可以使用 cluster by 方式。<br>cluster by 除了具有 distribute by 的功能外还兼具 sort by 的功能。但是排序只能是升序排序， 不能指定排序规则为 ASC 或者 DESC。  </p>
+<ul>
+<li><p>以下两种写法等价 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select * from emp cluster by deptno;</span><br><span class="line">hive (default)&gt; select * from emp distribute by deptno sort by deptno;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="6-分区表和分桶表"><a href="#6-分区表和分桶表" class="headerlink" title="6 分区表和分桶表"></a>6 分区表和分桶表</h1><h2 id="6-1-分区表"><a href="#6-1-分区表" class="headerlink" title="6.1 分区表"></a>6.1 分区表</h2><p>分区表实际上就是对应一个 HDFS 文件系统上的独立的<strong>文件夹</strong>，该文件夹下是该分区所有的数据文件。 Hive 中的分区就是分目录，把一个大的数据集根据业务需要分割成小的数据集。在查询时通过 WHERE 子句中的表达式选择查询所需要的指定的分区，这样的查询效率<br>会提高很多。  </p>
+<h3 id="6-1-1-分区表基本操作"><a href="#6-1-1-分区表基本操作" class="headerlink" title="6.1.1 分区表基本操作"></a>6.1.1 分区表基本操作</h3><ol>
+<li><p>引入分区表（需要根据日期对日志进行管理, 通过部门信息模拟）  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dept_20200401.log</span><br><span class="line">dept_20200402.log</span><br><span class="line">dept_20200403.log</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建分区表语法 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; create table dept_partition(</span><br><span class="line">deptno int, dname string, loc string</span><br><span class="line">)</span><br><span class="line">partitioned by (day string)</span><br><span class="line">row format delimited fields terminated by &#39;\t&#39;</span><br></pre></td></tr></table></figure>
+
+<p>注意：<strong>分区字段不能是表中已经存在的数据</strong>，可以将分区字段看作表的伪列。</p>
+</li>
+<li><p>加载数据到分区表中</p>
+<ol>
+<li><p>数据准备</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">dept_20200401.log</span><br><span class="line">10 ACCOUNTING 1700</span><br><span class="line">20 RESEARCH 1800</span><br><span class="line"></span><br><span class="line">dept_20200402.log</span><br><span class="line">30 SALES 1900</span><br><span class="line">40 OPERATIONS 1700</span><br><span class="line"></span><br><span class="line">dept_20200403.log</span><br><span class="line">50 TEST 2000</span><br><span class="line">60 DEV 1900</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>加载数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; load data local inpath</span><br><span class="line">&#39;&#x2F;opt&#x2F;module&#x2F;hive&#x2F;datas&#x2F;dept_20200401.log&#39; into table dept_partition</span><br><span class="line">partition(day&#x3D;&#39;20200401&#39;);</span><br><span class="line">hive (default)&gt; load data local inpath</span><br><span class="line">&#39;&#x2F;opt&#x2F;module&#x2F;hive&#x2F;datas&#x2F;dept_20200402.log&#39; into table dept_partition</span><br><span class="line">partition(day&#x3D;&#39;20200402&#39;);</span><br><span class="line">hive (default)&gt; load data local inpath</span><br><span class="line">&#39;&#x2F;opt&#x2F;module&#x2F;hive&#x2F;datas&#x2F;dept_20200403.log&#39; into table dept_partition</span><br><span class="line">partition(day&#x3D;&#39;20200403&#39;);</span><br></pre></td></tr></table></figure>
+
+<p>注意：分区表加载数据时，必须指定分区  </p>
+</li>
+<li><p>查询分区中的数据</p>
+<p><code>hive (default)&gt; select * from dept_partition where day=&#39;20200401&#39;;</code></p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="6-2-分桶表"><a href="#6-2-分桶表" class="headerlink" title="6.2 分桶表"></a>6.2 分桶表</h2><p>分区提供一个隔离数据和优化查询的便利方式。不过，并非所有的数据集都可形成合理的分区。 对于一张表或者分区， Hive 可以进一步组织成桶，也就是更为细粒度的数据范围划分。  </p>
+<p>分桶是将数据集分解成更容易管理的若干部分的另一个技术。<br><strong>分区针对的是数据的存储路径；分桶针对的是数据文件。</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create table stu_buck(id int, name string)</span><br><span class="line">clustered by(id)</span><br><span class="line">into 4 buckets</span><br><span class="line">row format delimited fields terminated by &#39;\t&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>*<em>Hive 的分桶采用对分桶字段的值进行哈希，然后除以桶的个数求余的方式决定该条记录存放在哪个桶当中  *</em></p>
+<h2 id="6-3-抽样调查"><a href="#6-3-抽样调查" class="headerlink" title="6.3 抽样调查"></a>6.3 抽样调查</h2><p>对于非常大的数据集，有时用户需要使用的是一个具有代表性的查询结果而不是全部结果。 Hive 可以通过对表进行抽样来满足这个需求。<br>语法: <code>TABLESAMPLE(BUCKET x OUT OF y)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查询表 stu_buck 中的数据。</span><br><span class="line">hive (default)&gt; select * from stu_buck tablesample(bucket 1 out of 4 on id);</span><br></pre></td></tr></table></figure>
+
+<h1 id="7-函数"><a href="#7-函数" class="headerlink" title="7 函数"></a>7 函数</h1><h2 id="7-1-系统内置函数"><a href="#7-1-系统内置函数" class="headerlink" title="7.1 系统内置函数"></a>7.1 系统内置函数</h2><ol>
+<li><p>查看系统内置函数</p>
+<p><code>hive&gt; show functions;</code></p>
+</li>
+<li><p>显示自带函数的用法</p>
+<p><code>hive&gt; desc function upper;</code></p>
+</li>
+<li><p>详细显示自带函数的用法</p>
+<p><code>hive&gt; desc function extended upper;</code></p>
+</li>
+</ol>
+<h2 id="7-2-常用内置函数"><a href="#7-2-常用内置函数" class="headerlink" title="7.2 常用内置函数"></a>7.2 常用内置函数</h2><h3 id="7-2-1-空字段赋值"><a href="#7-2-1-空字段赋值" class="headerlink" title="7.2.1 空字段赋值"></a>7.2.1 空字段赋值</h3><ol>
+<li><p>函数说明</p>
+<p><strong>NVL</strong>： 给值为 NULL 的数据赋值， 它的格式是 NVL( value， default_value)。它的功能是如果 value 为 NULL， 则 NVL 函数返回 default_value 的值， 否则返回 value 的值， 如果两个参数都为 NULL ， 则返回 NULL。  </p>
+</li>
+</ol>
+<h3 id="7-2-2-CASE-WHEN-THEN-ELSE-END"><a href="#7-2-2-CASE-WHEN-THEN-ELSE-END" class="headerlink" title="7.2.2 CASE WHEN THEN ELSE END"></a>7.2.2 CASE WHEN THEN ELSE END</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select</span><br><span class="line">dept_id,</span><br><span class="line">sum(case sex when &#39;男&#39; then 1 else 0 end) male_count,</span><br><span class="line">sum(case sex when &#39;女&#39; then 1 else 0 end) female_count</span><br><span class="line">from emp_sex</span><br><span class="line">group by dept_id;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/08/24/Kafka/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/08/24/Kafka/" itemprop="url">Kafka</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-24T23:32:08+08:00">
+                2021-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-Kafka概述"><a href="#1-Kafka概述" class="headerlink" title="1 Kafka概述"></a>1 Kafka概述</h1><h2 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1 定义"></a>1.1 定义</h2><p>Kafka 是一个<strong>分布式</strong>的基于<strong>发布/订阅模式</strong>的<strong>消息队列</strong>（Message Queue） ， 主要应用于<strong>大数据实时</strong>处理领域。  </p>
+<h2 id="1-2-消息队列"><a href="#1-2-消息队列" class="headerlink" title="1.2 消息队列"></a>1.2 消息队列</h2><h3 id="1-2-1-传统消息队列的应用场景"><a href="#1-2-1-传统消息队列的应用场景" class="headerlink" title="1.2.1 传统消息队列的应用场景"></a>1.2.1 传统消息队列的应用场景</h3><p><img src="https://i.loli.net/2021/08/29/bhaXuFQUj8poE4A.png" alt="image-20210829100457579">、</p>
+<p><strong>使用消息队列好处</strong></p>
+<ol>
+<li><p><strong>解耦</strong>  </p>
+<p>允许你独立的扩展或修改两边的处理过程，只要确保它们遵守同样的接口约束。</p>
+</li>
+<li><p><strong>可恢复性</strong><br>系统的一部分组件失效时，不会影响到整个系统。消息队列降低了进程间的耦合度，所以即使一个处理消息的进程挂掉，加入队列中的消息仍然可以在系统恢复后被处理。  </p>
+</li>
+<li><p><strong>缓冲</strong>  </p>
+<p>有助于控制和优化数据流经过系统的速度， 解决生产消息和消费消息的处理速度不一致的情况。 </p>
+</li>
+<li><p><strong>灵活性 &amp; 峰值处理能力</strong><br>在访问量剧增的情况下，应用仍然需要继续发挥作用，但是这样的突发流量并不常见。如果为以能处理这类峰值访问为标准来投入资源随时待命无疑是巨大的浪费。使用消息队列能够使关键组件顶住突发的访问压力，而不会因为突发的超负荷的请求而完全崩溃。  </p>
+</li>
+<li><p>异步通信</p>
+<p>很多时候，用户不想也不需要立即处理消息。消息队列提供了异步处理机制，允许用户把一个消息放入队列，但并不立即处理它。想向队列中放入多少消息就放多少，然后在需要的时候再去处理它们。  </p>
+</li>
+</ol>
+<h3 id="1-2-2-消息队列的两种模式"><a href="#1-2-2-消息队列的两种模式" class="headerlink" title="1.2.2 消息队列的两种模式"></a>1.2.2 消息队列的两种模式</h3><ol>
+<li><p><strong>点对点模式</strong>（一对一，消费者主动拉取数据，消息收到后消息清除）  </p>
+<p>消息生产者生产消息发送到Queue中， 然后消息消费者从Queue中取出并且消费消息。消息被消费以后， queue 中不再有存储，所以消息消费者不可能消费到已经被消费的消息。Queue 支持存在多个消费者，但是对一个消息而言，只会有一个消费者可以消费。  </p>
+<p><img src="https://i.loli.net/2021/08/29/vKHwqUcN1F4riJn.png" alt="image-20210829100905235"></p>
+</li>
+<li><p><strong>发布/订阅模式</strong>（一对多，消费者消费数据之后不会清除消息 ）</p>
+<p>消息生产者（发布）将消息发布到 topic 中，同时有多个消息消费者（订阅）消费该消息。和点对点方式不同，发布到 topic 的消息会被所有订阅者消费。  </p>
+<p><img src="https://i.loli.net/2021/08/29/fXHZ8NrcVTFghRm.png" alt="image-20210829101011829"></p>
+</li>
+</ol>
+<h2 id="1-3-Kafka基础架构"><a href="#1-3-Kafka基础架构" class="headerlink" title="1.3 Kafka基础架构"></a>1.3 Kafka基础架构</h2><p><img src="https://i.loli.net/2021/08/29/BwG1mf6K9zP7A2H.png" alt="image-20210829101042834"></p>
+<ol>
+<li><strong>Producer</strong> ： 消息生产者，就是向 kafka broker 发消息的客户端；</li>
+<li><strong>Consumer</strong> ： 消息消费者，向 kafka broker 取消息的客户端；</li>
+<li><strong>Consumer Group （CG）</strong>： 消费者组，由多个 consumer 组成。 消费者组内每个消费者负责消费不同分区的数据，一个分区只能由一个组内消费者消费；消费者组之间互不影响。 所有的消费者都属于某个消费者组，即消费者组是逻辑上的一个订阅者。</li>
+<li><strong>Broker</strong> ： 一台 kafka 服务器就是一个 broker。一个集群由多个 broker 组成。一个 broker可以容纳多个 topic。 </li>
+<li><strong>Topic</strong> ： 可以理解为一个队列， 生产者和消费者面向的都是一个 topic；</li>
+<li><strong>Partition</strong>： 为了实现扩展性，一个非常大的 topic 可以分布到多个 broker（即服务器）上，<strong>一个 topic 可以分为多个 partition</strong>，每个 partition 是一个有序的队列； </li>
+<li><strong>Replica</strong>： 副本，为保证集群中的某个节点发生故障时， 该节点上的 partition 数据不丢失，且 kafka 仍然能够继续工作， kafka 提供了副本机制，一个 topic 的每个分区都有若干个副本，一个 <strong>leader</strong> 和若干个 <strong>follower</strong>。  </li>
+<li><strong>leader</strong>： 每个分区多个副本的“主”，生产者发送数据的对象，以及消费者消费数据的对象都是 leader。</li>
+<li><strong>follower</strong>： 每个分区多个副本中的“从”，实时从 leader 中同步数据，保持和 leader 数据的同步。 leader 发生故障时，某个 follower 会成为新的 follower。  </li>
+</ol>
+<h1 id="2-Kafka架构深入"><a href="#2-Kafka架构深入" class="headerlink" title="2 Kafka架构深入"></a>2 Kafka架构深入</h1><h2 id="2-1-Kafka工作流程及文件存储机制"><a href="#2-1-Kafka工作流程及文件存储机制" class="headerlink" title="2.1 Kafka工作流程及文件存储机制"></a>2.1 Kafka工作流程及文件存储机制</h2><p><img src="https://i.loli.net/2021/08/29/1B7DeiXFnAdz94R.png" alt="image-20210829101614958"></p>
+<p>Kafka 中消息是以 topic 进行分类的， 生产者生产消息，消费者消费消息，都是面向 topic的。  </p>
+<p>topic 是逻辑上的概念，而 partition 是物理上的概念，<strong>每个 partition 对应于一个 log 文件</strong>，该 log 文件中存储的就是 producer 生产的数据。 Producer 生产的数据会被不断追加到该log 文件末端，且每条数据都有自己的 offset。 消费者组中的每个消费者， 都会实时记录自己消费到了哪个 offset，以便出错恢复时，从上次的位置继续消费。  </p>
+<p><img src="https://i.loli.net/2021/08/29/nim9obKMrXIlBu5.png" alt="image-20210829101808522"></p>
+<p>由于生产者生产的消息会不断追加到 log 文件末尾， 为防止 log 文件过大导致数据定位效率低下， Kafka 采取了分片和索引机制，将每个 partition 分为多个 <strong>segment</strong>。 每个 segment对应两个文件——“.index”文件和“.log”文件。 这些文件位于一个文件夹下， 该文件夹的命名规则为： topic 名称+分区序号。例如， first 这个 topic 有三个分区，则其对应的文件夹为 first-0,first-1,first-2。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">00000000000000000000.index</span><br><span class="line">00000000000000000000.log</span><br><span class="line">00000000000000170410.index</span><br><span class="line">00000000000000170410.log</span><br><span class="line">00000000000000239430.index</span><br><span class="line">00000000000000239430.log</span><br></pre></td></tr></table></figure>
+
+<p>index 和 log 文件以<strong>当前 segment 的第一条消息的 offset 命名</strong>。下图为 index 文件和 log文件的结构示意图。  </p>
+<p><img src="https://i.loli.net/2021/08/29/CjRaA2wIP4OzFUm.png" alt="image-20210829101927517"></p>
+<p>“.index”文件存储大量的索引信息，“.log”文件存储大量的数据，<strong>索引文件中的元数据指向对应数据文件中 message 的物理偏移地址</strong>。  </p>
+<h2 id="2-2-Kafka生产者"><a href="#2-2-Kafka生产者" class="headerlink" title="2.2 Kafka生产者"></a>2.2 Kafka生产者</h2><h3 id="2-2-1-分区策略"><a href="#2-2-1-分区策略" class="headerlink" title="2.2.1 分区策略"></a>2.2.1 分区策略</h3><ol>
+<li><p>分区的原因</p>
+<ul>
+<li><strong>方便在集群中扩展</strong>，每个 Partition 可以通过调整以适应它所在的机器，而一个 topic又可以有多个 Partition 组成，因此整个集群就可以适应任意大小的数据了；</li>
+<li>可以<strong>提高并发</strong>，因为可以以 Partition 为单位读写了。  </li>
+</ul>
+</li>
+<li><p>分区的原因</p>
+<p>我们需要将 producer 发送的数据封装成一个 <strong>ProducerRecord</strong> 对象。  </p>
+<p><img src="https://i.loli.net/2021/08/29/XYTHAUvksoMIVat.png" alt="image-20210829102228983"></p>
+<ul>
+<li>指明 partition 的情况下，直接将指明的值直接作为 partiton 值；  </li>
+<li>没有指明 partition 值但有 key 的情况下，将 key 的 hash 值与 topic 的 partition数进行取余得到 partition 值；</li>
+<li>既没有 partition 值又没有 key 值的情况下，第一次调用时随机生成一个整数（后面每次调用在这个整数上自增），将这个值与 topic 可用的 partition 总数取余得到 partition值，也就是常说的 <strong>round-robin</strong> 算法。  </li>
+</ul>
+</li>
+</ol>
+<h3 id="2-2-2-数据可靠性保证"><a href="#2-2-2-数据可靠性保证" class="headerlink" title="2.2.2 数据可靠性保证"></a>2.2.2 数据可靠性保证</h3><p>为保证 producer 发送的数据，能可靠的发送到指定的 topic， <strong>topic</strong> 的每个 partition 收到producer 发送的数据后， 都需要向 producer 发送 <strong>ack</strong>（acknowledgement 确认收到） ，<strong>如果producer 收到 ack， 就会进行下一轮的发送，否则重新发送数据</strong>。  </p>
+<p><img src="https://i.loli.net/2021/08/29/TasCyYfQ5uBELIJ.png" alt="image-20210829102436502"></p>
+<ol>
+<li><p>副本数据同步策略</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>半数以上完成同步， 就发 送 ack</td>
+<td>延迟低</td>
+<td>选举新的 leader 时， 容忍 n 台 节点的故障，需要 2n+1 个副 本</td>
+</tr>
+<tr>
+<td>全部完成同步，才发送 ack</td>
+<td>选举新的 leader 时， 容忍 n 台 节点的故障，需要 n+1 个副 本</td>
+<td>延迟高</td>
+</tr>
+</tbody></table>
+<p>Kafka 选择了第二种方案，原因如下：<br>1.同样为了容忍 n 台节点的故障，第一种方案需要 2n+1 个副本，而第二种方案只需要 n+1个副本，而 Kafka 的每个分区都有大量的数据， 第一种方案会造成大量数据的冗余。<br>2.虽然第二种方案的网络延迟会比较高，但网络延迟对 Kafka 的影响较小。  </p>
+</li>
+<li><p><strong>ISR</strong></p>
+<p>采用第二种方案之后，设想以下情景： leader 收到数据，所有 follower 都开始同步数据，但有一个 follower，因为某种故障，迟迟不能与 leader 进行同步，那 leader 就要一直等下去，直到它完成同步，才能发送 ack。这个问题怎么解决呢？ </p>
+<p>Leader 维护了一个动态的 <strong>in-sync replica set (ISR)</strong>，意为和 leader 保持同步的 follower 集合。当 ISR 中的 follower 完成数据的同步之后， leader 就会给 follower 发送 ack。如果 follower长 时 间 未 向 leader 同 步 数 据 ， 则 该 follower 将 被 踢 出 ISR ， 该 时 间 阈 值 由replica.lag.time.max.ms 参数设定。 Leader 发生故障之后，就会从 ISR 中选举新的 leader。  </p>
+</li>
+<li><p><strong>ack 应答机制</strong><br>对于某些不太重要的数据，对数据的可靠性要求不是很高，能够容忍数据的少量丢失，所以没必要等 ISR 中的 follower 全部接收成功。所以 Kafka 为用户提供了三种可靠性级别，用户根据对可靠性和延迟的要求进行权衡，选择以下的配置。  </p>
+<p><strong>acks 参数配置：</strong><br>acks：<br><strong>0</strong>： producer 不等待 broker 的 ack，这一操作提供了一个最低的延迟， broker 一接收到还没有写入磁盘就已经返回，当 broker 故障时有可能丢失数据；<br><strong>1</strong>： producer 等待 broker 的 ack， partition 的 leader 落盘成功后返回 ack，如果在 follower同步成功之前 leader 故障，那么将会丢失数据；  </p>
+<p><strong>-1（all）</strong> ： producer 等待 broker 的 ack， partition 的 leader 和 follower 全部落盘成功后才返回 ack。但是如果在 follower 同步完成后， broker 发送 ack 之前， leader 发生故障，那么会造成数据重复。  </p>
+<p><img src="https://i.loli.net/2021/08/29/j5esYdzm1DOBcxg.png" alt="image-20210829103122680"></p>
+</li>
+<li><p><strong>故障处理细节</strong></p>
+<p><img src="https://i.loli.net/2021/08/29/dZvJMmHUViKA2hN.png" alt="image-20210829103213045"></p>
+<p><strong>LEO：指的是每个副本最大的 offset；<br>HW：指的是消费者能见到的最大的 offset， ISR 队列中最小的 LEO。</strong>    </p>
+<ol>
+<li><p><strong>follower 故障</strong><br>follower 发生故障后会被临时踢出 ISR，待该 follower 恢复后， follower 会读取本地磁盘<strong>记录的上次的 HW</strong>，并将 log 文件高于 HW 的部分截取掉，从 HW 开始向 leader 进行同步。<strong>等该 follower 的 LEO 大于等于该 Partition 的 HW</strong>，即 follower 追上 leader 之后，就可以重新加入 ISR 了。  </p>
+</li>
+<li><p><strong>leader 故障</strong><br>leader 发生故障之后，会从 ISR 中选出一个新的 leader，之后，为保证多个副本之间的 数据一致性， <strong>其余的 follower 会先将各自的 log 文件高于 HW 的部分截掉</strong>，然后从新的 leader同步数据。  </p>
+</li>
+</ol>
+<p>*<em>注意： 这只能保证副本之间的数据一致性，并不能保证数据不丢失或者不重复。  *</em></p>
+</li>
+</ol>
+<h3 id="2-2-3-Exactly-Once-语义"><a href="#2-2-3-Exactly-Once-语义" class="headerlink" title="2.2.3 Exactly Once 语义"></a>2.2.3 Exactly Once 语义</h3><p>将服务器的 ACK 级别设置为-1，可以保证 Producer 到 Server 之间不会丢失数据，即 <strong>AtLeast Once</strong> 语义。相对的，将服务器 ACK 级别设置为 0，可以保证生产者每条消息只会被发送一次，即 <strong>At Most Once</strong> 语义。  </p>
+<p>At Least Once 可以保证数据不丢失，但是不能保证数据不重复；相对的， At Most Once可以保证数据不重复，但是不能保证数据不丢失。 但是，对于一些非常重要的信息，比如说交易数据，下游数据消费者要求数据既不重复也不丢失，即 <strong>Exactly Once</strong> 语义。 在 0.11 版本以前的 Kafka，对此是无能为力的，只能保证数据不丢失，再在下游消费者对数据做全局去重。对于多个下游应用的情况，每个都需要单独做全局去重，这就对性能造成了很大影响。  </p>
+<p>0.11 版本的 Kafka，引入了一项重大特性：<strong>幂等性</strong>。所谓的幂等性就是指 Producer 不论向 Server 发送多少次重复数据， Server 端都只会持久化一条。幂等性结合 At Least Once 语义，就构成了 Kafka 的 Exactly Once 语义。即： </p>
+<p>​                                                                <strong>At Least Once + 幂等性 = Exactly Once</strong></p>
+<p>要启用幂等性，只需要将 Producer 的参数中 <strong>enable.idompotence</strong> 设置为 true 即可。 Kafka的幂等性实现其实就是将原来下游需要做的去重放在了数据上游。开启幂等性的 Producer 在初始化的时候会被分配一个 PID，发往同一 Partition 的消息会附带 Sequence Number。而Broker 端会对&lt;PID, Partition, SeqNumber&gt;做缓存，当具有相同主键的消息提交时， Broker 只会持久化一条。    </p>
+<p>但是 PID 重启就会变化，同时不同的 Partition 也具有不同主键，所以<strong>幂等性无法保证跨分区跨会话的 Exactly Once</strong>。  </p>
+<h2 id="2-3-Kafka消费者"><a href="#2-3-Kafka消费者" class="headerlink" title="2.3 Kafka消费者"></a>2.3 Kafka消费者</h2><h3 id="2-3-1-消费方式"><a href="#2-3-1-消费方式" class="headerlink" title="2.3.1 消费方式"></a>2.3.1 消费方式</h3><p>consumer 采用 <strong>pull（拉）</strong> 模式从 broker 中读取数据。<br>push（推）模式很难适应消费速率不同的消费者，因为消息发送速率是由 broker 决定的。它的目标是尽可能以最快速度传递消息，但是这样很容易造成 consumer 来不及处理消息，典型的表现就是拒绝服务以及网络拥塞。而 <strong>pull 模式则可以根据 consumer 的消费能力以适当的速率消费消息</strong>。 </p>
+<p><strong>pull 模式不足之处是，如果 kafka 没有数据，消费者可能会陷入循环中， 一直返回空数据</strong>。 针对这一点， Kafka 的消费者在消费数据时会传入一个时长参数 timeout，如果当前没有数据可供消费， consumer 会等待一段时间之后再返回，这段时长即为 timeout。  </p>
+<h3 id="2-3-2-分区分配策略"><a href="#2-3-2-分区分配策略" class="headerlink" title="2.3.2 分区分配策略"></a>2.3.2 分区分配策略</h3><p>一个 consumer group 中有多个 consumer，一个 topic 有多个 partition，所以必然会涉及到 partition 的分配问题，即确定那个 partition 由哪个 consumer 来消费。<br>Kafka 有两种分配策略，一是 RoundRobin，一是 Range。 </p>
+<h3 id="2-3-3-offset的维护"><a href="#2-3-3-offset的维护" class="headerlink" title="2.3.3 offset的维护"></a>2.3.3 offset的维护</h3><p>由于 consumer 在消费过程中可能会出现断电宕机等故障， consumer 恢复后，需要从故障前的位置的继续消费，所以 <strong>consumer 需要实时记录自己消费到了哪个 offset</strong>，以便故障恢复后继续消费。  </p>
+<p>Kafka 0.9 版本之前， consumer 默认将 offset 保存在 Zookeeper 中，从 0.9 版本开始，<strong>consumer 默认将 offset 保存在 Kafka 一个内置的 topic 中</strong>，该 topic 为__consumer_offsets。  </p>
+<h2 id="2-4-Kafka高效读写数据"><a href="#2-4-Kafka高效读写数据" class="headerlink" title="2.4 Kafka高效读写数据"></a>2.4 Kafka高效读写数据</h2><ol>
+<li><p><strong>顺序写磁盘</strong></p>
+<p>Kafka 的 producer 生产数据，要写入到 log 文件中，写的过程是一直追加到文件末端，为顺序写。 官网有数据表明，同样的磁盘，顺序写能到 600M/s，而随机写只有 100K/s。这与磁盘的机械机构有关，顺序写之所以快，是因为其省去了大量磁头寻址的时间。  </p>
+</li>
+<li><p><strong>零拷贝</strong></p>
+</li>
+</ol>
+<h2 id="2-5-Zookeeper在Kafka中的作用"><a href="#2-5-Zookeeper在Kafka中的作用" class="headerlink" title="2.5 Zookeeper在Kafka中的作用"></a>2.5 Zookeeper在Kafka中的作用</h2><p>Kafka 集群中有一个 broker 会被选举为 <strong>Controller</strong>，<strong>负责管理集群 broker 的上下线，所有 topic 的分区副本分配和 leader 选举等工作</strong>。<br>Controller 的管理工作都是依赖于 Zookeeper 的。</p>
+<h2 id="2-6-Kafka事务"><a href="#2-6-Kafka事务" class="headerlink" title="2.6 Kafka事务"></a>2.6 Kafka事务</h2><p>Kafka 从 0.11 版本开始引入了事务支持。<strong>事务可以保证 Kafka 在 Exactly Once 语义的基础上，生产和消费可以跨分区和会话，要么全部成功，要么全部失败。</strong>  </p>
+<h3 id="2-6-1-Producer事务"><a href="#2-6-1-Producer事务" class="headerlink" title="2.6.1 Producer事务"></a>2.6.1 Producer事务</h3><p>为了实现跨分区跨会话的事务，需要引入一个全局唯一的 Transaction ID，并将 Producer获得的PID 和Transaction ID 绑定。这样当Producer 重启后就可以通过正在进行的 TransactionID 获得原来的 PID。  </p>
+<p>为了管理 Transaction， Kafka 引入了一个新的组件 Transaction Coordinator。 Producer 就是通过和 Transaction Coordinator 交互获得 Transaction ID 对应的任务状态。 TransactionCoordinator 还负责将事务所有写入 Kafka 的一个内部 Topic，这样即使整个服务重启，由于事务状态得到保存，进行中的事务状态可以得到恢复，从而继续进行。  </p>
+<h3 id="2-6-2-Consumer事务"><a href="#2-6-2-Consumer事务" class="headerlink" title="2.6.2 Consumer事务"></a>2.6.2 Consumer事务</h3><p>上述事务机制主要是从 Producer 方面考虑，对于 Consumer 而言，事务的保证就会相对较弱，尤其是无法保证 Commit 的信息被精确消费。这是由于 Consumer 可以通过 offset 访问任意信息，而且不同的 Segment File 生命周期不同，同一事务的消息可能会出现重启后被删除的情况。  </p>
+<h1 id="3-Kafka-API"><a href="#3-Kafka-API" class="headerlink" title="3 Kafka API"></a>3 Kafka API</h1><h2 id="3-1-Producer-API"><a href="#3-1-Producer-API" class="headerlink" title="3.1 Producer API"></a>3.1 Producer API</h2><h3 id="3-1-1-消息发送流程"><a href="#3-1-1-消息发送流程" class="headerlink" title="3.1.1 消息发送流程"></a>3.1.1 消息发送流程</h3><p>Kafka 的 Producer 发送消息采用的是<strong>异步发送</strong>的方式。在消息发送的过程中，涉及到了两个线程——<strong>main 线程和 Sender 线程</strong>，以及一个线程共享变量——<strong>RecordAccumulator</strong>。main 线程将消息发送给 RecordAccumulator， Sender 线程不断从RecordAccumulator 中拉取消息发送到 Kafka broker。  </p>
+<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210829153604369.png" alt="image-20210829153604369"></p>
+<p><strong>相关参数：</strong><br>batch.size： 只有数据积累到 batch.size 之后， sender 才会发送数据。<br>linger.ms： 如果数据迟迟未达到 batch.size， sender 等待 linger.time 之后就会发送数据。  </p>
+<h3 id="3-1-2-异步发送API"><a href="#3-1-2-异步发送API" class="headerlink" title="3.1.2 异步发送API"></a>3.1.2 异步发送API</h3><ol>
+<li><p><strong>导入依赖</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.kafka&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;kafka-clients&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;0.11.0.0&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写代码</p>
+<p>需要用到的类：<br><strong>KafkaProducer</strong>：需要创建一个生产者对象，用来发送数据<br><strong>ProducerConfig</strong>：获取所需的一系列配置参数<br><strong>ProducerRecord</strong>：每条数据都要封装成一个 ProducerRecord 对象  </p>
+<ol>
+<li><p><strong>不带回调函数的 API</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">package com.atguigu.kafka;</span><br><span class="line"></span><br><span class="line">import org.apache.kafka.clients.producer.*;</span><br><span class="line">import java.util.Properties;</span><br><span class="line">import java.util.concurrent.ExecutionException;</span><br><span class="line"></span><br><span class="line">public class CustomProducer &#123;</span><br><span class="line">    public static void main(String[] args) throws ExecutionException, InterruptedException &#123;</span><br><span class="line">    </span><br><span class="line">        Properties props &#x3D; new Properties();</span><br><span class="line">        &#x2F;&#x2F;kafka 集群， broker-list</span><br><span class="line">        props.put(&quot;bootstrap.servers&quot;, &quot;hadoop102:9092&quot;);</span><br><span class="line">        props.put(&quot;acks&quot;, &quot;all&quot;);</span><br><span class="line">        &#x2F;&#x2F;重试次数</span><br><span class="line">        props.put(&quot;retries&quot;, 1);</span><br><span class="line">        &#x2F;&#x2F;批次大小</span><br><span class="line">        props.put(&quot;batch.size&quot;, 16384);</span><br><span class="line">        &#x2F;&#x2F;等待时间</span><br><span class="line">        props.put(&quot;linger.ms&quot;, 1);</span><br><span class="line">        &#x2F;&#x2F;RecordAccumulator 缓冲区大小</span><br><span class="line">        props.put(&quot;buffer.memory&quot;, 33554432);</span><br><span class="line">        props.put(&quot;key.serializer&quot;,</span><br><span class="line">        &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);</span><br><span class="line">        props.put(&quot;value.serializer&quot;,</span><br><span class="line">        &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);</span><br><span class="line">        Producer&lt;String, String&gt; producer &#x3D; new KafkaProducer&lt;&gt;(props);</span><br><span class="line">        for (int i &#x3D; 0; i &lt; 100; i++) &#123;</span><br><span class="line">            producer.send(new ProducerRecord&lt;String, String&gt;(&quot;first&quot;,</span><br><span class="line">            Integer.toString(i), Integer.toString(i)));</span><br><span class="line">        &#125;</span><br><span class="line">        producer.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>*<em>带回调函数的 API  *</em></p>
+<p><strong>回调函数会在 producer 收到 ack 时调用，为异步调用</strong>， 该方法有两个参数，分别是RecordMetadata 和 Exception，如果 Exception 为 null，说明消息发送成功，如果Exception 不为 null，说明消息发送失败。<br>注意：消息发送失败会自动重试，不需要我们在回调函数中手动重试。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">for (int i &#x3D; 0; i &lt; 100; i++) &#123;</span><br><span class="line">    producer.send(new ProducerRecord&lt;String, String&gt;(&quot;first&quot;,</span><br><span class="line">    Integer.toString(i), Integer.toString(i)), new Callback() &#123;</span><br><span class="line">        &#x2F;&#x2F;回调函数， 该方法会在 Producer 收到 ack 时调用，为异步调用</span><br><span class="line">        @Override</span><br><span class="line">        public void onCompletion(RecordMetadata metadata, Exception exception) &#123;</span><br><span class="line">            if (exception &#x3D;&#x3D; null) &#123;</span><br><span class="line">                System.out.println(&quot;success-&gt;&quot; +metadata.offset());</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                exception.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="3-2-Consumer-API"><a href="#3-2-Consumer-API" class="headerlink" title="3.2 Consumer API"></a>3.2 Consumer API</h2><p>Consumer 消费数据时的可靠性是很容易保证的，因为数据在 Kafka 中是持久化的，故不用担心数据丢失问题。<br>由于 consumer 在消费过程中可能会出现断电宕机等故障， consumer 恢复后，需要从故障前的位置的继续消费，所以 consumer 需要实时记录自己消费到了哪个 offset，以便故障恢复后继续消费。<br>所以 <strong>offset 的维护是 Consumer 消费数据是必须考虑的问题。</strong></p>
+<h3 id="3-2-1-自动提交offset"><a href="#3-2-1-自动提交offset" class="headerlink" title="3.2.1 自动提交offset"></a>3.2.1 自动提交offset</h3><ol>
+<li><p>编写代码</p>
+<p>需要用到的类：<br><strong>KafkaConsumer</strong>： 需要创建一个消费者对象，用来消费数据<br><strong>ConsumerConfig</strong>： 获取所需的一系列配置参数<br><strong>ConsuemrRecord</strong>： 每条数据都要封装成一个 ConsumerRecord 对象<br>为了使我们能够专注于自己的业务逻辑， Kafka 提供了自动提交 offset 的功能。自动提交 offset 的相关参数：<br><strong>enable.auto.commit</strong>： 是否开启自动提交 offset 功能<br><strong>auto.commit.interval.ms</strong>： 自动提交 offset 的时间间隔  </p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">package com.atguigu.kafka;</span><br><span class="line"></span><br><span class="line">import org.apache.kafka.clients.consumer.ConsumerRecord;</span><br><span class="line">import org.apache.kafka.clients.consumer.ConsumerRecords;</span><br><span class="line">import org.apache.kafka.clients.consumer.KafkaConsumer;</span><br><span class="line">import java.util.Arrays;</span><br><span class="line">import java.util.Properties;</span><br><span class="line"></span><br><span class="line">public class CustomConsumer &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">    </span><br><span class="line">        Properties props &#x3D; new Properties();</span><br><span class="line">        props.put(&quot;bootstrap.servers&quot;, &quot;hadoop102:9092&quot;);</span><br><span class="line">        props.put(&quot;group.id&quot;, &quot;test&quot;);</span><br><span class="line">        props.put(&quot;enable.auto.commit&quot;, &quot;true&quot;);</span><br><span class="line">        props.put(&quot;auto.commit.interval.ms&quot;, &quot;1000&quot;);</span><br><span class="line">        props.put(&quot;key.deserializer&quot;,</span><br><span class="line">        &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;);</span><br><span class="line">        props.put(&quot;value.deserializer&quot;,</span><br><span class="line">        &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;);</span><br><span class="line">        </span><br><span class="line">        KafkaConsumer&lt;String, String&gt; consumer &#x3D; new KafkaConsumer&lt;&gt;(props);</span><br><span class="line">        consumer.subscribe(Arrays.asList(&quot;first&quot;));</span><br><span class="line">        while (true) &#123;</span><br><span class="line">            ConsumerRecords&lt;String, String&gt; records &#x3D; consumer.poll(100);</span><br><span class="line">            for (ConsumerRecord&lt;String, String&gt; record : records)</span><br><span class="line">            	System.out.printf(&quot;offset &#x3D; %d, key &#x3D; %s, value &#x3D; %s%n&quot;, record.offset(), record.key(), record.value());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-2-手动提交offset"><a href="#3-2-2-手动提交offset" class="headerlink" title="3.2.2 手动提交offset"></a>3.2.2 手动提交offset</h3><p>虽然自动提交 offset 十分简介便利，但由于其是基于时间提交的， 开发人员难以把握offset 提交的时机。因此 Kafka 还提供了手动提交 offset 的 API。手动提交 offset 的方法有两种：分别是 <strong>commitSync（同步提交）</strong> 和 <strong>commitAsync（异步提交）</strong> 。两者的相同点是，都会将本次 poll 的一批数据最高的偏移量提交；不同点是，commitSync 阻塞当前线程，一直到提交成功，并且会自动失败重试（由不可控因素导致，也会出现提交失败）；而 commitAsync 则没有失败重试机制，故有可能提交失败。  </p>
+<ul>
+<li><p><strong>异步提交offset</strong></p>
+<p>虽然同步提交 offset 更可靠一些，但是由于其会阻塞当前线程，直到提交成功。因此吞吐量会收到很大的影响。因此更多的情况下，会选用异步提交 offset 的方式。<br>以下为异步提交 offset 的示例：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">package com.atguigu.kafka.consumer;</span><br><span class="line"></span><br><span class="line">import org.apache.kafka.clients.consumer.*;</span><br><span class="line">import org.apache.kafka.common.TopicPartition;</span><br><span class="line">import java.util.Arrays;</span><br><span class="line">import java.util.Map;</span><br><span class="line">import java.util.Properties;</span><br><span class="line"></span><br><span class="line">public class CustomConsumer &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">    </span><br><span class="line">        Properties props &#x3D; new Properties();</span><br><span class="line">        &#x2F;&#x2F;Kafka 集群</span><br><span class="line">        props.put(&quot;bootstrap.servers&quot;, &quot;hadoop102:9092&quot;);</span><br><span class="line">        &#x2F;&#x2F;消费者组，只要 group.id 相同，就属于同一个消费者组</span><br><span class="line">        props.put(&quot;group.id&quot;, &quot;test&quot;);</span><br><span class="line">        &#x2F;&#x2F;关闭自动提交 offset</span><br><span class="line">        props.put(&quot;enable.auto.commit&quot;, &quot;false&quot;);</span><br><span class="line">        props.put(&quot;key.deserializer&quot;,</span><br><span class="line">        &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;);</span><br><span class="line">        props.put(&quot;value.deserializer&quot;,</span><br><span class="line">        &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;);</span><br><span class="line">        KafkaConsumer&lt;String, String&gt; consumer &#x3D; new KafkaConsumer&lt;&gt;(props);</span><br><span class="line">        consumer.subscribe(Arrays.asList(&quot;first&quot;));&#x2F;&#x2F;消费者订阅主题</span><br><span class="line">        while (true) &#123;</span><br><span class="line">            ConsumerRecords&lt;String, String&gt; records &#x3D; consumer.poll(100);&#x2F;&#x2F;消费者拉取数据</span><br><span class="line">            for (ConsumerRecord&lt;String, String&gt; record : records) &#123;</span><br><span class="line">                System.out.printf(&quot;offset &#x3D; %d, key &#x3D; %s, value &#x3D; %s%n&quot;, record.offset(), record.key(), record.value());</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;异步提交</span><br><span class="line">            consumer.commitAsync(new OffsetCommitCallback() &#123;</span><br><span class="line">                @Override</span><br><span class="line">                public void onComplete(Map&lt;TopicPartition, OffsetAndMetadata&gt; offsets, Exception exception) &#123;</span><br><span class="line">                    if (exception !&#x3D; null) &#123;</span><br><span class="line">                    	System.err.println(&quot;Commit failed for&quot; + offsets);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="3-3-自定义Interceptor"><a href="#3-3-自定义Interceptor" class="headerlink" title="3.3 自定义Interceptor"></a>3.3 自定义Interceptor</h2><h3 id="3-3-1-拦截器原理"><a href="#3-3-1-拦截器原理" class="headerlink" title="3.3.1 拦截器原理"></a>3.3.1 拦截器原理</h3><p>Producer 拦截器(interceptor)是在 Kafka 0.10 版本被引入的，主要用于<strong>实现 clients 端的定制化控制逻辑。</strong><br>对于 producer 而言， interceptor 使得用户<strong>在消息发送前</strong>以及 <strong>producer 回调逻辑前</strong>有机会对消息做一些定制化需求，比如修改消息等。同时， producer 允许用户指定多个 interceptor按序作用于同一条消息从而形成一个拦截链(interceptor chain)。 Intercetpor 的实现接口是<strong>org.apache.kafka.clients.producer.ProducerInterceptor</strong>，其定义的方法包括：  </p>
+<p>（1） <strong>configure(configs)</strong>：<br>获取配置信息和初始化数据时调用。<br>（2） <strong>onSend(ProducerRecord)</strong>：<br>该方法封装进 KafkaProducer.send 方法中，即它运行在用户主线程中。 Producer 确保在消息被序列化以及计算分区前调用该方法。 用户可以在该方法中对消息做任何操作，但最好保证不要修改消息所属的 topic 和分区， 否则会影响目标分区的计算。<br>（3） <strong>onAcknowledgement(RecordMetadata, Exception)</strong>：<br>该方法会在消息从 RecordAccumulator 成功发送到 Kafka Broker 之后，或者在发送过程中失败时调用。 并且通常都是在 producer 回调逻辑触发之前。 onAcknowledgement 运行在producer 的 IO 线程中，因此不要在该方法中放入很重的逻辑，否则会拖慢 producer 的消息发送效率。<br>（4） <strong>close</strong>：<br>关闭 interceptor，主要用于执行一些资源清理工作。</p>
+<p>如前所述， interceptor 可能被运行在多个线程中，因此在具体实现时用户需要自行确保线程安全。另外倘若指定了多个 interceptor，则 producer 将按照指定顺序调用它们，并仅仅是捕获每个 interceptor 可能抛出的异常记录到错误日志中而非在向上传递。这在使用过程中要特别留意。  </p>
+<h3 id="3-3-2-拦截器案例"><a href="#3-3-2-拦截器案例" class="headerlink" title="3.3.2 拦截器案例"></a>3.3.2 拦截器案例</h3><ol>
+<li><p><strong>需求：</strong></p>
+<p>实现一个简单的双 interceptor 组成的拦截链。第一个 interceptor 会在消息发送前将时间戳信息加到消息 value 的最前部；第二个 interceptor 会在消息发送后更新成功发送消息数或失败发送消息数。</p>
+<p><img src="https://i.loli.net/2021/08/29/4N1kchtIQYpRix5.png" alt="image-20210829160513448"></p>
+</li>
+<li><p><strong>案例实操</strong></p>
+<ol>
+<li><p>增加时间戳拦截器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">package com.atguigu.kafka.interceptor;</span><br><span class="line"></span><br><span class="line">import java.util.Map;</span><br><span class="line">import org.apache.kafka.clients.producer.ProducerInterceptor;</span><br><span class="line">import org.apache.kafka.clients.producer.ProducerRecord;</span><br><span class="line">import org.apache.kafka.clients.producer.RecordMetadata;</span><br><span class="line"></span><br><span class="line">public class TimeInterceptor implements ProducerInterceptor&lt;String, String&gt; &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void configure(Map&lt;String, ?&gt; configs) &#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    public ProducerRecord&lt;String, String&gt; onSend(ProducerRecord&lt;String, String&gt; record) &#123;</span><br><span class="line">        &#x2F;&#x2F; 创建一个新的 record，把时间戳写入消息体的最前部</span><br><span class="line">        return new ProducerRecord(record.topic(),record.partition(), record.timestamp(), record.key(),System.currentTimeMillis() + &quot;,&quot; + record.value().toString());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    public void onAcknowledgement(RecordMetadata metadata, Exception exception) &#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    public void close() &#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>统计发送消息成功和发送失败消息数，并在 producer 关闭时打印这两个计数器 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">package com.atguigu.kafka.interceptor;</span><br><span class="line"></span><br><span class="line">import java.util.Map;</span><br><span class="line">import org.apache.kafka.clients.producer.ProducerInterceptor;</span><br><span class="line">import org.apache.kafka.clients.producer.ProducerRecord;</span><br><span class="line">import org.apache.kafka.clients.producer.RecordMetadata;</span><br><span class="line"></span><br><span class="line">public class CounterInterceptor implements ProducerInterceptor&lt;String, String&gt;&#123;</span><br><span class="line"></span><br><span class="line">    private int errorCounter &#x3D; 0;</span><br><span class="line">    private int successCounter &#x3D; 0;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    public void configure(Map&lt;String, ?&gt; configs) &#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    public ProducerRecord&lt;String, String&gt; onSend(ProducerRecord&lt;String, String&gt; record) &#123;</span><br><span class="line">    	return record;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    public void onAcknowledgement(RecordMetadata metadata, Exception exception) &#123;</span><br><span class="line">        &#x2F;&#x2F; 统计成功和失败的次数</span><br><span class="line">        if (exception &#x3D;&#x3D; null) &#123;</span><br><span class="line">        successCounter++;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">        errorCounter++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    public void close() &#123;</span><br><span class="line">        &#x2F;&#x2F; 保存结果</span><br><span class="line">        System.out.println(&quot;Successful sent: &quot; + successCounter);</span><br><span class="line">        System.out.println(&quot;Failed sent: &quot; + errorCounter);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Producer主程序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">package com.atguigu.kafka.interceptor;</span><br><span class="line"></span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.List;</span><br><span class="line">import java.util.Properties;</span><br><span class="line">import org.apache.kafka.clients.producer.KafkaProducer;</span><br><span class="line">import org.apache.kafka.clients.producer.Producer;</span><br><span class="line">import org.apache.kafka.clients.producer.ProducerConfig;</span><br><span class="line">import org.apache.kafka.clients.producer.ProducerRecord;</span><br><span class="line"></span><br><span class="line">public class InterceptorProducer &#123;</span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line">        &#x2F;&#x2F; 1 设置配置信息</span><br><span class="line">        Properties props &#x3D; new Properties();</span><br><span class="line">        props.put(&quot;bootstrap.servers&quot;, &quot;hadoop102:9092&quot;);</span><br><span class="line">        props.put(&quot;acks&quot;, &quot;all&quot;);</span><br><span class="line">        props.put(&quot;retries&quot;, 3);</span><br><span class="line">        props.put(&quot;batch.size&quot;, 16384);</span><br><span class="line">        props.put(&quot;linger.ms&quot;, 1);</span><br><span class="line">        props.put(&quot;buffer.memory&quot;, 33554432);</span><br><span class="line">        props.put(&quot;key.serializer&quot;,</span><br><span class="line">        &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);</span><br><span class="line">        props.put(&quot;value.serializer&quot;,</span><br><span class="line">        &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F; 2 构建拦截链</span><br><span class="line">        List&lt;String&gt; interceptors &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line">        interceptors.add(&quot;com.atguigu.kafka.interceptor.TimeInterceptor&quot;);</span><br><span class="line">        interceptors.add(&quot;com.atguigu.kafka.interceptor.CounterInterceptor&quot;);</span><br><span class="line">        props.put(ProducerConfig.INTERCEPTOR_CLASSES_CONFIG, interceptors);</span><br><span class="line">        String topic &#x3D; &quot;first&quot;;</span><br><span class="line">        Producer&lt;String, String&gt; producer &#x3D; new KafkaProducer&lt;&gt;(props);</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F; 3 发送消息</span><br><span class="line">        for (int i &#x3D; 0; i &lt; 10; i++) &#123;</span><br><span class="line">            ProducerRecord&lt;String, String&gt; record &#x3D; new ProducerRecord&lt;&gt;(topic, &quot;message&quot; + i);</span><br><span class="line">            producer.send(record);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F; 4 一定要关闭 producer，这样才会调用 interceptor 的 close 方法</span><br><span class="line">        producer.close();</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试</p>
+<p>在 kafka 上启动消费者， 然后运行客户端 java 程序。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">bin&#x2F;kafka-console-consumer.sh --bootstrap-server hadoop102:9092 --from-beginning --topic first</span><br><span class="line"></span><br><span class="line">1501904047034,message0</span><br><span class="line">1501904047225,message1</span><br><span class="line">1501904047230,message2</span><br><span class="line">1501904047234,message3</span><br><span class="line">1501904047236,message4</span><br><span class="line">1501904047240,message5</span><br><span class="line">1501904047243,message6</span><br><span class="line">1501904047246,message7</span><br><span class="line">1501904047249,message8</span><br><span class="line">1501904047252,message9</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/04/02/%E5%A4%A7%E6%95%B0%E6%8D%AELinux%E5%BC%80%E5%8F%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3732,6 +4968,31 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
 <h1 id="7-YARN"><a href="#7-YARN" class="headerlink" title="7.YARN"></a>7.YARN</h1><h2 id="7-1-Yarn资源调度器"><a href="#7-1-Yarn资源调度器" class="headerlink" title="7.1 Yarn资源调度器"></a>7.1 Yarn资源调度器</h2><p><strong>Yarn</strong>是一个资源调度平台，负责为运算程序提供服务器运算资源，相当于一个分布式的操作系统，而MapReduce等运算程序则相当于运行于 <strong>操作系统之上的应用程序</strong>。</p>
 <h3 id="7-1-1-Yarn基础架构"><a href="#7-1-1-Yarn基础架构" class="headerlink" title="7.1.1 Yarn基础架构"></a>7.1.1 Yarn基础架构</h3><p>YARN 主要由 ResourceManager、 NodeManager、 ApplicationMaster 和 Container 等组件构成。          </p>
 <p><img src="https://i.loli.net/2021/08/10/Rk6dOwYzUE4eobZ.png" alt="image-20210810231029645"></p>
+<h3 id="7-1-2-Yarn工作机制"><a href="#7-1-2-Yarn工作机制" class="headerlink" title="7.1.2 Yarn工作机制"></a>7.1.2 Yarn工作机制</h3><p><img src="https://i.loli.net/2021/08/28/borOxzqcZnf86Vh.png" alt="image-20210828161252267"></p>
+<ol>
+<li>MR 程序提交到客户端所在的节点。  </li>
+<li>YarnRunner 向 ResourceManager 申请一个 Application。</li>
+<li>RM 将该应用程序的资源路径返回给 YarnRunner。</li>
+<li>该程序将运行所需资源提交到 HDFS 上。</li>
+<li>程序资源提交完毕后，申请运行 mrAppMaster。</li>
+<li>RM 将用户的请求初始化成一个 Task。</li>
+<li>其中一个 NodeManager 领取到 Task 任务。</li>
+<li>该 NodeManager 创建容器 Container， 并产生 MRAppmaster。  </li>
+<li>Container 从 HDFS 上拷贝资源到本地。</li>
+<li>MRAppmaster 向 RM 申请运行 MapTask 资源。</li>
+<li>RM 将运行 MapTask 任务分配给另外两个 NodeManager， 另两个 NodeManager 分别领取任务并创建容器。</li>
+<li>MR 向两个接收到任务的 NodeManager 发送程序启动脚本， 这两个 NodeManager分别启动 MapTask， MapTask 对数据分区排序。</li>
+<li>MrAppMaster 等待所有 MapTask 运行完毕后，向 RM 申请容器， 运行 ReduceTask。</li>
+<li>ReduceTask 向 MapTask 获取相应分区的数据。</li>
+<li>程序运行完毕后， MR 会向 RM 申请注销自己。  </li>
+</ol>
+<h3 id="7-1-3-Yarn调度器和调度算法"><a href="#7-1-3-Yarn调度器和调度算法" class="headerlink" title="7.1.3 Yarn调度器和调度算法"></a>7.1.3 Yarn调度器和调度算法</h3><p>目前， Hadoop 作业调度器主要有三种： <strong>FIFO</strong>、 <strong>容量</strong>（Capacity Scheduler） 和<strong>公平</strong>（FairScheduler） 。 Apache Hadoop3.1.3 默认的资源调度器是 Capacity Scheduler。<br>CDH 框架默认调度器是 Fair Scheduler。  </p>
+<h4 id="7-1-3-1-FIFO"><a href="#7-1-3-1-FIFO" class="headerlink" title="7.1.3.1 FIFO"></a>7.1.3.1 FIFO</h4><p>FIFO 调度器（First In First Out）：单队列，根据提交作业的先后顺序，先来先服务。  </p>
+<h4 id="7-1-3-2-容量调度器"><a href="#7-1-3-2-容量调度器" class="headerlink" title="7.1.3.2 容量调度器"></a>7.1.3.2 容量调度器</h4><p>Capacity Scheduler 是 Yahoo 开发的多用户调度器。  </p>
+<p><img src="https://i.loli.net/2021/08/28/6c8WQjK1NxuYEG3.png" alt="image-20210828162303146"></p>
+<p><img src="https://i.loli.net/2021/08/28/5cWiDqfnAemXu6B.png" alt="image-20210828162640660"></p>
+<h4 id="7-1-3-3-公平调度器"><a href="#7-1-3-3-公平调度器" class="headerlink" title="7.1.3.3 公平调度器"></a>7.1.3.3 公平调度器</h4><p>Fair Schedulere 是 Facebook 开发的多用户调度器。  </p>
+<p><img src="https://i.loli.net/2021/08/28/jXWucapIbNlTz4V.png" alt="image-20210828163011144"></p>
 
           
         
@@ -4104,655 +5365,6 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/07/16/120-%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/16/120-%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" itemprop="url">120.三角形最小路径和</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-16T10:15:47+08:00">
-                2020-07-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="120-三角形最小路径和"><a href="#120-三角形最小路径和" class="headerlink" title="120. 三角形最小路径和"></a><a href="https://leetcode-cn.com/problems/triangle/" target="_blank" rel="noopener">120. 三角形最小路径和</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。</p>
-<p>相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点。</p>
-<p>例如，给定三角形：</p>
-<p>[<br>     [2],<br>    [3,4],<br>   [6,5,7],<br>  [4,1,8,3]<br>]<br>自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。</p>
-<h2 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>依次去计算每一种路径可能的结果，然后取最小</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">private int res&#x3D;Integer.MAX_VALUE;</span><br><span class="line"></span><br><span class="line">   public int minimumTotal(List&lt;List&lt;Integer&gt;&gt; triangle) &#123;</span><br><span class="line">       if(triangle&#x3D;&#x3D;null||triangle.size()&#x3D;&#x3D;0) return 0;</span><br><span class="line">       helper(triangle,0,0,0,triangle.size());</span><br><span class="line">       return res;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   private void helper(List&lt;List&lt;Integer&gt;&gt; triangle,int i,int j,int sum,int size)&#123;</span><br><span class="line">       if(i&#x3D;&#x3D;size) &#123;</span><br><span class="line">           res&#x3D;Math.min(res,sum);</span><br><span class="line">           return;</span><br><span class="line">       &#125;</span><br><span class="line">       int num&#x3D;triangle.get(i).get(j);</span><br><span class="line">       sum+&#x3D;num;</span><br><span class="line">       helper(triangle,i+1,j,sum,size);</span><br><span class="line">       helper(triangle,i+1,j+1,sum,size);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p>超时</p>
-<p><strong>时间复杂度：</strong>O(2^n^)，从最上面向下看，每次都有两个分支，所以就不停乘以2，最后得出2^n^</p>
-<p><strong>空间复杂度：</strong>O(n)，递归调用的空间复杂度</p>
-<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li><p>用dp[i][j]来记录从最上面到第i行第j个的最小路径和，则有如下的递推关系式：</p>
-<p><code>dp[i][j]=Math.min(dp[i-1][j-1],dp[i-1][j])+nums[i][j]</code></p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public int minimumTotal(List&lt;List&lt;Integer&gt;&gt; triangle) &#123;</span><br><span class="line">        if(triangle&#x3D;&#x3D;null||triangle.size()&#x3D;&#x3D;0) return 0;</span><br><span class="line">        int n&#x3D;triangle.size();</span><br><span class="line">        int[][] dp&#x3D;new int[n][n];</span><br><span class="line">        dp[0][0]&#x3D;triangle.get(0).get(0);</span><br><span class="line">        for(int i&#x3D;1;i&lt;n;i++)&#123;</span><br><span class="line">            List&lt;Integer&gt; list&#x3D;triangle.get(i);</span><br><span class="line">            int size&#x3D;list.size();</span><br><span class="line">            &#x2F;&#x2F;0和size-1要单独出来算，避免越界</span><br><span class="line">            dp[i][0]&#x3D;dp[i-1][0]+list.get(0);</span><br><span class="line">            for(int j&#x3D;1;j&lt;size-1;j++)&#123;</span><br><span class="line">                dp[i][j]&#x3D;Math.min(dp[i-1][j-1],dp[i-1][j])+list.get(j);</span><br><span class="line">            &#125;</span><br><span class="line">            dp[i][size-1]&#x3D;dp[i-1][size-2]+list.get(size-1);</span><br><span class="line">        &#125;</span><br><span class="line">        int res&#x3D;Integer.MAX_VALUE;</span><br><span class="line">        for(int i&#x3D;0;i&lt;n;i++)&#123;</span><br><span class="line">            res&#x3D;Math.min(res,dp[n-1][i]);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>时间复杂度：</strong>O(n^2^)</p>
-<p><strong>空间复杂度：</strong>O(n^2^)</p>
-<h2 id="空间优化"><a href="#空间优化" class="headerlink" title="空间优化"></a>空间优化</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>从上面的递推关系式<code>dp[i][j]=Math.min(dp[i-1][j-1],dp[i-1][j])+nums[i][j]</code>可以发现dp[i][j]的计算只和i-1行的状态有关，所以不需要去存储前面i-1行之前的数据，所以可以用一个二维矩阵来存储dp[2][n]，其中一行存储上一行的，一行存储这一行的，然后交替使用。</li>
-<li>更好的改进是只使用dp[n]的数组，由于计算dp[n]需要用到dp[n]与dp[n-1]，所以如果正着从1开始算，那么就会因为dp[n-1]已经被更新了，而无法得到正确的结果，所以可以倒着算，计算dp[n]时只更新了dp[n+1]以及其向后的，dp[n]和dp[n-1]还存储着上一行的数据。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public int minimumTotal(List&lt;List&lt;Integer&gt;&gt; triangle) &#123;</span><br><span class="line">        if(triangle&#x3D;&#x3D;null||triangle.size()&#x3D;&#x3D;0) return 0;</span><br><span class="line">        int n&#x3D;triangle.size();</span><br><span class="line">        int[] dp&#x3D;new int[n];</span><br><span class="line">        dp[0]&#x3D;triangle.get(0).get(0);</span><br><span class="line">        for(int i&#x3D;1;i&lt;n;i++)&#123;</span><br><span class="line">            List&lt;Integer&gt; list&#x3D;triangle.get(i);</span><br><span class="line">            int size&#x3D;list.size();</span><br><span class="line">            &#x2F;&#x2F;从后向前算</span><br><span class="line">            dp[size-1]&#x3D;dp[size-2]+list.get(size-1);</span><br><span class="line">            for(int j&#x3D;size-2;j&gt;0;j--)&#123;</span><br><span class="line">                dp[j]&#x3D;Math.min(dp[j],dp[j-1])+list.get(j);</span><br><span class="line">            &#125;</span><br><span class="line">            dp[0]&#x3D;dp[0]+list.get(0);</span><br><span class="line">        &#125;</span><br><span class="line">        int res&#x3D;Integer.MAX_VALUE;</span><br><span class="line">        for(int i&#x3D;0;i&lt;n;i++)&#123;</span><br><span class="line">            res&#x3D;Math.min(res,dp[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>时间复杂度：</strong>O(n^2^)</p>
-<p><strong>空间复杂度：</strong>O(n)</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/07/10/151-%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/10/151-%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D/" itemprop="url">151.翻转字符串里的单词</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-10T20:56:51+08:00">
-                2020-07-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="151-翻转字符串里的单词"><a href="#151-翻转字符串里的单词" class="headerlink" title="151. 翻转字符串里的单词"></a><a href="https://leetcode-cn.com/problems/reverse-words-in-a-string/" target="_blank" rel="noopener">151. 翻转字符串里的单词</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个字符串，逐个翻转字符串中的每个单词。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入: &quot;the sky is blue&quot;</span><br><span class="line">输出: &quot;blue is sky the&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入: &quot;  hello world!  &quot;</span><br><span class="line">输出: &quot;world! hello&quot;</span><br><span class="line">解释: 输入字符串可以在前面或者后面包含多余的空格，但是反转后的字符不能包括。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 3：</span><br><span class="line"></span><br><span class="line">输入: &quot;a good   example&quot;</span><br><span class="line">输出: &quot;example good a&quot;</span><br><span class="line">解释: 如果两个单词间有多余的空格，将反转后单词间的空格减少到只含一个。</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p><strong>算法思想：</strong></p>
-<ul>
-<li>用StringBuilder开始从后向前拼接，需要解决一下几点：<ol>
-<li>字符串前面和后面的多余空格需要消除</li>
-<li>单词中间多余的空格需要消除</li>
-</ol>
-</li>
-<li>从末尾向前遍历，每次拼接一个单词，然后拼上一个空格</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public String reverseWords(String s) &#123;</span><br><span class="line">        if(s&#x3D;&#x3D;null||s.length()&#x3D;&#x3D;0) return s;</span><br><span class="line">        StringBuilder res&#x3D;new StringBuilder();</span><br><span class="line">        int i&#x3D;s.length()-1;</span><br><span class="line">        while(i&gt;&#x3D;0&amp;&amp;s.charAt(i)&#x3D;&#x3D;&#39; &#39;) i--;</span><br><span class="line">        &#x2F;&#x2F;全是空格的情况，返回空串</span><br><span class="line">        if(i&#x3D;&#x3D;-1) return &quot;&quot;;</span><br><span class="line">        while(i&gt;&#x3D;0)&#123;</span><br><span class="line">            int r&#x3D;i;</span><br><span class="line">            &#x2F;&#x2F;找到单词的左边界</span><br><span class="line">            while(i&gt;&#x3D;0&amp;&amp;s.charAt(i)!&#x3D;&#39; &#39;) i--;</span><br><span class="line">            res.append(s.substring(i+1,r+1));</span><br><span class="line">            res.append(&#39; &#39;);</span><br><span class="line">            &#x2F;&#x2F;寻找下一个单词的右边界</span><br><span class="line">            while(i&gt;&#x3D;0&amp;&amp;s.charAt(i)&#x3D;&#x3D;&#39; &#39;) i--;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后一个单词多加了一个空格，需要删掉</span><br><span class="line">        res.deleteCharAt(res.length()-1);</span><br><span class="line">        return res.toString();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/07/10/63-%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84II/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/10/63-%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84II/" itemprop="url">63.不同路径II</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-10T17:52:18+08:00">
-                2020-07-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="63-不同路径-II"><a href="#63-不同路径-II" class="headerlink" title="63. 不同路径 II"></a><a href="https://leetcode-cn.com/problems/unique-paths-ii/" target="_blank" rel="noopener">63. 不同路径 II</a></h1><p><strong>题目描述:</strong></p>
-<p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。</p>
-<p>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。</p>
-<p>现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？</p>
-<p>网格中的障碍物和空位置分别用 1 和 0 来表示。</p>
-<p>说明：m 和 n 的值均不超过 100。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入:</span><br><span class="line">[</span><br><span class="line">  [0,0,0],</span><br><span class="line">  [0,1,0],</span><br><span class="line">  [0,0,0]</span><br><span class="line">]</span><br><span class="line">输出: 2</span><br><span class="line">解释:</span><br><span class="line">3x3 网格的正中间有一个障碍物。</span><br><span class="line">从左上角到右下角一共有 2 条不同的路径：</span><br><span class="line">1. 向右 -&gt; 向右 -&gt; 向下 -&gt; 向下</span><br><span class="line">2. 向下 -&gt; 向下 -&gt; 向右 -&gt; 向右</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>需要去处理障碍物时的情况，用0来表示某个位置不可到达，则其余递推关系是不变的</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public int uniquePathsWithObstacles(int[][] obstacleGrid) &#123;</span><br><span class="line">        int m&#x3D;obstacleGrid.length,n&#x3D;obstacleGrid[0].length;</span><br><span class="line">        int[][] dp&#x3D;new int[m][n];</span><br><span class="line">        for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">            for(int j&#x3D;0;j&lt;n;j++)&#123;</span><br><span class="line">                if(i&#x3D;&#x3D;0&amp;&amp;j&#x3D;&#x3D;0)&#123;</span><br><span class="line">                    dp[i][j]&#x3D;obstacleGrid[0][0]&#x3D;&#x3D;1?0:1;</span><br><span class="line">                    continue;</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F;如果当前有障碍物，则dp为0</span><br><span class="line">                if(obstacleGrid[i][j]&#x3D;&#x3D;1)</span><br><span class="line">                    dp[i][j]&#x3D;0;</span><br><span class="line">                else&#123;</span><br><span class="line">                    if(i-1&gt;&#x3D;0&amp;&amp;j-1&gt;&#x3D;0)&#123;</span><br><span class="line">                        dp[i][j]&#x3D;dp[i-1][j]+dp[i][j-1];</span><br><span class="line">                    &#125;else if(i&#x3D;&#x3D;0)&#123;</span><br><span class="line">                        dp[i][j]&#x3D;dp[i][j-1];</span><br><span class="line">                    &#125;else dp[i][j]&#x3D;dp[i-1][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return dp[m-1][n-1];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/07/10/1013-%E5%B0%86%E6%95%B0%E7%BB%84%E5%88%86%E6%88%90%E5%92%8C%E7%9B%B8%E7%AD%89%E7%9A%84%E4%B8%89%E4%B8%AA%E9%83%A8%E5%88%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/10/1013-%E5%B0%86%E6%95%B0%E7%BB%84%E5%88%86%E6%88%90%E5%92%8C%E7%9B%B8%E7%AD%89%E7%9A%84%E4%B8%89%E4%B8%AA%E9%83%A8%E5%88%86/" itemprop="url">1013.将数组分成和相等的三个部分</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-10T16:30:05+08:00">
-                2020-07-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="1013-将数组分成和相等的三个部分"><a href="#1013-将数组分成和相等的三个部分" class="headerlink" title="1013. 将数组分成和相等的三个部分"></a><a href="https://leetcode-cn.com/problems/partition-array-into-three-parts-with-equal-sum/" target="_blank" rel="noopener">1013. 将数组分成和相等的三个部分</a></h1><p><strong>题目描述：</strong></p>
-<p>给你一个整数数组 A，只有可以将其划分为三个和相等的非空部分时才返回 true，否则返回 false。</p>
-<p>形式上，如果可以找出索引 i+1 &lt; j 且满足 A[0] + A[1] + … + A[i] == A[i+1] + A[i+2] + … + A[j-1] == A[j] + A[j-1] + … + A[A.length - 1] 就可以将数组三等分。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：[0,2,1,-6,6,-7,9,1,2,0,1]</span><br><span class="line">输出：true</span><br><span class="line">解释：0 + 2 + 1 &#x3D; -6 + 6 - 7 + 9 + 1 &#x3D; 2 + 0 + 1</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：[0,2,1,-6,6,7,9,-1,2,0,1]</span><br><span class="line">输出：false</span><br><span class="line"></span><br><span class="line">示例 3：</span><br><span class="line"></span><br><span class="line">输入：[3,3,6,5,-2,2,5,1,-9,4]</span><br><span class="line">输出：true</span><br><span class="line">解释：3 + 3 &#x3D; 6 &#x3D; 5 - 2 + 2 + 5 + 1 - 9 + 4</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p><strong>算法思想：</strong></p>
-<ul>
-<li>思路很清晰，就是有些错误容易犯，先计算整个数组的和，然后/3，从0开始向后去找到第一个和为sum/3的索引，再从后面去找第二个….</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public boolean canThreePartsEqualSum(int[] A) &#123;</span><br><span class="line">       int sum&#x3D;0;</span><br><span class="line">       for(int num:A)&#123;</span><br><span class="line">           sum+&#x3D;num;</span><br><span class="line">       &#125;</span><br><span class="line">       if(sum%3!&#x3D;0) return false;</span><br><span class="line">       int i&#x3D;0,sum1&#x3D;0,sum2&#x3D;0;</span><br><span class="line">       while(i&lt;A.length)&#123;</span><br><span class="line">           sum1+&#x3D;A[i++];</span><br><span class="line">           if(sum1&#x3D;&#x3D;sum&#x2F;3)</span><br><span class="line">               break;</span><br><span class="line">       &#125;</span><br><span class="line">       while(i&lt;A.length)&#123;</span><br><span class="line">           sum2+&#x3D;A[i++];</span><br><span class="line">           if(sum2&#x3D;&#x3D;sum&#x2F;3)</span><br><span class="line">               break;</span><br><span class="line">       &#125;</span><br><span class="line">       &#x2F;&#x2F;最后返回i是否&lt;A.length</span><br><span class="line">       return i&lt;A.length;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4807,7 +5419,7 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">214</span>
+                  <span class="site-state-item-count">218</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -4829,7 +5441,7 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

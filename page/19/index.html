@@ -248,7 +248,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/279.%20%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/240.%20%E6%90%9C%E7%B4%A2%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%20II/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黎达">
@@ -267,7 +267,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/11/279.%20%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0/" itemprop="url">279. 完全平方数</a></h1>
+                <a class="post-title-link" href="/2020/04/11/240.%20%E6%90%9C%E7%B4%A2%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%20II/" itemprop="url">240. 搜索二维矩阵 II</a></h1>
         
 
         <div class="post-meta">
@@ -341,29 +341,601 @@
       
         
           
-            <h1 id="279-完全平方数"><a href="#279-完全平方数" class="headerlink" title="279. 完全平方数"></a><a href="https://leetcode-cn.com/problems/perfect-squares/" target="_blank" rel="noopener">279. 完全平方数</a></h1><p><strong>题目描述：</strong></p>
-<p>给定正整数 <em>n</em>，找到若干个完全平方数（比如 <code>1, 4, 9, 16, ...</code>）使得它们的和等于 <em>n</em>。你需要让组成和的完全平方数的个数最少。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: n &#x3D; 12</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 12 &#x3D; 4 + 4 + 4.</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: n &#x3D; 13</span><br><span class="line">输出: 2</span><br><span class="line">解释: 13 &#x3D; 4 + 9.</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p><strong>算法思想：</strong></p>
+            <h1 id="240-搜索二维矩阵-II"><a href="#240-搜索二维矩阵-II" class="headerlink" title="240. 搜索二维矩阵 II"></a><a href="https://leetcode-cn.com/problems/search-a-2d-matrix-ii/" target="_blank" rel="noopener">240. 搜索二维矩阵 II</a></h1><p><strong>题目描述：</strong></p>
+<p>编写一个高效的算法来搜索 m x n 矩阵 matrix 中的一个目标值 target。该矩阵具有以下特性：</p>
 <ul>
-<li>用一个长度为n+1的数组来维护对应索引能化成的最少完全平方数之和，每次更新前先将每次位置的值初始化为其索引，即res[i]=i，即完全平方数之和的上界(1+1+….+1)</li>
-<li>递推关系式为res[i]=min(res(i-j*j)+1)</li>
+<li>每行的元素从左到右升序排列。</li>
+<li>每列的元素从上到下升序排列。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">现有矩阵 matrix 如下：</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">  [1,   4,  7, 11, 15],</span><br><span class="line">  [2,   5,  8, 12, 19],</span><br><span class="line">  [3,   6,  9, 16, 22],</span><br><span class="line">  [10, 13, 14, 17, 24],</span><br><span class="line">  [18, 21, 23, 26, 30]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">给定 target &#x3D; 5，返回 true。</span><br><span class="line">给定 target &#x3D; 20，返回 false。</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="算法一：二分查找（在每一行中分别查找）"><a href="#算法一：二分查找（在每一行中分别查找）" class="headerlink" title="算法一：二分查找（在每一行中分别查找）"></a>算法一：二分查找（在每一行中分别查找）</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>由于数组中每一行是有序的，所以可以依次在每一行中用二分查找是否有目标元素存在</li>
 </ul>
 <p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public int numSquares(int n) &#123;</span><br><span class="line">        int[] res&#x3D;new int[n+1];</span><br><span class="line">        for(int i&#x3D;1;i&lt;&#x3D;n;i++)&#123;</span><br><span class="line">            res[i]&#x3D;i;</span><br><span class="line">            for(int j&#x3D;1;i-j*j&gt;&#x3D;0;j++)&#123;</span><br><span class="line">                res[i]&#x3D;Math.min(res[i],res[i-j*j]+1);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res[n];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public boolean searchMatrix(int[][] matrix, int target) &#123;</span><br><span class="line">        int m&#x3D;matrix.length;</span><br><span class="line">        if(m&#x3D;&#x3D;0) return false;</span><br><span class="line">        int n&#x3D;matrix[0].length;</span><br><span class="line">        for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">            int left&#x3D;0,right&#x3D;n-1;</span><br><span class="line">            &#x2F;&#x2F;二分查找要有等号</span><br><span class="line">            while (left&lt;&#x3D;right)&#123;</span><br><span class="line">                int mid&#x3D;(left+right)&#x2F;2;</span><br><span class="line">                if(matrix[i][mid]&#x3D;&#x3D;target) return true;</span><br><span class="line">                else if(matrix[i][mid]&lt;target)&#123;</span><br><span class="line">                    left&#x3D;mid+1;</span><br><span class="line">                &#125;else right&#x3D;mid-1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 
 
 <p><strong>算法分析：</strong></p>
 <ul>
-<li><p><strong>时间复杂度：</strong>O(n×sqrt(n))</p>
+<li><strong>时间复杂度：</strong>O(mlogn)，其中m,n分别为二维数组的行数和列数</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+<h2 id="算法二：二分查找-数组分成四块"><a href="#算法二：二分查找-数组分成四块" class="headerlink" title="算法二：二分查找(数组分成四块)"></a>算法二：二分查找(数组分成四块)</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>将数组分成四块，left和right分别表示当前检查的数组的列的开头和结尾；up和down表示当前检查的数组的行的开头和结尾</li>
+<li>每次在中间一列中寻找是否有目标元素，如果有则返回true，否则寻找第一个比目标元素大的元素，则可以排除掉以其划分的左上元素和右下元素，所以可以排除两个区域，在剩下两个区域中寻找</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">private int[][] matrix;</span><br><span class="line">   private int target;</span><br><span class="line">   private boolean searchHelper(int left,int right,int up,int down)&#123;</span><br><span class="line">   	&#x2F;&#x2F;列或则行范围不合法</span><br><span class="line">       if(left&gt;right||up&gt;down) return false;</span><br><span class="line">       &#x2F;&#x2F;如果目标元素小于最左上元素，或者大于最右下元素，则不会有元素匹配</span><br><span class="line">       if(target&lt;matrix[up][left]||target&gt;matrix[down][right]) return false;</span><br><span class="line">       &#x2F;&#x2F;中间列</span><br><span class="line">       int mid&#x3D;(left+right)&#x2F;2;</span><br><span class="line">       int row&#x3D;up;</span><br><span class="line">       &#x2F;&#x2F;找到在中间列中第一个大于目标元素的行数</span><br><span class="line">       while (row&lt;&#x3D;down&amp;&amp;matrix[row][mid]&lt;&#x3D;target)&#123;</span><br><span class="line">           if(matrix[row][mid]&#x3D;&#x3D;target) return true;</span><br><span class="line">           row++;</span><br><span class="line">       &#125;</span><br><span class="line">       &#x2F;&#x2F;只用递归查找右上和左下即可</span><br><span class="line">       return searchHelper(left,mid-1,row,down)||searchHelper(mid+1,right,up,row-1);</span><br><span class="line">   &#125;</span><br><span class="line">   public boolean searchMatrix(int[][] matrix, int target) &#123;</span><br><span class="line">       this.matrix&#x3D;matrix;</span><br><span class="line">       this.target&#x3D;target;</span><br><span class="line">       int m&#x3D;matrix.length;</span><br><span class="line">       if(m&#x3D;&#x3D;0) return false;</span><br><span class="line">       int n&#x3D;matrix[0].length;</span><br><span class="line">       return searchHelper(0,n-1,0,m-1);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><p><strong>时间复杂度：</strong>O(nlogn)，为了将问题简单化假设m=n，则有时间复杂度</p>
+<p>T(n^2^)=2T(n^2^/4)+n</p>
+<p>​         =4T(n^2^/16)+2n</p>
+<p>​         =…….=2^k^T(n^2^/4^k^)+kn，假设n^2^/4^k^=1，可以得到2^k^=n，k=logn，所以T(n^2^)=nlogn</p>
 </li>
-<li><p><strong>空间复杂度：</strong>O(n)</p>
+<li><p><strong>空间复杂度：</strong>O(logn)</p>
 </li>
+</ul>
+<h2 id="算法四"><a href="#算法四" class="headerlink" title="算法四"></a>算法四</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>初始化一个指向数组坐下元素的指针(row,col)，每次将其与目标元素相比，如果大于目标元素，则row–，如果小于目标元素，则col++，相当于每次排除一行或者一列</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public boolean searchMatrix(int[][] matrix, int target) &#123;</span><br><span class="line">        int m&#x3D;matrix.length;</span><br><span class="line">        if(m&#x3D;&#x3D;0) return false;</span><br><span class="line">        int n&#x3D;matrix[0].length;</span><br><span class="line">        int row&#x3D;m-1,col&#x3D;0;</span><br><span class="line">        while (row&gt;&#x3D;0&amp;&amp;col&lt;n)&#123;</span><br><span class="line">            if(matrix[row][col]&#x3D;&#x3D;target) return true;</span><br><span class="line">            else if(matrix[row][col]&lt;target) col++;</span><br><span class="line">            else row--;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(m+n)，最坏情况下需要从左下角判断到右上角，由于每次只能向上走一行或者向右走一列，所以时间为m+n</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/238.%20%E9%99%A4%E8%87%AA%E8%BA%AB%E4%BB%A5%E5%A4%96%E6%95%B0%E7%BB%84%E7%9A%84%E4%B9%98%E7%A7%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/238.%20%E9%99%A4%E8%87%AA%E8%BA%AB%E4%BB%A5%E5%A4%96%E6%95%B0%E7%BB%84%E7%9A%84%E4%B9%98%E7%A7%AF/" itemprop="url">238. 除自身以外数组的乘积</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="238-除自身以外数组的乘积"><a href="#238-除自身以外数组的乘积" class="headerlink" title="238. 除自身以外数组的乘积"></a><a href="https://leetcode-cn.com/problems/product-of-array-except-self/" target="_blank" rel="noopener">238. 除自身以外数组的乘积</a></h1><p><strong>题目描述：</strong></p>
+<p>给你一个长度为 n 的整数数组 nums，其中 n &gt; 1，返回输出数组 output ，其中 output[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,2,3,4]</span><br><span class="line">输出: [24,12,8,6]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法一：动态规划"><a href="#算法一：动态规划" class="headerlink" title="算法一：动态规划"></a>算法一：动态规划</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>分别计算两个数组left和right的值，其中left[i]表示在原数组中索引在i之前(不包括i)的所有元素的乘积，right[i]表示在原数组中索引在以后(不包括i)的所有元素的乘积，则最终结果output[i]=left[i]×right[i]</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public int[] productExceptSelf(int[] nums) &#123;</span><br><span class="line">        int len&#x3D;nums.length;</span><br><span class="line">        int[] res&#x3D;new int[len];</span><br><span class="line">        if(len&#x3D;&#x3D;0) return res;</span><br><span class="line">        int[] left&#x3D;new int[len];</span><br><span class="line">        int[] right&#x3D;new int[len];</span><br><span class="line">        &#x2F;&#x2F;left[0]和right[len-1]初始值为1</span><br><span class="line">        left[0]&#x3D;1;</span><br><span class="line">        right[len-1]&#x3D;1;</span><br><span class="line">        &#x2F;&#x2F;计算left的值和right的值</span><br><span class="line">        for(int i&#x3D;1;i&lt;len;i++)&#123;</span><br><span class="line">            left[i]&#x3D;left[i-1]*nums[i-1];</span><br><span class="line">        &#125;</span><br><span class="line">        for(int i&#x3D;len-2;i&gt;&#x3D;0;i--)&#123;</span><br><span class="line">            right[i]&#x3D;right[i+1]*nums[i+1];</span><br><span class="line">        &#125;</span><br><span class="line">        for(int i&#x3D;0;i&lt;len;i++)&#123;</span><br><span class="line">            res[i]&#x3D;left[i]*right[i];</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)</li>
+<li><strong>空间复杂度：</strong>O(n)</li>
+</ul>
+<h2 id="算法二：动态规划改进"><a href="#算法二：动态规划改进" class="headerlink" title="算法二：动态规划改进"></a>算法二：动态规划改进</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>上面使用了两个数组来存储对应的值，可以只用两个值来代替，left和right，在计算left的值时将其值赋给结果数组，然后计算right再将其与结果数组相乘即可</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public int[] productExceptSelf(int[] nums) &#123;</span><br><span class="line">        int len&#x3D;nums.length;</span><br><span class="line">        int[] res&#x3D;new int[len];</span><br><span class="line">        if(len&#x3D;&#x3D;0) return res;</span><br><span class="line">        res[0]&#x3D;1;</span><br><span class="line">        int left&#x3D;1,right&#x3D;1;</span><br><span class="line">        &#x2F;&#x2F;计算left的值时将其值赋给res</span><br><span class="line">        for(int i&#x3D;1;i&lt;len;i++)&#123;</span><br><span class="line">            left*&#x3D;nums[i-1];</span><br><span class="line">            res[i]&#x3D;left;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;计算right时将其与res相乘</span><br><span class="line">        for(int i&#x3D;len-2;i&gt;&#x3D;0;i--)&#123;</span><br><span class="line">            right*&#x3D;nums[i+1];</span><br><span class="line">            res[i]*&#x3D;right;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/268.%20%E7%BC%BA%E5%A4%B1%E6%95%B0%E5%AD%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/268.%20%E7%BC%BA%E5%A4%B1%E6%95%B0%E5%AD%97/" itemprop="url">268. 缺失数字</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="268-缺失数字"><a href="#268-缺失数字" class="headerlink" title="268. 缺失数字"></a><a href="https://leetcode-cn.com/problems/missing-number/" target="_blank" rel="noopener">268. 缺失数字</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个包含 <code>0, 1, 2, ..., n</code> 中 <em>n</em> 个数的序列，找出 0 .. <em>n</em> 中没有出现在序列中的那个数。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: [3,0,1]</span><br><span class="line">输出: 2</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: [9,6,4,2,3,5,7,0,1]</span><br><span class="line">输出: 8</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法一：求和"><a href="#算法一：求和" class="headerlink" title="算法一：求和"></a>算法一：求和</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>等差数列的和减去数组的和即为缺少的元素</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public int missingNumber(int[] nums) &#123;</span><br><span class="line">        int len&#x3D;nums.length;</span><br><span class="line">        int res&#x3D;0;</span><br><span class="line">        for(int num:nums)&#123;</span><br><span class="line">            res+&#x3D;num;</span><br><span class="line">        &#125;</span><br><span class="line">        return len*(len+1)&#x2F;2-res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+<h2 id="算法二：位运算"><a href="#算法二：位运算" class="headerlink" title="算法二：位运算"></a>算法二：位运算</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>使用异或运算，异或运算满足结合律，将数组中的元素与0,……,n分别做异或运算，得到的结果就是最终结果，以[3,0,1]为例：<ul>
+<li><code>3^0^1^0^1^2^3=(0^0)^(1^1)^2^(3^3)=0^0^2^0=2</code></li>
+</ul>
+</li>
+<li>在数组中可以将元素与其索引(0,1,2)作异或，最后再异或上一个数组长度(3)即可</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public int missingNumber(int[] nums) &#123;</span><br><span class="line">        int len&#x3D;nums.length;</span><br><span class="line">        int res&#x3D;len;</span><br><span class="line">        for(int i&#x3D;0;i&lt;len;i++)&#123;</span><br><span class="line">            res^&#x3D;i^nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)</li>
+<li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/242.%20%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/242.%20%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/" itemprop="url">242. 有效的字母异位词</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="242-有效的字母异位词"><a href="#242-有效的字母异位词" class="headerlink" title="242. 有效的字母异位词"></a><a href="https://leetcode-cn.com/problems/valid-anagram/" target="_blank" rel="noopener">242. 有效的字母异位词</a></h1><p><strong>题目描述：</strong></p>
+<p>给定两个字符串 <em>s</em> 和 <em>t</em> ，编写一个函数来判断 <em>t</em> 是否是 <em>s</em> 的字母异位词。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: s &#x3D; &quot;anagram&quot;, t &#x3D; &quot;nagaram&quot;</span><br><span class="line">输出: true</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: s &#x3D; &quot;rat&quot;, t &#x3D; &quot;car&quot;</span><br><span class="line">输出: false</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="算法一：哈希表"><a href="#算法一：哈希表" class="headerlink" title="算法一：哈希表"></a>算法一：哈希表</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>用哈希表来存储字符串s中每个字符出现的次数，然后在带入字符串t中去比较</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public boolean isAnagram(String s, String t) &#123;</span><br><span class="line">		&#x2F;&#x2F;长度不同直接返回false</span><br><span class="line">        if(s.length()!&#x3D;t.length()) return false;</span><br><span class="line">        Map&lt;Character,Integer&gt; map&#x3D;new HashMap&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F;记录字符串s中的每个字符出现的个数</span><br><span class="line">        for(int i&#x3D;0;i&lt;s.length();i++)&#123;</span><br><span class="line">            if(!map.containsKey(s.charAt(i)))&#123;</span><br><span class="line">                map.put(s.charAt(i),1);</span><br><span class="line">            &#125;else map.put(s.charAt(i),map.get(s.charAt(i))+1);</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;然后在t中比较</span><br><span class="line">        for(int i&#x3D;0;i&lt;t.length();i++)&#123;</span><br><span class="line">            if(!map.containsKey(t.charAt(i))||map.get(t.charAt(i))&#x3D;&#x3D;0) return false;</span><br><span class="line">            map.put(t.charAt(i),map.get(t.charAt(i))-1);</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)</li>
+<li><strong>空间复杂度：</strong>O(n)</li>
+</ul>
+<h2 id="算法二：改进"><a href="#算法二：改进" class="headerlink" title="算法二：改进"></a>算法二：改进</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>用数组来代替哈希表，其索引就可以代表相应字符，例如索引0对应字符’a’，向后递推</li>
+<li>在一次遍历中，如果遇到s中的字符，则对应数组元素++，若遇到t中的元三年，则对应数组元素–，最后判断数组中是否所有元素都是0</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public boolean isAnagram(String s, String t) &#123;</span><br><span class="line">        if(s.length()!&#x3D;t.length()) return false;</span><br><span class="line">        int[] count&#x3D;new int[26];</span><br><span class="line">        for(int i&#x3D;0;i&lt;s.length();i++)&#123;</span><br><span class="line">            count[s.charAt(i)-&#39;a&#39;]++;</span><br><span class="line">            count[t.charAt(i)-&#39;a&#39;]--;</span><br><span class="line">        &#125;</span><br><span class="line">        for(int num:count)&#123;</span><br><span class="line">            if(num!&#x3D;0) return false;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><strong>时间复杂度：</strong>O(n)</li>
+<li><strong>空间复杂度：</strong>O(1)，只申请了常数个长度的数组</li>
 </ul>
 
           
@@ -540,6 +1112,171 @@
 <ul>
 <li><strong>时间复杂度：</strong>O(n)</li>
 <li><strong>空间复杂度：</strong>O(1)</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/279.%20%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/279.%20%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0/" itemprop="url">279. 完全平方数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="279-完全平方数"><a href="#279-完全平方数" class="headerlink" title="279. 完全平方数"></a><a href="https://leetcode-cn.com/problems/perfect-squares/" target="_blank" rel="noopener">279. 完全平方数</a></h1><p><strong>题目描述：</strong></p>
+<p>给定正整数 <em>n</em>，找到若干个完全平方数（比如 <code>1, 4, 9, 16, ...</code>）使得它们的和等于 <em>n</em>。你需要让组成和的完全平方数的个数最少。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: n &#x3D; 12</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 12 &#x3D; 4 + 4 + 4.</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: n &#x3D; 13</span><br><span class="line">输出: 2</span><br><span class="line">解释: 13 &#x3D; 4 + 9.</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>用一个长度为n+1的数组来维护对应索引能化成的最少完全平方数之和，每次更新前先将每次位置的值初始化为其索引，即res[i]=i，即完全平方数之和的上界(1+1+….+1)</li>
+<li>递推关系式为res[i]=min(res(i-j*j)+1)</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public int numSquares(int n) &#123;</span><br><span class="line">        int[] res&#x3D;new int[n+1];</span><br><span class="line">        for(int i&#x3D;1;i&lt;&#x3D;n;i++)&#123;</span><br><span class="line">            res[i]&#x3D;i;</span><br><span class="line">            for(int j&#x3D;1;i-j*j&gt;&#x3D;0;j++)&#123;</span><br><span class="line">                res[i]&#x3D;Math.min(res[i],res[i-j*j]+1);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res[n];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法分析：</strong></p>
+<ul>
+<li><p><strong>时间复杂度：</strong>O(n×sqrt(n))</p>
+</li>
+<li><p><strong>空间复杂度：</strong>O(n)</p>
+</li>
 </ul>
 
           
@@ -1152,191 +1889,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/62.%20%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/62.%20%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84/" itemprop="url">62. 不同路径</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="62-不同路径"><a href="#62-不同路径" class="headerlink" title="62. 不同路径"></a><a href="https://leetcode-cn.com/problems/unique-paths/" target="_blank" rel="noopener">62. 不同路径</a></h1><p><strong>题目描述：</strong></p>
-<p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。</p>
-<p>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。</p>
-<p>问总共有多少条不同的路径？</p>
-<p><img src="/images/leetcode/t14_2.png" alt="image-20200119191050814"></p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: m &#x3D; 3, n &#x3D; 2</span><br><span class="line">输出: 3</span><br><span class="line">解释:</span><br><span class="line">从左上角开始，总共有 3 条路径可以到达右下角。</span><br><span class="line">1. 向右 -&gt; 向右 -&gt; 向下</span><br><span class="line">2. 向右 -&gt; 向下 -&gt; 向右</span><br><span class="line">3. 向下 -&gt; 向右 -&gt; 向右</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: m &#x3D; 7, n &#x3D; 3</span><br><span class="line">输出: 28</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="算法一：回溯法"><a href="#算法一：回溯法" class="headerlink" title="算法一：回溯法"></a>算法一：回溯法</h1><p><strong>算法思想：</strong></p>
-<ul>
-<li>以(i,j)表示机器人当前的位置，(m,n)表示终点的位置</li>
-<li>当i==m且j==n时表示机器人已经走到终点了，则计数num++</li>
-<li>若i&lt;m，则机器人可以向下走</li>
-<li>若j&lt;n，则机器人可以向右走</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;全局变量num表示到终点的路径</span><br><span class="line">private int num;</span><br><span class="line">    public int uniquePaths(int m, int n) &#123;</span><br><span class="line">    	&#x2F;&#x2F;初始位置为(1,1)</span><br><span class="line">        PTrace(1,1,m,n);</span><br><span class="line">        return num;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;(i,j)表示当前机器人的位置</span><br><span class="line">    private void PTrace(int i,int j,int m,int n)&#123;</span><br><span class="line">    	&#x2F;&#x2F;表示到达终点，num++</span><br><span class="line">        if(i&#x3D;&#x3D;m&amp;&amp;j&#x3D;&#x3D;n)&#123;</span><br><span class="line">            num++;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;如果i&lt;m，则机器人向下走</span><br><span class="line">        if(i&lt;m)&#123;</span><br><span class="line">            PTrace(i+1,j,m,n);</span><br><span class="line">        &#125;</span><br><span class="line">        如果j&lt;n，则机器人向右走</span><br><span class="line">        if(j&lt;n)&#123;</span><br><span class="line">            PTrace(i,j+1,m,n);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<h1 id="算法二：动态规划"><a href="#算法二：动态规划" class="headerlink" title="算法二：动态规划"></a>算法二：动态规划</h1><p><strong>算法思想：</strong></p>
-<ul>
-<li>用一个二维数组去存储索引处位置到终点的不同路径条数，则显然<code>paths[m-1][n-1]=1</code>,需要注意的是数组的索引是从0开始的，而机器人位置坐标是从1开始的，所以要统一坐标</li>
-<li>动态规划递推公式为<ul>
-<li>若i&lt;m-1且j&lt;n-1， <code>paths[i][j]=paths[i][j+1]+paths[i+1][j]</code></li>
-<li>若i==m-1，则 <code>paths[i][j]=paths[i][j+1]</code></li>
-<li>若j==n-1,则 <code>paths[i][j]=paths[i+1][j]</code></li>
-</ul>
-</li>
-<li>最后输出的 <code>paths[0][0]即为所求</code></li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public int uniquePaths(int m, int n) &#123;</span><br><span class="line">		&#x2F;&#x2F;paths数组存放每一个索引代表的位置到终点的不同路径条数</span><br><span class="line">        int[][] paths&#x3D;new int[m][n];</span><br><span class="line">        &#x2F;&#x2F;此处默认为1</span><br><span class="line">        paths[m-1][n-1]&#x3D;1;</span><br><span class="line">        &#x2F;&#x2F;对所有点从后向前递推赋值</span><br><span class="line">        for(int i&#x3D;m-1;i&gt;&#x3D;0;i--)&#123;</span><br><span class="line">            for(int j&#x3D;n-1;j&gt;&#x3D;0;j--)&#123;</span><br><span class="line">            	&#x2F;&#x2F;i&#x3D;&#x3D;m-1且j&#x3D;&#x3D;n-1时不需要进行赋值，因为之前已经赋过值了</span><br><span class="line">                if(i&#x3D;&#x3D;m-1&amp;&amp;j&#x3D;&#x3D;n-1) continue;</span><br><span class="line">                &#x2F;&#x2F;如果i&#x3D;&#x3D;m-1，则机器人只能向右走</span><br><span class="line">                if(i&#x3D;&#x3D;m-1)&#123;</span><br><span class="line">                    paths[i][j]&#x3D;paths[i][j+1];</span><br><span class="line">                    &#x2F;&#x2F;j&#x3D;&#x3D;n-1时，机器人只能向下走</span><br><span class="line">                &#125;else if(j&#x3D;&#x3D;n-1)&#123;</span><br><span class="line">                    paths[i][j]&#x3D;paths[i+1][j];</span><br><span class="line">                &#125;else&#123;</span><br><span class="line">                	&#x2F;&#x2F;否则机器人既能向下走，又能向右走</span><br><span class="line">                    paths[i][j]&#x3D;paths[i][j+1]+paths[i+1][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;最后paths[0][0]即为所求</span><br><span class="line">        return paths[0][0];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>时间复杂度：</strong>O(m*n),两层循环处的时间复杂度</p>
-<p><strong>空间复杂度：</strong>O(m*n)，paths数组的空间消耗</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/66.%20%E5%8A%A0%E4%B8%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1497,586 +2049,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/70.%20%E7%88%AC%E6%A5%BC%E6%A2%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/70.%20%E7%88%AC%E6%A5%BC%E6%A2%AF/" itemprop="url">70. 爬楼梯</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="70-爬楼梯"><a href="#70-爬楼梯" class="headerlink" title="70. 爬楼梯"></a><a href="https://leetcode-cn.com/problems/climbing-stairs/" target="_blank" rel="noopener">70. 爬楼梯</a></h1><p><strong>题目描述：</strong></p>
-<p>假设你正在爬楼梯。需要 <em>n</em> 阶你才能到达楼顶。</p>
-<p>每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？</p>
-<p><strong>注意：</strong>给定 <em>n</em> 是一个正整数。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入： 2</span><br><span class="line">输出： 2</span><br><span class="line">解释： 有两种方法可以爬到楼顶。</span><br><span class="line">1.  1 阶 + 1 阶</span><br><span class="line">2.  2 阶</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入： 3</span><br><span class="line">输出： 3</span><br><span class="line">解释： 有三种方法可以爬到楼顶。</span><br><span class="line">1.  1 阶 + 1 阶 + 1 阶</span><br><span class="line">2.  1 阶 + 2 阶</span><br><span class="line">3.  2 阶 + 1 阶</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="算法一：暴力法（递归）"><a href="#算法一：暴力法（递归）" class="headerlink" title="算法一：暴力法（递归）"></a>算法一：暴力法（递归）</h2><p><strong>算法思路：</strong></p>
-<ul>
-<li><p><code>stairsBTrace(begin,n)=stairsBTrace(begin+1,n)+stairsBTrace(begin+2,n)</code></p>
-</li>
-<li><p>设置三个递归出口：</p>
-<ol>
-<li>若begin==n-1，返回1</li>
-<li>若begin==n-2，返回2</li>
-<li>若begin&gt;n，返回0</li>
-</ol>
-</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public int climbStairs(int n) &#123;</span><br><span class="line">		&#x2F;&#x2F;调用递归函数，设置begin为0</span><br><span class="line">        return stairsBTrace(0,n);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private int stairsBTrace(int begin,int n)&#123;</span><br><span class="line">    	&#x2F;&#x2F;三个递归出口</span><br><span class="line">    	if(begin&gt;n) return 0;</span><br><span class="line">        if(begin&#x3D;&#x3D;n-2) return 2;</span><br><span class="line">        if(begin&#x3D;&#x3D;n-1) return 1;</span><br><span class="line">        int pathsForword_1&#x3D;stairsBTrace(begin+1,n);</span><br><span class="line">        int pathsForword_2&#x3D;stairsBTrace(begin+2,n);</span><br><span class="line">        return pathsForword_1+pathsForword_2;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ol>
-<li><p><strong>时间复杂度：O(2^n^)，当考虑一个算法的时间复杂度时，可以先如下列出一个情况来考虑</strong></p>
-<p>例如：当n=5时的情况如下：</p>
-</li>
-</ol>
-<p><img src="/images/leetcode/t70_1.jfif" alt="Climbing_Stairs"></p>
-<ol start="2">
-<li><strong>空间复杂度：O(n)，递归树的深度为n</strong></li>
-</ol>
-<h2 id="算法二：带有记忆表的优化"><a href="#算法二：带有记忆表的优化" class="headerlink" title="算法二：带有记忆表的优化"></a>算法二：带有记忆表的优化</h2><p><strong>算法思路：</strong></p>
-<ul>
-<li>使用一个数组memo来记忆已经递归计算过的路径数</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;memo充当记忆表</span><br><span class="line">private int[] memo;</span><br><span class="line">       public int climbStairs(int n) &#123;</span><br><span class="line">       	&#x2F;&#x2F;memeo初始化</span><br><span class="line">           memo&#x3D;new int[n];</span><br><span class="line">           return stairsBTrace(0,n);</span><br><span class="line">       &#125;</span><br><span class="line">   </span><br><span class="line">       private int stairsBTrace(int begin,int n)&#123;</span><br><span class="line">           if(begin&gt;n) return 0;</span><br><span class="line">           if(begin&#x3D;&#x3D;n-2) return 2;</span><br><span class="line">           if(begin&#x3D;&#x3D;n-1) return 1;</span><br><span class="line">           &#x2F;&#x2F;如果memo[begin]已经计算过值，则直接返回</span><br><span class="line">           if(memo[begin]&gt;0)&#123;</span><br><span class="line">               return memo[begin];</span><br><span class="line">           &#125;</span><br><span class="line">           &#x2F;&#x2F;否则，同样递推计算其值，并更新在memo数组中</span><br><span class="line">           int pathsForword_1&#x3D;stairsBTrace(begin+1,n);</span><br><span class="line">           int pathsForword_2&#x3D;stairsBTrace(begin+2,n);</span><br><span class="line">           memo[begin]&#x3D;pathsForword_1+pathsForword_2;</span><br><span class="line">           return pathsForword_1+pathsForword_2;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ol>
-<li><strong>时间复杂度：O(n)</strong>，也可以通过n=5的情况来归纳</li>
-<li><strong>空间复杂度：O(n)</strong></li>
-</ol>
-<h2 id="算法三：动态规划"><a href="#算法三：动态规划" class="headerlink" title="算法三：动态规划"></a>算法三：动态规划</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>递推关系可以描述为：<code>paths[i]=paths[i-1]+paths[i-2]</code></li>
-<li>数组错位表示，paths[n-1]表示到达n阶台阶的不同走法</li>
-<li>设置两个初值path[0]表示到达1阶台阶有1种不同走法，paths[1]表示到达2阶台阶有2种不同走法</li>
-</ul>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public int climbStairs(int n) &#123;</span><br><span class="line">		&#x2F;&#x2F;n&#x3D;&#x3D;1或2时单独拿出来，防止下面的paths数组越界</span><br><span class="line">        if(n&#x3D;&#x3D;1)&#123;</span><br><span class="line">            return 1;</span><br><span class="line">        &#125;</span><br><span class="line">        if(n&#x3D;&#x3D;2)&#123;</span><br><span class="line">            return 2;</span><br><span class="line">        &#125;</span><br><span class="line">        int[] paths&#x3D;new int[n];</span><br><span class="line">        &#x2F;&#x2F;两个递归初值</span><br><span class="line">        paths[0]&#x3D;1;</span><br><span class="line">        paths[1]&#x3D;2;</span><br><span class="line">        &#x2F;&#x2F;递推关系</span><br><span class="line">        for(int i&#x3D;2;i&lt;n;i++)&#123;</span><br><span class="line">            paths[i]&#x3D;paths[i-1]+paths[i-2];</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;paths[n-1]表示到n阶台阶的不同走法</span><br><span class="line">        return paths[n-1];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ol>
-<li><p><strong>时间复杂度：O(n)</strong></p>
-</li>
-<li><p><strong>空间复杂度：O(n)</strong></p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/73.%20%E7%9F%A9%E9%98%B5%E7%BD%AE%E9%9B%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/73.%20%E7%9F%A9%E9%98%B5%E7%BD%AE%E9%9B%B6/" itemprop="url">73. 矩阵置零</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="73-矩阵置零"><a href="#73-矩阵置零" class="headerlink" title="73. 矩阵置零"></a><a href="https://leetcode-cn.com/problems/set-matrix-zeroes/" target="_blank" rel="noopener">73. 矩阵置零</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个 <em>m</em> x <em>n</em> 的矩阵，如果一个元素为 0，则将其所在行和列的所有元素都设为 0。请使用<strong><a href="http://baike.baidu.com/item/原地算法" target="_blank" rel="noopener">原地</a></strong>算法<strong>。</strong></p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: </span><br><span class="line">[</span><br><span class="line">  [1,1,1],</span><br><span class="line">  [1,0,1],</span><br><span class="line">  [1,1,1]</span><br><span class="line">]</span><br><span class="line">输出: </span><br><span class="line">[</span><br><span class="line">  [1,0,1],</span><br><span class="line">  [0,0,0],</span><br><span class="line">  [1,0,1]</span><br><span class="line">]</span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: </span><br><span class="line">[</span><br><span class="line">  [0,1,2,0],</span><br><span class="line">  [3,4,5,2],</span><br><span class="line">  [1,3,1,5]</span><br><span class="line">]</span><br><span class="line">输出: </span><br><span class="line">[</span><br><span class="line">  [0,0,0,0],</span><br><span class="line">  [0,4,5,0],</span><br><span class="line">  [0,3,1,0]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="算法一：用两个数组分别记录要置为0的行-和列"><a href="#算法一：用两个数组分别记录要置为0的行-和列" class="headerlink" title="算法一：用两个数组分别记录要置为0的行 和列"></a>算法一：用两个数组分别记录要置为0的行 和列</h2><p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public void setZeroes(int[][] matrix) &#123;</span><br><span class="line">        int m&#x3D;matrix.length;</span><br><span class="line">        int n&#x3D;matrix[0].length;</span><br><span class="line">        &#x2F;&#x2F;zeros_rows记录要置为0的行</span><br><span class="line">        int[] zero_rows&#x3D;new int[m];</span><br><span class="line">        &#x2F;&#x2F;zeros_cols记录要置为0的列</span><br><span class="line">        int[] zero_cols&#x3D;new int[n];</span><br><span class="line">        for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">            for(int j&#x3D;0;j&lt;n;j++)&#123;</span><br><span class="line">            	&#x2F;&#x2F;如果存在0元素，则将对应数组的值赋为1</span><br><span class="line">                if(matrix[i][j]&#x3D;&#x3D;0)&#123;</span><br><span class="line">                    zero_rows[i]&#x3D;1;</span><br><span class="line">                    zero_cols[j]&#x3D;1;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;将zeros_rows中为1的元素对应的行全部赋值为0</span><br><span class="line">        for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">            if(zero_rows[i]&#x3D;&#x3D;1)&#123;</span><br><span class="line">                for(int j&#x3D;0;j&lt;n;j++)&#123;</span><br><span class="line">                    matrix[i][j]&#x3D;0;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;将zeros_cols中为1的元素对应的列全部赋值为0</span><br><span class="line">        for(int j&#x3D;0;j&lt;n;j++)&#123;</span><br><span class="line">            if(zero_cols[j]&#x3D;&#x3D;1)&#123;</span><br><span class="line">                for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">                    matrix[i][j]&#x3D;0;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(m*n)，m为二维数组的行数，n为二维数组的列数</li>
-<li><strong>空间复杂度：</strong>O(m+n)</li>
-</ul>
-<h2 id="算法二：O-1-空间的暴力法"><a href="#算法二：O-1-空间的暴力法" class="headerlink" title="算法二：O(1)空间的暴力法"></a>算法二：O(1)空间的暴力法</h2><p><strong>算法思路：</strong></p>
-<ol>
-<li>遍历原始矩阵，如果发现如果某个元素 <code>cell[i][j]</code> 为 0，我们将第 i 行和第 j 列的所有非零元素设成很大的负虚拟值（比如说 -1000000）。注意，正确的虚拟值取值依赖于问题的约束，任何允许值范围外的数字都可以作为虚拟之。</li>
-<li>最后，我们便利整个矩阵将所有等于虚拟值（常量在代码中初始化为 <code>MODIFIED</code>）的元素设为 0。</li>
-</ol>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;MODIFIED的值表示虚拟值，具体值随具体情况而变</span><br><span class="line">private int MODIFIED&#x3D;-10000000;</span><br><span class="line">   public void setZeroes(int[][] matrix) &#123;</span><br><span class="line">       int m&#x3D;matrix.length;</span><br><span class="line">       int n&#x3D;matrix[0].length;</span><br><span class="line">       for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">           for(int j&#x3D;0;j&lt;n;j++)&#123;</span><br><span class="line">           	&#x2F;&#x2F;若当前元素为0，则将其所在行与所在列的所有元素赋为MODIFIED，要除去值本身为0				的情况，因为如果其值之前就为0，赋值后会缺少此处为0的信息</span><br><span class="line">               if(matrix[i][j]&#x3D;&#x3D;0)&#123;</span><br><span class="line">                   for(int k&#x3D;0;k&lt;n;k++)&#123;</span><br><span class="line">                       if(matrix[i][k]!&#x3D;0) &#123;</span><br><span class="line">                           matrix[i][k] &#x3D; MODIFIED;</span><br><span class="line">                       &#125;</span><br><span class="line">                   &#125;</span><br><span class="line">                   for(int k&#x3D;0;k&lt;m;k++)&#123;</span><br><span class="line">                       if(matrix[k][j]!&#x3D;0) &#123;</span><br><span class="line">                           matrix[k][j] &#x3D; MODIFIED;</span><br><span class="line">                       &#125;</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       &#x2F;&#x2F;最后将数组中所有值为MODIFIED的元素赋值为0即可</span><br><span class="line">       for(int i&#x3D;0;i&lt;m;i++)&#123;</span><br><span class="line">           for(int j&#x3D;0;j&lt;n;j++)&#123;</span><br><span class="line">               if(matrix[i][j]&#x3D;&#x3D;MODIFIED)&#123;</span><br><span class="line">                   matrix[i][j]&#x3D;0;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(n^2^)</li>
-<li><strong>空间复杂度：</strong>O(1)</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/04/11/75.%20%E9%A2%9C%E8%89%B2%E5%88%86%E7%B1%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/11/75.%20%E9%A2%9C%E8%89%B2%E5%88%86%E7%B1%BB/" itemprop="url">75. 颜色分类</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T17:51:24+08:00">
-                2020-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="75-颜色分类"><a href="#75-颜色分类" class="headerlink" title="75. 颜色分类"></a><a href="https://leetcode-cn.com/problems/sort-colors/" target="_blank" rel="noopener">75. 颜色分类</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个包含红色、白色和蓝色，一共 n 个元素的数组，原地对它们进行排序，使得相同颜色的元素相邻，并按照红色、白色、蓝色顺序排列。</p>
-<p>此题中，我们使用整数 0、 1 和 2 分别表示红色、白色和蓝色。</p>
-<p>注意:<br>不能使用代码库中的排序函数来解决这道题。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [2,0,2,1,1,0]</span><br><span class="line">输出: [0,0,1,1,2,2]</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>进阶：</strong></p>
-<ul>
-<li>一个直观的解决方案是使用计数排序的两趟扫描算法。<br>首先，迭代计算出0、1 和 2 元素的个数，然后按照0、1、2的排序，重写当前数组。</li>
-<li>你能想出一个仅使用常数空间的一趟扫描算法吗？</li>
-</ul>
-<h2 id="算法一：直接排序（冒泡）"><a href="#算法一：直接排序（冒泡）" class="headerlink" title="算法一：直接排序（冒泡）"></a>算法一：直接排序（冒泡）</h2><p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public void sortColors(int[] nums) &#123;</span><br><span class="line">        int len&#x3D;nums.length;</span><br><span class="line">        &#x2F;&#x2F;冒泡排序即可</span><br><span class="line">        for(int i&#x3D;0;i&lt;len;i++)&#123;</span><br><span class="line">            for(int j&#x3D;i+1;j&lt;len;j++)&#123;</span><br><span class="line">                if(nums[j]&lt;nums[i])&#123;</span><br><span class="line">                    int temp&#x3D;nums[i];</span><br><span class="line">                    nums[i]&#x3D;nums[j];</span><br><span class="line">                    nums[j]&#x3D;temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(n^2^)</li>
-<li><strong>空间复杂度:</strong>O(1)</li>
-</ul>
-<h2 id="算法二：两次遍历，第一次确定每个元素的个数，第二次重排数组即可"><a href="#算法二：两次遍历，第一次确定每个元素的个数，第二次重排数组即可" class="headerlink" title="算法二：两次遍历，第一次确定每个元素的个数，第二次重排数组即可"></a>算法二：两次遍历，第一次确定每个元素的个数，第二次重排数组即可</h2><p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public void sortColors(int[] nums) &#123;</span><br><span class="line">        int len&#x3D;nums.length;</span><br><span class="line">        &#x2F;&#x2F;sum数组记录0，1，2元素的个数</span><br><span class="line">        int[] sum&#x3D;new int[3];</span><br><span class="line">        &#x2F;&#x2F;第一次循环确定各个元素个数</span><br><span class="line">        for(int i&#x3D;0;i&lt;len;i++)&#123;</span><br><span class="line">            sum[nums[i]]++;</span><br><span class="line">        &#125;</span><br><span class="line">        int i&#x3D;0;</span><br><span class="line">        &#x2F;&#x2F;第二次循环重排数组</span><br><span class="line">        for(i&#x3D;0;i&lt;sum[0];i++)&#123;</span><br><span class="line">            nums[i]&#x3D;0;</span><br><span class="line">        &#125;</span><br><span class="line">        for(;i&lt;sum[0]+sum[1];i++)&#123;</span><br><span class="line">            nums[i]&#x3D;1;</span><br><span class="line">        &#125;</span><br><span class="line">        for(;i&lt;len;i++)&#123;</span><br><span class="line">            nums[i]&#x3D;2;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(n)，两次遍历</li>
-<li><strong>空间复杂度：</strong>O(1)，只是用了一个长度为3的数组，常数阶</li>
-</ul>
-<h2 id="算法三：一次遍历"><a href="#算法三：一次遍历" class="headerlink" title="算法三：一次遍历"></a>算法三：一次遍历</h2><p><strong>算法思路：</strong></p>
-<ol>
-<li>用三个指针p0，curr，p2分别指向元素0的右边界，当前元素，元素2的左边界，以p0为例，此处0的右边界表示的是最右边的0的右边一位的元素</li>
-<li>curr从0开始沿着数组遍历，若当前元素<ul>
-<li>nums[curr]==0，则将其与nums[p0]互换，并且curr++,p0++;</li>
-<li>nums[curr]==2,则将其与nums[p2]互换，并且p2–;</li>
-<li>nums[curr]==1,则curr++即可</li>
-</ul>
-</li>
-<li>因为当nums[curr]==2,则将nums[curr]与nums[p2]互换后，nums[curr]处的值可能为0，还需要再判断，来更新p0的值，所以此时curr不能++；nums[curr]==0，则将nums[curr]与nums[p0]互换后，nums[curr]处的值不会0或者2，只有一种情况可能是0，就是当p0与curr指向同一个元素0时，此时互换后也需要curr++，而其他情况只能是1，所以curr可以直接++</li>
-</ol>
-<p><strong>算法实现：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public void sortColors(int[] nums) &#123;</span><br><span class="line">		&#x2F;&#x2F;p0,curr从0开始，p2从nums.length-1开始</span><br><span class="line">        int p0&#x3D;0,curr&#x3D;0;</span><br><span class="line">        int p2&#x3D;nums.length-1;</span><br><span class="line">        int tmp;</span><br><span class="line">        &#x2F;&#x2F;当curr&lt;&#x3D;p2时循环</span><br><span class="line">        while(curr&lt;&#x3D;p2)&#123;</span><br><span class="line">            if(nums[curr]&#x3D;&#x3D;0)&#123;</span><br><span class="line">                tmp&#x3D;nums[curr];</span><br><span class="line">                nums[curr++]&#x3D;nums[p0];</span><br><span class="line">                nums[p0++]&#x3D;tmp;</span><br><span class="line">            &#125;else if(nums[curr]&#x3D;&#x3D;2)&#123;</span><br><span class="line">                tmp&#x3D;nums[curr];</span><br><span class="line">                nums[curr]&#x3D;nums[p2];</span><br><span class="line">                nums[p2--]&#x3D;tmp;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                curr++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>算法分析：</strong></p>
-<ul>
-<li><strong>时间复杂度：</strong>O(n)</li>
-<li><strong>空间复杂度：</strong>O(1)</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2131,7 +2103,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">214</span>
+                  <span class="site-state-item-count">218</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2153,7 +2125,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

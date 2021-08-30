@@ -248,6 +248,703 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/06/21/214-%E6%9C%80%E7%9F%AD%E5%9B%9E%E6%96%87%E4%B8%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/21/214-%E6%9C%80%E7%9F%AD%E5%9B%9E%E6%96%87%E4%B8%B2/" itemprop="url">214.最短回文串</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T21:45:58+08:00">
+                2020-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="214-最短回文串"><a href="#214-最短回文串" class="headerlink" title="214. 最短回文串"></a><a href="https://leetcode-cn.com/problems/shortest-palindrome/" target="_blank" rel="noopener">214. 最短回文串</a></h1><p><strong>题目描述：</strong></p>
+<p>给定一个字符串 <strong><em>s</em></strong>，你可以通过在字符串前面添加字符将其转换为回文串。找到并返回可以用这种方式转换的最短回文串。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: &quot;aacecaaa&quot;</span><br><span class="line">输出: &quot;aaacecaaa&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: &quot;abcd&quot;</span><br><span class="line">输出: &quot;dcbabcd&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="暴力法"><a href="#暴力法" class="headerlink" title="暴力法"></a>暴力法</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>由于只能在左边添加字符使得其称为回文串，所以找到从左边第一个字符开始的最长回文字符串即可。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public String shortestPalindrome(String s) &#123;</span><br><span class="line">        if(s&#x3D;&#x3D;null||s.length()&#x3D;&#x3D;0) return s;</span><br><span class="line">        char[] chars&#x3D;s.toCharArray();</span><br><span class="line">        int i&#x3D;s.length()-1;</span><br><span class="line">        while(i&gt;&#x3D;0)&#123;</span><br><span class="line">            if(isMirror(chars,i))</span><br><span class="line">                break;</span><br><span class="line">            i--;</span><br><span class="line">        &#125;</span><br><span class="line">        StringBuilder res&#x3D;new StringBuilder();</span><br><span class="line">        for(int j&#x3D;s.length()-1;j&gt;i;j--)&#123;</span><br><span class="line">            res.append(s.charAt(j));</span><br><span class="line">        &#125;</span><br><span class="line">        res.append(s);</span><br><span class="line">        return res.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private boolean isMirror(char[] chars,int i)&#123;</span><br><span class="line">        int l&#x3D;0;</span><br><span class="line">        while(l&lt;i)&#123;</span><br><span class="line">            if(chars[l]!&#x3D;chars[i])</span><br><span class="line">                return false;</span><br><span class="line">            l++;</span><br><span class="line">            i--;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/06/18/1117-H2O%E7%94%9F%E6%88%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/18/1117-H2O%E7%94%9F%E6%88%90/" itemprop="url">1117.H2O生成</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-18T20:58:59+08:00">
+                2020-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1117-H2O-生成"><a href="#1117-H2O-生成" class="headerlink" title="1117. H2O 生成"></a><a href="https://leetcode-cn.com/problems/building-h2o/" target="_blank" rel="noopener">1117. H2O 生成</a></h1><p><strong>题目描述：</strong></p>
+<p>现在有两种线程，氧 oxygen 和氢 hydrogen，你的目标是组织这两种线程来产生水分子。</p>
+<p>存在一个屏障（barrier）使得每个线程必须等候直到一个完整水分子能够被产生出来。</p>
+<p>氢和氧线程会被分别给予 releaseHydrogen 和 releaseOxygen 方法来允许它们突破屏障。</p>
+<p>这些线程应该三三成组突破屏障并能立即组合产生一个水分子。</p>
+<p>你必须保证产生一个水分子所需线程的结合必须发生在下一个水分子产生之前。</p>
+<p>换句话说:</p>
+<p>如果一个氧线程到达屏障时没有氢线程到达，它必须等候直到两个氢线程到达。<br>如果一个氢线程到达屏障时没有其它线程到达，它必须等候直到一个氧线程和另一个氢线程到达。<br>书写满足这些限制条件的氢、氧线程同步代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: &quot;HOH&quot;</span><br><span class="line">输出: &quot;HHO&quot;</span><br><span class="line">解释: &quot;HOH&quot; 和 &quot;OHH&quot; 依然都是有效解。</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: &quot;OOHHHH&quot;</span><br><span class="line">输出: &quot;HHOHHO&quot;</span><br><span class="line">解释: &quot;HOHHHO&quot;, &quot;OHHHHO&quot;, &quot;HHOHOH&quot;, &quot;HOHHOH&quot;, &quot;OHHHOH&quot;, &quot;HHOOHH&quot;, &quot;HOHOHH&quot; 和 &quot;OHHOHH&quot; 依然都是有效解。</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2><p><strong>算法思想：</strong></p>
+<ul>
+<li>假设两个H必须在O之前打印，所以有关系H-&gt;O，而在打印一个O之后又可以打印2个H，所以有O-&gt;H。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class H2O &#123;</span><br><span class="line"></span><br><span class="line">    Semaphore h;</span><br><span class="line">    Semaphore o;</span><br><span class="line"></span><br><span class="line">    public H2O() &#123;</span><br><span class="line">        h&#x3D;new Semaphore(2);</span><br><span class="line">        o&#x3D;new Semaphore(0);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void hydrogen(Runnable releaseHydrogen) throws InterruptedException &#123;</span><br><span class="line">		h.acquire();</span><br><span class="line">        &#x2F;&#x2F; releaseHydrogen.run() outputs &quot;H&quot;. Do not change or remove this line.</span><br><span class="line">        releaseHydrogen.run();</span><br><span class="line">        o.release();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void oxygen(Runnable releaseOxygen) throws InterruptedException &#123;</span><br><span class="line">    	&#x2F;&#x2F;这里每次获取两个，然后释放两个</span><br><span class="line">        o.acquire(2);</span><br><span class="line">        &#x2F;&#x2F; releaseOxygen.run() outputs &quot;O&quot;. Do not change or remove this line.</span><br><span class="line">		releaseOxygen.run();</span><br><span class="line">        h.release(2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/06/18/Dubbo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/18/Dubbo/" itemprop="url">Dubbo</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-18T15:34:08+08:00">
+                2020-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Dubbo/" itemprop="url" rel="index">
+                    <span itemprop="name">Dubbo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="一重要的概念"><a href="#一重要的概念" class="headerlink" title="一重要的概念"></a>一重要的概念</h1><h2 id="1-1-什么是Dubbo"><a href="#1-1-什么是Dubbo" class="headerlink" title="1.1 什么是Dubbo"></a>1.1 什么是Dubbo</h2><p>Apache Dubbo (incubating) |ˈdʌbəʊ| 是一款高性能、轻量级的开源Java <strong>RPC 框架</strong>，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现。简单来说 Dubbo 是一个分布式服务框架，致力于提供高性能和透明化的RPC远程服务调用方案，以及SOA服务治理方案。</p>
+<h2 id="1-2-什么是RPC？RPC原理是什么？"><a href="#1-2-什么是RPC？RPC原理是什么？" class="headerlink" title="1.2 什么是RPC？RPC原理是什么？"></a>1.2 什么是RPC？RPC原理是什么？</h2><p><strong>什么是 RPC？</strong></p>
+<p>RPC（Remote Procedure Call）—远程过程调用，它是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。<strong>比如两个不同的服务 A、B 部署在两台不同的机器上，那么服务 A 如果想要调用服务 B 中的某个方法</strong>该怎么办呢？使用 HTTP请求当然可以，但是可能会比较麻烦。 RPC 的出现就是为了让你调用远程方法像调用本地方法一样简单。</p>
+<p><strong>RPC原理是什么？</strong></p>
+<p>我这里这是简单的提一下。详细内容可以查看下面这篇文章：</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-6/37345851.jpg" alt="RPC原理图"></p>
+<ol>
+<li>服务消费方（client）调用以本地调用方式调用服务；</li>
+<li>client stub接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体；</li>
+<li>client stub找到服务地址，并将消息发送到服务端；</li>
+<li>server stub收到消息后进行解码；</li>
+<li>server stub根据解码结果调用本地的服务；</li>
+<li>本地服务执行并将结果返回给server stub；</li>
+<li>server stub将返回结果打包成消息并发送至消费方；</li>
+<li>client stub接收到消息，并进行解码；</li>
+<li>服务消费方得到最终结果。</li>
+</ol>
+<p>下面再贴一个网上的时序图：</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-6/32527396.jpg" alt="RPC原理时序图"></p>
+<p><strong>说了这么多，我们为什么要用 Dubbo 呢？</strong></p>
+<h2 id="1-3-为什么要用Dubbo"><a href="#1-3-为什么要用Dubbo" class="headerlink" title="1.3 为什么要用Dubbo"></a>1.3 为什么要用Dubbo</h2><p>Dubbo 的诞生和 SOA 分布式架构的流行有着莫大的关系。SOA 面向服务的架构（Service Oriented Architecture），也就是把工程按照业务逻辑拆分成服务层、表现层两个工程。服务层中包含业务逻辑，只需要对外提供服务即可。表现层只需要处理和页面的交互，业务逻辑都是调用服务层的服务来实现。SOA架构中有两个主要角色：服务提供者（Provider）和服务使用者（Consumer）。</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-26/43050183.jpg" alt="为什么要用 Dubbo"></p>
+<p><strong>如果你要开发分布式程序，你也可以直接基于 HTTP 接口进行通信，但是为什么要用 Dubbo呢？</strong></p>
+<p>我觉得主要可以从 Dubbo 提供的下面四点特性来说为什么要用 Dubbo：</p>
+<ol>
+<li><strong>负载均衡</strong>——同一个服务部署在不同的机器时该调用那一台机器上的服务。</li>
+<li><strong>服务调用链路生成</strong>——随着系统的发展，服务越来越多，服务间依赖关系变得错踪复杂，甚至分不清哪个应用要在哪个应用之前启动，架构师都不能完整的描述应用的架构关系。Dubbo 可以为我们解决服务之间互相是如何调用的。</li>
+<li><strong>服务访问压力以及时长统计、资源调度和治理</strong>——基于访问压力实时管理集群容量，提高集群利用率。</li>
+<li><strong>服务降级</strong>——某个服务挂掉之后调用备用服务。</li>
+</ol>
+<p>另外，Dubbo 除了能够应用在分布式系统中，也可以应用在现在比较火的微服务系统中。不过，由于 Spring Cloud 在微服务中应用更加广泛，所以，我觉得一般我们提 Dubbo 的话，大部分是分布式系统的情况。</p>
+<p><strong>我们刚刚提到了分布式这个概念，下面再给大家介绍一下什么是分布式？为什么要分布式？</strong></p>
+<h2 id="1-4-什么是分布式？"><a href="#1-4-什么是分布式？" class="headerlink" title="1.4 什么是分布式？"></a>1.4 什么是分布式？</h2><p>分布式或者说 SOA 分布式重要的就是面向服务，说简单的分布式就是我们<strong>把整个系统拆分成不同的服务然后将这些服务放在不同的服务器上减轻单体服务的压力提高并发量和性能</strong>。比如电商系统可以简单地拆分成订单系统、商品系统、登录系统等等，拆分之后的每个服务可以部署在不同的机器上，如果某一个服务的访问量比较大的话也可以将这个服务同时部署在多台机器上。</p>
+<h2 id="1-5-为什么要分布式？"><a href="#1-5-为什么要分布式？" class="headerlink" title="1.5 为什么要分布式？"></a>1.5 为什么要分布式？</h2><p>从开发角度来讲单体应用的代码都集中在一起，而分布式系统的代码根据业务被拆分。所以，每个团队可以负责一个服务的开发，这样提升了开发效率。另外，代码根据业务拆分之后更加便于维护和扩展。</p>
+<p>另外，我觉得将系统拆分成分布式之后不光便于系统扩展和维护，更能提高整个系统的性能。你想一想嘛？把整个系统拆分成不同的服务/系统，然后每个服务/系统 单独部署在一台服务器上，是不是很大程度上提高了系统性能呢？</p>
+<h1 id="二Dubbo的架构"><a href="#二Dubbo的架构" class="headerlink" title="二Dubbo的架构"></a>二Dubbo的架构</h1><h2 id="2-1-Dubbo的架构图解"><a href="#2-1-Dubbo的架构图解" class="headerlink" title="2.1 Dubbo的架构图解"></a>2.1 Dubbo的架构图解</h2><p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-26/46816446.jpg" alt="Dubbo 架构"></p>
+<p><strong>上述节点简单说明：</strong></p>
+<ul>
+<li><strong>Provider：</strong> 暴露服务的服务提供方</li>
+<li><strong>Consumer：</strong> 调用远程服务的服务消费方</li>
+<li><strong>Registry：</strong> 服务注册与发现的注册中心</li>
+<li><strong>Monitor：</strong> 统计服务的调用次数和调用时间的监控中心</li>
+<li><strong>Container：</strong> 服务运行容器</li>
+</ul>
+<p><strong>调用关系说明：</strong></p>
+<ol>
+<li>服务容器负责启动，加载，运行服务提供者。</li>
+<li>服务提供者在启动时，向注册中心注册自己提供的服务。</li>
+<li>服务消费者在启动时，向注册中心订阅自己所需的服务。</li>
+<li>注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者。</li>
+<li>服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。</li>
+<li>服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心。</li>
+</ol>
+<p><strong>重要知识点总结：</strong></p>
+<ul>
+<li><strong>注册中心负责服务地址的注册与查找，相当于目录服务，服务提供者和消费者只在启动时与注册中心交互，注册中心不转发请求，压力较小</strong></li>
+<li><strong>监控中心负责统计各服务调用次数，调用时间等，统计先在内存汇总后每分钟一次发送到监控中心服务器，并以报表展示</strong></li>
+<li><strong>注册中心，服务提供者，服务消费者三者之间均为长连接，监控中心除外</strong></li>
+<li><strong>注册中心通过长连接感知服务提供者的存在，服务提供者宕机，注册中心将立即推送事件通知消费者</strong></li>
+<li><strong>注册中心和监控中心全部宕机，不影响已运行的提供者和消费者，消费者在本地缓存了提供者列表</strong></li>
+<li><strong>注册中心和监控中心都是可选的，服务消费者可以直连服务提供者</strong></li>
+<li><strong>服务提供者无状态，任意一台宕掉后，不影响使用</strong></li>
+<li><strong>服务提供者全部宕掉后，服务消费者应用将无法使用，并无限次重连等待服务提供者恢复</strong></li>
+</ul>
+<h1 id="三Dubbo的负载均衡策略"><a href="#三Dubbo的负载均衡策略" class="headerlink" title="三Dubbo的负载均衡策略"></a>三Dubbo的负载均衡策略</h1><h2 id="3-1-什么是负载均衡"><a href="#3-1-什么是负载均衡" class="headerlink" title="3.1 什么是负载均衡"></a>3.1 什么是负载均衡</h2><p>比如我们的系统中的某个服务的访问量特别大，我们将这个服务部署在了多台服务器上，当客户端发起请求的时候，多台服务器都可以处理这个请求。那么，如何正确选择处理该请求的服务器就很关键。假如，你就要一台服务器来处理该服务的请求，那该服务部署在多台服务器的意义就不复存在了。负载均衡就是为了避免单个服务器响应同一请求，容易造成服务器宕机、崩溃等问题，我们从负载均衡的这四个字就能明显感受到它的意义。</p>
+<h2 id="3-2-Dubbo提供的负载均衡策略"><a href="#3-2-Dubbo提供的负载均衡策略" class="headerlink" title="3.2 Dubbo提供的负载均衡策略"></a>3.2 Dubbo提供的负载均衡策略</h2><p>在集群负载均衡时，Dubbo 提供了多种均衡策略，默认为 <code>random</code> 随机调用。</p>
+<h3 id="3-2-1-Random-LoadBalance"><a href="#3-2-1-Random-LoadBalance" class="headerlink" title="3.2.1 Random LoadBalance"></a>3.2.1 Random LoadBalance</h3><ul>
+<li><strong>随机，按权重设置随机概率。</strong></li>
+<li>在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后也比较均匀，有利于动态调整提供者权重。</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-7/77722327.jpg" alt="基于权重的随机负载均衡机制"></p>
+<h3 id="3-2-2-RoundRobin-LoadBalance"><a href="#3-2-2-RoundRobin-LoadBalance" class="headerlink" title="3.2.2 RoundRobin LoadBalance"></a>3.2.2 RoundRobin LoadBalance</h3><ul>
+<li>轮循，按公约后的权重设置轮循比率。</li>
+<li>存在慢的提供者累积请求的问题，比如：第二台机器很慢，但没挂，当请求调到第二台时就卡在那，久而久之，所有请求都卡在调到第二台上。</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-7/97933247.jpg" alt="基于权重的轮询负载均衡机制"></p>
+<h3 id="3-2-3-LeastActive-LoadBalance"><a href="#3-2-3-LeastActive-LoadBalance" class="headerlink" title="3.2.3 LeastActive LoadBalance"></a>3.2.3 LeastActive LoadBalance</h3><ul>
+<li>最少活跃调用数，相同活跃数的随机，活跃数指调用前后计数差。</li>
+<li>使慢的提供者收到更少请求，因为越慢的提供者的调用前后计数差会越大。</li>
+</ul>
+<h3 id="3-2-4-ConsistentHash-LoadBalance"><a href="#3-2-4-ConsistentHash-LoadBalance" class="headerlink" title="3.2.4 ConsistentHash LoadBalance"></a>3.2.4 ConsistentHash LoadBalance</h3><ul>
+<li><strong>一致性 Hash，相同参数的请求总是发到同一提供者。(如果你需要的不是随机负载均衡，是要一类请求都到一个节点，那就走这个一致性hash策略。)</strong></li>
+<li>当某一台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/06/17/%E6%90%9C%E7%B4%A2%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/17/%E6%90%9C%E7%B4%A2%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/" itemprop="url">搜索旋转数组</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-17T11:46:33+08:00">
+                2020-06-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="面试题-10-03-搜索旋转数组"><a href="#面试题-10-03-搜索旋转数组" class="headerlink" title="面试题 10.03. 搜索旋转数组"></a><a href="https://leetcode-cn.com/problems/search-rotate-array-lcci/" target="_blank" rel="noopener">面试题 10.03. 搜索旋转数组</a></h1><p><strong>题目描述：</strong></p>
+<p>搜索<strong>旋转数组</strong>。给定一个排序后的数组，包含n个整数，但这个数组已被旋转过很多次了，次数不详。请编写代码找出数组中的某个元素，假设数组元素原先是按升序排列的。<strong>若有多个相同元素，返回索引值最小的一个</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">示例1:</span><br><span class="line"></span><br><span class="line"> 输入: arr &#x3D; [15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14], target &#x3D; 5</span><br><span class="line"> 输出: 8（元素5在该数组中的索引）</span><br><span class="line"> </span><br><span class="line">示例2:</span><br><span class="line"></span><br><span class="line"> 输入：arr &#x3D; [15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14], target &#x3D; 11</span><br><span class="line"> 输出：-1 （没有找到）</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>算法思想：</strong></p>
+<ul>
+<li>还是使用二分法，需要注意的是可能有重复元素的存在，例如1,2,1,1,1的情况，如果简单的通过arr[mid]&gt;=arr[0]不能判断左边递增，因此需要将等于的情况单独拿出来，然后遍历去寻找即可</li>
+<li>还有一种情况就是相同的值并不一定是挨在一起的，例如2,1,2,2,2，所以不能在mid等于target时，简单的判断左边是否等于target，而是将其值记录下来，一次又一次的更新，最后得到的结果就是最左边的</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public int search(int[] arr, int target) &#123;</span><br><span class="line">        int left&#x3D;0,right&#x3D;arr.length-1;</span><br><span class="line">        &#x2F;&#x2F;res记录最左边的结果</span><br><span class="line">        int res&#x3D;-1;</span><br><span class="line">        while(left&lt;&#x3D;right)&#123;</span><br><span class="line">            int mid&#x3D;left+(right-left)&#x2F;2;</span><br><span class="line">            if(arr[mid]&#x3D;&#x3D;target) &#123;</span><br><span class="line">            	&#x2F;&#x2F;更新结果，然后去左边找</span><br><span class="line">                res&#x3D;mid;</span><br><span class="line">                right&#x3D;mid-1;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;相等的时候就顺序查找</span><br><span class="line">            if(arr[mid]&#x3D;&#x3D;arr[left])&#123;</span><br><span class="line">                for(int i&#x3D;left;i&lt;&#x3D;mid;i++)&#123;</span><br><span class="line">                    if(arr[i]&#x3D;&#x3D;target) return i;</span><br><span class="line">                &#125;</span><br><span class="line">                left&#x3D;mid+1;</span><br><span class="line">            &#125;</span><br><span class="line">            else if(arr[mid]&gt;arr[left])&#123;</span><br><span class="line">                if(arr[mid]&lt;target)&#123;</span><br><span class="line">                    left&#x3D;mid+1;</span><br><span class="line">                &#125;else&#123;</span><br><span class="line">                    if(target&gt;&#x3D;arr[left])</span><br><span class="line">                        right&#x3D;mid-1;</span><br><span class="line">                    else left&#x3D;mid+1;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                if(arr[mid]&gt;target)&#123;</span><br><span class="line">                    right&#x3D;mid-1;</span><br><span class="line">                &#125;else&#123;</span><br><span class="line">                    if(target&gt;&#x3D;arr[left])</span><br><span class="line">                        right&#x3D;mid-1;</span><br><span class="line">                    else left&#x3D;mid+1;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/06/17/%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2II/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1317,655 +2014,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/06/14/309-%E6%9C%80%E4%BD%B3%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E6%97%B6%E6%9C%BA%E5%90%AB%E5%86%B7%E5%86%BB%E6%9C%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/14/309-%E6%9C%80%E4%BD%B3%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E6%97%B6%E6%9C%BA%E5%90%AB%E5%86%B7%E5%86%BB%E6%9C%9F/" itemprop="url">309.最佳买卖股票时机含冷冻期</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-14T17:03:51+08:00">
-                2020-06-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="309-最佳买卖股票时机含冷冻期"><a href="#309-最佳买卖股票时机含冷冻期" class="headerlink" title="309. 最佳买卖股票时机含冷冻期"></a><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/" target="_blank" rel="noopener">309. 最佳买卖股票时机含冷冻期</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个整数数组，其中第 i 个元素代表了第 i 天的股票价格 。</p>
-<p>设计一个算法计算出最大利润。在满足以下约束条件下，你可以尽可能地完成更多的交易（多次买卖一支股票）:</p>
-<p>你不能参与多笔交易（你必须在再次购买前出售掉之前的股票）。<br>卖出股票后，你无法在第二天买入股票 (即冷冻期为 1 天)。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">示例:</span><br><span class="line"></span><br><span class="line">输入: [1,2,3,0,2]</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 对应的交易状态为: [买入, 卖出, 冷冻期, 买入, 卖出]</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li><p>二维dp，其中dp[i][0]表示第i天不持有股票的最大收益，dp[i][1]表示第i天持有股票的最大收益，则dp[i][0]根据第i天是否售卖股票进一步可分为：</p>
-<ol>
-<li>如果第i天出售股票，则dp[i][0]=dp[i-1][1]+prices[i]</li>
-<li>如果第i天没有出售股票，则dp[i][0]=dp[i-1][0]</li>
-</ol>
-</li>
-<li><p>同样dp[i][1]也可分为：</p>
-<ol>
-<li>如果第i天购买股票，则dp[i][1]=dp[i-2][0]-prices[i]</li>
-<li>如果第i天没有购入股票，则dp[i][1]=dp[i-1][1]</li>
-</ol>
-</li>
-<li><p>则最终结果为dp[n][0]</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public int maxProfit(int[] prices) &#123;</span><br><span class="line">        if(prices&#x3D;&#x3D;null||prices.length&lt;&#x3D;1) return 0;</span><br><span class="line">        int len&#x3D;prices.length;</span><br><span class="line">        int[][] dp&#x3D;new int[len][2];</span><br><span class="line">        dp[0][0]&#x3D;0;</span><br><span class="line">        dp[0][1]&#x3D;-prices[0];</span><br><span class="line">        dp[1][0]&#x3D;Math.max(prices[1]-prices[0],0);</span><br><span class="line">        dp[1][1]&#x3D;Math.max(-prices[0],-prices[1]);</span><br><span class="line">        for(int i&#x3D;2;i&lt;len;i++)&#123;</span><br><span class="line">            dp[i][1]&#x3D;Math.max(dp[i-2][0]-prices[i],dp[i-1][1]);</span><br><span class="line">            dp[i][0]&#x3D;Math.max(dp[i-1][1]+prices[i],dp[i-1][0]);</span><br><span class="line">        &#125;</span><br><span class="line">        return dp[len-1][0];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/06/14/650-%E5%8F%AA%E6%9C%89%E4%B8%A4%E4%B8%AA%E9%94%AE%E7%9A%84%E9%94%AE%E7%9B%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/14/650-%E5%8F%AA%E6%9C%89%E4%B8%A4%E4%B8%AA%E9%94%AE%E7%9A%84%E9%94%AE%E7%9B%98/" itemprop="url">650.只有两个键的键盘</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-14T15:42:32+08:00">
-                2020-06-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="650-只有两个键的键盘"><a href="#650-只有两个键的键盘" class="headerlink" title="650. 只有两个键的键盘"></a><a href="https://leetcode-cn.com/problems/2-keys-keyboard/" target="_blank" rel="noopener">650. 只有两个键的键盘</a></h1><p><strong>题目描述：</strong></p>
-<p>最初在一个记事本上只有一个字符 ‘A’。你每次可以对这个记事本进行两种操作：</p>
-<p>Copy All (复制全部) : 你可以复制这个记事本中的所有字符(部分的复制是不允许的)。<br>Paste (粘贴) : 你可以粘贴你上一次复制的字符。<br>给定一个数字 n 。你需要使用最少的操作次数，在记事本中打印出恰好 n 个 ‘A’。输出能够打印出 n 个 ‘A’ 的最少操作次数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: 3</span><br><span class="line">输出: 3</span><br><span class="line">解释:</span><br><span class="line">最初, 我们只有一个字符 &#39;A&#39;。</span><br><span class="line">第 1 步, 我们使用 Copy All 操作。</span><br><span class="line">第 2 步, 我们使用 Paste 操作来获得 &#39;AA&#39;。</span><br><span class="line">第 3 步, 我们使用 Paste 操作来获得 &#39;AAA&#39;。</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>题目等价于素数分解，首先对于一个素数，其dp[i]=i，因为素数没有因子，所以只能由1粘贴得来，而对于25=5*5，首先可以先得到5需要5次，然后5复制之后，粘贴4次就可以得到25</li>
-<li>更一般的如果i可以分解为m<em>n，则有dp[i]=dp[m]+dp[n];其中dp[m]就是先得到m所需要的次数，对dp[n]的理解举一个例子：24=2\</em>12，后面的dp[12]可以理解初始记事本中有2个A，要得到24个A需要多少次，完全等价于初始笔记本只有1个A，得到12个A需要的次数也就是dp[12]</li>
-<li>而对于存在多个分解的情况，也只用计算一次，因为最终都是分解成了素数的乘积</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public int minSteps(int n) &#123;</span><br><span class="line">          if(n&#x3D;&#x3D;1) return 0;</span><br><span class="line">          int[] dp&#x3D;new int[n+1];</span><br><span class="line">          dp[1]&#x3D;0;</span><br><span class="line">          &#x2F;&#x2F;初始化每一个dp[i]&#x3D;i</span><br><span class="line">          for(int i&#x3D;2;i&lt;&#x3D;n;i++)&#123;</span><br><span class="line">              dp[i]&#x3D;i;</span><br><span class="line">          &#125;</span><br><span class="line">          for(int i&#x3D;2;i&lt;&#x3D;n;i++)&#123;</span><br><span class="line">              for(int j&#x3D;2;j&lt;&#x3D;Math.sqrt(i);j++)&#123;</span><br><span class="line">                  if(i%j&#x3D;&#x3D;0)&#123;</span><br><span class="line">                      dp[i]&#x3D;dp[j]+dp[i&#x2F;j];</span><br><span class="line">                      break;</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          return dp[n];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/06/14/128-%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/14/128-%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/" itemprop="url">128.最长连续序列</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-14T10:32:46+08:00">
-                2020-06-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="128-最长连续序列"><a href="#128-最长连续序列" class="headerlink" title="128. 最长连续序列"></a><a href="https://leetcode-cn.com/problems/longest-consecutive-sequence/" target="_blank" rel="noopener">128. 最长连续序列</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个未排序的整数数组，找出最长连续序列的长度。</p>
-<p>要求算法的时间复杂度为 <em>O(n)</em>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">示例:</span><br><span class="line"></span><br><span class="line">输入: [100, 4, 200, 1, 3, 2]</span><br><span class="line">输出: 4</span><br><span class="line">解释: 最长连续序列是 [1, 2, 3, 4]。它的长度为 4。</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>先排序后一次遍历即可</li>
-</ul>
-<p><strong>第二次做时出现的错误：</strong></p>
-<ol>
-<li>没有考虑元素相等的情况</li>
-<li>没有考虑数组为空的情况</li>
-<li>当出现不连续的时候，curr从1开始</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public int longestConsecutive(int[] nums) &#123;</span><br><span class="line">        if(nums&#x3D;&#x3D;null||nums.length&#x3D;&#x3D;0) return 0;</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        int max&#x3D;0,curr&#x3D;1;</span><br><span class="line">        for(int i&#x3D;1;i&lt;nums.length;i++)&#123;</span><br><span class="line">            if(nums[i]-nums[i-1]&#x3D;&#x3D;1)&#123;</span><br><span class="line">                curr++;</span><br><span class="line">            &#125;else if(nums[i]-nums[i-1]&#x3D;&#x3D;0)&#123;</span><br><span class="line">                continue;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                max&#x3D;Math.max(max,curr);</span><br><span class="line">                curr&#x3D;1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        max&#x3D;Math.max(max,curr);</span><br><span class="line">        return max;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><p><strong>算法思想：</strong></p>
-<ul>
-<li>将所有元素存在哈希表中，同时可以去重，然后对于每一个元素num，只要num-1不在set中，则去判断以其作为起点的最长连续序列；反之若在，则跳过该元素，因为以num-1未开始的最长连续序列一定比他长。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public int longestConsecutive(int[] nums) &#123;</span><br><span class="line">        if(nums&#x3D;&#x3D;null||nums.length&#x3D;&#x3D;0) return 0;</span><br><span class="line">        Set&lt;Integer&gt; set&#x3D;new HashSet&lt;&gt;();</span><br><span class="line">        int max&#x3D;0;</span><br><span class="line">        for(int num:nums)</span><br><span class="line">            set.add(num);</span><br><span class="line">        for(int num:set)&#123;</span><br><span class="line">            if(!set.contains(num-1))&#123;</span><br><span class="line">                int curr&#x3D;1;</span><br><span class="line">                int next&#x3D;num+1;</span><br><span class="line">                while (set.contains(next))&#123;</span><br><span class="line">                    curr++;</span><br><span class="line">                    next++;</span><br><span class="line">                &#125;</span><br><span class="line">                max&#x3D;Math.max(max,curr);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return max;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/06/13/%E6%9C%80%E9%95%BF%E6%9C%89%E6%95%88%E6%8B%AC%E5%8F%B7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/13/%E6%9C%80%E9%95%BF%E6%9C%89%E6%95%88%E6%8B%AC%E5%8F%B7/" itemprop="url">最长有效括号</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-13T20:40:29+08:00">
-                2020-06-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="32-最长有效括号"><a href="#32-最长有效括号" class="headerlink" title="32. 最长有效括号"></a><a href="https://leetcode-cn.com/problems/longest-valid-parentheses/" target="_blank" rel="noopener">32. 最长有效括号</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个只包含 <code>&#39;(&#39;</code> 和 <code>&#39;)&#39;</code> 的字符串，找出最长的包含有效括号的子串的长度。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: &quot;(()&quot;</span><br><span class="line">输出: 2</span><br><span class="line">解释: 最长有效括号子串为 &quot;()&quot;</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: &quot;)()())&quot;</span><br><span class="line">输出: 4</span><br><span class="line">解释: 最长有效括号子串为 &quot;()()&quot;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><ul>
-<li>memo[i]表示以下标i的字符结束的最长有效括号子串长度，则如果s[i]==’(‘时，其肯定为0，只用考虑为右括号的情况。</li>
-<li>根据其前一个字符可以分为两种情况：<ol>
-<li>s[i-1]==’(‘，则memo[i]=memo[i-2]+2</li>
-<li>s[i-1]==’)’，则判断s[i-1-memo[i-1]]是否为’(‘，如果成立，则memo[i]=memo[i-1]+memo[i-2-memo[i-1]]+2</li>
-</ol>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public int longestValidParentheses(String s) &#123;</span><br><span class="line">        if(s&#x3D;&#x3D;null||s.length()&#x3D;&#x3D;0) return 0;</span><br><span class="line">        int[] memo&#x3D;new int[s.length()];</span><br><span class="line">        int max&#x3D;0;</span><br><span class="line">        for(int i&#x3D;1;i&lt;memo.length;i++)&#123;</span><br><span class="line">            if(s.charAt(i)&#x3D;&#x3D;&#39;)&#39;)&#123;</span><br><span class="line">                if(s.charAt(i-1)&#x3D;&#x3D;&#39;(&#39;)&#123;</span><br><span class="line">                    memo[i]&#x3D;i-2&gt;&#x3D;0?memo[i-2]+2:2;</span><br><span class="line">                &#125;else&#123;</span><br><span class="line">                    if(i-2&gt;&#x3D;0&amp;&amp;i-1-memo[i-1]&gt;&#x3D;0&amp;&amp;s.charAt(i-1-memo[i-1])&#x3D;&#x3D;&#39;(&#39;)&#123;</span><br><span class="line">                        memo[i]&#x3D;i-2-memo[i-1]&gt;&#x3D;0?memo[i-1]+memo[i-2-memo[i-1]]+2:memo[i-1]+2;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            max&#x3D;Math.max(max,memo[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        return max;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2020,7 +2068,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">214</span>
+                  <span class="site-state-item-count">218</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2042,7 +2090,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
