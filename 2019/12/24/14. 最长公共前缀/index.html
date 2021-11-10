@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="leetcode," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="14. 最长公共前缀题目描述：  编写一个函数来查找字符串数组中的最长公共前缀。 如果不存在公共前缀，返回空字符串 &quot;&quot;。  示例： 1234567891011示例 1:输入: [&quot;flower&quot;,&quot;flow&quot;,&quot;flight&quot;]输出: &quot;fl&quot;示例 2:输入: [&quot;dog&quot;,&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="14. 最长公共前缀">
+<meta property="og:url" content="http://extrali.com/2019/12/24/14.%20%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%89%8D%E7%BC%80/index.html">
+<meta property="og:site_name" content="Extrali">
+<meta property="og:description" content="14. 最长公共前缀题目描述：  编写一个函数来查找字符串数组中的最长公共前缀。 如果不存在公共前缀，返回空字符串 &quot;&quot;。  示例： 1234567891011示例 1:输入: [&quot;flower&quot;,&quot;flow&quot;,&quot;flight&quot;]输出: &quot;fl&quot;示例 2:输入: [&quot;dog&quot;,&amp;">
+<meta property="og:image" content="https://i.loli.net/2020/05/04/sx4cjb2Bu3mAK9F.png">
+<meta property="og:image" content="https://i.loli.net/2020/05/04/x6OkaRQTEXVlvJg.png">
+<meta property="og:image" content="https://i.loli.net/2020/05/04/ljVLJuIBK71W6tZ.png">
+<meta property="article:published_time" content="2019-12-24T09:51:24.000Z">
+<meta property="article:modified_time" content="2020-05-04T13:41:41.553Z">
+<meta property="article:author" content="黎达">
+<meta property="article:tag" content="leetcode">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/04/sx4cjb2Bu3mAK9F.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://extrali.com/2019/12/24/14. 最长公共前缀/"/>
+
+
+
+
+
+  <title>14. 最长公共前缀 | Extrali</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Extrali</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2019/12/24/14.%20%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%89%8D%E7%BC%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">14. 最长公共前缀</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-24T17:51:24+08:00">
+                2019-12-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="14-最长公共前缀"><a href="#14-最长公共前缀" class="headerlink" title="14. 最长公共前缀"></a><a href="https://leetcode-cn.com/problems/longest-common-prefix/" target="_blank" rel="noopener">14. 最长公共前缀</a></h1><p><strong>题目描述：</strong></p>
+<blockquote>
+<p>编写一个函数来查找字符串数组中的最长公共前缀。</p>
+<p>如果不存在公共前缀，返回空字符串 <code>&quot;&quot;</code>。</p>
+</blockquote>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: [&quot;flower&quot;,&quot;flow&quot;,&quot;flight&quot;]</span><br><span class="line">输出: &quot;fl&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: [&quot;dog&quot;,&quot;racecar&quot;,&quot;car&quot;]</span><br><span class="line">输出: &quot;&quot;</span><br><span class="line">解释: 输入不存在公共前缀。</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a><strong>方法一：</strong></h2><ul>
+<li>对于每一个字符串，依次比较其从地位到高位的字符是否相同，直到存在不同的字符，则返回</li>
+</ul>
+<p><strong>算法实现1(自己的)：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public String longestCommonPrefix(String[] strs) &#123;</span><br><span class="line">		&#x2F;&#x2F;如果数组为空或者长度为0则返回空串</span><br><span class="line">        if(strs&#x3D;&#x3D;null||strs.length&#x3D;&#x3D;0)&#123;</span><br><span class="line">            return &quot;&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        String s1&#x3D;strs[0];</span><br><span class="line">        flag记录是否存在不同的字符，当有不同的字符时，则赋值为false</span><br><span class="line">        boolean flag&#x3D;true;</span><br><span class="line">        int i&#x3D;0;</span><br><span class="line">        &#x2F;&#x2F;对于每一个字符位，从低位到高位</span><br><span class="line">        for(i&#x3D;0;i&lt;s1.length();i++)&#123;</span><br><span class="line">            char c&#x3D;s1.charAt(i);</span><br><span class="line">            &#x2F;&#x2F;对于每一个字符串</span><br><span class="line">            for(int j&#x3D;1;j&lt;strs.length;j++)&#123;</span><br><span class="line">            	&#x2F;&#x2F;如果当前比较的字符索引大于等于某个字符串的长度，则需要跳出循环了，最后一个相等的					字符索引为i-1</span><br><span class="line">                if (i&gt;&#x3D;strs[j].length())&#123;</span><br><span class="line">                    flag&#x3D;false;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F;如果对应的字符不同，则跳出循环</span><br><span class="line">                if(strs[j].charAt(i)!&#x3D;c)&#123;</span><br><span class="line">                    flag&#x3D;false;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;flag&#x3D;&#x3D;false跳出循环</span><br><span class="line">            if(flag&#x3D;&#x3D;false) break;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;i&#x3D;&#x3D;0表示没有任何一个字符位相同，返回空串</span><br><span class="line">        if(i&#x3D;&#x3D;0) &#123;</span><br><span class="line">            return &quot;&quot;;</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            return s1.substring(0,i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>改进思路：</strong></p>
+<ul>
+<li>我是通过判断不同的字符来跳出循环，可以直接让存在不同字符则返回结果</li>
+</ul>
+<p><strong>算法实现2(改)：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public String longestCommonPrefix(String[] strs) &#123;</span><br><span class="line">        if (strs &#x3D;&#x3D; null || strs.length &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            return &quot;&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        for(int i&#x3D;0;i&lt;strs[0].length();i++)&#123;</span><br><span class="line">            char c&#x3D;strs[0].charAt(i);</span><br><span class="line">            for(int j&#x3D;1;j&lt;strs.length;j++)&#123;</span><br><span class="line">            	&#x2F;&#x2F;如果存在不同的字符位，则直接返回结果</span><br><span class="line">                if(i&#x3D;&#x3D;strs[j].length()||strs[j].charAt(i)!&#x3D;c)&#123;</span><br><span class="line">                    return strs[0].substring(0,i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;若没有在循环中返回结果，则表示str[0]的所有字符都可以作为公共字符，所以直接返回strs[0]</span><br><span class="line">        return strs[0];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二:"></a>方法二:</h2><ul>
+<li>首先找到前两的字符串的公共前缀，然后将这个公共前缀与第三个字符串相比，依次往后，得到结果，若在某一步得到的公共前缀已经是空串了，则可以直接返回空串了。</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public String longestCommonPrefix(String[] strs)&#123;</span><br><span class="line">        if(strs.length&#x3D;&#x3D;0) return &quot;&quot;;</span><br><span class="line">        &#x2F;&#x2F;&#x2F;prefix记录最长公共前缀</span><br><span class="line">        String prefix&#x3D;strs[0];</span><br><span class="line">        for(int i&#x3D;1;i&lt;strs.length;i++)&#123;</span><br><span class="line">        	&#x2F;&#x2F;当prefix在strs[i]中第一次出现的索引不是0时，将prefix的最后一位去掉</span><br><span class="line">            while(strs[i].indexOf(prefix)!&#x3D;0)&#123;</span><br><span class="line">                prefix&#x3D;prefix.substring(0,prefix.length()-1);</span><br><span class="line">               &#x2F;&#x2F;若当前的prefix为空串，则返回空串</span><br><span class="line">            &#125;if(prefix.length()&#x3D;&#x3D;0)&#123;</span><br><span class="line">                return &quot;&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return prefix;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="方法三："><a href="#方法三：" class="headerlink" title="方法三："></a>方法三：</h2><ul>
+<li><p><strong>分治法：</strong></p>
+<p><img src="https://i.loli.net/2020/05/04/sx4cjb2Bu3mAK9F.png" alt="t14_1.PNG"></p>
+</li>
+</ul>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public String longestCommonPrefix(String[] strs)&#123;</span><br><span class="line">        if(strs&#x3D;&#x3D;null||strs.length&#x3D;&#x3D;0)&#123;</span><br><span class="line">            return &quot;&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        return longestCommonPrefix(strs,0,strs.length-1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private String longestCommonPrefix(String[] strs,int l,int r)&#123;</span><br><span class="line">    	&#x2F;&#x2F;如果左右边界相等，则表示只有一个字符串，显然公共前缀为自己</span><br><span class="line">        if(l&#x3D;&#x3D;r)&#123;</span><br><span class="line">            return strs[l];</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">        	&#x2F;&#x2F;需要注意mid&#x3D;（l+r）&#x2F;2，不能是减</span><br><span class="line">            int mid&#x3D;(l+r)&#x2F;2;</span><br><span class="line">            &#x2F;&#x2F;分成左右两个部分计算</span><br><span class="line">            String leftLongest&#x3D;longestCommonPrefix(strs,l,mid);</span><br><span class="line">            String rightLongest&#x3D;longestCommonPrefix(strs,mid+1,r);</span><br><span class="line">            &#x2F;&#x2F;再合起来</span><br><span class="line">            return CommonePrefix(leftLongest,rightLongest);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;计算两个字符串的公共前缀</span><br><span class="line">    private String CommonePrefix(String s1,String s2)&#123;</span><br><span class="line">        int index&#x3D;0;</span><br><span class="line">   	while(index&lt;s1.length()&amp;&amp;index&lt;s2.length()&amp;&amp;s1.charAt(index)&#x3D;&#x3D;s2.charAt(index))&#123;</span><br><span class="line">            index++;</span><br><span class="line">        &#125;</span><br><span class="line">        return s1.substring(0,index);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="二分查找法："><a href="#二分查找法：" class="headerlink" title="二分查找法："></a>二分查找法：</h2><p><img src="https://i.loli.net/2020/05/04/x6OkaRQTEXVlvJg.png" alt="t14_2.png"></p>
+<p><img src="https://i.loli.net/2020/05/04/ljVLJuIBK71W6tZ.png" alt="t14_3.png"></p>
+<p><strong>算法实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public String longestCommonPrefix(String[] strs) &#123;</span><br><span class="line">       if (strs &#x3D;&#x3D; null || strs.length &#x3D;&#x3D; 0)</span><br><span class="line">           return &quot;&quot;;</span><br><span class="line">       int minLen &#x3D; Integer.MAX_VALUE;</span><br><span class="line">       for (String str : strs)</span><br><span class="line">           minLen &#x3D; Math.min(minLen, str.length());</span><br><span class="line">       int low &#x3D; 1;</span><br><span class="line">       int high &#x3D; minLen;</span><br><span class="line">       while (low &lt;&#x3D; high) &#123;</span><br><span class="line">           int middle &#x3D; (low + high) &#x2F; 2;</span><br><span class="line">           if (isCommonPrefix(strs, middle))</span><br><span class="line">               low &#x3D; middle + 1;</span><br><span class="line">           else</span><br><span class="line">               high &#x3D; middle - 1;</span><br><span class="line">       &#125;</span><br><span class="line">       return strs[0].substring(0, (low + high) &#x2F; 2);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   private boolean isCommonPrefix(String[] strs, int len)&#123;</span><br><span class="line">       String str1 &#x3D; strs[0].substring(0,len);</span><br><span class="line">       for (int i &#x3D; 1; i &lt; strs.length; i++)</span><br><span class="line">           if (!strs[i].startsWith(str1))</span><br><span class="line">               return false;</span><br><span class="line">       return true;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/leetcode/" rel="tag"># leetcode</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/24/15.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/" rel="next" title="15.三数之和">
+                <i class="fa fa-chevron-left"></i> 15.三数之和
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/24/13.%20%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/" rel="prev" title="13. 罗马数字转整数">
+                13. 罗马数字转整数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg"
+                alt="黎达" />
+            
+              <p class="site-author-name" itemprop="name">黎达</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">218</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/extrali" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:extralida@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#14-最长公共前缀"><span class="nav-number">1.</span> <span class="nav-text">14. 最长公共前缀</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法一："><span class="nav-number">1.1.</span> <span class="nav-text">方法一：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法二"><span class="nav-number">1.2.</span> <span class="nav-text">方法二:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法三："><span class="nav-number">1.3.</span> <span class="nav-text">方法三：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找法："><span class="nav-number">1.4.</span> <span class="nav-text">二分查找法：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黎达</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

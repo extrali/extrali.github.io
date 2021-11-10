@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Spark," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1 Spark概述1.1 Spark是什么Spark 是一种基于内存的快速、通用、可扩展的大数据分析计算引擎。   1.2 Spark and Hadoop在之前的学习中， Hadoop 的 MapReduce 是大家广为熟知的计算框架，那为什么咱们还要学习新的计算框架 Spark 呢，这里就不得不提到 Spark 和 Hadoop 的关系。   Hadoop  Hadoop 是由 java 语言">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark">
+<meta property="og:url" content="http://extrali.com/2021/08/29/Spark/index.html">
+<meta property="og:site_name" content="Extrali">
+<meta property="og:description" content="1 Spark概述1.1 Spark是什么Spark 是一种基于内存的快速、通用、可扩展的大数据分析计算引擎。   1.2 Spark and Hadoop在之前的学习中， Hadoop 的 MapReduce 是大家广为熟知的计算框架，那为什么咱们还要学习新的计算框架 Spark 呢，这里就不得不提到 Spark 和 Hadoop 的关系。   Hadoop  Hadoop 是由 java 语言">
+<meta property="og:image" content="https://i.loli.net/2021/08/30/9BIa3TMHukPe716.png">
+<meta property="og:image" content="https://i.loli.net/2021/08/31/tTvFgK7hp46ljuY.png">
+<meta property="og:image" content="https://i.loli.net/2021/08/31/69awlsvqR7A2YSj.png">
+<meta property="og:image" content="https://i.loli.net/2021/08/31/X4iEUgTwRqnKQcl.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/04/re84aGMuw3KUQvc.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/04/2vIFZBsMfWpz6cV.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/04/3qyAgEhCU9xLNZ1.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/04/b9RCaxPwINQME2j.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/04/esdwbDLG4kN6oRy.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/04/e69tayM1jX2JCPc.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/04/g5wFXiLAhtGj7Y6.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/04/Swuben7O1aFt5zf.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/04/3ma8lCtW2KMfjhH.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/04/PGv9z5XcMD2ibwr.png">
+<meta property="article:published_time" content="2021-08-29T15:30:52.000Z">
+<meta property="article:modified_time" content="2021-09-05T02:43:16.908Z">
+<meta property="article:author" content="黎达">
+<meta property="article:tag" content="Spark">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/08/30/9BIa3TMHukPe716.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://extrali.com/2021/08/29/Spark/"/>
+
+
+
+
+
+  <title>Spark | Extrali</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Extrali</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/08/29/Spark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spark</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-29T23:30:52+08:00">
+                2021-08-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-Spark概述"><a href="#1-Spark概述" class="headerlink" title="1 Spark概述"></a>1 Spark概述</h1><h2 id="1-1-Spark是什么"><a href="#1-1-Spark是什么" class="headerlink" title="1.1 Spark是什么"></a>1.1 Spark是什么</h2><p>Spark 是一种基于内存的快速、通用、可扩展的大数据分析<strong>计算引擎</strong>。  </p>
+<h2 id="1-2-Spark-and-Hadoop"><a href="#1-2-Spark-and-Hadoop" class="headerlink" title="1.2 Spark and Hadoop"></a>1.2 Spark and Hadoop</h2><p>在之前的学习中， Hadoop 的 MapReduce 是大家广为熟知的计算框架，那为什么咱们还要学习<strong>新的计算框架 Spark</strong> 呢，这里就不得不提到 Spark 和 Hadoop 的关系。  </p>
+<p><strong>Hadoop</strong></p>
+<ul>
+<li>Hadoop 是由 java 语言编写的，在分布式服务器集群上存储海量数据并运行分布式分析应用的开源框架</li>
+<li>作为 Hadoop 分布式文件系统， <strong>HDFS</strong> 处于 Hadoop 生态圈的最下层，存储着所有的数 据 ，支 持 着 Hadoop 的 所 有 服 务 。 它 的 理 论 基 础 源 于 Google 的TheGoogleFileSystem 这篇论文，它是 GFS 的开源实现。</li>
+<li><strong>MapReduce</strong> 是一种编程模型， Hadoop 根据 Google 的 MapReduce 论文将其实现，作为 Hadoop 的分布式计算模型，是 Hadoop 的核心。基于这个框架，分布式并行程序的编写变得异常简单。综合了 HDFS 的分布式存储和 MapReduce 的分布式计<br>算， Hadoop 在处理海量数据时， 性能横向扩展变得非常容易。</li>
+<li><strong>HBase</strong> 是对 Google 的 Bigtable 的开源实现，但又和 Bigtable 存在许多不同之处。HBase 是一个基于 HDFS 的分布式数据库，擅长实时地随机读/写超大规模数据集。它也是 Hadoop 非常重要的组件。  </li>
+</ul>
+<p><strong>Spark</strong></p>
+<ul>
+<li>Spark 是一种由 <strong>Scala</strong> 语言开发的快速、通用、可扩展的大数据分析引擎</li>
+<li>Spark Core 中提供了 Spark 最基础与最核心的功能</li>
+<li>Spark SQL 是 Spark 用来操作结构化数据的组件。通过 Spark SQL，用户可以使用SQL 或者 Apache Hive 版本的 SQL 方言（HQL）来查询数据。</li>
+<li>Spark Streaming 是 Spark 平台上针对实时数据进行<strong>流式计算</strong>的组件，提供了丰富的处理数据流的 API。  </li>
+</ul>
+<p>由上面的信息可以获知， Spark 出现的时间相对较晚，并且主要功能主要是用于数据计算，所以其实 Spark 一直被认为是 Hadoop 框架的升级版。  </p>
+<h2 id="1-3-Spark-or-Hadoop"><a href="#1-3-Spark-or-Hadoop" class="headerlink" title="1.3 Spark or Hadoop"></a>1.3 Spark or Hadoop</h2><p>Hadoop 的 <strong>MR 框架和 Spark 框架</strong>都是数据处理框架，那么我们在使用时如何选择呢？  </p>
+<ul>
+<li>Hadoop MapReduce 由于其设计初衷并不是为了满足循环迭代式数据流处理，因此在多并行运行的数据可复用场景（如：机器学习、图挖掘算法、交互式数据挖掘算法）中存在诸多计算效率等问题。所以 Spark 应运而生， Spark 就是在传统的 MapReduce 计算框架的基础上，利用其计算过程的优化，从而大大加快了数据分析、挖掘的运行和读写速度，并将计算单元缩小到更适合并行计算和重复使用的 RDD 计算模型。</li>
+<li>机器学习中 ALS、凸优化梯度下降等。这些都需要基于数据集或者数据集的衍生数据反复查询反复操作。 MR 这种模式不太合适，即使多 MR 串行处理，性能和时间也是一个问题。数据的共享依赖于磁盘。另外一种是交互式数据挖掘， MR 显然不擅长。而Spark 所基于的 scala 语言恰恰擅长函数的处理。    </li>
+<li>Spark 是一个分布式数据快速分析项目。它的核心技术是<strong>弹性分布式数据集</strong>（Resilient Distributed Datasets），提供了比 MapReduce 丰富的模型，可以快速在内存中对数据集进行多次迭代，来支持复杂的数据挖掘算法和图形计算算法。  </li>
+<li><strong>Spark 和Hadoop 的根本差异是多个作业之间的数据通信问题 : Spark 多个作业之间数据通信是基于内存，而 Hadoop 是基于磁盘。</strong>  </li>
+<li>Spark Task 的启动时间快。 Spark 采用 <strong>fork 线程</strong>的方式，而 Hadoop 采用创建新的进程的方式。</li>
+<li><strong>Spark 只有在 shuffle 的时候将数据写入磁盘</strong>，而 Hadoop 中多个 MR 作业之间的数据交互都要依赖于磁盘交互</li>
+<li>Spark 的缓存机制比 HDFS 的缓存机制高效。  </li>
+</ul>
+<p>经过上面的比较，我们可以看出在绝大多数的数据计算场景中， Spark 确实会比 MapReduce更有优势。但是 Spark 是基于内存的，所以在实际的生产环境中，由于内存的限制，可能会由于内存资源不够导致 Job 执行失败，此时， MapReduce 其实是一个更好的选择，所以 Spark并不能完全替代 MR。  </p>
+<h2 id="1-4-Spark核心模块"><a href="#1-4-Spark核心模块" class="headerlink" title="1.4 Spark核心模块"></a>1.4 Spark核心模块</h2><p><img src="https://i.loli.net/2021/08/30/9BIa3TMHukPe716.png" alt="image-20210830204726731"></p>
+<ul>
+<li><strong>Spark Core</strong><br>Spark Core 中提供了 Spark 最基础与最核心的功能， Spark 其他的功能如： Spark SQL，Spark Streaming， GraphX, MLlib 都是在 Spark Core 的基础上进行扩展的。</li>
+<li><strong>Spark SQL</strong><br>Spark SQL 是 Spark 用来操作结构化数据的组件。通过 Spark SQL，用户可以使用 SQL或者 Apache Hive 版本的 SQL 方言（HQL）来查询数据。</li>
+<li><strong>Spark Streaming</strong><br>Spark Streaming 是 Spark 平台上针对<strong>实时数据进行流式计算</strong>的组件，提供了丰富的处理数据流的 API。</li>
+<li><strong>Spark MLlib</strong><br>MLlib 是 Spark 提供的一个机器学习算法库。 MLlib 不仅提供了模型评估、数据导入等额外的功能，还提供了一些更底层的机器学习原语。</li>
+<li>Spark GraphX<br>GraphX 是 Spark 面向图计算提供的框架与算法库。  </li>
+</ul>
+<h1 id="2-Spark运行架构"><a href="#2-Spark运行架构" class="headerlink" title="2 Spark运行架构"></a>2 Spark运行架构</h1><h2 id="2-1-运行架构"><a href="#2-1-运行架构" class="headerlink" title="2.1 运行架构"></a>2.1 运行架构</h2><p>Spark 框架的核心是一个计算引擎，整体来说，它采用了标准 <strong>master-slave</strong> 的结构。<br>如下图所示，它展示了一个 Spark 执行时的基本结构。 图形中的 <strong>Driver 表示 master</strong>，负责管理整个集群中的作业任务调度。图形中的 <strong>Executor 则是 slave</strong>，负责实际执行任务。  </p>
+<p><img src="https://i.loli.net/2021/08/31/tTvFgK7hp46ljuY.png" alt="image-20210831205527697"></p>
+<h2 id="2-2-核心组件"><a href="#2-2-核心组件" class="headerlink" title="2.2 核心组件"></a>2.2 核心组件</h2><p>由上图可以看出，对于 Spark 框架有两个核心组件：  </p>
+<h3 id="2-2-1-Driver"><a href="#2-2-1-Driver" class="headerlink" title="2.2.1 Driver"></a>2.2.1 Driver</h3><p>Spark 驱动器节点，用于执行 Spark 任务中的 main 方法，负责实际代码的执行工作。Driver 在 Spark 作业执行时主要负责：  </p>
+<ul>
+<li>将用户程序转化为作业（job）</li>
+<li>在 Executor 之间调度任务(task)</li>
+<li>跟踪 Executor 的执行情况</li>
+<li>通过 UI 展示查询运行情况</li>
+</ul>
+<p>实际上，我们无法准确地描述 Driver 的定义，因为在整个的编程过程中没有看到任何有关Driver 的字眼。所以简单理解，所谓的 Driver 就是驱使整个应用运行起来的程序，也称之为Driver 类。  </p>
+<h3 id="2-2-2-Executor"><a href="#2-2-2-Executor" class="headerlink" title="2.2.2 Executor"></a>2.2.2 Executor</h3><p>Spark Executor 是集群中工作节点（Worker）中的一个 JVM 进程，负责在 Spark 作业中运行具体任务（Task） ，任务彼此之间相互独立。 Spark 应用启动时， Executor 节点被同时启动，并且始终伴随着整个 Spark 应用的生命周期而存在。如果有 Executor 节点发生了<br>故障或崩溃， Spark 应用也可以继续执行，会将出错节点上的任务调度到其他 Executor 节点上继续运行。</p>
+<p>Executor 有两个核心功能：</p>
+<ul>
+<li>负责运行组成 Spark 应用的任务，并将结果返回给Driver进程；</li>
+<li>它们通过自身的块管理器（Block Manager）为用户程序中要求缓存的 RDD 提供内存式存储。 RDD 是直接缓存在 Executor 进程内的，因此任务可以在运行时充分利用缓存数据加速运算。    </li>
+</ul>
+<h3 id="2-2-3-Master-amp-Worker"><a href="#2-2-3-Master-amp-Worker" class="headerlink" title="2.2.3 Master&amp;Worker"></a>2.2.3 Master&amp;Worker</h3><p>Spark 集群的独立部署环境中，不需要依赖其他的资源调度框架，自身就实现了资源调度的功能，所以环境中还有其他两个核心组件： <strong>Master 和 Worker</strong>，这里的 Master 是一个进程，主要负责资源的调度和分配，并进行集群的监控等职责，类似于 Yarn 环境中的 RM, 而Worker 呢，也是进程，一个 Worker 运行在集群中的一台服务器上，由 Master 分配资源对数据进行并行的处理和计算，类似于 Yarn 环境中NM。  </p>
+<h3 id="2-2-4-Application-Master"><a href="#2-2-4-Application-Master" class="headerlink" title="2.2.4 Application Master"></a>2.2.4 Application Master</h3><p>​    Hadoop 用户向 YARN 集群提交应用程序时,提交程序中应该包含 ApplicationMaster，用于向资源调度器申请执行任务的资源容器 Container，运行用户自己的程序任务 job，监控整个任务的执行，跟踪整个任务的状态，处理任务失败等异常情况。说的简单点就是， ResourceManager（资源）和 Driver（计算）之间的解耦合靠的就是ApplicationMaster。  </p>
+<h2 id="2-3-核心概念"><a href="#2-3-核心概念" class="headerlink" title="2.3 核心概念"></a>2.3 核心概念</h2><h3 id="2-3-1-Executor与Core"><a href="#2-3-1-Executor与Core" class="headerlink" title="2.3.1 Executor与Core"></a>2.3.1 Executor与Core</h3><p>Spark Executor 是集群中运行在工作节点（Worker）中的一个 JVM 进程，是整个集群中的专门用于计算的节点。在提交应用中，可以提供参数指定计算节点的个数，以及对应的资源。这里的资源一般指的是工作节点 Executor 的内存大小和使用的虚拟 <strong>CPU 核（Core）数</strong><br><strong>量</strong>。  </p>
+<p>应用程序相关启动参数如下：  </p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">–num-executors</td>
+<td align="center">配置 Executor 的数量</td>
+</tr>
+<tr>
+<td align="center">–executor-memory</td>
+<td align="center">配置每个 Executor 的内存大小</td>
+</tr>
+<tr>
+<td align="center">–executor-cores</td>
+<td align="center">配置每个 Executor 的虚拟 CPU core 数量</td>
+</tr>
+</tbody></table>
+<h3 id="2-3-2-并行度（-Parallelism）"><a href="#2-3-2-并行度（-Parallelism）" class="headerlink" title="2.3.2 并行度（ Parallelism）"></a>2.3.2 并行度（ Parallelism）</h3><p>在分布式计算框架中一般都是多个任务同时执行，由于任务分布在不同的计算节点进行计算，所以能够真正地实现多任务并行执行，记住，这里是<strong>并行</strong>，而不是并发。这里我们将整个集群并行执行任务的数量称之为并行度。那么一个作业到底并行度是多少呢？这个取决于框架的默认配置。应用程序也可以在运行过程中动态修改。  </p>
+<h3 id="2-3-3-有向无环图（DAG）"><a href="#2-3-3-有向无环图（DAG）" class="headerlink" title="2.3.3 有向无环图（DAG）"></a>2.3.3 有向无环图（DAG）</h3><p><img src="https://i.loli.net/2021/08/31/69awlsvqR7A2YSj.png" alt="image-20210831214147559"></p>
+<p>​    大数据计算引擎框架我们根据使用方式的不同一般会分为<strong>四类</strong>，其中第一类就是Hadoop 所承载的 MapReduce,它将计算分为两个阶段，分别为 Map 阶段 和 Reduce 阶段。对于上层应用来说，就不得不想方设法去拆分算法，甚至于不得不在上层应用实现多个 Job的串联，以完成一个完整的算法，例如迭代计算。 由于这样的弊端，催生了支持 DAG 框架的产生。 因此，支持 DAG 的框架被划分为第二代计算引擎。如 Tez 以及更上层的Oozie。这里我们不去细究各种 DAG 实现之间的区别，不过对于当时的 Tez 和 Oozie 来说，大多还是批处理的任务。接下来就是以 Spark 为代表的第三代的计算引擎。第三代计算引擎的特点主要是 Job 内部的 DAG 支持（不跨越 Job），以及实时计算。</p>
+<p>​    这里所谓的有向无环图，并不是真正意义的图形，而是<strong>由 Spark 程序直接映射成的数据流的高级抽象模型</strong>。简单理解就是<strong>将整个程序计算的执行过程用图形表示出来</strong>,这样更直观，更便于理解，可以用于表示程序的拓扑结构。  </p>
+<p>​    <strong>DAG（Directed Acyclic Graph）有向无环图</strong>是由点和线组成的拓扑图形，该图形具有方向，不会闭环。  </p>
+<h2 id="2-4-提交流程"><a href="#2-4-提交流程" class="headerlink" title="2.4 提交流程"></a>2.4 提交流程</h2><p>​    所谓的提交流程，其实就是我们开发人员根据需求写的应用程序通过 Spark 客户端提交给 Spark 运行环境执行计算的流程。在不同的部署环境中，这个提交过程基本相同，但是又有细微的区别，我们这里不进行详细的比较，但是因为国内工作中，将 Spark 引用部署到Yarn 环境中会更多一些，所以本课程中的提交流程是基于 Yarn 环境的。  </p>
+<p><img src="https://i.loli.net/2021/08/31/X4iEUgTwRqnKQcl.png" alt="image-20210831214506334"></p>
+<p>​    Spark 应用程序提交到 Yarn 环境中执行的时候，一般会有两种部署执行的方式： Client和 Cluster。 <strong>两种模式主要区别在于： Driver 程序的运行节点位置</strong>。  </p>
+<h3 id="2-4-1-Yarn-Client模式"><a href="#2-4-1-Yarn-Client模式" class="headerlink" title="2.4.1 Yarn Client模式"></a>2.4.1 Yarn Client模式</h3><p>​    Client 模式将用于监控和调度的 Driver 模块在客户端执行，而不是在 Yarn 中，所以一般用于测试。  </p>
+<ul>
+<li>Driver 在任务提交的本地机器上运行；</li>
+<li>Driver 启动后会和 ResourceManager 通讯申请启动 ApplicationMaster；</li>
+<li>ResourceManager 分配 container，在合适的 NodeManager 上启动 ApplicationMaster， 负责向 ResourceManager 申请 Executor 内存；</li>
+<li>ResourceManager 接到 ApplicationMaster 的资源申请后会分配 container，然后ApplicationMaster 在资源分配指定的 NodeManager 上启动 Executor 进程 ；</li>
+<li>Executor 进程启动后会向 Driver 反向注册， Executor 全部注册完成后 Driver 开始执行main 函数；</li>
+<li>之后执行到 Action 算子时，触发一个 Job，并根据宽依赖开始划分 stage，每个 stage 生成对应的 TaskSet，之后将 task 分发到各个 Executor 上执行。  </li>
+</ul>
+<h3 id="2-4-2-Yarn-Cluster模式"><a href="#2-4-2-Yarn-Cluster模式" class="headerlink" title="2.4.2 Yarn Cluster模式"></a>2.4.2 Yarn Cluster模式</h3><p>​    Cluster 模式将用于监控和调度的 Driver 模块启动在 Yarn 集群资源中执行。一般应用于实际生产环境。  </p>
+<ul>
+<li>在 YARN Cluster 模式下，任务提交后会和 ResourceManager 通讯申请启动ApplicationMaster；</li>
+<li>随后 ResourceManager 分配 container，在合适的 NodeManager 上启动 ApplicationMaster，此时的 ApplicationMaster 就是 Driver；</li>
+<li>Driver 启动后向 ResourceManager 申请 Executor 内存， ResourceManager 接到ApplicationMaster 的资源申请后会分配container，然后在合适的 NodeManager 上启动Executor 进程；</li>
+<li>Executor 进程启动后会向 Driver 反向注册， Executor 全部注册完成后 Driver 开始执行main 函数；</li>
+<li>之后执行到 Action 算子时，触发一个 Job，并根据宽依赖开始划分 stage，每个 stage 生成对应的 TaskSet，之后将 task 分发到各个 Executor 上执行。  </li>
+</ul>
+<h1 id="3-Spark核心编程"><a href="#3-Spark核心编程" class="headerlink" title="3 Spark核心编程"></a>3 Spark核心编程</h1><p>​    Spark 计算框架为了能够进行高并发和高吞吐的数据处理，封装了三大数据结构，用于处理不同的应用场景。三大数据结构分别是：</p>
+<ul>
+<li><strong>RDD : 弹性分布式数据集</strong></li>
+<li><strong>累加器</strong>：分布式共享<strong>只写</strong>变量</li>
+<li><strong>广播变量</strong>：分布式共享<strong>只读</strong>变量</li>
+</ul>
+<h2 id="3-1-RDD"><a href="#3-1-RDD" class="headerlink" title="3.1 RDD"></a>3.1 RDD</h2><h3 id="3-1-1-什么是RDD？"><a href="#3-1-1-什么是RDD？" class="headerlink" title="3.1.1 什么是RDD？"></a>3.1.1 什么是RDD？</h3><p>RDD（<strong>Resilient Distributed Dataset</strong>）叫做弹性分布式数据集，是 Spark 中最基本的数据处理模型。代码中是一个抽象类，它代表一个<strong>弹性的、不可变、可分区、里面的元素可并行计算</strong>的集合。  </p>
+<ul>
+<li><p>弹性</p>
+<ul>
+<li><strong>存储的弹性：内存与磁盘的自动切换</strong>；</li>
+<li><strong>容错的弹性：数据丢失可以自动恢复</strong>；</li>
+<li><strong>计算的弹性：计算出错重试机制</strong>；</li>
+<li><strong>分片的弹性：可根据需要重新分片</strong>。  </li>
+</ul>
+</li>
+<li><p>分布式：数据存储在大数据集群不同节点上</p>
+</li>
+<li><p>数据集： <strong>RDD 封装了计算逻辑，并不保存数据</strong></p>
+</li>
+<li><p>数据抽象： RDD 是一个抽象类，需要子类具体实现</p>
+</li>
+<li><p>不可变： <strong>RDD 封装了计算逻辑，是不可以改变的</strong>，想要改变，只能产生新的 RDD，在新的 RDD 里面封装计算逻辑</p>
+</li>
+<li><p>可分区、并行计算  </p>
+</li>
+</ul>
+<h3 id="3-1-2-核心属性"><a href="#3-1-2-核心属性" class="headerlink" title="3.1.2 核心属性"></a>3.1.2 核心属性</h3><p><img src="https://i.loli.net/2021/09/04/re84aGMuw3KUQvc.png" alt="image-20210904155949641"></p>
+<ul>
+<li><p><strong>分区列表</strong></p>
+<p>RDD 数据结构中存在分区列表，用于执行任务时并行计算，是实现分布式计算的重要属性。  </p>
+<p><img src="https://i.loli.net/2021/09/04/2vIFZBsMfWpz6cV.png" alt="image-20210904160103418"></p>
+</li>
+<li><p><strong>分区计算函数</strong></p>
+<p>Spark 在计算时，是使用分区函数对每一个分区进行计算  </p>
+<p><img src="https://i.loli.net/2021/09/04/3qyAgEhCU9xLNZ1.png" alt="image-20210904160202543"></p>
+</li>
+<li><p><strong>RDD 之间的依赖关系</strong>  </p>
+<p>RDD 是计算模型的封装，当需求中需要将多个计算模型进行组合时，就需要将多个 RDD 建立依赖关系  </p>
+<p><img src="https://i.loli.net/2021/09/04/b9RCaxPwINQME2j.png" alt="image-20210904160300386"></p>
+</li>
+<li><p><strong>分区器（可选）</strong>  </p>
+<p>当数据为 KV 类型数据时，可以通过设定分区器自定义数据的分区  </p>
+<p><img src="https://i.loli.net/2021/09/04/esdwbDLG4kN6oRy.png" alt="image-20210904160351926"></p>
+</li>
+<li><p><strong>首选位置（可选）</strong>  </p>
+<p>计算数据时，可以根据计算节点的状态选择不同的节点位置进行计算  </p>
+<p><img src="https://i.loli.net/2021/09/04/e69tayM1jX2JCPc.png" alt="image-20210904160412938"></p>
+</li>
+</ul>
+<h3 id="3-1-3-执行原理"><a href="#3-1-3-执行原理" class="headerlink" title="3.1.3 执行原理"></a>3.1.3 执行原理</h3><p>从计算的角度来讲，数据处理过程中需要<strong>计算资源（内存 &amp; CPU）</strong>和<strong>计算模型（逻辑）</strong>。执行时，需要将计算资源和计算模型进行协调和整合。  </p>
+<p>Spark 框架在执行时，先申请资源，然后将应用程序的数据处理逻辑分解成一个一个的计算任务。然后将任务发到已经分配资源的计算节点上, 按照指定的计算模型进行数据计算。最后得到计算结果。  </p>
+<p>RDD 是 Spark 框架中用于数据处理的核心模型，接下来我们看看，在 Yarn 环境中， RDD的工作原理:  </p>
+<ol>
+<li><p>启动Yarn集群环境</p>
+<p><img src="https://i.loli.net/2021/09/04/g5wFXiLAhtGj7Y6.png" alt="image-20210904160631603"></p>
+</li>
+<li><p>Spark 通过申请资源创建调度节点和计算节点  </p>
+<p><img src="https://i.loli.net/2021/09/04/Swuben7O1aFt5zf.png" alt="image-20210904160646108"></p>
+</li>
+<li><p>Spark 框架根据需求将计算逻辑根据分区划分成不同的任务  </p>
+<p><img src="https://i.loli.net/2021/09/04/3ma8lCtW2KMfjhH.png" alt="image-20210904160720057"></p>
+</li>
+<li><p>调度节点将任务根据计算节点状态发送到对应的计算节点进行计算  </p>
+<p><img src="https://i.loli.net/2021/09/04/PGv9z5XcMD2ibwr.png" alt="image-20210904160733051"></p>
+</li>
+</ol>
+<p>从以上流程可以看出 RDD 在整个流程中主要用于将逻辑进行封装，并生成 Task 发送给Executor 节点执行计算，接下来我们就一起看看 Spark 框架中 RDD 是具体是如何进行数据处理的。  </p>
+<h3 id="3-1-4-基础编程"><a href="#3-1-4-基础编程" class="headerlink" title="3.1.4 基础编程"></a>3.1.4 基础编程</h3><h4 id="3-1-4-1-RDD创建"><a href="#3-1-4-1-RDD创建" class="headerlink" title="3.1.4.1 RDD创建"></a>3.1.4.1 RDD创建</h4><p>在 Spark 中创建 RDD 的创建方式可以分为四种：  </p>
+<ol>
+<li><p><strong>从集合（内存）中创建 RDD</strong> </p>
+<p> 从集合中创建 RDD， Spark 主要提供了两个方法： <strong>parallelize</strong> 和 <strong>makeRDD</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">val sparkConf &#x3D;</span><br><span class="line">new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;spark&quot;)</span><br><span class="line">val sparkContext &#x3D; new SparkContext(sparkConf)</span><br><span class="line">val rdd1 &#x3D; sparkContext.parallelize(</span><br><span class="line">List(1,2,3,4)</span><br><span class="line">)</span><br><span class="line">val rdd2 &#x3D; sparkContext.makeRDD(</span><br><span class="line">List(1,2,3,4)</span><br><span class="line">)</span><br><span class="line">rdd1.collect().foreach(println)</span><br><span class="line">rdd2.collect().foreach(println)</span><br><span class="line">sparkContext.stop()</span><br></pre></td></tr></table></figure>
+
+<p>从底层代码实现来讲， <strong>makeRDD 方法其实就是 parallelize 方法</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def makeRDD[T: ClassTag](</span><br><span class="line">    seq: Seq[T],</span><br><span class="line">    numSlices: Int &#x3D; defaultParallelism): RDD[T] &#x3D; withScope &#123;</span><br><span class="line">    parallelize(seq, numSlices)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>*<em>从外部存储（文件）创建 RDD  *</em></p>
+<p>由外部存储系统的数据集创建 RDD 包括：本地的文件系统，所有 Hadoop 支持的数据集，比如 HDFS、 HBase 等。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">val sparkConf &#x3D;</span><br><span class="line">	new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;spark&quot;)</span><br><span class="line">val sparkContext &#x3D; new SparkContext(sparkConf)</span><br><span class="line">val fileRDD: RDD[String] &#x3D; sparkContext.textFile(&quot;input&quot;)</span><br><span class="line">fileRDD.collect().foreach(println)</span><br><span class="line">sparkContext.stop()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>*<em>从其他 RDD 创建  *</em></p>
+<p>主要是通过一个 RDD 运算完后，再产生新的 RDD。 详情请参考后续章节  </p>
+</li>
+<li><p><strong>直接创建 RDD（new）</strong>  </p>
+<p>使用 new 的方式直接构造 RDD，一般由 Spark 框架自身使用。  </p>
+</li>
+</ol>
+<h4 id="3-1-4-2-RDD-并行度与分区"><a href="#3-1-4-2-RDD-并行度与分区" class="headerlink" title="3.1.4.2 RDD 并行度与分区"></a>3.1.4.2 RDD 并行度与分区</h4><p>默认情况下， Spark 可以将一个作业切分多个任务后，发送给 Executor 节点并行计算，而<strong>能够并行计算的任务数量我们称之为并行度</strong>。这个数量可以在构建 RDD 时指定。 记住，这里的<strong>并行执行的任务数量，并不是指的切分任务的数量</strong>，不要混淆了。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">val sparkConf &#x3D;</span><br><span class="line">	new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;spark&quot;)</span><br><span class="line">val sparkContext &#x3D; new SparkContext(sparkConf)</span><br><span class="line">val dataRDD: RDD[Int] &#x3D; sparkContext.makeRDD(</span><br><span class="line">    List(1,2,3,4),</span><br><span class="line">    4)</span><br><span class="line">val fileRDD: RDD[String] &#x3D; sparkContext.textFile(</span><br><span class="line">    &quot;input&quot;,</span><br><span class="line">    2)</span><br><span class="line">fileRDD.collect().foreach(println)</span><br><span class="line">sparkContext.stop()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>读取<strong>内存</strong>数据时，数据可以按照并行度的设定进行数据的分区操作，数据分区规则的Spark 核心源码如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def positions(length: Long, numSlices: Int): Iterator[(Int, Int)] &#x3D; &#123;</span><br><span class="line">    (0 until numSlices).iterator.map &#123; i &#x3D;&gt;</span><br><span class="line">    val start &#x3D; ((i * length) &#x2F; numSlices).toInt</span><br><span class="line">    val end &#x3D; (((i + 1) * length) &#x2F; numSlices).toInt</span><br><span class="line">    (start, end)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>读取文件数据时，数据是按照 Hadoop 文件读取的规则进行切片分区，而切片规则和数据读取的规则有些差异，具体 Spark 核心源码如下 :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public InputSplit[] getSplits(JobConf job, int numSplits)</span><br><span class="line">throws IOException &#123;</span><br><span class="line">    long totalSize &#x3D; 0; &#x2F;&#x2F; compute total size</span><br><span class="line">    for (FileStatus file: files) &#123; &#x2F;&#x2F; check we have valid files</span><br><span class="line">    if (file.isDirectory()) &#123;</span><br><span class="line">    throw new IOException(&quot;Not a file: &quot;+ file.getPath());</span><br><span class="line">    &#125;</span><br><span class="line">    totalSize +&#x3D; file.getLen();</span><br><span class="line">    &#125;</span><br><span class="line">    long goalSize &#x3D; totalSize &#x2F; (numSplits &#x3D;&#x3D; 0 ? 1 : numSplits);</span><br><span class="line">    long minSize &#x3D; Math.max(job.getLong(org.apache.hadoop.mapreduce.lib.input.</span><br><span class="line">    FileInputFormat.SPLIT_MINSIZE, 1), minSplitSize);</span><br><span class="line">    ...</span><br><span class="line">    for (FileStatus file: files) &#123;</span><br><span class="line">    ...</span><br><span class="line">    if (isSplitable(fs, path)) &#123;</span><br><span class="line">    long blockSize &#x3D; file.getBlockSize();</span><br><span class="line">    long splitSize &#x3D; computeSplitSize(goalSize, minSize, blockSize);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">protected long computeSplitSize(long goalSize, long minSize,</span><br><span class="line">long blockSize) &#123;</span><br><span class="line">	return Math.max(minSize, Math.min(goalSize, blockSize));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="3-1-4-3-RDD转换算子"><a href="#3-1-4-3-RDD转换算子" class="headerlink" title="3.1.4.3 RDD转换算子"></a>3.1.4.3 RDD转换算子</h4><p>RDD 根据数据处理方式的不同将算子整体上分为 <strong>Value 类型</strong>、<strong>双 Value 类型</strong>和 <strong>Key-Value类型</strong>  </p>
+<ol>
+<li><p><strong>Value类型</strong></p>
+<ol>
+<li><p><strong>Map</strong></p>
+<ul>
+<li><p>函数签名</p>
+<p><code>def map[U: ClassTag](f: T =&gt; U): RDD[U]</code></p>
+</li>
+<li><p>函数说明</p>
+<p>将处理的数据逐条进行映射转换，这里的转换可以是类型的转换，也可以是值的转换。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">val dataRDD: RDD[Int] &#x3D; sparkContext.makeRDD(List(1,2,3,4))</span><br><span class="line">val dataRDD1: RDD[Int] &#x3D; dataRDD.map(</span><br><span class="line">    num &#x3D;&gt; &#123;</span><br><span class="line">    	num * 2</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">val dataRDD2: RDD[String] &#x3D; dataRDD1.map(</span><br><span class="line">    num &#x3D;&gt; &#123;</span><br><span class="line">    	&quot;&quot; + num</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>mapPartitions</strong></p>
+<ul>
+<li><p>函数签名  </p>
+<p>`def mapPartitions[U: ClassTag](</p>
+<pre><code>f: Iterator[T] =&gt; Iterator[U],
+preservesPartitioning: Boolean = false): RDD[U]  `</code></pre></li>
+<li><p>函数说明</p>
+<p>将待处理的数据<strong>以分区为单位</strong>发送到计算节点进行处理，这里的处理是指可以进行任意的处理，哪怕是过滤数据。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">val dataRDD1: RDD[Int] &#x3D; dataRDD.mapPartitions(</span><br><span class="line">    datas &#x3D;&gt; &#123;</span><br><span class="line">    	datas.filter(_&#x3D;&#x3D;2)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>map 和 mapPartitions 的区别？</strong>  </p>
+<ol>
+<li><p>数据处理角度</p>
+<p>Map 算子是分区内一个数据一个数据的执行，类似于串行操作。而 mapPartitions 算子是<strong>以分区为单位</strong>进行批处理操作。  </p>
+</li>
+<li><p>功能的角度  </p>
+<p>Map 算子主要目的将数据源中的数据进行转换和改变。但是不会减少或增多数据。MapPartitions 算子需要传递一个迭代器，返回一个迭代器，没有要求的元素的个数保持不变，所以可以增加或减少数据。</p>
+</li>
+<li><p>性能的角度  </p>
+<p>Map 算子因为类似于串行操作，所以性能比较低，而是 mapPartitions 算子类似于批处理，所以性能较高。但是 mapPartitions 算子会长时间占用内存，那么这样会导致内存可能不够用，出现内存溢出的错误。所以在内存有限的情况下，不推荐使用。使用 map 操作。  </p>
+</li>
+</ol>
+</li>
+<li><p>mapPartitionsWithIndex  </p>
+<ul>
+<li><p>函数签名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def mapPartitionsWithIndex[U: ClassTag](</span><br><span class="line">    f: (Int, Iterator[T]) &#x3D;&gt; Iterator[U],</span><br><span class="line">    preservesPartitioning: Boolean &#x3D; false): RDD[U]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>函数说明</p>
+<p>将待处理的数据以分区为单位发送到计算节点进行处理，这里的处理是指可以进行任意的处理，哪怕是过滤数据，在处理时同时<strong>可以获取当前分区索引</strong>。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">val dataRDD1 &#x3D; dataRDD.mapPartitionsWithIndex(</span><br><span class="line">    (index, datas) &#x3D;&gt; &#123;</span><br><span class="line">    	datas.map(index, _)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>flatMap</p>
+<ul>
+<li><p>函数签名  </p>
+<p><code>def flatMap[U: ClassTag](f: T =&gt; TraversableOnce[U]): RDD[U]</code></p>
+</li>
+<li><p>函数说明</p>
+<p>将处理的数据进行扁平化后再进行映射处理，所以算子也称之为扁平映射  </p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spark/" rel="tag"># Spark</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/08/29/Zookeeper/" rel="next" title="zookeeper">
+                <i class="fa fa-chevron-left"></i> zookeeper
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg"
+                alt="黎达" />
+            
+              <p class="site-author-name" itemprop="name">黎达</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">218</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/extrali" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:extralida@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Spark概述"><span class="nav-number">1.</span> <span class="nav-text">1 Spark概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Spark是什么"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Spark是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Spark-and-Hadoop"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Spark and Hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-Spark-or-Hadoop"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Spark or Hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-Spark核心模块"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 Spark核心模块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Spark运行架构"><span class="nav-number">2.</span> <span class="nav-text">2 Spark运行架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-运行架构"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 运行架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-核心组件"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 核心组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-Driver"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 Driver</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-Executor"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 Executor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-Master-amp-Worker"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 Master&amp;Worker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-4-Application-Master"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.2.4 Application Master</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-核心概念"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-Executor与Core"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 Executor与Core</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-并行度（-Parallelism）"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 并行度（ Parallelism）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-有向无环图（DAG）"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 有向无环图（DAG）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-提交流程"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 提交流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-Yarn-Client模式"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1 Yarn Client模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-Yarn-Cluster模式"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2 Yarn Cluster模式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Spark核心编程"><span class="nav-number">3.</span> <span class="nav-text">3 Spark核心编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-RDD"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 RDD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-什么是RDD？"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 什么是RDD？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-2-核心属性"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2 核心属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-3-执行原理"><span class="nav-number">3.1.3.</span> <span class="nav-text">3.1.3 执行原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-4-基础编程"><span class="nav-number">3.1.4.</span> <span class="nav-text">3.1.4 基础编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-4-1-RDD创建"><span class="nav-number">3.1.4.1.</span> <span class="nav-text">3.1.4.1 RDD创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-4-2-RDD-并行度与分区"><span class="nav-number">3.1.4.2.</span> <span class="nav-text">3.1.4.2 RDD 并行度与分区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-4-3-RDD转换算子"><span class="nav-number">3.1.4.3.</span> <span class="nav-text">3.1.4.3 RDD转换算子</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黎达</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
