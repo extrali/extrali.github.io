@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="clickhouse," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="refer: &lt;&lt;Clickhouse原理解析及应用实践&gt;&gt;  1. Clickhouse的前世今生OLAP常见架构分类：  ROLAP（Relational OLAP, 关系型OLAP）。直接使用关系模型构建，数据模型常使用星型模型或则雪花模型。  星型模是一种多维的数据关系，它由一个fact表和一组dimension表组成。每个dimension表都有一个维作为主键，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="clickhouse">
+<meta property="og:url" content="http://extrali.com/2021/11/12/clickhouse/index.html">
+<meta property="og:site_name" content="Extrali">
+<meta property="og:description" content="refer: &lt;&lt;Clickhouse原理解析及应用实践&gt;&gt;  1. Clickhouse的前世今生OLAP常见架构分类：  ROLAP（Relational OLAP, 关系型OLAP）。直接使用关系模型构建，数据模型常使用星型模型或则雪花模型。  星型模是一种多维的数据关系，它由一个fact表和一组dimension表组成。每个dimension表都有一个维作为主键，">
+<meta property="og:image" content="https://i.loli.net/2021/11/12/3YL8i12oFf9ae7t.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/12/1cjWOKhoSzb6DM7.png">
+<meta property="article:published_time" content="2021-11-12T14:44:01.000Z">
+<meta property="article:modified_time" content="2021-11-13T13:18:24.876Z">
+<meta property="article:author" content="黎达">
+<meta property="article:tag" content="clickhouse">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/11/12/3YL8i12oFf9ae7t.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://extrali.com/2021/11/12/clickhouse/"/>
+
+
+
+
+
+  <title>clickhouse | Extrali</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Extrali</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/11/12/clickhouse/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">clickhouse</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-11-12T22:44:01+08:00">
+                2021-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/clickhouse/" itemprop="url" rel="index">
+                    <span itemprop="name">clickhouse</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>refer: &lt;&lt;Clickhouse原理解析及应用实践&gt;&gt;</p>
+</blockquote>
+<h1 id="1-Clickhouse的前世今生"><a href="#1-Clickhouse的前世今生" class="headerlink" title="1. Clickhouse的前世今生"></a>1. Clickhouse的前世今生</h1><p>OLAP常见架构分类：</p>
+<ol>
+<li><p><strong>ROLAP</strong>（Relational OLAP, 关系型OLAP）。直接使用关系模型构建，数据模型常使用<strong>星型模型或则雪花模型</strong>。</p>
+<ul>
+<li><p>星型模是一种多维的数据关系，它由<strong>一个fact表</strong>和<strong>一组dimension表</strong>组成。每个dimension表都有一个维作为主键，所有这些dimension的主键组合成fact表的主键。强调的是对维度进行预处理，将多个维度集合到一个fact表，形成一个宽表。这也是我们在使用hive时，经常会看到一些大宽表的原因，大宽表一般都是fact表，包含了维度关联的主键和一些度量信息，而dimension表则是事实表里面维度的具体信息，使用时候一般通过join来组合数据，相对来说对OLAP的分析比较方便。</p>
+<p><img src="https://i.loli.net/2021/11/12/3YL8i12oFf9ae7t.png" alt="image-20211112225815162"></p>
+</li>
+<li><p>当有一个或多个dimension表没有直接连接到fact表上，而是通过其他dimension表连接到fact表上时，其图解就像多个雪花连接在一起，故称雪花模型。雪花模型是对星型模型的扩展。它对星型模型的维表进一步层次化，原有的各dimension表可能被扩展为小的fact表，形成一些局部的 “层次 “ 区域，这些被分解的表都连接到主dimension表而不是fact表。雪花模型更加符合数据库范式，减少数据冗余，但是在分析数据的时候，操作比较复杂，需要join的表比较多所以其性能并不一定比星型模型高。</p>
+<p><img src="https://i.loli.net/2021/11/12/1cjWOKhoSzb6DM7.png" alt="image-20211112230731449"></p>
+</li>
+</ul>
+</li>
+<li><p><strong>MOLAP</strong>（Multidimensional OLAP，多维型OLAP）MOLAP使用多维数组的形式保存数据，其核心思想是借助预先聚合结果，使用空间换取时间的形式最终提升查询性能。<strong>缺点</strong>是维度预处理可能会导致数据的膨胀，如果数据立方体包括5个维度，那么维度的组合方式就是2^5^种。</p>
+</li>
+<li><p><strong>HOLAP</strong>（Hybrid OLAP，混合架构的OLAP），可以看成ROLAP和MOLAP两者的集成。</p>
+</li>
+</ol>
+<h1 id="2-Clickhouse架构概述"><a href="#2-Clickhouse架构概述" class="headerlink" title="2. Clickhouse架构概述"></a>2. Clickhouse架构概述</h1><p>Clickhouse是一款<strong>MPP架构</strong>的<strong>列式存储数据库</strong></p>
+<h2 id="2-1-Clickhouse核心特性"><a href="#2-1-Clickhouse核心特性" class="headerlink" title="2.1 Clickhouse核心特性"></a>2.1 Clickhouse核心特性</h2><ol>
+<li><p><strong>列式存储与数据压缩</strong></p>
+<p>按列存储和按行存储相比，前者可以有效减少查询时所需要扫描的数据量。假设一个数据表A用有50个字段A<del>1</del>A<del>50</del>，以及100行数据。现在需要查询前5个字段并进行数据分析，则可以使用如下SQL实现：</p>
+<p><code>select A1, A2, A3, A4, A5 from A</code></p>
+<p>如果按行存储，数据库首先会逐行扫描，并获取每行数据的所有50个字段，再从每一行数据种返回A<del>1</del>A<del>5</del>这5个字段。不难发现，尽管只需要前面5个字段，但由于数据是按行进行组织的，实际上还是扫描了所有的字段。如果数据按列存储，数据库就可以直接获取A<del>1</del>A<del>5</del>这5列的数据。</p>
+<p>按列存储相比按行存储的另一个优势是对数据压缩的友好性。<strong>数据中的重复率越多，则压缩率越高；压缩率越高，则数据体量越小</strong>。数据按列组织，因为他们拥有相同的数据类型和现实语义，重复项的可能性自然就越高。</p>
+</li>
+<li><p><strong>向量化执行引擎</strong></p>
+<p>为了实现向量化执行，需要利用CPU的<strong>SIMD</strong>指令。SIMD的全程是Single Instruction Mutiple Data，即<strong>使用单条指令操作多条数据</strong>。现代计算机系统概念种，它是通过数据并行以提升性能的一种实现方式，它的原理是在CPU寄存器层面实现数据的并行操作。</p>
+</li>
+<li><p><strong>关系模型与SQL查询</strong></p>
+</li>
+<li><p><strong>多样化的表引擎</strong></p>
+</li>
+<li><p><strong>多线程与分布式</strong></p>
+<p>Clickhouse在大数据存取方面，既支持<strong>分区（纵向扩展，利用多线程原理）</strong>，也支持<strong>分片（横向扩展，利用分布式原理）</strong>。</p>
+</li>
+<li><p><strong>多主架构</strong></p>
+<p>Clickhouse采用Multi-Master多主架构，集群中的每个角色对等，客户端访问任意一个节点都能得到同样的结果。</p>
+</li>
+<li><p><strong>在线查询</strong></p>
+<p><strong>速度快</strong></p>
+</li>
+<li><p><strong>数据分片与分布式查询</strong></p>
+<p>数据分片是将数据进行<strong>横向切分</strong>。Clickhouse支持分片，而分片依赖于集群，每个集群由1到多个分片组成，而<strong>每个分片则对应了Clickhouse的1个服务节点</strong>。分片的数量上限取决于节点数量（1个分片只能对应一个服务节点）。</p>
+<p>Clickhouse提供了<strong>本地表（Local Table）</strong>与<strong>分布式表（Distributed Table）</strong>的概念。<strong>一张Local Table等同于一份数据的分片。而Distributed Table本身不存储任何数据，它是本地表的访问代理</strong>，其作用类似于分库中间件。借助分布式表，能够代理多个数据分片，从而实现分布式查询。</p>
+</li>
+</ol>
+<h2 id="2-2-Clickhouse的架构设计"><a href="#2-2-Clickhouse的架构设计" class="headerlink" title="2.2 Clickhouse的架构设计"></a>2.2 Clickhouse的架构设计</h2><ol>
+<li><p><strong>Column与Field</strong></p>
+<p>Clickhouse按列存储数据，内存中的<strong>一列数据</strong>由一个<strong>Column对象</strong>表示。如果需要操作单个具体的值（也就是单列中的一行数据），则需要使用Field对象，<strong>Field对象代表一个单值</strong>。</p>
+</li>
+<li><p><strong>DataType</strong></p>
+<p>数据的序列化和反序列化工作由DataType负责。</p>
+</li>
+<li><p><strong>Block与Block流</strong></p>
+<p>Clickhouse内部的数据操作是面向<strong>Block对象</strong>进行的。虽然Column和Field组成了数据的基本映射单元，但对应到实际操作，它们还缺少了一些必要的信息，比如数据的类型及列的名称。Block对象的本质是由<strong>数据对象、数据类型和列名称</strong>组成的三元组，即Column、DataType及列名称字符串。Column提供了数据的读取功能，而DataType知道如何正反序列化。</p>
+</li>
+<li><p><strong>Table</strong></p>
+<p>直接使用<strong>IStorage接口</strong>指代数据表。</p>
+</li>
+<li><p><strong>Parser与Interpreter</strong></p>
+<p><strong>Parser分析器</strong>负责创建AST对象；而<strong>Interpreter解释器</strong>则负责解释AST，并进一步创建查询的执行管道。</p>
+</li>
+<li><p><strong>Functions与Aggregate Functions</strong></p>
+<p>Clickhouse主要提供两类函数——<strong>普通函数</strong>和<strong>聚合函数</strong>。普通函数由IFunction接口定义。聚合函数由IAggregateFunction接口定义。</p>
+</li>
+<li><p><strong>Cluster与Replication</strong></p>
+<p>Clickhouse的集群由<strong>分片（Shard）</strong>组成，而每个分片又通过副本（Replica）组成。</p>
+<ul>
+<li>ClickHouse的1个节点只能拥有1个分片，也就是说如果要实现1分片、1副本，则至少需要部署2个服务节点。</li>
+<li>分片只是逻辑概念，其物理承载还是由副本承担的。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1分片、1副本的集群配置</span><br><span class="line"></span><br><span class="line">&lt;ch_cluster&gt;			&#x2F;&#x2F;集群名字</span><br><span class="line">	&lt;shard&gt;</span><br><span class="line">		&lt;replica&gt;</span><br><span class="line">			&lt;host&gt;10.37.129.6&lt;&#x2F;host&gt;</span><br><span class="line">			&lt;port&gt;9000&lt;&#x2F;port&gt;</span><br><span class="line">        &lt;&#x2F;replica&gt;</span><br><span class="line">        &lt;replica&gt;</span><br><span class="line">			&lt;host&gt;10.37.129.7&lt;&#x2F;host&gt;</span><br><span class="line">			&lt;port&gt;9000&lt;&#x2F;port&gt;</span><br><span class="line">        &lt;&#x2F;replica&gt;</span><br><span class="line">    &lt;&#x2F;shard&gt;</span><br><span class="line">&lt;&#x2F;ch_cluster&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="3-安装与部署"><a href="#3-安装与部署" class="headerlink" title="3. 安装与部署"></a>3. 安装与部署</h1><h2 id="3-1-目录结构"><a href="#3-1-目录结构" class="headerlink" title="3.1 目录结构"></a>3.1 目录结构</h2><p><strong>核心目录</strong>部分：</p>
+<ol>
+<li><strong>/etc/clickhouse-server</strong>：服务端的配置文件目录，包括全局配置config.xml和用户配置users.xml等。</li>
+<li><strong>/var/lib/clickhouse</strong>：默认的数据存储目录（通常会修改默认路径配置，将数据保存到大容量磁盘挂载的路径）</li>
+<li><strong>/var/log/clickhouse-server</strong>：默认保存日志的目录</li>
+</ol>
+<p>在/usr/bin路径下的可执行文件：</p>
+<ol>
+<li>clickhouse：主程序执行文件。</li>
+<li>clickhouse-client：一个指向Clickhouse可执行文件的软链接，共客户端连接使用。</li>
+<li>clickhouse-server：一个指向Clickhouse可执行文件的软链接，共服务端连接使用。</li>
+<li>clickhouse-compressor：内置提供的压缩文具，可用于数据的正压反解。</li>
+</ol>
+<h2 id="3-2-客户端的访问接口"><a href="#3-2-客户端的访问接口" class="headerlink" title="3.2 客户端的访问接口"></a>3.2 客户端的访问接口</h2><p>ClickHouse的底层访问接口支持<strong>TCP和HTTP两种协议</strong>，其中TCP协议具有更好的性能，其默认端口为<strong>9000</strong>，主要用于集群间内部通信及CLI客户端；而HTTP协议则拥有更好的兼容性，可以通过REST服务的形式被广泛用于JAVA、Python等编程语言的客户端，其默认端口为<strong>8123</strong>.</p>
+<ol>
+<li><p><strong>CLI</strong></p>
+<ul>
+<li><p>交互式执行：<code>clickhouse-client</code></p>
+</li>
+<li><p>非交互式执行：<code>clickhouse-client --query</code>。如果需要执行多次查询，可以追加<code>--multiquery</code>参数，多条查询语句之间用分号分隔。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clickhouse-client --multiquery --query&#x3D;&quot;SELECT 1;SELECT 2;SELECT 3;&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重要参数：</p>
+<ol>
+<li><code>--host/-h</code>：服务端的地址，默认值为localhost。</li>
+<li><code>--port</code>：服务端的TCP端口，默认值为9000。</li>
+<li><code>--user/-u</code>：登录的用户名。</li>
+<li><code>--password</code>：登录的密码。</li>
+<li><code>--database/-d</code>：登录的数据库，默认值为default。</li>
+<li><code>--query/-q</code>：非交互方式。</li>
+<li><code>--multiquery/-n</code></li>
+<li><code>--time/-t</code>：在非交互式执行时，会打印每条SQL的执行时间。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><strong>JDBC</strong></p>
+<p>使用下面的Maven依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;ru.yandex.clickhouse&lt;&#x2F;groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;clickhouse-jdbc&lt;&#x2F;artifactId&gt;</span><br><span class="line">	&lt;version&gt;0.2.4&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p><strong>标准形式</strong></p>
+<ul>
+<li><p><strong>JDBC Driver Class</strong>为<code>ru.yandex.clickhouse.ClickHouseDriver</code></p>
+</li>
+<li><p><strong>JDBC URL</strong>为<code>jdbc:clickhouse://&lt;host&gt;:&lt;port&gt;[/&lt;database&gt;]</code></p>
+</li>
+</ul>
+</li>
+<li><p><strong>高可用模式</strong></p>
+<p>高可用模式允许设置多个host地址，每次会从可用的地址中随机选择一个进行连接，其URL声明格式如下：</p>
+<p><code>jdbc:clickhouse://&lt;first-host&gt;:&lt;port&gt;,&lt;second-host&gt;:&lt;port&gt;[/&lt;database&gt;]</code></p>
+<p>在高可用模式下，需要通过<code>BalancedClickhouseDataSource</code>对象获取连接。</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="3-3-内置的实用工具"><a href="#3-3-内置的实用工具" class="headerlink" title="3.3 内置的实用工具"></a>3.3 内置的实用工具</h2><ol>
+<li><p><strong>clickhouse-local</strong></p>
+</li>
+<li><p><strong>clickhouse-benchmark</strong></p>
+<p>基准测试的小工具，可以自动运行SQL查询，并生成相应的运行指标报告。</p>
+<p><code>echo &quot;select * from system.numbers limit 100&quot; | clickhouse-benchmark -i 5</code></p>
+<p>核心参数：</p>
+<ol>
+<li><p><code>-i/--iterations</code>：SQL查询执行的次数，默认值为0.</p>
+</li>
+<li><p><code>-c/--concurrency</code>：同时执行查询的并发数，默认值为1.</p>
+</li>
+<li><p><code>-h/--host</code>：服务端地址，默认值为localhost。clickhouse-benchmark支持对比测试，此时需要通过此参数声明两个服务端的地址。</p>
+<p><code>echo &quot;select * from system.numbers limit 100&quot; | clickhouse-benchmark -i 5 -h localhost -h localhost</code></p>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="4-数据定义"><a href="#4-数据定义" class="headerlink" title="4. 数据定义"></a>4. 数据定义</h1><h2 id="4-1-数据类型"><a href="#4-1-数据类型" class="headerlink" title="4.1 数据类型"></a>4.1 数据类型</h2><p>Clickhouse的数据类型可以划分为<strong>基础类型、复合类型和特殊类型</strong>。</p>
+<h3 id="4-1-1-基础类型"><a href="#4-1-1-基础类型" class="headerlink" title="4.1.1 基础类型"></a>4.1.1 基础类型</h3><h4 id="1-数值类型"><a href="#1-数值类型" class="headerlink" title="1. 数值类型"></a>1. 数值类型</h4><p>数值类型分为<strong>整形，浮点数和定点数</strong>。</p>
+<ol>
+<li><p><strong>Int</strong></p>
+<p>在普遍观念中，常用<strong>Tinyint、Smallint、Int和Bigint</strong>指代整数的不同取值范围。而Clickhouse中直接使用<strong>Int8、Int16、Int32和Int64</strong>指代4种大小的Int类型。</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">大小（字节）</th>
+<th align="center">普遍观念</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Int8</td>
+<td align="center">1</td>
+<td align="center">Tinyint</td>
+</tr>
+<tr>
+<td align="center">Int16</td>
+<td align="center">2</td>
+<td align="center">Smallint</td>
+</tr>
+<tr>
+<td align="center">Int32</td>
+<td align="center">4</td>
+<td align="center">Int</td>
+</tr>
+<tr>
+<td align="center">Int64</td>
+<td align="center">8</td>
+<td align="center">Bigint</td>
+</tr>
+</tbody></table>
+<p>Clickhouse支持无符号的整数，使用前缀U表示。UInt8、UInt16、UInt32和UInt64.</p>
+</li>
+<li><p><strong>Float</strong></p>
+<p>与整数类似，Clickhouse直接使用Float32和Float64代表单精度浮点数及双精度浮点数。</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">大小（字节）</th>
+<th align="center">有效精度（位数）</th>
+<th align="center">普遍概念</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Float32</td>
+<td align="center">4</td>
+<td align="center">7</td>
+<td align="center">Float</td>
+</tr>
+<tr>
+<td align="center">Float64</td>
+<td align="center">8</td>
+<td align="center">16</td>
+<td align="center">Double</td>
+</tr>
+</tbody></table>
+<p>Float32从小数点后第8位起及Float64从小数点后第17位起，都会产生数据溢出。</p>
+</li>
+<li><p><strong>Decimal</strong></p>
+<p>Clickhouse提供了Decimal32、Decimal64和Decimal128三种精度的定点数。可以通过两种形式声明：</p>
+<ul>
+<li>简写方式位Decimal32(S)、Decimal64(S)、Decimal128(S)；</li>
+<li>原生方式为Decimal(P,S)</li>
+</ul>
+<p>其中P代表精度，决定总位数（整数部分+小数部分），取值范围是1~38；</p>
+<p>S代表规模，决定小数位数，取值范围是0~P</p>
+</li>
+</ol>
+<h4 id="2-字符串类型"><a href="#2-字符串类型" class="headerlink" title="2. 字符串类型"></a>2. 字符串类型</h4><ol>
+<li><p><strong>String</strong></p>
+<p>长度不限。完全替代了传统意义上数据库的Varchar、Text、Clob和Blob等字符串类型。</p>
+</li>
+<li><p><strong>FixedString</strong></p>
+<p>定长字符串通过<strong>FixedString(N)</strong>声明，其中<strong>N表示字符串长度</strong>。但与Char不同的是，<strong>FixedString使用null字节填充末尾字符</strong>，而Char通常使用空格填充。</p>
+</li>
+<li><p><strong>UUID</strong></p>
+<p>UUID共有32位，它的格式位8-4-4-4-12.如果一个UUID类型的字段在写入数据时没有被赋值，则会依照格式使用0填充。</p>
+</li>
+</ol>
+<h4 id="3-时间类型"><a href="#3-时间类型" class="headerlink" title="3. 时间类型"></a>3. 时间类型</h4><p>时间类型分为<strong>DateTime、DateTime64和Date</strong>三类。Clickhouse目前没有时间戳类型，时间类型的最高精度为秒。</p>
+<ol>
+<li><p><strong>DateTime</strong></p>
+<p>DateTime类型包含时、分、秒信息，精确到秒，支持使用字符串形式写入。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE Datetime_TEST (</span><br><span class="line">	c1 DateTime</span><br><span class="line">) ENGINE &#x3D; Memory</span><br><span class="line">----以字符串形式写入</span><br><span class="line">INSERT INTO Datetime_TEST VALUES(&#39;2019-06-22 00:00:00&#39;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>DateTime64</strong></p>
+<p>DateTime64可以记录亚秒，它在DateTime之上增加了精度的设置。</p>
+</li>
+<li><p><strong>Date</strong></p>
+<p>Date类型不包含具体的时间信息，只精确到天，它同样支持字符串形式写入。</p>
+</li>
+</ol>
+<h3 id="4-1-2-复合类型"><a href="#4-1-2-复合类型" class="headerlink" title="4.1.2 复合类型"></a>4.1.2 复合类型</h3><p>Clickhouse还提供了<strong>数组、元组、枚举和嵌套</strong>四类复合类型。</p>
+<ol>
+<li><p><strong>Array</strong></p>
+<p>数组有两种定义方式，常规方式array(T)：</p>
+<p><code>select array(1, 2)</code></p>
+<p>简写方式[T]：</p>
+<p><code>select [1, 2]</code></p>
+</li>
+<li><p><strong>Tuple</strong></p>
+<p>元组类型由1~n个元素组成，<strong>每个元素之间允许设置不同的数据类型，且彼此之间不要求兼容</strong>。</p>
+<p><strong>常规方式tuple(T)，简写方式(T)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE Tuple_TEST (</span><br><span class="line">	c1 Tuple(String, Int8)</span><br><span class="line">) ENGINE &#x3D; Memory;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Enum</strong></p>
+<p>Clickhouse提供了<strong>Enum8</strong>和<strong>Enum16</strong>两种枚举类型。枚举类型固定使用<strong>（String：Int）Key/Value键值对</strong>的形式定义数据，所以Enum8和Enum16分别会对应（String：Int8）和（String：Int16）.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE Enum_TEST (</span><br><span class="line">	c1 Enum8(&#39;ready&#39; &#x3D; 1, &#39;start&#39; &#x3D; 2, &#39;success&#39; &#x3D; 3, &#39;error&#39; &#x3D; 4)</span><br><span class="line">) ENGINE &#x3D; Memory</span><br></pre></td></tr></table></figure>
+
+<p><strong>Key和Value是不允许重复的，要保证唯一性</strong>，其次Key和Value的值都不能为null，但Key允许是空字符串。在写入枚举数据的时候，只会用到Key字符串部分。</p>
+<p><code>INSERT INTO Enum_TEST VALUES(&#39;ready&#39;);</code></p>
+</li>
+<li><p><strong>Nested</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE nested_test (</span><br><span class="line">	name String,</span><br><span class="line">	age  UInt8,</span><br><span class="line">	dept Nested(</span><br><span class="line">		id    UInt8,</span><br><span class="line">		name  String,</span><br><span class="line">	)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>嵌套类型本质是一种多维数组结构。<strong>嵌套字段中的每个字段都是一个数组</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO nested_test VALUES (&#39;bruce&#39;, 30, [10000, 10001, 10002], [&#39;研发部&#39;, [技术部], [&#39;测试部&#39;]]);</span><br></pre></td></tr></table></figure>
+
+<p>同一行数据内每个数组的元素个数必须相等。访问嵌套类型得数据需要使用点符号<code>dept.id</code></p>
+</li>
+</ol>
+<h3 id="4-1-3-特殊类型"><a href="#4-1-3-特殊类型" class="headerlink" title="4.1.3 特殊类型"></a>4.1.3 特殊类型</h3><ol>
+<li><p><strong>Nullable</strong></p>
+<p>Nullable更像是一种辅助的修饰符，需要<strong>与基础数据类型一起搭配使用</strong>。它表示某个数据类型可以是Null值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE Null_TEST (</span><br><span class="line">	c1 String,</span><br><span class="line">	c2 Nullable(UInt8)</span><br><span class="line">) ENGINE &#x3D; TinyLog;</span><br></pre></td></tr></table></figure>
+
+<p>应该慎用Nullable类型，不然会使查询和写入性能变慢。因为在正常情况下，每个列字段的数据会被存储在对应的<strong>[Column].bin</strong>文件种。如果一个列字段被Nullable类型修饰后，会额外生成一个<strong>[Column].null.bin</strong>文件专门保存它的Null值。这意味着在读取和写入数据时，需要一倍的额外文件操作。</p>
+</li>
+<li><p><strong>Domain</strong></p>
+<p>域名类型分为<strong>IPV4</strong>和<strong>IPV6</strong>两类。</p>
+</li>
+</ol>
+<h2 id="4-2-定义数据表"><a href="#4-2-定义数据表" class="headerlink" title="4.2 定义数据表"></a>4.2 定义数据表</h2><ol>
+<li><p><strong>数据库</strong></p>
+<p>数据库目前一共支持5种引擎：</p>
+<ol>
+<li><strong>Ordinary</strong>：默认引擎。</li>
+<li><strong>Dictionary</strong>：字典引擎。</li>
+<li><strong>Memory</strong>：内存引擎。</li>
+<li><strong>Lazy</strong>：日志引擎，此类数据库下只能使用Log系列的表引擎。</li>
+<li><strong>MySQL：</strong>MYSQL引擎，此类数据库下会自动拉去远端MySQL种的数据。</li>
+</ol>
+</li>
+<li><p><strong>默认值表达式</strong></p>
+<p>表字段支持三种默认值表达式的定义方式，分别是<strong>DEFAULT</strong>、<strong>MATERIALIZED</strong>和<strong>ALIAS</strong></p>
+</li>
+<li><p><strong>临时表</strong></p>
+<p>创建临时表的方法是在普通表的基础上添加<strong>TEMPORARY</strong>关键字</p>
+<ul>
+<li>临时表的<strong>生命周期是会话绑定的</strong>，所以它<strong>只支持Memory表引擎</strong>，如果会话结束，数据表就会被销毁。</li>
+<li>临时表不属于任何数据库。</li>
+</ul>
+</li>
+<li><p><strong>分区表</strong></p>
+<p>数据分区（<strong>partition</strong>）和数据分片（<strong>shard</strong>）是完全不同的两个概念。数据分区是针对本地数据而言的，是数据的一种纵向切分。而数据分片是一种横向切分。目前只有<strong>MergeTree</strong>家族系列的表引擎才支持数据分区。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE partition_v1 (</span><br><span class="line">	ID  	  String,</span><br><span class="line">	URL 	  String,</span><br><span class="line">	EventTime Date,</span><br><span class="line">) ENGINE &#x3D; MergeTree()</span><br><span class="line">PARTITION BY toYYYYMM(EventTime)</span><br><span class="line">ORDER BY ID</span><br><span class="line"></span><br><span class="line">INSERT INTO partition_v1 VALUES</span><br><span class="line">(&#39;A000&#39;, &#39;www.baidu.com&#39;, &#39;2019-05-01&#39;),</span><br><span class="line">(&#39;A001&#39;, &#39;www.baidu.com&#39;, &#39;2019-06-02&#39;);</span><br><span class="line"></span><br><span class="line">通过system.parts系统表，查询数据表的分区状态：</span><br><span class="line">SELECT table, partition, path from system.parts where table &#x3D; &#39;partition_v1&#39;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">table</th>
+<th align="center">partition</th>
+<th align="center">path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">partition_v1</td>
+<td align="center">201905</td>
+<td align="center">/chbase/data/default/partition_v1/201905_1_1_0/</td>
+</tr>
+<tr>
+<td align="center">partition_v1</td>
+<td align="center">201906</td>
+<td align="center">/chbase/data/default/partition_v1/201906_2_2_0/</td>
+</tr>
+</tbody></table>
+<p>可以看到每个分区都对应一个独立的文件目录。分区键不应该使用粒度过细的数据字段。</p>
+</li>
+<li><p><strong>视图</strong></p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/clickhouse/" rel="tag"># clickhouse</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/08/29/Spark/" rel="next" title="Spark">
+                <i class="fa fa-chevron-left"></i> Spark
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg"
+                alt="黎达" />
+            
+              <p class="site-author-name" itemprop="name">黎达</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/extrali" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:extralida@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Clickhouse的前世今生"><span class="nav-number">1.</span> <span class="nav-text">1. Clickhouse的前世今生</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Clickhouse架构概述"><span class="nav-number">2.</span> <span class="nav-text">2. Clickhouse架构概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Clickhouse核心特性"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Clickhouse核心特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Clickhouse的架构设计"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Clickhouse的架构设计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-安装与部署"><span class="nav-number">3.</span> <span class="nav-text">3. 安装与部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-目录结构"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-客户端的访问接口"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 客户端的访问接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-内置的实用工具"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 内置的实用工具</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-数据定义"><span class="nav-number">4.</span> <span class="nav-text">4. 数据定义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-数据类型"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-1-基础类型"><span class="nav-number">4.1.1.</span> <span class="nav-text">4.1.1 基础类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-数值类型"><span class="nav-number">4.1.1.1.</span> <span class="nav-text">1. 数值类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-字符串类型"><span class="nav-number">4.1.1.2.</span> <span class="nav-text">2. 字符串类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-时间类型"><span class="nav-number">4.1.1.3.</span> <span class="nav-text">3. 时间类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-2-复合类型"><span class="nav-number">4.1.2.</span> <span class="nav-text">4.1.2 复合类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-3-特殊类型"><span class="nav-number">4.1.3.</span> <span class="nav-text">4.1.3 特殊类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-定义数据表"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 定义数据表</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黎达</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

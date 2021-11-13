@@ -248,6 +248,485 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/11/12/clickhouse/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/11/12/clickhouse/" itemprop="url">clickhouse</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-11-12T22:44:01+08:00">
+                2021-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/clickhouse/" itemprop="url" rel="index">
+                    <span itemprop="name">clickhouse</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>refer: &lt;&lt;Clickhouse原理解析及应用实践&gt;&gt;</p>
+</blockquote>
+<h1 id="1-Clickhouse的前世今生"><a href="#1-Clickhouse的前世今生" class="headerlink" title="1. Clickhouse的前世今生"></a>1. Clickhouse的前世今生</h1><p>OLAP常见架构分类：</p>
+<ol>
+<li><p><strong>ROLAP</strong>（Relational OLAP, 关系型OLAP）。直接使用关系模型构建，数据模型常使用<strong>星型模型或则雪花模型</strong>。</p>
+<ul>
+<li><p>星型模是一种多维的数据关系，它由<strong>一个fact表</strong>和<strong>一组dimension表</strong>组成。每个dimension表都有一个维作为主键，所有这些dimension的主键组合成fact表的主键。强调的是对维度进行预处理，将多个维度集合到一个fact表，形成一个宽表。这也是我们在使用hive时，经常会看到一些大宽表的原因，大宽表一般都是fact表，包含了维度关联的主键和一些度量信息，而dimension表则是事实表里面维度的具体信息，使用时候一般通过join来组合数据，相对来说对OLAP的分析比较方便。</p>
+<p><img src="https://i.loli.net/2021/11/12/3YL8i12oFf9ae7t.png" alt="image-20211112225815162"></p>
+</li>
+<li><p>当有一个或多个dimension表没有直接连接到fact表上，而是通过其他dimension表连接到fact表上时，其图解就像多个雪花连接在一起，故称雪花模型。雪花模型是对星型模型的扩展。它对星型模型的维表进一步层次化，原有的各dimension表可能被扩展为小的fact表，形成一些局部的 “层次 “ 区域，这些被分解的表都连接到主dimension表而不是fact表。雪花模型更加符合数据库范式，减少数据冗余，但是在分析数据的时候，操作比较复杂，需要join的表比较多所以其性能并不一定比星型模型高。</p>
+<p><img src="https://i.loli.net/2021/11/12/1cjWOKhoSzb6DM7.png" alt="image-20211112230731449"></p>
+</li>
+</ul>
+</li>
+<li><p><strong>MOLAP</strong>（Multidimensional OLAP，多维型OLAP）MOLAP使用多维数组的形式保存数据，其核心思想是借助预先聚合结果，使用空间换取时间的形式最终提升查询性能。<strong>缺点</strong>是维度预处理可能会导致数据的膨胀，如果数据立方体包括5个维度，那么维度的组合方式就是2^5^种。</p>
+</li>
+<li><p><strong>HOLAP</strong>（Hybrid OLAP，混合架构的OLAP），可以看成ROLAP和MOLAP两者的集成。</p>
+</li>
+</ol>
+<h1 id="2-Clickhouse架构概述"><a href="#2-Clickhouse架构概述" class="headerlink" title="2. Clickhouse架构概述"></a>2. Clickhouse架构概述</h1><p>Clickhouse是一款<strong>MPP架构</strong>的<strong>列式存储数据库</strong></p>
+<h2 id="2-1-Clickhouse核心特性"><a href="#2-1-Clickhouse核心特性" class="headerlink" title="2.1 Clickhouse核心特性"></a>2.1 Clickhouse核心特性</h2><ol>
+<li><p><strong>列式存储与数据压缩</strong></p>
+<p>按列存储和按行存储相比，前者可以有效减少查询时所需要扫描的数据量。假设一个数据表A用有50个字段A<del>1</del>A<del>50</del>，以及100行数据。现在需要查询前5个字段并进行数据分析，则可以使用如下SQL实现：</p>
+<p><code>select A1, A2, A3, A4, A5 from A</code></p>
+<p>如果按行存储，数据库首先会逐行扫描，并获取每行数据的所有50个字段，再从每一行数据种返回A<del>1</del>A<del>5</del>这5个字段。不难发现，尽管只需要前面5个字段，但由于数据是按行进行组织的，实际上还是扫描了所有的字段。如果数据按列存储，数据库就可以直接获取A<del>1</del>A<del>5</del>这5列的数据。</p>
+<p>按列存储相比按行存储的另一个优势是对数据压缩的友好性。<strong>数据中的重复率越多，则压缩率越高；压缩率越高，则数据体量越小</strong>。数据按列组织，因为他们拥有相同的数据类型和现实语义，重复项的可能性自然就越高。</p>
+</li>
+<li><p><strong>向量化执行引擎</strong></p>
+<p>为了实现向量化执行，需要利用CPU的<strong>SIMD</strong>指令。SIMD的全程是Single Instruction Mutiple Data，即<strong>使用单条指令操作多条数据</strong>。现代计算机系统概念种，它是通过数据并行以提升性能的一种实现方式，它的原理是在CPU寄存器层面实现数据的并行操作。</p>
+</li>
+<li><p><strong>关系模型与SQL查询</strong></p>
+</li>
+<li><p><strong>多样化的表引擎</strong></p>
+</li>
+<li><p><strong>多线程与分布式</strong></p>
+<p>Clickhouse在大数据存取方面，既支持<strong>分区（纵向扩展，利用多线程原理）</strong>，也支持<strong>分片（横向扩展，利用分布式原理）</strong>。</p>
+</li>
+<li><p><strong>多主架构</strong></p>
+<p>Clickhouse采用Multi-Master多主架构，集群中的每个角色对等，客户端访问任意一个节点都能得到同样的结果。</p>
+</li>
+<li><p><strong>在线查询</strong></p>
+<p><strong>速度快</strong></p>
+</li>
+<li><p><strong>数据分片与分布式查询</strong></p>
+<p>数据分片是将数据进行<strong>横向切分</strong>。Clickhouse支持分片，而分片依赖于集群，每个集群由1到多个分片组成，而<strong>每个分片则对应了Clickhouse的1个服务节点</strong>。分片的数量上限取决于节点数量（1个分片只能对应一个服务节点）。</p>
+<p>Clickhouse提供了<strong>本地表（Local Table）</strong>与<strong>分布式表（Distributed Table）</strong>的概念。<strong>一张Local Table等同于一份数据的分片。而Distributed Table本身不存储任何数据，它是本地表的访问代理</strong>，其作用类似于分库中间件。借助分布式表，能够代理多个数据分片，从而实现分布式查询。</p>
+</li>
+</ol>
+<h2 id="2-2-Clickhouse的架构设计"><a href="#2-2-Clickhouse的架构设计" class="headerlink" title="2.2 Clickhouse的架构设计"></a>2.2 Clickhouse的架构设计</h2><ol>
+<li><p><strong>Column与Field</strong></p>
+<p>Clickhouse按列存储数据，内存中的<strong>一列数据</strong>由一个<strong>Column对象</strong>表示。如果需要操作单个具体的值（也就是单列中的一行数据），则需要使用Field对象，<strong>Field对象代表一个单值</strong>。</p>
+</li>
+<li><p><strong>DataType</strong></p>
+<p>数据的序列化和反序列化工作由DataType负责。</p>
+</li>
+<li><p><strong>Block与Block流</strong></p>
+<p>Clickhouse内部的数据操作是面向<strong>Block对象</strong>进行的。虽然Column和Field组成了数据的基本映射单元，但对应到实际操作，它们还缺少了一些必要的信息，比如数据的类型及列的名称。Block对象的本质是由<strong>数据对象、数据类型和列名称</strong>组成的三元组，即Column、DataType及列名称字符串。Column提供了数据的读取功能，而DataType知道如何正反序列化。</p>
+</li>
+<li><p><strong>Table</strong></p>
+<p>直接使用<strong>IStorage接口</strong>指代数据表。</p>
+</li>
+<li><p><strong>Parser与Interpreter</strong></p>
+<p><strong>Parser分析器</strong>负责创建AST对象；而<strong>Interpreter解释器</strong>则负责解释AST，并进一步创建查询的执行管道。</p>
+</li>
+<li><p><strong>Functions与Aggregate Functions</strong></p>
+<p>Clickhouse主要提供两类函数——<strong>普通函数</strong>和<strong>聚合函数</strong>。普通函数由IFunction接口定义。聚合函数由IAggregateFunction接口定义。</p>
+</li>
+<li><p><strong>Cluster与Replication</strong></p>
+<p>Clickhouse的集群由<strong>分片（Shard）</strong>组成，而每个分片又通过副本（Replica）组成。</p>
+<ul>
+<li>ClickHouse的1个节点只能拥有1个分片，也就是说如果要实现1分片、1副本，则至少需要部署2个服务节点。</li>
+<li>分片只是逻辑概念，其物理承载还是由副本承担的。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1分片、1副本的集群配置</span><br><span class="line"></span><br><span class="line">&lt;ch_cluster&gt;			&#x2F;&#x2F;集群名字</span><br><span class="line">	&lt;shard&gt;</span><br><span class="line">		&lt;replica&gt;</span><br><span class="line">			&lt;host&gt;10.37.129.6&lt;&#x2F;host&gt;</span><br><span class="line">			&lt;port&gt;9000&lt;&#x2F;port&gt;</span><br><span class="line">        &lt;&#x2F;replica&gt;</span><br><span class="line">        &lt;replica&gt;</span><br><span class="line">			&lt;host&gt;10.37.129.7&lt;&#x2F;host&gt;</span><br><span class="line">			&lt;port&gt;9000&lt;&#x2F;port&gt;</span><br><span class="line">        &lt;&#x2F;replica&gt;</span><br><span class="line">    &lt;&#x2F;shard&gt;</span><br><span class="line">&lt;&#x2F;ch_cluster&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="3-安装与部署"><a href="#3-安装与部署" class="headerlink" title="3. 安装与部署"></a>3. 安装与部署</h1><h2 id="3-1-目录结构"><a href="#3-1-目录结构" class="headerlink" title="3.1 目录结构"></a>3.1 目录结构</h2><p><strong>核心目录</strong>部分：</p>
+<ol>
+<li><strong>/etc/clickhouse-server</strong>：服务端的配置文件目录，包括全局配置config.xml和用户配置users.xml等。</li>
+<li><strong>/var/lib/clickhouse</strong>：默认的数据存储目录（通常会修改默认路径配置，将数据保存到大容量磁盘挂载的路径）</li>
+<li><strong>/var/log/clickhouse-server</strong>：默认保存日志的目录</li>
+</ol>
+<p>在/usr/bin路径下的可执行文件：</p>
+<ol>
+<li>clickhouse：主程序执行文件。</li>
+<li>clickhouse-client：一个指向Clickhouse可执行文件的软链接，共客户端连接使用。</li>
+<li>clickhouse-server：一个指向Clickhouse可执行文件的软链接，共服务端连接使用。</li>
+<li>clickhouse-compressor：内置提供的压缩文具，可用于数据的正压反解。</li>
+</ol>
+<h2 id="3-2-客户端的访问接口"><a href="#3-2-客户端的访问接口" class="headerlink" title="3.2 客户端的访问接口"></a>3.2 客户端的访问接口</h2><p>ClickHouse的底层访问接口支持<strong>TCP和HTTP两种协议</strong>，其中TCP协议具有更好的性能，其默认端口为<strong>9000</strong>，主要用于集群间内部通信及CLI客户端；而HTTP协议则拥有更好的兼容性，可以通过REST服务的形式被广泛用于JAVA、Python等编程语言的客户端，其默认端口为<strong>8123</strong>.</p>
+<ol>
+<li><p><strong>CLI</strong></p>
+<ul>
+<li><p>交互式执行：<code>clickhouse-client</code></p>
+</li>
+<li><p>非交互式执行：<code>clickhouse-client --query</code>。如果需要执行多次查询，可以追加<code>--multiquery</code>参数，多条查询语句之间用分号分隔。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clickhouse-client --multiquery --query&#x3D;&quot;SELECT 1;SELECT 2;SELECT 3;&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重要参数：</p>
+<ol>
+<li><code>--host/-h</code>：服务端的地址，默认值为localhost。</li>
+<li><code>--port</code>：服务端的TCP端口，默认值为9000。</li>
+<li><code>--user/-u</code>：登录的用户名。</li>
+<li><code>--password</code>：登录的密码。</li>
+<li><code>--database/-d</code>：登录的数据库，默认值为default。</li>
+<li><code>--query/-q</code>：非交互方式。</li>
+<li><code>--multiquery/-n</code></li>
+<li><code>--time/-t</code>：在非交互式执行时，会打印每条SQL的执行时间。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><strong>JDBC</strong></p>
+<p>使用下面的Maven依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;ru.yandex.clickhouse&lt;&#x2F;groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;clickhouse-jdbc&lt;&#x2F;artifactId&gt;</span><br><span class="line">	&lt;version&gt;0.2.4&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p><strong>标准形式</strong></p>
+<ul>
+<li><p><strong>JDBC Driver Class</strong>为<code>ru.yandex.clickhouse.ClickHouseDriver</code></p>
+</li>
+<li><p><strong>JDBC URL</strong>为<code>jdbc:clickhouse://&lt;host&gt;:&lt;port&gt;[/&lt;database&gt;]</code></p>
+</li>
+</ul>
+</li>
+<li><p><strong>高可用模式</strong></p>
+<p>高可用模式允许设置多个host地址，每次会从可用的地址中随机选择一个进行连接，其URL声明格式如下：</p>
+<p><code>jdbc:clickhouse://&lt;first-host&gt;:&lt;port&gt;,&lt;second-host&gt;:&lt;port&gt;[/&lt;database&gt;]</code></p>
+<p>在高可用模式下，需要通过<code>BalancedClickhouseDataSource</code>对象获取连接。</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="3-3-内置的实用工具"><a href="#3-3-内置的实用工具" class="headerlink" title="3.3 内置的实用工具"></a>3.3 内置的实用工具</h2><ol>
+<li><p><strong>clickhouse-local</strong></p>
+</li>
+<li><p><strong>clickhouse-benchmark</strong></p>
+<p>基准测试的小工具，可以自动运行SQL查询，并生成相应的运行指标报告。</p>
+<p><code>echo &quot;select * from system.numbers limit 100&quot; | clickhouse-benchmark -i 5</code></p>
+<p>核心参数：</p>
+<ol>
+<li><p><code>-i/--iterations</code>：SQL查询执行的次数，默认值为0.</p>
+</li>
+<li><p><code>-c/--concurrency</code>：同时执行查询的并发数，默认值为1.</p>
+</li>
+<li><p><code>-h/--host</code>：服务端地址，默认值为localhost。clickhouse-benchmark支持对比测试，此时需要通过此参数声明两个服务端的地址。</p>
+<p><code>echo &quot;select * from system.numbers limit 100&quot; | clickhouse-benchmark -i 5 -h localhost -h localhost</code></p>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="4-数据定义"><a href="#4-数据定义" class="headerlink" title="4. 数据定义"></a>4. 数据定义</h1><h2 id="4-1-数据类型"><a href="#4-1-数据类型" class="headerlink" title="4.1 数据类型"></a>4.1 数据类型</h2><p>Clickhouse的数据类型可以划分为<strong>基础类型、复合类型和特殊类型</strong>。</p>
+<h3 id="4-1-1-基础类型"><a href="#4-1-1-基础类型" class="headerlink" title="4.1.1 基础类型"></a>4.1.1 基础类型</h3><h4 id="1-数值类型"><a href="#1-数值类型" class="headerlink" title="1. 数值类型"></a>1. 数值类型</h4><p>数值类型分为<strong>整形，浮点数和定点数</strong>。</p>
+<ol>
+<li><p><strong>Int</strong></p>
+<p>在普遍观念中，常用<strong>Tinyint、Smallint、Int和Bigint</strong>指代整数的不同取值范围。而Clickhouse中直接使用<strong>Int8、Int16、Int32和Int64</strong>指代4种大小的Int类型。</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">大小（字节）</th>
+<th align="center">普遍观念</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Int8</td>
+<td align="center">1</td>
+<td align="center">Tinyint</td>
+</tr>
+<tr>
+<td align="center">Int16</td>
+<td align="center">2</td>
+<td align="center">Smallint</td>
+</tr>
+<tr>
+<td align="center">Int32</td>
+<td align="center">4</td>
+<td align="center">Int</td>
+</tr>
+<tr>
+<td align="center">Int64</td>
+<td align="center">8</td>
+<td align="center">Bigint</td>
+</tr>
+</tbody></table>
+<p>Clickhouse支持无符号的整数，使用前缀U表示。UInt8、UInt16、UInt32和UInt64.</p>
+</li>
+<li><p><strong>Float</strong></p>
+<p>与整数类似，Clickhouse直接使用Float32和Float64代表单精度浮点数及双精度浮点数。</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">大小（字节）</th>
+<th align="center">有效精度（位数）</th>
+<th align="center">普遍概念</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Float32</td>
+<td align="center">4</td>
+<td align="center">7</td>
+<td align="center">Float</td>
+</tr>
+<tr>
+<td align="center">Float64</td>
+<td align="center">8</td>
+<td align="center">16</td>
+<td align="center">Double</td>
+</tr>
+</tbody></table>
+<p>Float32从小数点后第8位起及Float64从小数点后第17位起，都会产生数据溢出。</p>
+</li>
+<li><p><strong>Decimal</strong></p>
+<p>Clickhouse提供了Decimal32、Decimal64和Decimal128三种精度的定点数。可以通过两种形式声明：</p>
+<ul>
+<li>简写方式位Decimal32(S)、Decimal64(S)、Decimal128(S)；</li>
+<li>原生方式为Decimal(P,S)</li>
+</ul>
+<p>其中P代表精度，决定总位数（整数部分+小数部分），取值范围是1~38；</p>
+<p>S代表规模，决定小数位数，取值范围是0~P</p>
+</li>
+</ol>
+<h4 id="2-字符串类型"><a href="#2-字符串类型" class="headerlink" title="2. 字符串类型"></a>2. 字符串类型</h4><ol>
+<li><p><strong>String</strong></p>
+<p>长度不限。完全替代了传统意义上数据库的Varchar、Text、Clob和Blob等字符串类型。</p>
+</li>
+<li><p><strong>FixedString</strong></p>
+<p>定长字符串通过<strong>FixedString(N)</strong>声明，其中<strong>N表示字符串长度</strong>。但与Char不同的是，<strong>FixedString使用null字节填充末尾字符</strong>，而Char通常使用空格填充。</p>
+</li>
+<li><p><strong>UUID</strong></p>
+<p>UUID共有32位，它的格式位8-4-4-4-12.如果一个UUID类型的字段在写入数据时没有被赋值，则会依照格式使用0填充。</p>
+</li>
+</ol>
+<h4 id="3-时间类型"><a href="#3-时间类型" class="headerlink" title="3. 时间类型"></a>3. 时间类型</h4><p>时间类型分为<strong>DateTime、DateTime64和Date</strong>三类。Clickhouse目前没有时间戳类型，时间类型的最高精度为秒。</p>
+<ol>
+<li><p><strong>DateTime</strong></p>
+<p>DateTime类型包含时、分、秒信息，精确到秒，支持使用字符串形式写入。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE Datetime_TEST (</span><br><span class="line">	c1 DateTime</span><br><span class="line">) ENGINE &#x3D; Memory</span><br><span class="line">----以字符串形式写入</span><br><span class="line">INSERT INTO Datetime_TEST VALUES(&#39;2019-06-22 00:00:00&#39;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>DateTime64</strong></p>
+<p>DateTime64可以记录亚秒，它在DateTime之上增加了精度的设置。</p>
+</li>
+<li><p><strong>Date</strong></p>
+<p>Date类型不包含具体的时间信息，只精确到天，它同样支持字符串形式写入。</p>
+</li>
+</ol>
+<h3 id="4-1-2-复合类型"><a href="#4-1-2-复合类型" class="headerlink" title="4.1.2 复合类型"></a>4.1.2 复合类型</h3><p>Clickhouse还提供了<strong>数组、元组、枚举和嵌套</strong>四类复合类型。</p>
+<ol>
+<li><p><strong>Array</strong></p>
+<p>数组有两种定义方式，常规方式array(T)：</p>
+<p><code>select array(1, 2)</code></p>
+<p>简写方式[T]：</p>
+<p><code>select [1, 2]</code></p>
+</li>
+<li><p><strong>Tuple</strong></p>
+<p>元组类型由1~n个元素组成，<strong>每个元素之间允许设置不同的数据类型，且彼此之间不要求兼容</strong>。</p>
+<p><strong>常规方式tuple(T)，简写方式(T)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE Tuple_TEST (</span><br><span class="line">	c1 Tuple(String, Int8)</span><br><span class="line">) ENGINE &#x3D; Memory;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Enum</strong></p>
+<p>Clickhouse提供了<strong>Enum8</strong>和<strong>Enum16</strong>两种枚举类型。枚举类型固定使用<strong>（String：Int）Key/Value键值对</strong>的形式定义数据，所以Enum8和Enum16分别会对应（String：Int8）和（String：Int16）.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE Enum_TEST (</span><br><span class="line">	c1 Enum8(&#39;ready&#39; &#x3D; 1, &#39;start&#39; &#x3D; 2, &#39;success&#39; &#x3D; 3, &#39;error&#39; &#x3D; 4)</span><br><span class="line">) ENGINE &#x3D; Memory</span><br></pre></td></tr></table></figure>
+
+<p><strong>Key和Value是不允许重复的，要保证唯一性</strong>，其次Key和Value的值都不能为null，但Key允许是空字符串。在写入枚举数据的时候，只会用到Key字符串部分。</p>
+<p><code>INSERT INTO Enum_TEST VALUES(&#39;ready&#39;);</code></p>
+</li>
+<li><p><strong>Nested</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE nested_test (</span><br><span class="line">	name String,</span><br><span class="line">	age  UInt8,</span><br><span class="line">	dept Nested(</span><br><span class="line">		id    UInt8,</span><br><span class="line">		name  String,</span><br><span class="line">	)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>嵌套类型本质是一种多维数组结构。<strong>嵌套字段中的每个字段都是一个数组</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO nested_test VALUES (&#39;bruce&#39;, 30, [10000, 10001, 10002], [&#39;研发部&#39;, [技术部], [&#39;测试部&#39;]]);</span><br></pre></td></tr></table></figure>
+
+<p>同一行数据内每个数组的元素个数必须相等。访问嵌套类型得数据需要使用点符号<code>dept.id</code></p>
+</li>
+</ol>
+<h3 id="4-1-3-特殊类型"><a href="#4-1-3-特殊类型" class="headerlink" title="4.1.3 特殊类型"></a>4.1.3 特殊类型</h3><ol>
+<li><p><strong>Nullable</strong></p>
+<p>Nullable更像是一种辅助的修饰符，需要<strong>与基础数据类型一起搭配使用</strong>。它表示某个数据类型可以是Null值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE Null_TEST (</span><br><span class="line">	c1 String,</span><br><span class="line">	c2 Nullable(UInt8)</span><br><span class="line">) ENGINE &#x3D; TinyLog;</span><br></pre></td></tr></table></figure>
+
+<p>应该慎用Nullable类型，不然会使查询和写入性能变慢。因为在正常情况下，每个列字段的数据会被存储在对应的<strong>[Column].bin</strong>文件种。如果一个列字段被Nullable类型修饰后，会额外生成一个<strong>[Column].null.bin</strong>文件专门保存它的Null值。这意味着在读取和写入数据时，需要一倍的额外文件操作。</p>
+</li>
+<li><p><strong>Domain</strong></p>
+<p>域名类型分为<strong>IPV4</strong>和<strong>IPV6</strong>两类。</p>
+</li>
+</ol>
+<h2 id="4-2-定义数据表"><a href="#4-2-定义数据表" class="headerlink" title="4.2 定义数据表"></a>4.2 定义数据表</h2><ol>
+<li><p><strong>数据库</strong></p>
+<p>数据库目前一共支持5种引擎：</p>
+<ol>
+<li><strong>Ordinary</strong>：默认引擎。</li>
+<li><strong>Dictionary</strong>：字典引擎。</li>
+<li><strong>Memory</strong>：内存引擎。</li>
+<li><strong>Lazy</strong>：日志引擎，此类数据库下只能使用Log系列的表引擎。</li>
+<li><strong>MySQL：</strong>MYSQL引擎，此类数据库下会自动拉去远端MySQL种的数据。</li>
+</ol>
+</li>
+<li><p><strong>默认值表达式</strong></p>
+<p>表字段支持三种默认值表达式的定义方式，分别是<strong>DEFAULT</strong>、<strong>MATERIALIZED</strong>和<strong>ALIAS</strong></p>
+</li>
+<li><p><strong>临时表</strong></p>
+<p>创建临时表的方法是在普通表的基础上添加<strong>TEMPORARY</strong>关键字</p>
+<ul>
+<li>临时表的<strong>生命周期是会话绑定的</strong>，所以它<strong>只支持Memory表引擎</strong>，如果会话结束，数据表就会被销毁。</li>
+<li>临时表不属于任何数据库。</li>
+</ul>
+</li>
+<li><p><strong>分区表</strong></p>
+<p>数据分区（<strong>partition</strong>）和数据分片（<strong>shard</strong>）是完全不同的两个概念。数据分区是针对本地数据而言的，是数据的一种纵向切分。而数据分片是一种横向切分。目前只有<strong>MergeTree</strong>家族系列的表引擎才支持数据分区。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE partition_v1 (</span><br><span class="line">	ID  	  String,</span><br><span class="line">	URL 	  String,</span><br><span class="line">	EventTime Date,</span><br><span class="line">) ENGINE &#x3D; MergeTree()</span><br><span class="line">PARTITION BY toYYYYMM(EventTime)</span><br><span class="line">ORDER BY ID</span><br><span class="line"></span><br><span class="line">INSERT INTO partition_v1 VALUES</span><br><span class="line">(&#39;A000&#39;, &#39;www.baidu.com&#39;, &#39;2019-05-01&#39;),</span><br><span class="line">(&#39;A001&#39;, &#39;www.baidu.com&#39;, &#39;2019-06-02&#39;);</span><br><span class="line"></span><br><span class="line">通过system.parts系统表，查询数据表的分区状态：</span><br><span class="line">SELECT table, partition, path from system.parts where table &#x3D; &#39;partition_v1&#39;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">table</th>
+<th align="center">partition</th>
+<th align="center">path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">partition_v1</td>
+<td align="center">201905</td>
+<td align="center">/chbase/data/default/partition_v1/201905_1_1_0/</td>
+</tr>
+<tr>
+<td align="center">partition_v1</td>
+<td align="center">201906</td>
+<td align="center">/chbase/data/default/partition_v1/201906_2_2_0/</td>
+</tr>
+</tbody></table>
+<p>可以看到每个分区都对应一个独立的文件目录。分区键不应该使用粒度过细的数据字段。</p>
+</li>
+<li><p><strong>视图</strong></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/08/29/Spark/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2987,295 +3466,6 @@ preservesPartitioning: Boolean = false): RDD[U]  `</code></pre></li>
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/03/06/U-Net%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/03/06/U-Net%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url">U-Net论文笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-06T09:59:12+08:00">
-                2021-03-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/02/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%8ECV/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="黎达">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Extrali">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/02/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%8ECV/" itemprop="url">深度学习与CV</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-28T16:35:50+08:00">
-                2021-02-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-CV/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习 CV</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="深度学习"><a href="#深度学习" class="headerlink" title="深度学习"></a>深度学习</h1><h2 id="tensorflow"><a href="#tensorflow" class="headerlink" title="tensorflow"></a>tensorflow</h2><h2 id="深度神经网络"><a href="#深度神经网络" class="headerlink" title="深度神经网络"></a>深度神经网络</h2><h3 id="神经网络简介"><a href="#神经网络简介" class="headerlink" title="神经网络简介"></a>神经网络简介</h3><p><strong>目前常用的神经网络包括：</strong></p>
-<ul>
-<li><strong>卷积神经网络(CNN)</strong></li>
-<li><strong>循环神经网络(RNN)</strong></li>
-<li><strong>生成对抗神经网络(GAN)</strong></li>
-<li><strong>深度强化学习(DRL)</strong></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/11/09/Hadoop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -5284,7 +5474,7 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/08/11/394-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E7%A0%81/">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/07/08/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黎达">
@@ -5303,7 +5493,7 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/08/11/394-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E7%A0%81/" itemprop="url">394.字符串解码</a></h1>
+                <a class="post-title-link" href="/2020/07/08/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/" itemprop="url">面试总结</a></h1>
         
 
         <div class="post-meta">
@@ -5315,8 +5505,8 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-11T16:14:25+08:00">
-                2020-08-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-08T16:03:17+08:00">
+                2020-07-08
               </time>
             
 
@@ -5338,8 +5528,8 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
                   </a>
                 </span>
 
@@ -5377,29 +5567,85 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
       
         
           
-            <h1 id="394-字符串解码"><a href="#394-字符串解码" class="headerlink" title="394. 字符串解码"></a><a href="https://leetcode-cn.com/problems/decode-string/" target="_blank" rel="noopener">394. 字符串解码</a></h1><p><strong>题目描述：</strong></p>
-<p>给定一个经过编码的字符串，返回它解码后的字符串。</p>
-<p>编码规则为: k[encoded_string]，表示其中方括号内部的 encoded_string 正好重复 k 次。注意 k 保证为正整数。</p>
-<p>你可以认为输入字符串总是有效的；输入字符串中没有额外的空格，且输入的方括号总是符合格式要求的。</p>
-<p>此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 k ，例如不会出现像 3a 或 2[4] 的输入。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：s &#x3D; &quot;3[a]2[bc]&quot;</span><br><span class="line">输出：&quot;aaabcbc&quot;</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：s &#x3D; &quot;3[a2[c]]&quot;</span><br><span class="line">输出：&quot;accaccacc&quot;</span><br><span class="line"></span><br><span class="line">示例 3：</span><br><span class="line"></span><br><span class="line">输入：s &#x3D; &quot;2[abc]3[cd]ef&quot;</span><br><span class="line">输出：&quot;abcabccdcdcdef&quot;</span><br><span class="line"></span><br><span class="line">示例 4：</span><br><span class="line"></span><br><span class="line">输入：s &#x3D; &quot;abc3[cd]xyz&quot;</span><br><span class="line">输出：&quot;abccdcdcdxyz&quot;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p><strong>算法思想：</strong></p>
+            <h1 id="7-06字节客户端一面二面三面"><a href="#7-06字节客户端一面二面三面" class="headerlink" title="7.06字节客户端一面二面三面"></a>7.06字节客户端一面二面三面</h1><p>一面二面三面一起的，一二面录音了，三面忘了，算法题放一起</p>
+<p><strong>算法题：</strong></p>
+<ol>
+<li>旋转数组的查找</li>
+<li>两个线程轮流打印奇数偶数</li>
+<li>有序数组查找一个元素第一次出现的位置</li>
+<li>单例</li>
+<li>域名反转(<a href="http://www.toutiao.com-&gt;com.toutiao.www" target="_blank" rel="noopener">www.toutiao.com-&gt;com.toutiao.www</a>)</li>
+<li>三面算法题在下面</li>
+</ol>
+<h2 id="一面-41min"><a href="#一面-41min" class="headerlink" title="一面(41min)"></a>一面(41min)</h2><ol>
+<li>自我介绍</li>
+<li>问性格，怎么不做算法？？？</li>
+<li>计算机基础咋学的？</li>
+<li>HTTP有哪些方法？</li>
+<li>get和post的区别？有说到get是幂等的，然后面试官问如果在两个get期间数据库发生改变了那结果还是一样吗？(不一样)。那怎么是幂等的。说我是不是在网上哪随便看到的(对对对，不敢反驳)</li>
+<li>比如我要去换一个头像是用get还是post？</li>
+<li>HTTP和HTTPS</li>
+<li>SSL握手过程，然后问我第一次握手是什么加密，第二次握手怎么加密</li>
+<li>对称加密的安全性</li>
+<li>操作系统层面的线程同步</li>
+<li>信号量和互斥量的区别</li>
+<li>synchronized介绍</li>
+<li>两个线程轮流打印奇数和偶数(我讲了通过信号量去实现，可能没讲太清楚，面试官就让我写一下，说用信号量写也可以，但我更希望你用锁去实现，然后用锁写的)。</li>
+<li>wait()和sleep()的区别</li>
+<li>hashcode场景，然后问了hashMap</li>
+<li>数据库</li>
+<li>事务</li>
+<li>脏读，怎么解决脏读(怎么加锁)</li>
+<li>类加载过程</li>
+<li>ClassLoader的作用，双亲委派</li>
+<li>算法怎么样(果然认怂，基础一点的还行)</li>
+<li>反问</li>
+</ol>
+<h2 id="二面-35min"><a href="#二面-35min" class="headerlink" title="二面(35min)"></a>二面(35min)</h2><ol>
+<li>问项目，项目细节，项目背景</li>
+<li>ArrayList和LinkedList的区别</li>
+<li>HashMap的put()流程，扩容</li>
+<li>设计模式知道哪些，讲一下单例，写一下(双重检查)</li>
+<li>volatile的作用</li>
+<li>双重检查的用处，假如不要第一次if判断会有什么问题</li>
+<li>夸我讲的好！问我咋学的这些</li>
+<li>快速排序讲一哈，时间复杂度，怎么使得快排避免O(n^2^)复杂度</li>
+<li>写题，两道，自己写例子测试测试</li>
+</ol>
+<h2 id="三面-记得多少写多少吧"><a href="#三面-记得多少写多少吧" class="headerlink" title="三面(记得多少写多少吧)"></a>三面(记得多少写多少吧)</h2><p>三面面试官口头禅：好的OK了解</p>
+<ol>
+<li>前面都是聊天，问团队合作，实验室情况，问了实验室的项目</li>
+<li>然后画风突转就问技术问题了，输入网址访问的过程，然后一点一点详细问</li>
+<li>DNS解析过程，DNS劫持了解吗，浏览器渲染页面的过程(???)，HTML和JS讲一下(???)</li>
+<li>然后就是一道算法题</li>
+</ol>
+<p><img src="https://i.loli.net/2020/07/08/Rk36PjlhVm1D94q.png" alt="image-20200708165103773.png"></p>
+<p>给定一个只有数字的字符串，输出一共有多少种可能的结果</p>
+<p>一直想着在整个字符串上dp</p>
+<p>面试官提示1：不同的字符之间有什么关系(感觉面试官前面的提示都太隐晦了，在这浪费了一些时间)</p>
+<p>拆分之后我给出了一个dp递推式，但是不太对，有重复。</p>
+<p>面试官提示2：怎么解决重复(这里又卡了一会)</p>
+<p>最后给出了dp关系式，但是没给多少时间写，没写完，只能写个大致，给出dp递推式后主要问题就是怎么去解决越界的问题，是每次都判断还是多申请几个空间这样，当时应该想一想再写的，有点慌。</p>
+<p><strong>最后面试官评价：</strong></p>
+<ol>
+<li>这题本身有难度，你有在和我一起思考</li>
+<li>代码能力需要加强。</li>
+</ol>
+<p><strong>算法思想：</strong></p>
 <ul>
-<li>递归方法helper(chars,l,r)解析chars数组从l到r的字符，则解析过程如下：<ul>
-<li>如果不是数字，则直接拼接上去；</li>
-<li>如果遇到数字了，则将其后面跟随的所有数字转换为整数，然后解析其后跟随的一对[]中的字符，并拼接上去；</li>
-<li>对于之后的数字递归调取方法即可。</li>
-</ul>
+<li><p>首先第一点，字符串拆分成相同字符的集合，例如”2222333477”拆分成“2222”，“333”，“4”，“77”，则最终结果为这四个字符串的可能的乘积。</p>
+</li>
+<li><p>然后就是对于只有一种字符的字符串怎么计算结果，先只考虑3个的情况，以’2‘为例，则最后的结尾字符只能是A，B或C，如果以A结尾，则字符串可以看成前i-1个和最后一个的组合；如果以B结尾，则可以看成前i-2和最后两个的组合；如果以C结尾，则可以看成前i-3和最后三个的组合：</p>
+<p>例如：“22222222”，可能的情况如果以A结尾，则为”2222222“+A；</p>
+<p>如果以B结尾，则为”222222“+B；如果以C结尾，则为”22222“+C</p>
+<p>所以有递推关系式dp[i]=dp[i-1]+dp[i-2]+dp[i-3]</p>
+<p>那么对于四种字符的情况就是dp[i-1]+dp[i-2]+dp[i-3]+dp[i-4]</p>
+</li>
+<li><p>实现上来看，各种字符之前没有区别，结果只和长度有关，但是7和9例外，所以只需要确定长度和mode即可确定结果，在实现上用了dp_3表示三种字符的递推结果，dp_4表示四种字符，同时为了避免重复计算，用i_3计算当前dp_3计算到哪了，i_4表示当前dp_4计算到哪了</p>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">public String decodeString(String s) &#123;</span><br><span class="line">        return helper(s.toCharArray(),0,s.length()-1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private String helper(char[] chars,int l,int r)&#123;</span><br><span class="line">        if(l&gt;r) return &quot;&quot;;</span><br><span class="line">        if(l&#x3D;&#x3D;r) return &quot;&quot;+chars[l];</span><br><span class="line">        StringBuilder res&#x3D;new StringBuilder();</span><br><span class="line">        while(l&lt;&#x3D;r&amp;&amp;(chars[l]&gt;&#39;9&#39;||chars[l]&lt;&#39;0&#39;))&#123;</span><br><span class="line">            res.append(chars[l]);</span><br><span class="line">            l++;</span><br><span class="line">        &#125;</span><br><span class="line">        if(l&gt;r) return new String(res);</span><br><span class="line">        &#x2F;&#x2F;将数字找出</span><br><span class="line">        int num&#x3D;0;</span><br><span class="line">        while(chars[l]!&#x3D;&#39;[&#39;)&#123;</span><br><span class="line">            num&#x3D;10*num+chars[l]-&#39;0&#39;;</span><br><span class="line">            l++;</span><br><span class="line">        &#125;</span><br><span class="line">        l++;</span><br><span class="line">        &#x2F;&#x2F;找到其后的一对[]，由于里面可能嵌套多层[]，所以用flag来记录嵌套情况</span><br><span class="line">        int index&#x3D;l,flag&#x3D;0;</span><br><span class="line">        while(index&lt;&#x3D;r)&#123;</span><br><span class="line">            if(flag&#x3D;&#x3D;0&amp;&amp;chars[index]&#x3D;&#x3D;&#39;]&#39;) break;</span><br><span class="line">            if(chars[index]&#x3D;&#x3D;&#39;]&#39;) flag--;</span><br><span class="line">            if(chars[index]&#x3D;&#x3D;&#39;[&#39;) flag++;</span><br><span class="line">            index++;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;递归转换括号之间的字符</span><br><span class="line">        String str&#x3D;helper(chars,l,index-1);</span><br><span class="line">        for(int k&#x3D;0;k&lt;num;k++)&#123;</span><br><span class="line">            res.append(str);</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;拼接上括号之后的</span><br><span class="line">        return res+helper(chars,index+1,r);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">private static int[] dp_3;</span><br><span class="line"></span><br><span class="line">   private static int i_3;</span><br><span class="line"></span><br><span class="line">   private static int[] dp_4;</span><br><span class="line"></span><br><span class="line">   private static int i_4;</span><br><span class="line"></span><br><span class="line">   private static int convert(String str)&#123;</span><br><span class="line">       dp_3&#x3D;new int[Math.max(str.length(),3)];</span><br><span class="line">       dp_4&#x3D;new int[Math.max(str.length(),4)];</span><br><span class="line">       &#x2F;&#x2F;前几位直接给出</span><br><span class="line">       dp_3[0]&#x3D;1;</span><br><span class="line">       dp_3[1]&#x3D;2;</span><br><span class="line">       dp_3[2]&#x3D;4;</span><br><span class="line">       i_3&#x3D;3;</span><br><span class="line">       dp_4[0]&#x3D;1;</span><br><span class="line">       dp_4[1]&#x3D;2;</span><br><span class="line">       dp_4[2]&#x3D;4;</span><br><span class="line">       dp_4[3]&#x3D;8;</span><br><span class="line">       i_4&#x3D;4;</span><br><span class="line">       char[] chars&#x3D;str.toCharArray();</span><br><span class="line">       int l&#x3D;0,r&#x3D;0,res&#x3D;1;</span><br><span class="line">       while(r&lt;chars.length)&#123;</span><br><span class="line">       	&#x2F;&#x2F;寻找相同字符的区间</span><br><span class="line">           while(r&lt;chars.length&amp;&amp;chars[r]&#x3D;&#x3D;chars[l]) r++;</span><br><span class="line">           int num&#x3D;getDp(r-1-l,chars[l]&#x3D;&#x3D;&#39;7&#39;||chars[l]&#x3D;&#x3D;&#39;9&#39;?1:0);</span><br><span class="line">           res*&#x3D;num;</span><br><span class="line">           l&#x3D;r;</span><br><span class="line">       &#125;</span><br><span class="line">       return res;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;mode用来表示哪种情况，如果是&#39;7&#39;或&#39;9&#39;则为1</span><br><span class="line">   private static int getDp(int len,int mode)&#123;</span><br><span class="line">       if(mode&#x3D;&#x3D;0)&#123;</span><br><span class="line">           if(dp_3[len]!&#x3D;0) return dp_3[len];</span><br><span class="line">           &#x2F;&#x2F;从i_3开始向后算</span><br><span class="line">           for(int i&#x3D;i_3;i&lt;&#x3D;len;i++)&#123;</span><br><span class="line">               dp_3[i]&#x3D;dp_3[i-1]+dp_3[i-2]+dp_3[i-3];</span><br><span class="line">           &#125;</span><br><span class="line">           i_3&#x3D;len;</span><br><span class="line">           return dp_3[len];</span><br><span class="line">       &#125;else &#123;</span><br><span class="line">           if(dp_4[len]!&#x3D;0) return dp_4[len];</span><br><span class="line">           for(int i&#x3D;i_4;i&lt;&#x3D;len;i++)&#123;</span><br><span class="line">               dp_4[i]&#x3D;dp_4[i-1]+dp_4[i-2]+dp_4[i-3]+dp_4[i-4];</span><br><span class="line">           &#125;</span><br><span class="line">           i_4&#x3D;len;</span><br><span class="line">           return dp_4[len];</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>时间复杂度：</strong>O(n)，每个字符只遍历了一次</p>
-<p><strong>空间复杂度：</strong>O(n)，StringBuilder占用空间为n，递归深度为最大括号嵌套数。</p>
 
           
         
@@ -5448,7 +5694,7 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/07/16/12-%E6%95%B4%E6%95%B0%E8%BD%AC%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97/">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/06/26/%E8%93%84%E6%B0%B4%E6%B1%A0%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黎达">
@@ -5467,7 +5713,7 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/07/16/12-%E6%95%B4%E6%95%B0%E8%BD%AC%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97/" itemprop="url">12.整数转罗马数字</a></h1>
+                <a class="post-title-link" href="/2020/06/26/%E8%93%84%E6%B0%B4%E6%B1%A0%E7%AE%97%E6%B3%95/" itemprop="url">蓄水池算法</a></h1>
         
 
         <div class="post-meta">
@@ -5479,8 +5725,8 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-16T15:12:54+08:00">
-                2020-07-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-26T09:35:04+08:00">
+                2020-06-26
               </time>
             
 
@@ -5502,8 +5748,8 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
                   </a>
                 </span>
 
@@ -5541,38 +5787,252 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
       
         
           
-            <h1 id="12-整数转罗马数字"><a href="#12-整数转罗马数字" class="headerlink" title="12. 整数转罗马数字"></a><a href="https://leetcode-cn.com/problems/integer-to-roman/" target="_blank" rel="noopener">12. 整数转罗马数字</a></h1><p><strong>题目描述：</strong></p>
-<p>罗马数字包含以下七种字符： I， V， X， L，C，D 和 M。</p>
-<p>字符          数值<br>I             1<br>V             5<br>X             10<br>L             50<br>C             100<br>D             500<br>M             1000<br>例如， 罗马数字 2 写做 II ，即为两个并列的 1。12 写做 XII ，即为 X + II 。 27 写做  XXVII, 即为 XX + V + II 。</p>
-<p>通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做 IIII，而是 IV。数字 1 在数字 5 的左边，所表示的数等于大数 5 减小数 1 得到的数值 4 。同样地，数字 9 表示为 IX。这个特殊的规则只适用于以下六种情况：</p>
-<ul>
-<li><p>I 可以放在 V (5) 和 X (10) 的左边，来表示 4 和 9。</p>
+            <h1 id="引论"><a href="#引论" class="headerlink" title="引论"></a>引论</h1><p>对于例如<strong>从100000 份调查报告中抽取 1000 份进行统计</strong>的抽样问题，如果要保持概论均等，那么只需要从<code>random.nextInt(100000)+1</code>中选出1000个即可，并且保持不重复。</p>
+<blockquote>
+<p>但是问题在于很多时候不知道总共有多少份报告，所以需要用到一下的蓄水池算法。</p>
+</blockquote>
+<h1 id="算法介绍"><a href="#算法介绍" class="headerlink" title="算法介绍"></a>算法介绍</h1><p>算法的过程：</p>
+<ol>
+<li><p>假设数据序列的规模为 n，需要采样的数量的为 k。</p>
 </li>
-<li><p>X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。 </p>
+<li><p>首先构建一个可容纳 k 个元素的数组，将序列的前 k 个元素放入数组中。</p>
 </li>
-<li><p>C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。</p>
-<p>给定一个整数，将其转为罗马数字。输入确保在 1 到 3999 的范围内。</p>
+<li><p>然后从第 k+1 个元素开始，以 k/n 的概率来决定该元素最后是否被留在数组中（每进来一个新的元素，数组中的每个旧元素被替换的概率是相同的）。 当遍历完所有元素之后，数组中剩下的元素即为所需采取的样本。</p>
 </li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: 3</span><br><span class="line">输出: &quot;III&quot;</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line"></span><br><span class="line">输入: 4</span><br><span class="line">输出: &quot;IV&quot;</span><br><span class="line"></span><br><span class="line">示例 3:</span><br><span class="line"></span><br><span class="line">输入: 9</span><br><span class="line">输出: &quot;IX&quot;</span><br><span class="line"></span><br><span class="line">示例 4:</span><br><span class="line"></span><br><span class="line">输入: 58</span><br><span class="line">输出: &quot;LVIII&quot;</span><br><span class="line">解释: L &#x3D; 50, V &#x3D; 5, III &#x3D; 3.</span><br><span class="line"></span><br><span class="line">示例 5:</span><br><span class="line"></span><br><span class="line">输入: 1994</span><br><span class="line">输出: &quot;MCMXCIV&quot;</span><br><span class="line">解释: M &#x3D; 1000, CM &#x3D; 900, XC &#x3D; 90, IV &#x3D; 4.</span><br></pre></td></tr></table></figure>
+</ol>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public static int[] sampling(int[] nums,int K)&#123;</span><br><span class="line">        int[] pooling&#x3D;new int[K];</span><br><span class="line">        for(int i&#x3D;0;i&lt;K;i++)&#123;</span><br><span class="line">            pooling[i]&#x3D;nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        Random random&#x3D;new Random();</span><br><span class="line">        for(int i&#x3D;K;i&lt;nums.length;i++)&#123;</span><br><span class="line">            int index&#x3D;random.nextInt(i+1);</span><br><span class="line">            if(index&lt;K)&#123;</span><br><span class="line">                pooling[index]&#x3D;nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return pooling;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h1><p>分两步证明：</p>
+<ol>
+<li>对于前k个元素，最终被留下来的概率是<code>1*(1-1/(k+1))*(1-1/(k+2))*(1-1/(k+3))*.....*1/n=k/n</code>，其中首先前k个元素被选中的概率为1，然后不被第k+1个元素替换的概率为1-1/(k+1)，然后同理得出不被第k+2个元素替换，…….，相乘即可得出结果。</li>
+<li>对于从第k+1个元素向后的任何一个元素M，首先其被选中的概率为k/M，然后不被第M+1替换，不被M+2替换，有<code>k/M*(1-1/(M+1))*(1-1/(M+2))*......*(1-1/n)=k/n</code></li>
+<li>所以对于任何一个元素都有k/n的概率被选择</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
 
+    
+      
 
-<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p><strong>算法思想：</strong></p>
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/06/18/Dubbo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黎达">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Extrali">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/18/Dubbo/" itemprop="url">Dubbo</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-18T15:34:08+08:00">
+                2020-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Dubbo/" itemprop="url" rel="index">
+                    <span itemprop="name">Dubbo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="一重要的概念"><a href="#一重要的概念" class="headerlink" title="一重要的概念"></a>一重要的概念</h1><h2 id="1-1-什么是Dubbo"><a href="#1-1-什么是Dubbo" class="headerlink" title="1.1 什么是Dubbo"></a>1.1 什么是Dubbo</h2><p>Apache Dubbo (incubating) |ˈdʌbəʊ| 是一款高性能、轻量级的开源Java <strong>RPC 框架</strong>，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现。简单来说 Dubbo 是一个分布式服务框架，致力于提供高性能和透明化的RPC远程服务调用方案，以及SOA服务治理方案。</p>
+<h2 id="1-2-什么是RPC？RPC原理是什么？"><a href="#1-2-什么是RPC？RPC原理是什么？" class="headerlink" title="1.2 什么是RPC？RPC原理是什么？"></a>1.2 什么是RPC？RPC原理是什么？</h2><p><strong>什么是 RPC？</strong></p>
+<p>RPC（Remote Procedure Call）—远程过程调用，它是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。<strong>比如两个不同的服务 A、B 部署在两台不同的机器上，那么服务 A 如果想要调用服务 B 中的某个方法</strong>该怎么办呢？使用 HTTP请求当然可以，但是可能会比较麻烦。 RPC 的出现就是为了让你调用远程方法像调用本地方法一样简单。</p>
+<p><strong>RPC原理是什么？</strong></p>
+<p>我这里这是简单的提一下。详细内容可以查看下面这篇文章：</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-6/37345851.jpg" alt="RPC原理图"></p>
+<ol>
+<li>服务消费方（client）调用以本地调用方式调用服务；</li>
+<li>client stub接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体；</li>
+<li>client stub找到服务地址，并将消息发送到服务端；</li>
+<li>server stub收到消息后进行解码；</li>
+<li>server stub根据解码结果调用本地的服务；</li>
+<li>本地服务执行并将结果返回给server stub；</li>
+<li>server stub将返回结果打包成消息并发送至消费方；</li>
+<li>client stub接收到消息，并进行解码；</li>
+<li>服务消费方得到最终结果。</li>
+</ol>
+<p>下面再贴一个网上的时序图：</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-6/32527396.jpg" alt="RPC原理时序图"></p>
+<p><strong>说了这么多，我们为什么要用 Dubbo 呢？</strong></p>
+<h2 id="1-3-为什么要用Dubbo"><a href="#1-3-为什么要用Dubbo" class="headerlink" title="1.3 为什么要用Dubbo"></a>1.3 为什么要用Dubbo</h2><p>Dubbo 的诞生和 SOA 分布式架构的流行有着莫大的关系。SOA 面向服务的架构（Service Oriented Architecture），也就是把工程按照业务逻辑拆分成服务层、表现层两个工程。服务层中包含业务逻辑，只需要对外提供服务即可。表现层只需要处理和页面的交互，业务逻辑都是调用服务层的服务来实现。SOA架构中有两个主要角色：服务提供者（Provider）和服务使用者（Consumer）。</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-26/43050183.jpg" alt="为什么要用 Dubbo"></p>
+<p><strong>如果你要开发分布式程序，你也可以直接基于 HTTP 接口进行通信，但是为什么要用 Dubbo呢？</strong></p>
+<p>我觉得主要可以从 Dubbo 提供的下面四点特性来说为什么要用 Dubbo：</p>
+<ol>
+<li><strong>负载均衡</strong>——同一个服务部署在不同的机器时该调用那一台机器上的服务。</li>
+<li><strong>服务调用链路生成</strong>——随着系统的发展，服务越来越多，服务间依赖关系变得错踪复杂，甚至分不清哪个应用要在哪个应用之前启动，架构师都不能完整的描述应用的架构关系。Dubbo 可以为我们解决服务之间互相是如何调用的。</li>
+<li><strong>服务访问压力以及时长统计、资源调度和治理</strong>——基于访问压力实时管理集群容量，提高集群利用率。</li>
+<li><strong>服务降级</strong>——某个服务挂掉之后调用备用服务。</li>
+</ol>
+<p>另外，Dubbo 除了能够应用在分布式系统中，也可以应用在现在比较火的微服务系统中。不过，由于 Spring Cloud 在微服务中应用更加广泛，所以，我觉得一般我们提 Dubbo 的话，大部分是分布式系统的情况。</p>
+<p><strong>我们刚刚提到了分布式这个概念，下面再给大家介绍一下什么是分布式？为什么要分布式？</strong></p>
+<h2 id="1-4-什么是分布式？"><a href="#1-4-什么是分布式？" class="headerlink" title="1.4 什么是分布式？"></a>1.4 什么是分布式？</h2><p>分布式或者说 SOA 分布式重要的就是面向服务，说简单的分布式就是我们<strong>把整个系统拆分成不同的服务然后将这些服务放在不同的服务器上减轻单体服务的压力提高并发量和性能</strong>。比如电商系统可以简单地拆分成订单系统、商品系统、登录系统等等，拆分之后的每个服务可以部署在不同的机器上，如果某一个服务的访问量比较大的话也可以将这个服务同时部署在多台机器上。</p>
+<h2 id="1-5-为什么要分布式？"><a href="#1-5-为什么要分布式？" class="headerlink" title="1.5 为什么要分布式？"></a>1.5 为什么要分布式？</h2><p>从开发角度来讲单体应用的代码都集中在一起，而分布式系统的代码根据业务被拆分。所以，每个团队可以负责一个服务的开发，这样提升了开发效率。另外，代码根据业务拆分之后更加便于维护和扩展。</p>
+<p>另外，我觉得将系统拆分成分布式之后不光便于系统扩展和维护，更能提高整个系统的性能。你想一想嘛？把整个系统拆分成不同的服务/系统，然后每个服务/系统 单独部署在一台服务器上，是不是很大程度上提高了系统性能呢？</p>
+<h1 id="二Dubbo的架构"><a href="#二Dubbo的架构" class="headerlink" title="二Dubbo的架构"></a>二Dubbo的架构</h1><h2 id="2-1-Dubbo的架构图解"><a href="#2-1-Dubbo的架构图解" class="headerlink" title="2.1 Dubbo的架构图解"></a>2.1 Dubbo的架构图解</h2><p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-26/46816446.jpg" alt="Dubbo 架构"></p>
+<p><strong>上述节点简单说明：</strong></p>
 <ul>
-<li>从最大的1000开始判断，如果比其大，则加上对应的字符并减去对应的数。</li>
+<li><strong>Provider：</strong> 暴露服务的服务提供方</li>
+<li><strong>Consumer：</strong> 调用远程服务的服务消费方</li>
+<li><strong>Registry：</strong> 服务注册与发现的注册中心</li>
+<li><strong>Monitor：</strong> 统计服务的调用次数和调用时间的监控中心</li>
+<li><strong>Container：</strong> 服务运行容器</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">public String intToRoman(int num) &#123;</span><br><span class="line">        StringBuilder res&#x3D;new StringBuilder();</span><br><span class="line">        helper(num,res);</span><br><span class="line">        return res.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void helper(int num,StringBuilder res)&#123;</span><br><span class="line">        if(num&#x3D;&#x3D;0) return;</span><br><span class="line">        if(num&#x2F;1000!&#x3D;0)&#123;</span><br><span class="line">            res.append(&#39;M&#39;);</span><br><span class="line">            num-&#x3D;1000;</span><br><span class="line">        &#125;else if(num&#x2F;900!&#x3D;0)&#123;</span><br><span class="line">            res.append(&quot;CM&quot;);</span><br><span class="line">            num-&#x3D;900;</span><br><span class="line">        &#125;else if(num&#x2F;500!&#x3D;0)&#123;</span><br><span class="line">            res.append(&quot;D&quot;);</span><br><span class="line">            num-&#x3D;500;</span><br><span class="line">        &#125;else if(num&#x2F;400!&#x3D;0)&#123;</span><br><span class="line">            res.append(&quot;CD&quot;);</span><br><span class="line">            num-&#x3D;400;</span><br><span class="line">        &#125;else if(num&#x2F;100!&#x3D;0)&#123;</span><br><span class="line">            res.append(&quot;C&quot;);</span><br><span class="line">            num-&#x3D;100;</span><br><span class="line">        &#125;else if(num&#x2F;90!&#x3D;0)&#123;</span><br><span class="line">            res.append(&quot;XC&quot;);</span><br><span class="line">            num-&#x3D;90;</span><br><span class="line">        &#125;else if(num&#x2F;50!&#x3D;0)&#123;</span><br><span class="line">            res.append(&quot;L&quot;);</span><br><span class="line">            num-&#x3D;50;</span><br><span class="line">        &#125;else if(num&#x2F;40!&#x3D;0)&#123;</span><br><span class="line">            res.append(&quot;XL&quot;);</span><br><span class="line">            num-&#x3D;40;</span><br><span class="line">        &#125;else if(num&#x2F;10!&#x3D;0)&#123;</span><br><span class="line">            res.append(&#39;X&#39;);</span><br><span class="line">            num-&#x3D;10;</span><br><span class="line">        &#125;else if(num&#x2F;9!&#x3D;0)&#123;</span><br><span class="line">            res.append(&quot;IX&quot;);</span><br><span class="line">            num-&#x3D;9;</span><br><span class="line">        &#125;else if(num&#x2F;5!&#x3D;0)&#123;</span><br><span class="line">            res.append(&#39;V&#39;);</span><br><span class="line">            num-&#x3D;5;</span><br><span class="line">        &#125;else if(num&#x2F;4!&#x3D;0)&#123;</span><br><span class="line">            res.append(&quot;IV&quot;);</span><br><span class="line">            num-&#x3D;4;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            res.append(&#39;I&#39;);</span><br><span class="line">            num-&#x3D;1;</span><br><span class="line">        &#125;</span><br><span class="line">        helper(num,res);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面的算法存在太多的if  else判断，这样代码简洁性太差了。</p>
-<h2 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h2><p><strong>算法思想：</strong></p>
+<p><strong>调用关系说明：</strong></p>
+<ol>
+<li>服务容器负责启动，加载，运行服务提供者。</li>
+<li>服务提供者在启动时，向注册中心注册自己提供的服务。</li>
+<li>服务消费者在启动时，向注册中心订阅自己所需的服务。</li>
+<li>注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者。</li>
+<li>服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。</li>
+<li>服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心。</li>
+</ol>
+<p><strong>重要知识点总结：</strong></p>
 <ul>
-<li>可以用两个数组分别存储数组和对应的字符串，这样来记录对应关系</li>
+<li><strong>注册中心负责服务地址的注册与查找，相当于目录服务，服务提供者和消费者只在启动时与注册中心交互，注册中心不转发请求，压力较小</strong></li>
+<li><strong>监控中心负责统计各服务调用次数，调用时间等，统计先在内存汇总后每分钟一次发送到监控中心服务器，并以报表展示</strong></li>
+<li><strong>注册中心，服务提供者，服务消费者三者之间均为长连接，监控中心除外</strong></li>
+<li><strong>注册中心通过长连接感知服务提供者的存在，服务提供者宕机，注册中心将立即推送事件通知消费者</strong></li>
+<li><strong>注册中心和监控中心全部宕机，不影响已运行的提供者和消费者，消费者在本地缓存了提供者列表</strong></li>
+<li><strong>注册中心和监控中心都是可选的，服务消费者可以直连服务提供者</strong></li>
+<li><strong>服务提供者无状态，任意一台宕掉后，不影响使用</strong></li>
+<li><strong>服务提供者全部宕掉后，服务消费者应用将无法使用，并无限次重连等待服务提供者恢复</strong></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public String intToRoman(int num) &#123;</span><br><span class="line">        int[] nums&#x3D;&#123;1000,900,500,400,100,90,50,40,10,9,5,4,1&#125;;</span><br><span class="line">        String[] dict&#x3D;&#123;&quot;M&quot;,&quot;CM&quot;,&quot;D&quot;,&quot;CD&quot;,&quot;C&quot;,&quot;XC&quot;,&quot;L&quot;,&quot;XL&quot;,&quot;X&quot;,&quot;IX&quot;,&quot;V&quot;,&quot;IV&quot;,&quot;I&quot;&#125;;</span><br><span class="line">        StringBuilder res&#x3D;new StringBuilder();</span><br><span class="line">        &#x2F;&#x2F;用i来记录当前需要比较哪个数字</span><br><span class="line">        int i&#x3D;0;</span><br><span class="line">        while(i&lt;nums.length)&#123;</span><br><span class="line">            if(num&gt;&#x3D;nums[i])&#123;</span><br><span class="line">                res.append(dict[i]);</span><br><span class="line">                num-&#x3D;nums[i];</span><br><span class="line">            &#125;else i++;</span><br><span class="line">        &#125;</span><br><span class="line">        return res.toString();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
+<h1 id="三Dubbo的负载均衡策略"><a href="#三Dubbo的负载均衡策略" class="headerlink" title="三Dubbo的负载均衡策略"></a>三Dubbo的负载均衡策略</h1><h2 id="3-1-什么是负载均衡"><a href="#3-1-什么是负载均衡" class="headerlink" title="3.1 什么是负载均衡"></a>3.1 什么是负载均衡</h2><p>比如我们的系统中的某个服务的访问量特别大，我们将这个服务部署在了多台服务器上，当客户端发起请求的时候，多台服务器都可以处理这个请求。那么，如何正确选择处理该请求的服务器就很关键。假如，你就要一台服务器来处理该服务的请求，那该服务部署在多台服务器的意义就不复存在了。负载均衡就是为了避免单个服务器响应同一请求，容易造成服务器宕机、崩溃等问题，我们从负载均衡的这四个字就能明显感受到它的意义。</p>
+<h2 id="3-2-Dubbo提供的负载均衡策略"><a href="#3-2-Dubbo提供的负载均衡策略" class="headerlink" title="3.2 Dubbo提供的负载均衡策略"></a>3.2 Dubbo提供的负载均衡策略</h2><p>在集群负载均衡时，Dubbo 提供了多种均衡策略，默认为 <code>random</code> 随机调用。</p>
+<h3 id="3-2-1-Random-LoadBalance"><a href="#3-2-1-Random-LoadBalance" class="headerlink" title="3.2.1 Random LoadBalance"></a>3.2.1 Random LoadBalance</h3><ul>
+<li><strong>随机，按权重设置随机概率。</strong></li>
+<li>在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后也比较均匀，有利于动态调整提供者权重。</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-7/77722327.jpg" alt="基于权重的随机负载均衡机制"></p>
+<h3 id="3-2-2-RoundRobin-LoadBalance"><a href="#3-2-2-RoundRobin-LoadBalance" class="headerlink" title="3.2.2 RoundRobin LoadBalance"></a>3.2.2 RoundRobin LoadBalance</h3><ul>
+<li>轮循，按公约后的权重设置轮循比率。</li>
+<li>存在慢的提供者累积请求的问题，比如：第二台机器很慢，但没挂，当请求调到第二台时就卡在那，久而久之，所有请求都卡在调到第二台上。</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-7/97933247.jpg" alt="基于权重的轮询负载均衡机制"></p>
+<h3 id="3-2-3-LeastActive-LoadBalance"><a href="#3-2-3-LeastActive-LoadBalance" class="headerlink" title="3.2.3 LeastActive LoadBalance"></a>3.2.3 LeastActive LoadBalance</h3><ul>
+<li>最少活跃调用数，相同活跃数的随机，活跃数指调用前后计数差。</li>
+<li>使慢的提供者收到更少请求，因为越慢的提供者的调用前后计数差会越大。</li>
+</ul>
+<h3 id="3-2-4-ConsistentHash-LoadBalance"><a href="#3-2-4-ConsistentHash-LoadBalance" class="headerlink" title="3.2.4 ConsistentHash LoadBalance"></a>3.2.4 ConsistentHash LoadBalance</h3><ul>
+<li><strong>一致性 Hash，相同参数的请求总是发到同一提供者。(如果你需要的不是随机负载均衡，是要一类请求都到一个节点，那就走这个一致性hash策略。)</strong></li>
+<li>当某一台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。</li>
+</ul>
 
           
         
@@ -5612,7 +6072,7 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -5662,7 +6122,7 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">218</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -5673,7 +6133,7 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -5684,7 +6144,7 @@ com/atguigu/mapreduce/wordcount/WordCountDriver : Unsupported major.minor versio
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
