@@ -1,85 +1,26 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="zh-Hans">
+<html lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"extrali.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="面试 - 并发," />
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="1.并发编程的挑战上下文切换 CPU通过时间片分配算法来循环执行任务，当前任务执行一个时间片后会切换到下一个任务。但是，在切换前会保存上一个任务的状态，以便下次切换回这个任务时，可以再加载这个任务的状态。所以任务从保存到再加载的过程就是一次上下文切换。  2.java并发机制的底层实现原理Volatile的应用 volatile关键字保证了共享变量的可见性。可见性的意思是当一个线程修改一个共享变量">
+  <meta name="description" content="1.并发编程的挑战上下文切换 CPU通过时间片分配算法来循环执行任务，当前任务执行一个时间片后会切换到下一个任务。但是，在切换前会保存上一个任务的状态，以便下次切换回这个任务时，可以再加载这个任务的状态。所以任务从保存到再加载的过程就是一次上下文切换。  2.java并发机制的底层实现原理Volatile的应用 volatile关键字保证了共享变量的可见性。可见性的意思是当一个线程修改一个共享变量">
 <meta property="og:type" content="article">
 <meta property="og:title" content="并发">
 <meta property="og:url" content="http://extrali.com/2020/05/04/%E5%B9%B6%E5%8F%91/index.html">
@@ -108,39 +49,18 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/11/8/16e4ad75b4f1ed7b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
 
+<link rel="canonical" href="http://extrali.com/2020/05/04/%E5%B9%B6%E5%8F%91/">
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
   };
 </script>
-
-
-
-  <link rel="canonical" href="http://extrali.com/2020/05/04/并发/"/>
-
-
-
-
 
   <title>并发 | Extrali</title>
   
@@ -150,212 +70,154 @@
 
 
 
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
 
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+</head>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Extrali</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Navigationsleiste an/ausschalten">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Extrali</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Startseite</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
 
-      
-    </ul>
-  
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archiv</a>
 
-  
+  </li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
     </header>
 
-    <main id="main" class="main">
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content">
+          
+
+          <div class="content post posts-expand">
             
 
-  <div id="posts" class="posts-expand">
     
-
-  
-
   
   
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/05/04/%E5%B9%B6%E5%8F%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="黎达">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Extrali">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">并发</h1>
-        
+        <h1 class="post-title" itemprop="name headline">
+          并发
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-04T16:35:00+08:00">
-                2020-05-04
-              </time>
-            
+              <span class="post-meta-item-text">Veröffentlicht am</span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B9%B6%E5%8F%91/" itemprop="url" rel="index">
-                    <span itemprop="name">并发</span>
-                  </a>
-                </span>
-
-                
-                
-              
+              <time title="Erstellt: 2020-05-04 16:35:00" itemprop="dateCreated datePublished" datetime="2020-05-04T16:35:00+08:00">2020-05-04</time>
             </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Bearbeitet am</span>
+                <time title="Geändert am: 2020-07-02 15:15:22" itemprop="dateModified" datetime="2020-07-02T15:15:22+08:00">2020-07-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">in</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B9%B6%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">并发</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
 
       
         <h1 id="1-并发编程的挑战"><a href="#1-并发编程的挑战" class="headerlink" title="1.并发编程的挑战"></a>1.并发编程的挑战</h1><h2 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h2><ul>
@@ -1032,273 +894,173 @@
 <p><strong>如果选择：</strong></p>
 <p>除非需要使用 ReentrantLock 的高级功能，否则优先使用 synchronized。这是因为 synchronized 是 JVM 实现的一种锁机制，JVM 原生地支持它，而 ReentrantLock 不是所有的 JDK 版本都支持。并且使用 synchronized 不用担心没有释放锁而导致死锁问题，因为 JVM 会确保锁的释放。</p>
 
-      
     </div>
+
     
     
     
 
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/%E9%9D%A2%E8%AF%95-%E5%B9%B6%E5%8F%91/" rel="tag"># 面试 - 并发</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9D%A2%E8%AF%95-%E5%B9%B6%E5%8F%91/" rel="tag"># 面试 - 并发</a>
           </div>
 
-          <span class="post-nav-divider"></span>
+        
 
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/05/04/%E6%8E%92%E5%BA%8F%E5%92%8C%E6%9F%A5%E6%89%BE/" rel="prev" title="排序与查找">
-                排序与查找 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
 
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/04/%E6%8E%92%E5%BA%8F%E5%92%8C%E6%9F%A5%E6%89%BE/" rel="next" title="排序与查找">
+      排序与查找 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
 
 
           </div>
           
 
-
-          
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg"
-                alt="黎达" />
-            
-              <p class="site-author-name" itemprop="name">黎达</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives">
-              
-                  <span class="site-state-item-count">42</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">30</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">35</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/extrali" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="mailto:extralida@gmail.com" target="_blank" title="E-Mail">
-                      
-                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                  </span>
-                
-            </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-并发编程的挑战"><span class="nav-number">1.</span> <span class="nav-text">1.并发编程的挑战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#上下文切换"><span class="nav-number">1.1.</span> <span class="nav-text">上下文切换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-java并发机制的底层实现原理"><span class="nav-number">2.</span> <span class="nav-text">2.java并发机制的底层实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Volatile的应用"><span class="nav-number">2.1.</span> <span class="nav-text">Volatile的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronized的实现原理与应用"><span class="nav-number">2.2.</span> <span class="nav-text">synchronized的实现原理与应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#锁的升级与对比"><span class="nav-number">2.2.1.</span> <span class="nav-text">锁的升级与对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#java对象头"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">java对象头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#偏向锁"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">偏向锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#轻量级锁"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">轻量级锁</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锁的优缺点"><span class="nav-number">2.2.2.</span> <span class="nav-text">锁的优缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原子操作的原理"><span class="nav-number">2.3.</span> <span class="nav-text">原子操作的原理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-java内存模型-JMM"><span class="nav-number">3.</span> <span class="nav-text">3.java内存模型(JMM)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#happens-before"><span class="nav-number">3.1.</span> <span class="nav-text">happens-before</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重排序"><span class="nav-number">3.2.</span> <span class="nav-text">重排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据依赖性"><span class="nav-number">3.2.1.</span> <span class="nav-text">数据依赖性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#as-if-serial语义"><span class="nav-number">3.2.2.</span> <span class="nav-text">as-if-serial语义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile的内存语义"><span class="nav-number">3.3.</span> <span class="nav-text">volatile的内存语义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锁的内存语义"><span class="nav-number">3.4.</span> <span class="nav-text">锁的内存语义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双重检查锁定"><span class="nav-number">3.5.</span> <span class="nav-text">双重检查锁定</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-java并发编程基础"><span class="nav-number">4.</span> <span class="nav-text">4.java并发编程基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程的状态"><span class="nav-number">4.1.</span> <span class="nav-text">线程的状态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建-new"><span class="nav-number">4.1.1.</span> <span class="nav-text">新建 new</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#就绪-Runnable"><span class="nav-number">4.1.2.</span> <span class="nav-text">就绪 Runnable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阻塞-Blocked"><span class="nav-number">4.1.3.</span> <span class="nav-text">阻塞 Blocked</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#等待-Waiting"><span class="nav-number">4.1.4.</span> <span class="nav-text">等待 Waiting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超时等待-Timed-Waiting"><span class="nav-number">4.1.5.</span> <span class="nav-text">超时等待 Timed Waiting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#终止-Terminated"><span class="nav-number">4.1.6.</span> <span class="nav-text">终止 Terminated</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#守护线程-Daemon线程"><span class="nav-number">4.2.</span> <span class="nav-text">守护线程(Daemon线程)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#等待-通知的经典范式"><span class="nav-number">4.3.</span> <span class="nav-text">等待&#x2F;通知的经典范式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见方法"><span class="nav-number">4.4.</span> <span class="nav-text">常见方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#join-方法"><span class="nav-number">4.4.1.</span> <span class="nav-text">join()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadLocal的使用"><span class="nav-number">4.4.2.</span> <span class="nav-text">ThreadLocal的使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-java中的锁"><span class="nav-number">5.</span> <span class="nav-text">5.java中的锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#队列同步器-AQS"><span class="nav-number">5.1.</span> <span class="nav-text">队列同步器(AQS)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#队列同步器实现分析"><span class="nav-number">5.1.1.</span> <span class="nav-text">队列同步器实现分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#同步队列"><span class="nav-number">5.1.1.1.</span> <span class="nav-text">同步队列</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#节点状态waitStatus"><span class="nav-number">5.1.1.1.1.</span> <span class="nav-text">节点状态waitStatus</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#独占式同步状态获取和释放"><span class="nav-number">5.1.1.1.2.</span> <span class="nav-text">独占式同步状态获取和释放</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#共享式同步状态获取与释放"><span class="nav-number">5.1.1.1.3.</span> <span class="nav-text">共享式同步状态获取与释放</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重入锁-ReentrantLock"><span class="nav-number">5.2.</span> <span class="nav-text">重入锁(ReentrantLock)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#支持重进入"><span class="nav-number">5.2.1.</span> <span class="nav-text">支持重进入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#公平锁与非公平锁的区别"><span class="nav-number">5.2.2.</span> <span class="nav-text">公平锁与非公平锁的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读写锁-ReadWriteLock"><span class="nav-number">5.3.</span> <span class="nav-text">读写锁(ReadWriteLock)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读写锁实现分析"><span class="nav-number">5.3.1.</span> <span class="nav-text">读写锁实现分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读写锁状态设计"><span class="nav-number">5.3.1.1.</span> <span class="nav-text">读写锁状态设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写锁的获取与释放"><span class="nav-number">5.3.1.2.</span> <span class="nav-text">写锁的获取与释放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读锁的获取与释放"><span class="nav-number">5.3.1.3.</span> <span class="nav-text">读锁的获取与释放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁降级"><span class="nav-number">5.3.1.4.</span> <span class="nav-text">锁降级</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LockSupport工具"><span class="nav-number">5.4.</span> <span class="nav-text">LockSupport工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Condition接口"><span class="nav-number">5.5.</span> <span class="nav-text">Condition接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Condition的实现分析"><span class="nav-number">5.5.1.</span> <span class="nav-text">Condition的实现分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#等待队列"><span class="nav-number">5.5.1.1.</span> <span class="nav-text">等待队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#等待"><span class="nav-number">5.5.1.2.</span> <span class="nav-text">等待</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-java并发容器和框架"><span class="nav-number">6.</span> <span class="nav-text">6.java并发容器和框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ConcurrentHashMap"><span class="nav-number">6.1.</span> <span class="nav-text">ConcurrentHashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap的结构"><span class="nav-number">6.1.1.</span> <span class="nav-text">ConcurrentHashMap的结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#核心成员"><span class="nav-number">6.1.1.1.</span> <span class="nav-text">核心成员</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构造方法"><span class="nav-number">6.1.1.2.</span> <span class="nav-text">构造方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jdk1-8之后的改进"><span class="nav-number">6.1.2.</span> <span class="nav-text">jdk1.8之后的改进</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#哈希桶table的初始化"><span class="nav-number">6.1.2.1.</span> <span class="nav-text">哈希桶table的初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get方法"><span class="nav-number">6.1.2.2.</span> <span class="nav-text">get方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#put方法"><span class="nav-number">6.1.2.3.</span> <span class="nav-text">put方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ConcurrentLinkedQueue"><span class="nav-number">6.2.</span> <span class="nav-text">ConcurrentLinkedQueue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#入队列"><span class="nav-number">6.2.1.</span> <span class="nav-text">入队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#出队列"><span class="nav-number">6.2.2.</span> <span class="nav-text">出队列</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java中的阻塞队列"><span class="nav-number">6.3.</span> <span class="nav-text">java中的阻塞队列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayBlockingQueue"><span class="nav-number">6.3.1.</span> <span class="nav-text">ArrayBlockingQueue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedBlockingQueue"><span class="nav-number">6.3.2.</span> <span class="nav-text">LinkedBlockingQueue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PriorityBlockingQueue"><span class="nav-number">6.3.3.</span> <span class="nav-text">PriorityBlockingQueue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DelayQueue"><span class="nav-number">6.3.4.</span> <span class="nav-text">DelayQueue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SynchronousQueue"><span class="nav-number">6.3.5.</span> <span class="nav-text">SynchronousQueue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedTransferQueue"><span class="nav-number">6.3.6.</span> <span class="nav-text">LinkedTransferQueue</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#transfer-方法"><span class="nav-number">6.3.6.1.</span> <span class="nav-text">transfer()方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tryTransfer-方法"><span class="nav-number">6.3.6.2.</span> <span class="nav-text">tryTransfer()方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedBlockingDeque"><span class="nav-number">6.3.7.</span> <span class="nav-text">LinkedBlockingDeque</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-java中的13个原子操作类"><span class="nav-number">7.</span> <span class="nav-text">7.java中的13个原子操作类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原子更新基本类型"><span class="nav-number">7.1.</span> <span class="nav-text">原子更新基本类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-java中的并发工具类"><span class="nav-number">8.</span> <span class="nav-text">8.java中的并发工具类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#等待多线程完成的CountDownLatch"><span class="nav-number">8.1.</span> <span class="nav-text">等待多线程完成的CountDownLatch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步屏障CyclicBarrier"><span class="nav-number">8.2.</span> <span class="nav-text">同步屏障CyclicBarrier</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CountDownLatch和CyclicBarrier的区别"><span class="nav-number">8.3.</span> <span class="nav-text">CountDownLatch和CyclicBarrier的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-java中的线程池"><span class="nav-number">9.</span> <span class="nav-text">9.java中的线程池</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadPoolExecutor核心参数"><span class="nav-number">9.1.</span> <span class="nav-text">ThreadPoolExecutor核心参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-corePoolSize：核心线程个数"><span class="nav-number">9.1.1.</span> <span class="nav-text">1.corePoolSize：核心线程个数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-maxmumPoolSize：线程池最大数量"><span class="nav-number">9.1.2.</span> <span class="nav-text">2.maxmumPoolSize：线程池最大数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-keepAliveTime：线程空闲时间"><span class="nav-number">9.1.3.</span> <span class="nav-text">3.keepAliveTime：线程空闲时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-RunnableTaskQueue：任务队列"><span class="nav-number">9.1.4.</span> <span class="nav-text">4.RunnableTaskQueue：任务队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-ThreadFactory：创建线程的工厂"><span class="nav-number">9.1.5.</span> <span class="nav-text">5.ThreadFactory：创建线程的工厂</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-RejectExecutionHandler：饱和策略"><span class="nav-number">9.1.6.</span> <span class="nav-text">6.RejectExecutionHandler：饱和策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向线程池中提交任务"><span class="nav-number">9.2.</span> <span class="nav-text">向线程池中提交任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭线程池"><span class="nav-number">9.3.</span> <span class="nav-text">关闭线程池</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-Executor框架"><span class="nav-number">10.</span> <span class="nav-text">10.Executor框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#补充"><span class="nav-number">11.</span> <span class="nav-text">补充</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadLocal"><span class="nav-number">11.1.</span> <span class="nav-text">ThreadLocal</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">11.1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">11.1.2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadLocal内存泄漏问题"><span class="nav-number">11.1.3.</span> <span class="nav-text">ThreadLocal内存泄漏问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronized和ReentrantLock的比较"><span class="nav-number">11.2.</span> <span class="nav-text">synchronized和ReentrantLock的比较</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">黎达</span>
-
-  
-</div>
-
-
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
-
-
-
-
-        
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
   }
 </script>
 
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Inhaltsverzeichnis
+        </li>
+        <li class="sidebar-nav-overview">
+          Übersicht
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-并发编程的挑战"><span class="nav-number">1.</span> <span class="nav-text">1.并发编程的挑战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#上下文切换"><span class="nav-number">1.1.</span> <span class="nav-text">上下文切换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-java并发机制的底层实现原理"><span class="nav-number">2.</span> <span class="nav-text">2.java并发机制的底层实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Volatile的应用"><span class="nav-number">2.1.</span> <span class="nav-text">Volatile的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronized的实现原理与应用"><span class="nav-number">2.2.</span> <span class="nav-text">synchronized的实现原理与应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#锁的升级与对比"><span class="nav-number">2.2.1.</span> <span class="nav-text">锁的升级与对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#java对象头"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">java对象头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#偏向锁"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">偏向锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#轻量级锁"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">轻量级锁</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锁的优缺点"><span class="nav-number">2.2.2.</span> <span class="nav-text">锁的优缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原子操作的原理"><span class="nav-number">2.3.</span> <span class="nav-text">原子操作的原理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-java内存模型-JMM"><span class="nav-number">3.</span> <span class="nav-text">3.java内存模型(JMM)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#happens-before"><span class="nav-number">3.1.</span> <span class="nav-text">happens-before</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重排序"><span class="nav-number">3.2.</span> <span class="nav-text">重排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据依赖性"><span class="nav-number">3.2.1.</span> <span class="nav-text">数据依赖性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#as-if-serial语义"><span class="nav-number">3.2.2.</span> <span class="nav-text">as-if-serial语义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile的内存语义"><span class="nav-number">3.3.</span> <span class="nav-text">volatile的内存语义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锁的内存语义"><span class="nav-number">3.4.</span> <span class="nav-text">锁的内存语义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双重检查锁定"><span class="nav-number">3.5.</span> <span class="nav-text">双重检查锁定</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-java并发编程基础"><span class="nav-number">4.</span> <span class="nav-text">4.java并发编程基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程的状态"><span class="nav-number">4.1.</span> <span class="nav-text">线程的状态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建-new"><span class="nav-number">4.1.1.</span> <span class="nav-text">新建 new</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#就绪-Runnable"><span class="nav-number">4.1.2.</span> <span class="nav-text">就绪 Runnable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阻塞-Blocked"><span class="nav-number">4.1.3.</span> <span class="nav-text">阻塞 Blocked</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#等待-Waiting"><span class="nav-number">4.1.4.</span> <span class="nav-text">等待 Waiting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超时等待-Timed-Waiting"><span class="nav-number">4.1.5.</span> <span class="nav-text">超时等待 Timed Waiting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#终止-Terminated"><span class="nav-number">4.1.6.</span> <span class="nav-text">终止 Terminated</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#守护线程-Daemon线程"><span class="nav-number">4.2.</span> <span class="nav-text">守护线程(Daemon线程)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#等待-通知的经典范式"><span class="nav-number">4.3.</span> <span class="nav-text">等待&#x2F;通知的经典范式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见方法"><span class="nav-number">4.4.</span> <span class="nav-text">常见方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#join-方法"><span class="nav-number">4.4.1.</span> <span class="nav-text">join()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadLocal的使用"><span class="nav-number">4.4.2.</span> <span class="nav-text">ThreadLocal的使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-java中的锁"><span class="nav-number">5.</span> <span class="nav-text">5.java中的锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#队列同步器-AQS"><span class="nav-number">5.1.</span> <span class="nav-text">队列同步器(AQS)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#队列同步器实现分析"><span class="nav-number">5.1.1.</span> <span class="nav-text">队列同步器实现分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#同步队列"><span class="nav-number">5.1.1.1.</span> <span class="nav-text">同步队列</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#节点状态waitStatus"><span class="nav-number">5.1.1.1.1.</span> <span class="nav-text">节点状态waitStatus</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#独占式同步状态获取和释放"><span class="nav-number">5.1.1.1.2.</span> <span class="nav-text">独占式同步状态获取和释放</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#共享式同步状态获取与释放"><span class="nav-number">5.1.1.1.3.</span> <span class="nav-text">共享式同步状态获取与释放</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重入锁-ReentrantLock"><span class="nav-number">5.2.</span> <span class="nav-text">重入锁(ReentrantLock)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#支持重进入"><span class="nav-number">5.2.1.</span> <span class="nav-text">支持重进入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#公平锁与非公平锁的区别"><span class="nav-number">5.2.2.</span> <span class="nav-text">公平锁与非公平锁的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读写锁-ReadWriteLock"><span class="nav-number">5.3.</span> <span class="nav-text">读写锁(ReadWriteLock)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读写锁实现分析"><span class="nav-number">5.3.1.</span> <span class="nav-text">读写锁实现分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读写锁状态设计"><span class="nav-number">5.3.1.1.</span> <span class="nav-text">读写锁状态设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写锁的获取与释放"><span class="nav-number">5.3.1.2.</span> <span class="nav-text">写锁的获取与释放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读锁的获取与释放"><span class="nav-number">5.3.1.3.</span> <span class="nav-text">读锁的获取与释放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁降级"><span class="nav-number">5.3.1.4.</span> <span class="nav-text">锁降级</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LockSupport工具"><span class="nav-number">5.4.</span> <span class="nav-text">LockSupport工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Condition接口"><span class="nav-number">5.5.</span> <span class="nav-text">Condition接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Condition的实现分析"><span class="nav-number">5.5.1.</span> <span class="nav-text">Condition的实现分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#等待队列"><span class="nav-number">5.5.1.1.</span> <span class="nav-text">等待队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#等待"><span class="nav-number">5.5.1.2.</span> <span class="nav-text">等待</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-java并发容器和框架"><span class="nav-number">6.</span> <span class="nav-text">6.java并发容器和框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ConcurrentHashMap"><span class="nav-number">6.1.</span> <span class="nav-text">ConcurrentHashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap的结构"><span class="nav-number">6.1.1.</span> <span class="nav-text">ConcurrentHashMap的结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#核心成员"><span class="nav-number">6.1.1.1.</span> <span class="nav-text">核心成员</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构造方法"><span class="nav-number">6.1.1.2.</span> <span class="nav-text">构造方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jdk1-8之后的改进"><span class="nav-number">6.1.2.</span> <span class="nav-text">jdk1.8之后的改进</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#哈希桶table的初始化"><span class="nav-number">6.1.2.1.</span> <span class="nav-text">哈希桶table的初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get方法"><span class="nav-number">6.1.2.2.</span> <span class="nav-text">get方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#put方法"><span class="nav-number">6.1.2.3.</span> <span class="nav-text">put方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ConcurrentLinkedQueue"><span class="nav-number">6.2.</span> <span class="nav-text">ConcurrentLinkedQueue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#入队列"><span class="nav-number">6.2.1.</span> <span class="nav-text">入队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#出队列"><span class="nav-number">6.2.2.</span> <span class="nav-text">出队列</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java中的阻塞队列"><span class="nav-number">6.3.</span> <span class="nav-text">java中的阻塞队列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayBlockingQueue"><span class="nav-number">6.3.1.</span> <span class="nav-text">ArrayBlockingQueue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedBlockingQueue"><span class="nav-number">6.3.2.</span> <span class="nav-text">LinkedBlockingQueue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PriorityBlockingQueue"><span class="nav-number">6.3.3.</span> <span class="nav-text">PriorityBlockingQueue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DelayQueue"><span class="nav-number">6.3.4.</span> <span class="nav-text">DelayQueue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SynchronousQueue"><span class="nav-number">6.3.5.</span> <span class="nav-text">SynchronousQueue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedTransferQueue"><span class="nav-number">6.3.6.</span> <span class="nav-text">LinkedTransferQueue</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#transfer-方法"><span class="nav-number">6.3.6.1.</span> <span class="nav-text">transfer()方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tryTransfer-方法"><span class="nav-number">6.3.6.2.</span> <span class="nav-text">tryTransfer()方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedBlockingDeque"><span class="nav-number">6.3.7.</span> <span class="nav-text">LinkedBlockingDeque</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-java中的13个原子操作类"><span class="nav-number">7.</span> <span class="nav-text">7.java中的13个原子操作类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原子更新基本类型"><span class="nav-number">7.1.</span> <span class="nav-text">原子更新基本类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-java中的并发工具类"><span class="nav-number">8.</span> <span class="nav-text">8.java中的并发工具类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#等待多线程完成的CountDownLatch"><span class="nav-number">8.1.</span> <span class="nav-text">等待多线程完成的CountDownLatch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步屏障CyclicBarrier"><span class="nav-number">8.2.</span> <span class="nav-text">同步屏障CyclicBarrier</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CountDownLatch和CyclicBarrier的区别"><span class="nav-number">8.3.</span> <span class="nav-text">CountDownLatch和CyclicBarrier的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-java中的线程池"><span class="nav-number">9.</span> <span class="nav-text">9.java中的线程池</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadPoolExecutor核心参数"><span class="nav-number">9.1.</span> <span class="nav-text">ThreadPoolExecutor核心参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-corePoolSize：核心线程个数"><span class="nav-number">9.1.1.</span> <span class="nav-text">1.corePoolSize：核心线程个数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-maxmumPoolSize：线程池最大数量"><span class="nav-number">9.1.2.</span> <span class="nav-text">2.maxmumPoolSize：线程池最大数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-keepAliveTime：线程空闲时间"><span class="nav-number">9.1.3.</span> <span class="nav-text">3.keepAliveTime：线程空闲时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-RunnableTaskQueue：任务队列"><span class="nav-number">9.1.4.</span> <span class="nav-text">4.RunnableTaskQueue：任务队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-ThreadFactory：创建线程的工厂"><span class="nav-number">9.1.5.</span> <span class="nav-text">5.ThreadFactory：创建线程的工厂</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-RejectExecutionHandler：饱和策略"><span class="nav-number">9.1.6.</span> <span class="nav-text">6.RejectExecutionHandler：饱和策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向线程池中提交任务"><span class="nav-number">9.2.</span> <span class="nav-text">向线程池中提交任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭线程池"><span class="nav-number">9.3.</span> <span class="nav-text">关闭线程池</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-Executor框架"><span class="nav-number">10.</span> <span class="nav-text">10.Executor框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#补充"><span class="nav-number">11.</span> <span class="nav-text">补充</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadLocal"><span class="nav-number">11.1.</span> <span class="nav-text">ThreadLocal</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">11.1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">11.1.2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadLocal内存泄漏问题"><span class="nav-number">11.1.3.</span> <span class="nav-text">ThreadLocal内存泄漏问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronized和ReentrantLock的比较"><span class="nav-number">11.2.</span> <span class="nav-text">synchronized和ReentrantLock的比较</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">黎达</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">Artikel</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">Kategorien</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">schlagwörter</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黎达</span>
+</div>
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
 
 
 
 
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
 
 
 
@@ -1316,118 +1078,8 @@
 
 
 
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
 
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
 
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
 
   
 

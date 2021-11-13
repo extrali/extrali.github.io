@@ -1,85 +1,26 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="zh-Hans">
+<html lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"extrali.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="大数据," />
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="1.虚拟机的三种网络配置方式 桥接模式 NAT模式 主机模式   2.Linux的文件目录linux 的文件系统是采用级层式的树状目录结构，在此结构中的最上层是根目录”&#x2F;“，然后在此目录下再创建其他的目录。    在 Linux 世界里，一切皆文件（即使是一个硬件设备，也是使用文本来标志）     具体的目录结构：      3.远程登陆到Linux服务器启用服务器的SSH服务：service s">
+  <meta name="description" content="1.虚拟机的三种网络配置方式 桥接模式 NAT模式 主机模式   2.Linux的文件目录linux 的文件系统是采用级层式的树状目录结构，在此结构中的最上层是根目录”&#x2F;“，然后在此目录下再创建其他的目录。    在 Linux 世界里，一切皆文件（即使是一个硬件设备，也是使用文本来标志）     具体的目录结构：      3.远程登陆到Linux服务器启用服务器的SSH服务：service s">
 <meta property="og:type" content="article">
 <meta property="og:title" content="大数据Linux开发">
 <meta property="og:url" content="http://extrali.com/2021/04/02/%E5%A4%A7%E6%95%B0%E6%8D%AELinux%E5%BC%80%E5%8F%91/index.html">
@@ -104,39 +45,18 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2021/05/09/CdsxetMYWaTNLOk.png">
 
+<link rel="canonical" href="http://extrali.com/2021/04/02/%E5%A4%A7%E6%95%B0%E6%8D%AELinux%E5%BC%80%E5%8F%91/">
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
   };
 </script>
-
-
-
-  <link rel="canonical" href="http://extrali.com/2021/04/02/大数据Linux开发/"/>
-
-
-
-
 
   <title>大数据Linux开发 | Extrali</title>
   
@@ -146,212 +66,154 @@
 
 
 
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
 
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+</head>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Extrali</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Navigationsleiste an/ausschalten">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Extrali</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Startseite</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
 
-      
-    </ul>
-  
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archiv</a>
 
-  
+  </li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
     </header>
 
-    <main id="main" class="main">
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content">
+          
+
+          <div class="content post posts-expand">
             
 
-  <div id="posts" class="posts-expand">
     
-
-  
-
   
   
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/04/02/%E5%A4%A7%E6%95%B0%E6%8D%AELinux%E5%BC%80%E5%8F%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="黎达">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Extrali">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">大数据Linux开发</h1>
-        
+        <h1 class="post-title" itemprop="name headline">
+          大数据Linux开发
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-02T16:07:35+08:00">
-                2021-04-02
-              </time>
-            
+              <span class="post-meta-item-text">Veröffentlicht am</span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index">
-                    <span itemprop="name">大数据</span>
-                  </a>
-                </span>
-
-                
-                
-              
+              <time title="Erstellt: 2021-04-02 16:07:35" itemprop="dateCreated datePublished" datetime="2021-04-02T16:07:35+08:00">2021-04-02</time>
             </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Bearbeitet am</span>
+                <time title="Geändert am: 2021-05-19 22:55:05" itemprop="dateModified" datetime="2021-05-19T22:55:05+08:00">2021-05-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">in</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index"><span itemprop="name">大数据</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
 
       
         <h1 id="1-虚拟机的三种网络配置方式"><a href="#1-虚拟机的三种网络配置方式" class="headerlink" title="1.虚拟机的三种网络配置方式"></a>1.虚拟机的三种网络配置方式</h1><ol>
@@ -1474,277 +1336,176 @@
 </li>
 </ol>
 
-      
     </div>
+
     
     
     
 
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag"># 大数据</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/11/09/Hadoop/" rel="next" title="Hadoop">
-                <i class="fa fa-chevron-left"></i> Hadoop
-              </a>
-            
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag"># 大数据</a>
           </div>
 
-          <span class="post-nav-divider"></span>
+        
 
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/08/24/Kafka/" rel="prev" title="Kafka">
-                Kafka <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
 
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/09/Hadoop/" rel="prev" title="Hadoop">
+      <i class="fa fa-chevron-left"></i> Hadoop
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/24/Kafka/" rel="next" title="Kafka">
+      Kafka <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
 
 
           </div>
           
 
-
-          
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg"
-                alt="黎达" />
-            
-              <p class="site-author-name" itemprop="name">黎达</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives">
-              
-                  <span class="site-state-item-count">42</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">30</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">35</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/extrali" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="mailto:extralida@gmail.com" target="_blank" title="E-Mail">
-                      
-                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                  </span>
-                
-            </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-虚拟机的三种网络配置方式"><span class="nav-number">1.</span> <span class="nav-text">1.虚拟机的三种网络配置方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Linux的文件目录"><span class="nav-number">2.</span> <span class="nav-text">2.Linux的文件目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-远程登陆到Linux服务器"><span class="nav-number">3.</span> <span class="nav-text">3.远程登陆到Linux服务器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Vi和Vim编辑器"><span class="nav-number">4.</span> <span class="nav-text">4.Vi和Vim编辑器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-Vim的三种模式切换"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Vim的三种模式切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-Vim的快捷键使用"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 Vim的快捷键使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-开机、重启和用户登陆注销"><span class="nav-number">5.</span> <span class="nav-text">5.开机、重启和用户登陆注销</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-开机-amp-重启指令"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 开机&amp;重启指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-用户登录和注销"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 用户登录和注销</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-用户管理"><span class="nav-number">6.</span> <span class="nav-text">6.用户管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1添加用户"><span class="nav-number">6.1.</span> <span class="nav-text">6.1添加用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-指定-修改密码"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 指定&#x2F;修改密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-删除用户"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-查询用户信息"><span class="nav-number">6.4.</span> <span class="nav-text">6.4 查询用户信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5-切换用户"><span class="nav-number">6.5.</span> <span class="nav-text">6.5 切换用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-6-用户组"><span class="nav-number">6.6.</span> <span class="nav-text">6.6 用户组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-7-sudo-设置普通用户具有root权限"><span class="nav-number">6.7.</span> <span class="nav-text">6.7 sudo 设置普通用户具有root权限</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-网络设置和系统管理操作"><span class="nav-number">7.</span> <span class="nav-text">7.网络设置和系统管理操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-配置网络IP地址"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 配置网络IP地址</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-1-修改IP地址"><span class="nav-number">7.1.1.</span> <span class="nav-text">7.1.1 修改IP地址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-配置主机名"><span class="nav-number">7.2.</span> <span class="nav-text">7.2 配置主机名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-1-修改主机名称"><span class="nav-number">7.2.1.</span> <span class="nav-text">7.2.1 修改主机名称</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3关闭防火墙"><span class="nav-number">7.3.</span> <span class="nav-text">7.3关闭防火墙</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-1-service后台服务管理"><span class="nav-number">7.3.1.</span> <span class="nav-text">7.3.1 service后台服务管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-2-chkconfig设置后台服务的自启配置"><span class="nav-number">7.3.2.</span> <span class="nav-text">7.3.2 chkconfig设置后台服务的自启配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-3-进程运行级别"><span class="nav-number">7.3.3.</span> <span class="nav-text">7.3.3 进程运行级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-4-关闭防火墙"><span class="nav-number">7.3.4.</span> <span class="nav-text">7.3.4 关闭防火墙</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-5-克隆虚拟机"><span class="nav-number">7.3.5.</span> <span class="nav-text">7.3.5 克隆虚拟机</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-常见使用指令"><span class="nav-number">8.</span> <span class="nav-text">8.常见使用指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-帮助指令"><span class="nav-number">8.1.</span> <span class="nav-text">8.1 帮助指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-1-man-获得帮助信息"><span class="nav-number">8.1.1.</span> <span class="nav-text">8.1.1 man 获得帮助信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-2-help-获得shell内置命令的帮助信息"><span class="nav-number">8.1.2.</span> <span class="nav-text">8.1.2 help 获得shell内置命令的帮助信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-3-常用快捷键"><span class="nav-number">8.1.3.</span> <span class="nav-text">8.1.3 常用快捷键</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-2-文件目录类"><span class="nav-number">8.2.</span> <span class="nav-text">8.2 文件目录类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-1-pwd-显示当前工作目录的绝对路径"><span class="nav-number">8.2.1.</span> <span class="nav-text">8.2.1 pwd 显示当前工作目录的绝对路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-2-ls-列出目录的内容"><span class="nav-number">8.2.2.</span> <span class="nav-text">8.2.2 ls 列出目录的内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-3-cd-切换目录"><span class="nav-number">8.2.3.</span> <span class="nav-text">8.2.3 cd 切换目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-4-mkdir-创建一个新的目录"><span class="nav-number">8.2.4.</span> <span class="nav-text">8.2.4 mkdir 创建一个新的目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-5-删除一个空的目录"><span class="nav-number">8.2.5.</span> <span class="nav-text">8.2.5 删除一个空的目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-6-touch-创建空文件"><span class="nav-number">8.2.6.</span> <span class="nav-text">8.2.6 touch 创建空文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-7-cp-复制文件或目录"><span class="nav-number">8.2.7.</span> <span class="nav-text">8.2.7 cp  复制文件或目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-8-rm-移除文件或目录"><span class="nav-number">8.2.8.</span> <span class="nav-text">8.2.8 rm 移除文件或目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-9-mv-移动文件与目录或重命名"><span class="nav-number">8.2.9.</span> <span class="nav-text">8.2.9 mv 移动文件与目录或重命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-10-cat-查看文件内容"><span class="nav-number">8.2.10.</span> <span class="nav-text">8.2.10 cat 查看文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-11-more-文件内容分屏查看器"><span class="nav-number">8.2.11.</span> <span class="nav-text">8.2.11 more 文件内容分屏查看器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-12-less-分屏显示文件内容"><span class="nav-number">8.2.12.</span> <span class="nav-text">8.2.12 less 分屏显示文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-13-echo"><span class="nav-number">8.2.13.</span> <span class="nav-text">8.2.13 echo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-14-head-显示文件头部内容"><span class="nav-number">8.2.14.</span> <span class="nav-text">8.2.14 head 显示文件头部内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-15-tail-输出文件尾部内容"><span class="nav-number">8.2.15.</span> <span class="nav-text">8.2.15 tail 输出文件尾部内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-16-gt-输出重定向和-gt-gt-追加"><span class="nav-number">8.2.16.</span> <span class="nav-text">8.2.16  &gt; 输出重定向和 &gt;&gt; 追加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-17-ln-软链接"><span class="nav-number">8.2.17.</span> <span class="nav-text">8.2.17 ln 软链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-18-history-查看已经执行过历史命令"><span class="nav-number">8.2.18.</span> <span class="nav-text">8.2.18 history 查看已经执行过历史命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3-文件权限类"><span class="nav-number">8.3.</span> <span class="nav-text">8.3 文件权限类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-1-文件属性"><span class="nav-number">8.3.1.</span> <span class="nav-text">8.3.1 文件属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-2-chmod-改变权限"><span class="nav-number">8.3.2.</span> <span class="nav-text">8.3.2 chmod 改变权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-3-chown-改变所有者"><span class="nav-number">8.3.3.</span> <span class="nav-text">8.3.3 chown 改变所有者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-4-chgrp-改变所属组"><span class="nav-number">8.3.4.</span> <span class="nav-text">8.3.4 chgrp 改变所属组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-搜索查找类"><span class="nav-number">8.4.</span> <span class="nav-text">8.4 搜索查找类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-4-1-find-查找文件或者目录"><span class="nav-number">8.4.1.</span> <span class="nav-text">8.4.1 find 查找文件或者目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-4-2-locate快速定位文件路径"><span class="nav-number">8.4.2.</span> <span class="nav-text">8.4.2 locate快速定位文件路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-4-3-grep-过滤查找及“-”管道符"><span class="nav-number">8.4.3.</span> <span class="nav-text">8.4.3 grep 过滤查找及“|”管道符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-5-压缩和解压缩类"><span class="nav-number">8.5.</span> <span class="nav-text">8.5 压缩和解压缩类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5-1-gzip-gunzip-压缩"><span class="nav-number">8.5.1.</span> <span class="nav-text">8.5.1 gzip&#x2F;gunzip 压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5-2-zip-unzip-压缩"><span class="nav-number">8.5.2.</span> <span class="nav-text">8.5.2 zip&#x2F;unzip 压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5-3-tar-打包"><span class="nav-number">8.5.3.</span> <span class="nav-text">8.5.3 tar 打包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-6-进程线程类"><span class="nav-number">8.6.</span> <span class="nav-text">8.6 进程线程类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-6-1-ps-查看当前系统进程状态"><span class="nav-number">8.6.1.</span> <span class="nav-text">8.6.1 ps 查看当前系统进程状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-6-2-kill-终止进程"><span class="nav-number">8.6.2.</span> <span class="nav-text">8.6.2 kill 终止进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-6-3-top-查看系统健康状态"><span class="nav-number">8.6.3.</span> <span class="nav-text">8.6.3 top 查看系统健康状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-6-4-netstat-显示网络统计信息和端口占用情况"><span class="nav-number">8.6.4.</span> <span class="nav-text">8.6.4 netstat 显示网络统计信息和端口占用情况</span></a></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">黎达</span>
-
-  
-</div>
-
-
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
-
-
-
-
-        
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
   }
 </script>
 
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Inhaltsverzeichnis
+        </li>
+        <li class="sidebar-nav-overview">
+          Übersicht
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-虚拟机的三种网络配置方式"><span class="nav-number">1.</span> <span class="nav-text">1.虚拟机的三种网络配置方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Linux的文件目录"><span class="nav-number">2.</span> <span class="nav-text">2.Linux的文件目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-远程登陆到Linux服务器"><span class="nav-number">3.</span> <span class="nav-text">3.远程登陆到Linux服务器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Vi和Vim编辑器"><span class="nav-number">4.</span> <span class="nav-text">4.Vi和Vim编辑器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-Vim的三种模式切换"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Vim的三种模式切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-Vim的快捷键使用"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 Vim的快捷键使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-开机、重启和用户登陆注销"><span class="nav-number">5.</span> <span class="nav-text">5.开机、重启和用户登陆注销</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-开机-amp-重启指令"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 开机&amp;重启指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-用户登录和注销"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 用户登录和注销</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-用户管理"><span class="nav-number">6.</span> <span class="nav-text">6.用户管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1添加用户"><span class="nav-number">6.1.</span> <span class="nav-text">6.1添加用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-指定-修改密码"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 指定&#x2F;修改密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-删除用户"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-查询用户信息"><span class="nav-number">6.4.</span> <span class="nav-text">6.4 查询用户信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5-切换用户"><span class="nav-number">6.5.</span> <span class="nav-text">6.5 切换用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-6-用户组"><span class="nav-number">6.6.</span> <span class="nav-text">6.6 用户组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-7-sudo-设置普通用户具有root权限"><span class="nav-number">6.7.</span> <span class="nav-text">6.7 sudo 设置普通用户具有root权限</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-网络设置和系统管理操作"><span class="nav-number">7.</span> <span class="nav-text">7.网络设置和系统管理操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-配置网络IP地址"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 配置网络IP地址</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-1-修改IP地址"><span class="nav-number">7.1.1.</span> <span class="nav-text">7.1.1 修改IP地址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-配置主机名"><span class="nav-number">7.2.</span> <span class="nav-text">7.2 配置主机名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-1-修改主机名称"><span class="nav-number">7.2.1.</span> <span class="nav-text">7.2.1 修改主机名称</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3关闭防火墙"><span class="nav-number">7.3.</span> <span class="nav-text">7.3关闭防火墙</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-1-service后台服务管理"><span class="nav-number">7.3.1.</span> <span class="nav-text">7.3.1 service后台服务管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-2-chkconfig设置后台服务的自启配置"><span class="nav-number">7.3.2.</span> <span class="nav-text">7.3.2 chkconfig设置后台服务的自启配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-3-进程运行级别"><span class="nav-number">7.3.3.</span> <span class="nav-text">7.3.3 进程运行级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-4-关闭防火墙"><span class="nav-number">7.3.4.</span> <span class="nav-text">7.3.4 关闭防火墙</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-5-克隆虚拟机"><span class="nav-number">7.3.5.</span> <span class="nav-text">7.3.5 克隆虚拟机</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-常见使用指令"><span class="nav-number">8.</span> <span class="nav-text">8.常见使用指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-帮助指令"><span class="nav-number">8.1.</span> <span class="nav-text">8.1 帮助指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-1-man-获得帮助信息"><span class="nav-number">8.1.1.</span> <span class="nav-text">8.1.1 man 获得帮助信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-2-help-获得shell内置命令的帮助信息"><span class="nav-number">8.1.2.</span> <span class="nav-text">8.1.2 help 获得shell内置命令的帮助信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-3-常用快捷键"><span class="nav-number">8.1.3.</span> <span class="nav-text">8.1.3 常用快捷键</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-2-文件目录类"><span class="nav-number">8.2.</span> <span class="nav-text">8.2 文件目录类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-1-pwd-显示当前工作目录的绝对路径"><span class="nav-number">8.2.1.</span> <span class="nav-text">8.2.1 pwd 显示当前工作目录的绝对路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-2-ls-列出目录的内容"><span class="nav-number">8.2.2.</span> <span class="nav-text">8.2.2 ls 列出目录的内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-3-cd-切换目录"><span class="nav-number">8.2.3.</span> <span class="nav-text">8.2.3 cd 切换目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-4-mkdir-创建一个新的目录"><span class="nav-number">8.2.4.</span> <span class="nav-text">8.2.4 mkdir 创建一个新的目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-5-删除一个空的目录"><span class="nav-number">8.2.5.</span> <span class="nav-text">8.2.5 删除一个空的目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-6-touch-创建空文件"><span class="nav-number">8.2.6.</span> <span class="nav-text">8.2.6 touch 创建空文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-7-cp-复制文件或目录"><span class="nav-number">8.2.7.</span> <span class="nav-text">8.2.7 cp  复制文件或目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-8-rm-移除文件或目录"><span class="nav-number">8.2.8.</span> <span class="nav-text">8.2.8 rm 移除文件或目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-9-mv-移动文件与目录或重命名"><span class="nav-number">8.2.9.</span> <span class="nav-text">8.2.9 mv 移动文件与目录或重命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-10-cat-查看文件内容"><span class="nav-number">8.2.10.</span> <span class="nav-text">8.2.10 cat 查看文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-11-more-文件内容分屏查看器"><span class="nav-number">8.2.11.</span> <span class="nav-text">8.2.11 more 文件内容分屏查看器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-12-less-分屏显示文件内容"><span class="nav-number">8.2.12.</span> <span class="nav-text">8.2.12 less 分屏显示文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-13-echo"><span class="nav-number">8.2.13.</span> <span class="nav-text">8.2.13 echo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-14-head-显示文件头部内容"><span class="nav-number">8.2.14.</span> <span class="nav-text">8.2.14 head 显示文件头部内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-15-tail-输出文件尾部内容"><span class="nav-number">8.2.15.</span> <span class="nav-text">8.2.15 tail 输出文件尾部内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-16-gt-输出重定向和-gt-gt-追加"><span class="nav-number">8.2.16.</span> <span class="nav-text">8.2.16  &gt; 输出重定向和 &gt;&gt; 追加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-17-ln-软链接"><span class="nav-number">8.2.17.</span> <span class="nav-text">8.2.17 ln 软链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-18-history-查看已经执行过历史命令"><span class="nav-number">8.2.18.</span> <span class="nav-text">8.2.18 history 查看已经执行过历史命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3-文件权限类"><span class="nav-number">8.3.</span> <span class="nav-text">8.3 文件权限类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-1-文件属性"><span class="nav-number">8.3.1.</span> <span class="nav-text">8.3.1 文件属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-2-chmod-改变权限"><span class="nav-number">8.3.2.</span> <span class="nav-text">8.3.2 chmod 改变权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-3-chown-改变所有者"><span class="nav-number">8.3.3.</span> <span class="nav-text">8.3.3 chown 改变所有者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-4-chgrp-改变所属组"><span class="nav-number">8.3.4.</span> <span class="nav-text">8.3.4 chgrp 改变所属组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-搜索查找类"><span class="nav-number">8.4.</span> <span class="nav-text">8.4 搜索查找类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-4-1-find-查找文件或者目录"><span class="nav-number">8.4.1.</span> <span class="nav-text">8.4.1 find 查找文件或者目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-4-2-locate快速定位文件路径"><span class="nav-number">8.4.2.</span> <span class="nav-text">8.4.2 locate快速定位文件路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-4-3-grep-过滤查找及“-”管道符"><span class="nav-number">8.4.3.</span> <span class="nav-text">8.4.3 grep 过滤查找及“|”管道符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-5-压缩和解压缩类"><span class="nav-number">8.5.</span> <span class="nav-text">8.5 压缩和解压缩类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5-1-gzip-gunzip-压缩"><span class="nav-number">8.5.1.</span> <span class="nav-text">8.5.1 gzip&#x2F;gunzip 压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5-2-zip-unzip-压缩"><span class="nav-number">8.5.2.</span> <span class="nav-text">8.5.2 zip&#x2F;unzip 压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5-3-tar-打包"><span class="nav-number">8.5.3.</span> <span class="nav-text">8.5.3 tar 打包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-6-进程线程类"><span class="nav-number">8.6.</span> <span class="nav-text">8.6 进程线程类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-6-1-ps-查看当前系统进程状态"><span class="nav-number">8.6.1.</span> <span class="nav-text">8.6.1 ps 查看当前系统进程状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-6-2-kill-终止进程"><span class="nav-number">8.6.2.</span> <span class="nav-text">8.6.2 kill 终止进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-6-3-top-查看系统健康状态"><span class="nav-number">8.6.3.</span> <span class="nav-text">8.6.3 top 查看系统健康状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-6-4-netstat-显示网络统计信息和端口占用情况"><span class="nav-number">8.6.4.</span> <span class="nav-text">8.6.4 netstat 显示网络统计信息和端口占用情况</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">黎达</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">Artikel</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">Kategorien</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">schlagwörter</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黎达</span>
+</div>
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
 
 
 
 
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
 
 
 
@@ -1762,118 +1523,8 @@
 
 
 
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
 
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
 
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
 
   
 

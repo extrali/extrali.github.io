@@ -1,85 +1,26 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="zh-Hans">
+<html lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"extrali.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="面经," />
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="美团1.了解Java运行时数据区域吗java运行时区域分为堆，虚拟机栈，本地方法栈，程序计数器和方法区，其中堆和方法区是线程共有的。其中堆是存放对象实例的区域，虚拟机栈是存放栈帧的区域，栈帧中存放着方法中的相关信息，本地方法区和方法区相似，但其是存放本地方法的栈帧，程序计数器指向当前线程程序执行的行号，方法区存放的是已被虚拟机加载的类信息。 2.了解垃圾回收机制吗垃圾回收是Java虚拟机(JVM)">
+  <meta name="description" content="美团1.了解Java运行时数据区域吗java运行时区域分为堆，虚拟机栈，本地方法栈，程序计数器和方法区，其中堆和方法区是线程共有的。其中堆是存放对象实例的区域，虚拟机栈是存放栈帧的区域，栈帧中存放着方法中的相关信息，本地方法区和方法区相似，但其是存放本地方法的栈帧，程序计数器指向当前线程程序执行的行号，方法区存放的是已被虚拟机加载的类信息。 2.了解垃圾回收机制吗垃圾回收是Java虚拟机(JVM)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面经">
 <meta property="og:url" content="http://extrali.com/2020/05/10/%E9%9D%A2%E7%BB%8F/index.html">
@@ -98,39 +39,18 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2020/05/11/qpzXtiD5BhQRAE1.png">
 
+<link rel="canonical" href="http://extrali.com/2020/05/10/%E9%9D%A2%E7%BB%8F/">
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
   };
 </script>
-
-
-
-  <link rel="canonical" href="http://extrali.com/2020/05/10/面经/"/>
-
-
-
-
 
   <title>面经 | Extrali</title>
   
@@ -140,212 +60,154 @@
 
 
 
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
 
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+</head>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Extrali</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Navigationsleiste an/ausschalten">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Extrali</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Startseite</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
 
-      
-    </ul>
-  
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archiv</a>
 
-  
+  </li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
     </header>
 
-    <main id="main" class="main">
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content">
+          
+
+          <div class="content post posts-expand">
             
 
-  <div id="posts" class="posts-expand">
     
-
-  
-
   
   
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://extrali.com/2020/05/10/%E9%9D%A2%E7%BB%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="黎达">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Extrali">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">面经</h1>
-        
+        <h1 class="post-title" itemprop="name headline">
+          面经
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-10T22:32:05+08:00">
-                2020-05-10
-              </time>
-            
+              <span class="post-meta-item-text">Veröffentlicht am</span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E7%BB%8F/" itemprop="url" rel="index">
-                    <span itemprop="name">面经</span>
-                  </a>
-                </span>
-
-                
-                
-              
+              <time title="Erstellt: 2020-05-10 22:32:05" itemprop="dateCreated datePublished" datetime="2020-05-10T22:32:05+08:00">2020-05-10</time>
             </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Bearbeitet am</span>
+                <time title="Geändert am: 2020-07-13 14:55:54" itemprop="dateModified" datetime="2020-07-13T14:55:54+08:00">2020-07-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">in</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E7%BB%8F/" itemprop="url" rel="index"><span itemprop="name">面经</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
 
       
         <h1 id="美团"><a href="#美团" class="headerlink" title="美团"></a>美团</h1><h2 id="1-了解Java运行时数据区域吗"><a href="#1-了解Java运行时数据区域吗" class="headerlink" title="1.了解Java运行时数据区域吗"></a>1.了解Java运行时数据区域吗</h2><p>java运行时区域分为<strong>堆，虚拟机栈，本地方法栈，程序计数器和方法区</strong>，其中堆和方法区是线程共有的。其中堆是存放对象实例的区域，虚拟机栈是存放栈帧的区域，栈帧中存放着方法中的相关信息，本地方法区和方法区相似，但其是存放本地方法的栈帧，程序计数器指向当前线程程序执行的行号，方法区存放的是<strong>已被虚拟机加载的类信息。</strong></p>
@@ -917,277 +779,176 @@
 <p> 用过西瓜视频吗，西瓜视频和b站哪个好，咱老二次媛了，只能硬着头皮夸b站hhhhhhh </p>
 <p> 为什么想去南方工作，北方人而且还读了北方的大学</p>
 
-      
     </div>
+
     
     
     
 
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/%E9%9D%A2%E7%BB%8F/" rel="tag"># 面经</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/05/10/Spring%E6%BA%90%E7%A0%81/" rel="next" title="Spring源码">
-                <i class="fa fa-chevron-left"></i> Spring源码
-              </a>
-            
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9D%A2%E7%BB%8F/" rel="tag"># 面经</a>
           </div>
 
-          <span class="post-nav-divider"></span>
+        
 
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/05/11/mysql%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/" rel="prev" title="mysql索引优化总结">
-                mysql索引优化总结 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
 
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/10/Spring%E6%BA%90%E7%A0%81/" rel="prev" title="Spring源码">
+      <i class="fa fa-chevron-left"></i> Spring源码
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/11/mysql%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/" rel="next" title="mysql索引优化总结">
+      mysql索引优化总结 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
 
 
           </div>
           
 
-
-          
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="https://i.loli.net/2019/12/23/1Z3jXvxfJwMHaY2.jpg"
-                alt="黎达" />
-            
-              <p class="site-author-name" itemprop="name">黎达</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives">
-              
-                  <span class="site-state-item-count">42</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">30</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">35</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/extrali" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="mailto:extralida@gmail.com" target="_blank" title="E-Mail">
-                      
-                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                  </span>
-                
-            </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#美团"><span class="nav-number">1.</span> <span class="nav-text">美团</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-了解Java运行时数据区域吗"><span class="nav-number">1.1.</span> <span class="nav-text">1.了解Java运行时数据区域吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-了解垃圾回收机制吗"><span class="nav-number">1.2.</span> <span class="nav-text">2.了解垃圾回收机制吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-static关键字"><span class="nav-number">1.3.</span> <span class="nav-text">3.static关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-什么时候会报StackOverFlowError-OutOfMemoryError"><span class="nav-number">1.4.</span> <span class="nav-text">4.什么时候会报StackOverFlowError&#x2F;OutOfMemoryError</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-你是怎么对sql语句优化的"><span class="nav-number">1.5.</span> <span class="nav-text">5.你是怎么对sql语句优化的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-同样是走索引，走索引A为什么比走索引B效果要好，你是怎么进行判断的"><span class="nav-number">1.6.</span> <span class="nav-text">6.同样是走索引，走索引A为什么比走索引B效果要好，你是怎么进行判断的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-手撕算法题：不用考虑输入输出，不用编译，两个数M和N，N个数相加得到M，输出所有可能。例如M-7，N-2，输出1，6；2，5；3，4。"><span class="nav-number">1.7.</span> <span class="nav-text">7.手撕算法题：不用考虑输入输出，不用编译，两个数M和N，N个数相加得到M，输出所有可能。例如M&#x3D;7，N&#x3D;2，输出1，6；2，5；3，4。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象类和接口的区别"><span class="nav-number">1.8.</span> <span class="nav-text">抽象类和接口的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些场景下索引的设计。例如：需求是select-A-B-C-from-T-where-A-‘a’，此时怎么设计索引，当需求改为select-A-B-C-from-T-where-A-‘a’-and-B-‘b’，你会怎么办"><span class="nav-number">1.9.</span> <span class="nav-text">一些场景下索引的设计。例如：需求是select A, B, C from T where A &#x3D; ‘a’，此时怎么设计索引，当需求改为select A, B, C from T where A &#x3D; ‘a’ and B &#x3D; ‘b’，你会怎么办</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#腾讯"><span class="nav-number">2.</span> <span class="nav-text">腾讯</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis和mysql的区别"><span class="nav-number">2.1.</span> <span class="nav-text">Redis和mysql的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis单线程为什么快"><span class="nav-number">2.2.</span> <span class="nav-text">Redis单线程为什么快</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql索引"><span class="nav-number">2.3.</span> <span class="nav-text">mysql索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#explain有哪些字段，type有哪些类型"><span class="nav-number">2.4.</span> <span class="nav-text">explain有哪些字段，type有哪些类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql慢查询"><span class="nav-number">2.5.</span> <span class="nav-text">Mysql慢查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手撕算法：将栈中元素从栈顶降序排列，允许使用一个额外的栈"><span class="nav-number">2.6.</span> <span class="nav-text">手撕算法：将栈中元素从栈顶降序排列，允许使用一个额外的栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手撕算法：将栈中的元素反转，不能申请新的空间。"><span class="nav-number">2.7.</span> <span class="nav-text">手撕算法：将栈中的元素反转，不能申请新的空间。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何设计表结构"><span class="nav-number">2.8.</span> <span class="nav-text">如何设计表结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手撕算法：第k大的数"><span class="nav-number">2.9.</span> <span class="nav-text">手撕算法：第k大的数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统态，用户态，什么时候会进入系统态"><span class="nav-number">2.10.</span> <span class="nav-text">系统态，用户态，什么时候会进入系统态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#32位操作系统，单个进程空间的大小"><span class="nav-number">2.11.</span> <span class="nav-text">32位操作系统，单个进程空间的大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟内存"><span class="nav-number">2.12.</span> <span class="nav-text">虚拟内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程调度算法"><span class="nav-number">2.13.</span> <span class="nav-text">进程调度算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程通信的方式"><span class="nav-number">2.14.</span> <span class="nav-text">进程通信的方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络传输过程"><span class="nav-number">2.15.</span> <span class="nav-text">网络传输过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP，UDP的区别"><span class="nav-number">2.16.</span> <span class="nav-text">TCP，UDP的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP四次挥手为什么是四次，不能是两次"><span class="nav-number">2.17.</span> <span class="nav-text">TCP四次挥手为什么是四次，不能是两次</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果a给b发送FIN，b给a发送ACK，a给b发送FIN但是网络断了，这时候双方会做什么"><span class="nav-number">2.18.</span> <span class="nav-text">如果a给b发送FIN，b给a发送ACK，a给b发送FIN但是网络断了，这时候双方会做什么</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#招银网络"><span class="nav-number">3.</span> <span class="nav-text">招银网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java类加载过程"><span class="nav-number">3.1.</span> <span class="nav-text">java类加载过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库的索引怎么实现的"><span class="nav-number">3.2.</span> <span class="nav-text">数据库的索引怎么实现的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B树和B-树的区别"><span class="nav-number">3.3.</span> <span class="nav-text">B树和B+树的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#画个B-树"><span class="nav-number">3.4.</span> <span class="nav-text">画个B+树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#讲一下你知道的java-util-concurrent包下的类"><span class="nav-number">3.5.</span> <span class="nav-text">讲一下你知道的java.util.concurrent包下的类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TreeMap了解吗"><span class="nav-number">3.6.</span> <span class="nav-text">TreeMap了解吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用数组实现一个队列"><span class="nav-number">3.7.</span> <span class="nav-text">用数组实现一个队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果保证缓存和数据库的双写一致性"><span class="nav-number">3.8.</span> <span class="nav-text">如果保证缓存和数据库的双写一致性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#百度"><span class="nav-number">4.</span> <span class="nav-text">百度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法：给你n个数，找到最大的m个数"><span class="nav-number">4.1.</span> <span class="nav-text">算法：给你n个数，找到最大的m个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#equals和hashcode说一下"><span class="nav-number">4.2.</span> <span class="nav-text">equals和hashcode说一下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程创建的方法？线程池原理说一下？线程同步的方法？"><span class="nav-number">4.3.</span> <span class="nav-text">线程创建的方法？线程池原理说一下？线程同步的方法？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap讲一下"><span class="nav-number">4.4.</span> <span class="nav-text">HashMap讲一下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap的put-过程讲一下"><span class="nav-number">4.5.</span> <span class="nav-text">HashMap的put()过程讲一下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkedHashMap和HashMap的区别"><span class="nav-number">4.6.</span> <span class="nav-text">LinkedHashMap和HashMap的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法：给你一个字符串，判断是不是标准的ip地址。"><span class="nav-number">4.7.</span> <span class="nav-text">算法：给你一个字符串，判断是不是标准的ip地址。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP的三次握手说一下，为什么？"><span class="nav-number">4.8.</span> <span class="nav-text">TCP的三次握手说一下，为什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP的滑动窗口原理"><span class="nav-number">4.9.</span> <span class="nav-text">TCP的滑动窗口原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hashMap是线程安全的吗？如何实现线程安全？"><span class="nav-number">4.10.</span> <span class="nav-text">hashMap是线程安全的吗？如何实现线程安全？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#了解生产者消费者模式吗？他主要解决的是什么问题？队列数目为0的时候是怎样的？描述一下整体过程中线程的状态，怎么实现的是线程同步"><span class="nav-number">4.11.</span> <span class="nav-text">了解生产者消费者模式吗？他主要解决的是什么问题？队列数目为0的时候是怎样的？描述一下整体过程中线程的状态，怎么实现的是线程同步</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拼多多"><span class="nav-number">5.</span> <span class="nav-text">拼多多</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#有一个10G的文件，里面是数字，怎么排序？"><span class="nav-number">5.1.</span> <span class="nav-text">有一个10G的文件，里面是数字，怎么排序？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lock和synchronized的区别"><span class="nav-number">5.2.</span> <span class="nav-text">Lock和synchronized的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池的拒绝策略"><span class="nav-number">5.3.</span> <span class="nav-text">线程池的拒绝策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库调优"><span class="nav-number">5.4.</span> <span class="nav-text">数据库调优</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库隔离级别"><span class="nav-number">5.5.</span> <span class="nav-text">数据库隔离级别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可重复读主要解决了什么问题？幻读？"><span class="nav-number">5.6.</span> <span class="nav-text">可重复读主要解决了什么问题？幻读？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis持久化"><span class="nav-number">5.7.</span> <span class="nav-text">Redis持久化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#头条"><span class="nav-number">6.</span> <span class="nav-text">头条</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#给你一个已经排序的数组，找到一个元素第一次出现的位置，-1-2-3-3-3-3-4-，输出2"><span class="nav-number">6.1.</span> <span class="nav-text">给你一个已经排序的数组，找到一个元素第一次出现的位置，{1,2,3,3,3,3,4}，输出2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP介绍"><span class="nav-number">6.2.</span> <span class="nav-text">TCP介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是B树"><span class="nav-number">6.3.</span> <span class="nav-text">什么是B树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手写单例"><span class="nav-number">6.4.</span> <span class="nav-text">手写单例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile"><span class="nav-number">6.5.</span> <span class="nav-text">volatile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给你一个User，包含id，name，parentId。然后给你一个List-lt-User-gt-，要求将它转换成一棵树的结构。只有一个根节点，parentId-1"><span class="nav-number">6.6.</span> <span class="nav-text">给你一个User，包含id，name，parentId。然后给你一个List&lt;User&gt;，要求将它转换成一棵树的结构。只有一个根节点，parentId&#x3D;-1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一张表有ABC三个字段，现在要查BA，BC，B，问怎么建立索引？"><span class="nav-number">6.7.</span> <span class="nav-text">一张表有ABC三个字段，现在要查BA，BC，B，问怎么建立索引？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-out-println"><span class="nav-number">6.8.</span> <span class="nav-text">System.out.println()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微博好友列表如何创建数据库"><span class="nav-number">6.9.</span> <span class="nav-text">微博好友列表如何创建数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给定int-RandomA-，-生成一个随机数1-5-每个数的概率0-2。实现-int-RandomB-范围为1-25-每个数概率为0-04"><span class="nav-number">6.10.</span> <span class="nav-text">给定int RandomA()， 生成一个随机数1-5. 每个数的概率0.2。实现 int RandomB(), 范围为1-25. 每个数概率为0.04</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单拎出来的缓存问题，结合状态码-304-可能问到，相关头字段，If-Modified-Since-和-Last-Modified，If-None-Match-和-ETag，它们的区别等"><span class="nav-number">6.11.</span> <span class="nav-text">单拎出来的缓存问题，结合状态码 304 可能问到，相关头字段，If-Modified-Since 和 Last-Modified，If-None-Match 和 ETag，它们的区别等</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSL连接过程已经证书验证过程"><span class="nav-number">6.12.</span> <span class="nav-text">SSL连接过程已经证书验证过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SYN洪泛攻击"><span class="nav-number">6.13.</span> <span class="nav-text">SYN洪泛攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#红黑树和平衡二叉树的区别"><span class="nav-number">6.14.</span> <span class="nav-text">红黑树和平衡二叉树的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反射"><span class="nav-number">6.15.</span> <span class="nav-text">反射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何理解多态"><span class="nav-number">6.16.</span> <span class="nav-text">如何理解多态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有A，B两个人，双方轮着数数。每次说出的数字，只能在对方的基础上加一或者加二，当最后谁先数到30及以上谁输。如果A先从0开始数，那你有什么方法使得A必赢？能否用具体算法实现"><span class="nav-number">6.17.</span> <span class="nav-text">有A，B两个人，双方轮着数数。每次说出的数字，只能在对方的基础上加一或者加二，当最后谁先数到30及以上谁输。如果A先从0开始数，那你有什么方法使得A必赢？能否用具体算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS解析的迭代和递归的区别"><span class="nav-number">6.18.</span> <span class="nav-text">DNS解析的迭代和递归的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写一个二叉树的先序遍历的迭代器"><span class="nav-number">6.19.</span> <span class="nav-text">写一个二叉树的先序遍历的迭代器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#array，先递增后递减，可能有重复，找到一个数"><span class="nav-number">6.20.</span> <span class="nav-text">array，先递增后递减，可能有重复，找到一个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程通信中的管道"><span class="nav-number">6.21.</span> <span class="nav-text">进程通信中的管道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作系统的fork-指令"><span class="nav-number">6.22.</span> <span class="nav-text">操作系统的fork()指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#finalize"><span class="nav-number">6.23.</span> <span class="nav-text">finalize()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zookeeper基于什么模式，观察者模式讲一下"><span class="nav-number">6.24.</span> <span class="nav-text">zookeeper基于什么模式，观察者模式讲一下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么设置String是不可变的"><span class="nav-number">6.25.</span> <span class="nav-text">为什么设置String是不可变的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分库分表"><span class="nav-number">6.26.</span> <span class="nav-text">分库分表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#垂直分表"><span class="nav-number">6.26.1.</span> <span class="nav-text">垂直分表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垂直分库"><span class="nav-number">6.26.2.</span> <span class="nav-text">垂直分库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#水平分库"><span class="nav-number">6.26.3.</span> <span class="nav-text">水平分库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#水平分表"><span class="nav-number">6.26.4.</span> <span class="nav-text">水平分表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#drop，truncate和delete的区别"><span class="nav-number">6.27.</span> <span class="nav-text">drop，truncate和delete的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引类型"><span class="nav-number">6.28.</span> <span class="nav-text">索引类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-forName-和ClassLoader-loaderClass-有什么区别"><span class="nav-number">6.29.</span> <span class="nav-text">Class.forName()和ClassLoader.loaderClass()有什么区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么http协议是无状态的？"><span class="nav-number">6.30.</span> <span class="nav-text">为什么http协议是无状态的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么用zset实现排行榜，其中相同的分数按照时间排序"><span class="nav-number">6.31.</span> <span class="nav-text">怎么用zset实现排行榜，其中相同的分数按照时间排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AQS讲一下？"><span class="nav-number">6.32.</span> <span class="nav-text">AQS讲一下？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是视图？视图的使用场景"><span class="nav-number">6.33.</span> <span class="nav-text">什么是视图？视图的使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库的乐观锁和悲观锁是什么？"><span class="nav-number">6.34.</span> <span class="nav-text">数据库的乐观锁和悲观锁是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可达性分析怎么解决循环引用的问题"><span class="nav-number">6.35.</span> <span class="nav-text">可达性分析怎么解决循环引用的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#priorityQueue的原理，增删查的时间复杂度"><span class="nav-number">6.36.</span> <span class="nav-text">priorityQueue的原理，增删查的时间复杂度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#阿里"><span class="nav-number">7.</span> <span class="nav-text">阿里</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC的流程"><span class="nav-number">7.1.</span> <span class="nav-text">IOC的流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#熟悉啥数据库？设计一个树型结构的组织。"><span class="nav-number">7.2.</span> <span class="nav-text">熟悉啥数据库？设计一个树型结构的组织。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写过注解吗"><span class="nav-number">7.3.</span> <span class="nav-text">写过注解吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#秒杀项目的构架"><span class="nav-number">7.4.</span> <span class="nav-text">秒杀项目的构架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么时候会触发full-GC"><span class="nav-number">7.5.</span> <span class="nav-text">什么时候会触发full GC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空间分配担保失败"><span class="nav-number">7.6.</span> <span class="nav-text">空间分配担保失败</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆和栈的区别"><span class="nav-number">7.7.</span> <span class="nav-text">堆和栈的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Callable和Runnable的区别"><span class="nav-number">7.8.</span> <span class="nav-text">Callable和Runnable的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反射的原理"><span class="nav-number">7.9.</span> <span class="nav-text">反射的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#成员变量i，用sychronized包括的i-线程安全吗"><span class="nav-number">7.10.</span> <span class="nav-text">成员变量i，用sychronized包括的i++线程安全吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证i-安全"><span class="nav-number">7.11.</span> <span class="nav-text">如何保证i++安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile的作用和原理"><span class="nav-number">7.12.</span> <span class="nav-text">volatile的作用和原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#讲讲JUC包下的CountDownLatch，CyclicBarrier和Semaphore"><span class="nav-number">7.13.</span> <span class="nav-text">讲讲JUC包下的CountDownLatch，CyclicBarrier和Semaphore</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#讲一下ArrayBlockingQueue"><span class="nav-number">7.14.</span> <span class="nav-text">讲一下ArrayBlockingQueue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#讲讲一个对象在内存中的变化过程。"><span class="nav-number">7.15.</span> <span class="nav-text">讲讲一个对象在内存中的变化过程。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾回收算法"><span class="nav-number">7.16.</span> <span class="nav-text">垃圾回收算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证缓存一致性"><span class="nav-number">7.17.</span> <span class="nav-text">如何保证缓存一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#讲讲平衡树"><span class="nav-number">7.18.</span> <span class="nav-text">讲讲平衡树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码测评"><span class="nav-number">7.19.</span> <span class="nav-text">代码测评</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis集群的架构"><span class="nav-number">7.20.</span> <span class="nav-text">Redis集群的架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希一致性算法"><span class="nav-number">7.21.</span> <span class="nav-text">哈希一致性算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadLocal的作用和场景"><span class="nav-number">7.22.</span> <span class="nav-text">ThreadLocal的作用和场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据库连接的步骤"><span class="nav-number">7.22.0.1.</span> <span class="nav-text">数据库连接的步骤</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadLocal的原理"><span class="nav-number">7.23.</span> <span class="nav-text">ThreadLocal的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单例模式有哪些创建方式"><span class="nav-number">7.24.</span> <span class="nav-text">单例模式有哪些创建方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#懒汉式和饿汉式各有什么优点"><span class="nav-number">7.25.</span> <span class="nav-text">懒汉式和饿汉式各有什么优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronized和Reentrantlock的区别，如何选择"><span class="nav-number">7.26.</span> <span class="nav-text">synchronized和Reentrantlock的区别，如何选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql如何性能调优？比较缓慢的话，从哪个方面优化？"><span class="nav-number">7.27.</span> <span class="nav-text">mysql如何性能调优？比较缓慢的话，从哪个方面优化？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么叫幻读，什么叫脏读"><span class="nav-number">7.28.</span> <span class="nav-text">什么叫幻读，什么叫脏读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有序矩阵的查找"><span class="nav-number">7.29.</span> <span class="nav-text">有序矩阵的查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一条mysql查询经历了什么"><span class="nav-number">7.30.</span> <span class="nav-text">一条mysql查询经历了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一条mysql查询经历了什么-1"><span class="nav-number">7.31.</span> <span class="nav-text">一条mysql查询经历了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四个字形容个人性格"><span class="nav-number">7.32.</span> <span class="nav-text">四个字形容个人性格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印空心菱形"><span class="nav-number">7.33.</span> <span class="nav-text">打印空心菱形</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递归的缺点？如何弥补缺点"><span class="nav-number">7.34.</span> <span class="nav-text">递归的缺点？如何弥补缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#秒杀系统的架构"><span class="nav-number">7.35.</span> <span class="nav-text">秒杀系统的架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#秒杀系统压力最大的是哪部分呢？"><span class="nav-number">7.36.</span> <span class="nav-text">秒杀系统压力最大的是哪部分呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要有RDB和AOF两种持久化方式"><span class="nav-number">7.37.</span> <span class="nav-text">为什么要有RDB和AOF两种持久化方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOF重写"><span class="nav-number">7.38.</span> <span class="nav-text">AOF重写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-树的叶子节点连接起来的好处？"><span class="nav-number">7.39.</span> <span class="nav-text">B+树的叶子节点连接起来的好处？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InnoDB和MyisAm的区别"><span class="nav-number">7.40.</span> <span class="nav-text">InnoDB和MyisAm的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAS的原理"><span class="nav-number">7.41.</span> <span class="nav-text">CAS的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java里面哪里用到了CAS？"><span class="nav-number">7.42.</span> <span class="nav-text">java里面哪里用到了CAS？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VIVO"><span class="nav-number">8.</span> <span class="nav-text">VIVO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍一下AQS"><span class="nav-number">8.1.</span> <span class="nav-text">介绍一下AQS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说一下公平锁和非公平锁的原理"><span class="nav-number">8.2.</span> <span class="nav-text">说一下公平锁和非公平锁的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hashMap为什么线程不安全，讲讲Chm"><span class="nav-number">8.3.</span> <span class="nav-text">hashMap为什么线程不安全，讲讲Chm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAS操作是什么，以及可能出现的问题"><span class="nav-number">8.4.</span> <span class="nav-text">CAS操作是什么，以及可能出现的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入一个url后的过程"><span class="nav-number">8.5.</span> <span class="nav-text">输入一个url后的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis中的zset，跳跃表的插入和删除"><span class="nav-number">8.6.</span> <span class="nav-text">Redis中的zset，跳跃表的插入和删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java异常了解吗？说说平时遇到的异常？"><span class="nav-number">8.7.</span> <span class="nav-text">Java异常了解吗？说说平时遇到的异常？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说说垃圾收集器"><span class="nav-number">8.8.</span> <span class="nav-text">说说垃圾收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类加载机制？如何实现类加载器？"><span class="nav-number">8.9.</span> <span class="nav-text">类加载机制？如何实现类加载器？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP报文结构，HTTP结构"><span class="nav-number">8.10.</span> <span class="nav-text">TCP报文结构，HTTP结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计一个应用层协议"><span class="nav-number">8.11.</span> <span class="nav-text">设计一个应用层协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#https加密过程"><span class="nav-number">8.12.</span> <span class="nav-text">https加密过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#快手"><span class="nav-number">9.</span> <span class="nav-text">快手</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分页查找，如果要查找很靠后的页面如何，比如100万之后查10条怎么优化"><span class="nav-number">9.1.</span> <span class="nav-text">分页查找，如果要查找很靠后的页面如何，比如100万之后查10条怎么优化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HR面"><span class="nav-number">10.</span> <span class="nav-text">HR面</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">黎达</span>
-
-  
-</div>
-
-
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
-
-
-
-
-        
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
   }
 </script>
 
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Inhaltsverzeichnis
+        </li>
+        <li class="sidebar-nav-overview">
+          Übersicht
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#美团"><span class="nav-number">1.</span> <span class="nav-text">美团</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-了解Java运行时数据区域吗"><span class="nav-number">1.1.</span> <span class="nav-text">1.了解Java运行时数据区域吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-了解垃圾回收机制吗"><span class="nav-number">1.2.</span> <span class="nav-text">2.了解垃圾回收机制吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-static关键字"><span class="nav-number">1.3.</span> <span class="nav-text">3.static关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-什么时候会报StackOverFlowError-OutOfMemoryError"><span class="nav-number">1.4.</span> <span class="nav-text">4.什么时候会报StackOverFlowError&#x2F;OutOfMemoryError</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-你是怎么对sql语句优化的"><span class="nav-number">1.5.</span> <span class="nav-text">5.你是怎么对sql语句优化的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-同样是走索引，走索引A为什么比走索引B效果要好，你是怎么进行判断的"><span class="nav-number">1.6.</span> <span class="nav-text">6.同样是走索引，走索引A为什么比走索引B效果要好，你是怎么进行判断的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-手撕算法题：不用考虑输入输出，不用编译，两个数M和N，N个数相加得到M，输出所有可能。例如M-7，N-2，输出1，6；2，5；3，4。"><span class="nav-number">1.7.</span> <span class="nav-text">7.手撕算法题：不用考虑输入输出，不用编译，两个数M和N，N个数相加得到M，输出所有可能。例如M&#x3D;7，N&#x3D;2，输出1，6；2，5；3，4。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象类和接口的区别"><span class="nav-number">1.8.</span> <span class="nav-text">抽象类和接口的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些场景下索引的设计。例如：需求是select-A-B-C-from-T-where-A-‘a’，此时怎么设计索引，当需求改为select-A-B-C-from-T-where-A-‘a’-and-B-‘b’，你会怎么办"><span class="nav-number">1.9.</span> <span class="nav-text">一些场景下索引的设计。例如：需求是select A, B, C from T where A &#x3D; ‘a’，此时怎么设计索引，当需求改为select A, B, C from T where A &#x3D; ‘a’ and B &#x3D; ‘b’，你会怎么办</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#腾讯"><span class="nav-number">2.</span> <span class="nav-text">腾讯</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis和mysql的区别"><span class="nav-number">2.1.</span> <span class="nav-text">Redis和mysql的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis单线程为什么快"><span class="nav-number">2.2.</span> <span class="nav-text">Redis单线程为什么快</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql索引"><span class="nav-number">2.3.</span> <span class="nav-text">mysql索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#explain有哪些字段，type有哪些类型"><span class="nav-number">2.4.</span> <span class="nav-text">explain有哪些字段，type有哪些类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql慢查询"><span class="nav-number">2.5.</span> <span class="nav-text">Mysql慢查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手撕算法：将栈中元素从栈顶降序排列，允许使用一个额外的栈"><span class="nav-number">2.6.</span> <span class="nav-text">手撕算法：将栈中元素从栈顶降序排列，允许使用一个额外的栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手撕算法：将栈中的元素反转，不能申请新的空间。"><span class="nav-number">2.7.</span> <span class="nav-text">手撕算法：将栈中的元素反转，不能申请新的空间。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何设计表结构"><span class="nav-number">2.8.</span> <span class="nav-text">如何设计表结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手撕算法：第k大的数"><span class="nav-number">2.9.</span> <span class="nav-text">手撕算法：第k大的数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统态，用户态，什么时候会进入系统态"><span class="nav-number">2.10.</span> <span class="nav-text">系统态，用户态，什么时候会进入系统态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#32位操作系统，单个进程空间的大小"><span class="nav-number">2.11.</span> <span class="nav-text">32位操作系统，单个进程空间的大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟内存"><span class="nav-number">2.12.</span> <span class="nav-text">虚拟内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程调度算法"><span class="nav-number">2.13.</span> <span class="nav-text">进程调度算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程通信的方式"><span class="nav-number">2.14.</span> <span class="nav-text">进程通信的方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络传输过程"><span class="nav-number">2.15.</span> <span class="nav-text">网络传输过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP，UDP的区别"><span class="nav-number">2.16.</span> <span class="nav-text">TCP，UDP的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP四次挥手为什么是四次，不能是两次"><span class="nav-number">2.17.</span> <span class="nav-text">TCP四次挥手为什么是四次，不能是两次</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果a给b发送FIN，b给a发送ACK，a给b发送FIN但是网络断了，这时候双方会做什么"><span class="nav-number">2.18.</span> <span class="nav-text">如果a给b发送FIN，b给a发送ACK，a给b发送FIN但是网络断了，这时候双方会做什么</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#招银网络"><span class="nav-number">3.</span> <span class="nav-text">招银网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java类加载过程"><span class="nav-number">3.1.</span> <span class="nav-text">java类加载过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库的索引怎么实现的"><span class="nav-number">3.2.</span> <span class="nav-text">数据库的索引怎么实现的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B树和B-树的区别"><span class="nav-number">3.3.</span> <span class="nav-text">B树和B+树的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#画个B-树"><span class="nav-number">3.4.</span> <span class="nav-text">画个B+树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#讲一下你知道的java-util-concurrent包下的类"><span class="nav-number">3.5.</span> <span class="nav-text">讲一下你知道的java.util.concurrent包下的类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TreeMap了解吗"><span class="nav-number">3.6.</span> <span class="nav-text">TreeMap了解吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用数组实现一个队列"><span class="nav-number">3.7.</span> <span class="nav-text">用数组实现一个队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果保证缓存和数据库的双写一致性"><span class="nav-number">3.8.</span> <span class="nav-text">如果保证缓存和数据库的双写一致性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#百度"><span class="nav-number">4.</span> <span class="nav-text">百度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法：给你n个数，找到最大的m个数"><span class="nav-number">4.1.</span> <span class="nav-text">算法：给你n个数，找到最大的m个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#equals和hashcode说一下"><span class="nav-number">4.2.</span> <span class="nav-text">equals和hashcode说一下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程创建的方法？线程池原理说一下？线程同步的方法？"><span class="nav-number">4.3.</span> <span class="nav-text">线程创建的方法？线程池原理说一下？线程同步的方法？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap讲一下"><span class="nav-number">4.4.</span> <span class="nav-text">HashMap讲一下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap的put-过程讲一下"><span class="nav-number">4.5.</span> <span class="nav-text">HashMap的put()过程讲一下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkedHashMap和HashMap的区别"><span class="nav-number">4.6.</span> <span class="nav-text">LinkedHashMap和HashMap的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法：给你一个字符串，判断是不是标准的ip地址。"><span class="nav-number">4.7.</span> <span class="nav-text">算法：给你一个字符串，判断是不是标准的ip地址。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP的三次握手说一下，为什么？"><span class="nav-number">4.8.</span> <span class="nav-text">TCP的三次握手说一下，为什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP的滑动窗口原理"><span class="nav-number">4.9.</span> <span class="nav-text">TCP的滑动窗口原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hashMap是线程安全的吗？如何实现线程安全？"><span class="nav-number">4.10.</span> <span class="nav-text">hashMap是线程安全的吗？如何实现线程安全？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#了解生产者消费者模式吗？他主要解决的是什么问题？队列数目为0的时候是怎样的？描述一下整体过程中线程的状态，怎么实现的是线程同步"><span class="nav-number">4.11.</span> <span class="nav-text">了解生产者消费者模式吗？他主要解决的是什么问题？队列数目为0的时候是怎样的？描述一下整体过程中线程的状态，怎么实现的是线程同步</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拼多多"><span class="nav-number">5.</span> <span class="nav-text">拼多多</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#有一个10G的文件，里面是数字，怎么排序？"><span class="nav-number">5.1.</span> <span class="nav-text">有一个10G的文件，里面是数字，怎么排序？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lock和synchronized的区别"><span class="nav-number">5.2.</span> <span class="nav-text">Lock和synchronized的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池的拒绝策略"><span class="nav-number">5.3.</span> <span class="nav-text">线程池的拒绝策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库调优"><span class="nav-number">5.4.</span> <span class="nav-text">数据库调优</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库隔离级别"><span class="nav-number">5.5.</span> <span class="nav-text">数据库隔离级别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可重复读主要解决了什么问题？幻读？"><span class="nav-number">5.6.</span> <span class="nav-text">可重复读主要解决了什么问题？幻读？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis持久化"><span class="nav-number">5.7.</span> <span class="nav-text">Redis持久化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#头条"><span class="nav-number">6.</span> <span class="nav-text">头条</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#给你一个已经排序的数组，找到一个元素第一次出现的位置，-1-2-3-3-3-3-4-，输出2"><span class="nav-number">6.1.</span> <span class="nav-text">给你一个已经排序的数组，找到一个元素第一次出现的位置，{1,2,3,3,3,3,4}，输出2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP介绍"><span class="nav-number">6.2.</span> <span class="nav-text">TCP介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是B树"><span class="nav-number">6.3.</span> <span class="nav-text">什么是B树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手写单例"><span class="nav-number">6.4.</span> <span class="nav-text">手写单例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile"><span class="nav-number">6.5.</span> <span class="nav-text">volatile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给你一个User，包含id，name，parentId。然后给你一个List-lt-User-gt-，要求将它转换成一棵树的结构。只有一个根节点，parentId-1"><span class="nav-number">6.6.</span> <span class="nav-text">给你一个User，包含id，name，parentId。然后给你一个List&lt;User&gt;，要求将它转换成一棵树的结构。只有一个根节点，parentId&#x3D;-1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一张表有ABC三个字段，现在要查BA，BC，B，问怎么建立索引？"><span class="nav-number">6.7.</span> <span class="nav-text">一张表有ABC三个字段，现在要查BA，BC，B，问怎么建立索引？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-out-println"><span class="nav-number">6.8.</span> <span class="nav-text">System.out.println()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微博好友列表如何创建数据库"><span class="nav-number">6.9.</span> <span class="nav-text">微博好友列表如何创建数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给定int-RandomA-，-生成一个随机数1-5-每个数的概率0-2。实现-int-RandomB-范围为1-25-每个数概率为0-04"><span class="nav-number">6.10.</span> <span class="nav-text">给定int RandomA()， 生成一个随机数1-5. 每个数的概率0.2。实现 int RandomB(), 范围为1-25. 每个数概率为0.04</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单拎出来的缓存问题，结合状态码-304-可能问到，相关头字段，If-Modified-Since-和-Last-Modified，If-None-Match-和-ETag，它们的区别等"><span class="nav-number">6.11.</span> <span class="nav-text">单拎出来的缓存问题，结合状态码 304 可能问到，相关头字段，If-Modified-Since 和 Last-Modified，If-None-Match 和 ETag，它们的区别等</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSL连接过程已经证书验证过程"><span class="nav-number">6.12.</span> <span class="nav-text">SSL连接过程已经证书验证过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SYN洪泛攻击"><span class="nav-number">6.13.</span> <span class="nav-text">SYN洪泛攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#红黑树和平衡二叉树的区别"><span class="nav-number">6.14.</span> <span class="nav-text">红黑树和平衡二叉树的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反射"><span class="nav-number">6.15.</span> <span class="nav-text">反射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何理解多态"><span class="nav-number">6.16.</span> <span class="nav-text">如何理解多态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有A，B两个人，双方轮着数数。每次说出的数字，只能在对方的基础上加一或者加二，当最后谁先数到30及以上谁输。如果A先从0开始数，那你有什么方法使得A必赢？能否用具体算法实现"><span class="nav-number">6.17.</span> <span class="nav-text">有A，B两个人，双方轮着数数。每次说出的数字，只能在对方的基础上加一或者加二，当最后谁先数到30及以上谁输。如果A先从0开始数，那你有什么方法使得A必赢？能否用具体算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS解析的迭代和递归的区别"><span class="nav-number">6.18.</span> <span class="nav-text">DNS解析的迭代和递归的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写一个二叉树的先序遍历的迭代器"><span class="nav-number">6.19.</span> <span class="nav-text">写一个二叉树的先序遍历的迭代器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#array，先递增后递减，可能有重复，找到一个数"><span class="nav-number">6.20.</span> <span class="nav-text">array，先递增后递减，可能有重复，找到一个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程通信中的管道"><span class="nav-number">6.21.</span> <span class="nav-text">进程通信中的管道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作系统的fork-指令"><span class="nav-number">6.22.</span> <span class="nav-text">操作系统的fork()指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#finalize"><span class="nav-number">6.23.</span> <span class="nav-text">finalize()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zookeeper基于什么模式，观察者模式讲一下"><span class="nav-number">6.24.</span> <span class="nav-text">zookeeper基于什么模式，观察者模式讲一下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么设置String是不可变的"><span class="nav-number">6.25.</span> <span class="nav-text">为什么设置String是不可变的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分库分表"><span class="nav-number">6.26.</span> <span class="nav-text">分库分表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#垂直分表"><span class="nav-number">6.26.1.</span> <span class="nav-text">垂直分表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垂直分库"><span class="nav-number">6.26.2.</span> <span class="nav-text">垂直分库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#水平分库"><span class="nav-number">6.26.3.</span> <span class="nav-text">水平分库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#水平分表"><span class="nav-number">6.26.4.</span> <span class="nav-text">水平分表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#drop，truncate和delete的区别"><span class="nav-number">6.27.</span> <span class="nav-text">drop，truncate和delete的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引类型"><span class="nav-number">6.28.</span> <span class="nav-text">索引类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-forName-和ClassLoader-loaderClass-有什么区别"><span class="nav-number">6.29.</span> <span class="nav-text">Class.forName()和ClassLoader.loaderClass()有什么区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么http协议是无状态的？"><span class="nav-number">6.30.</span> <span class="nav-text">为什么http协议是无状态的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么用zset实现排行榜，其中相同的分数按照时间排序"><span class="nav-number">6.31.</span> <span class="nav-text">怎么用zset实现排行榜，其中相同的分数按照时间排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AQS讲一下？"><span class="nav-number">6.32.</span> <span class="nav-text">AQS讲一下？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是视图？视图的使用场景"><span class="nav-number">6.33.</span> <span class="nav-text">什么是视图？视图的使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库的乐观锁和悲观锁是什么？"><span class="nav-number">6.34.</span> <span class="nav-text">数据库的乐观锁和悲观锁是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可达性分析怎么解决循环引用的问题"><span class="nav-number">6.35.</span> <span class="nav-text">可达性分析怎么解决循环引用的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#priorityQueue的原理，增删查的时间复杂度"><span class="nav-number">6.36.</span> <span class="nav-text">priorityQueue的原理，增删查的时间复杂度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#阿里"><span class="nav-number">7.</span> <span class="nav-text">阿里</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC的流程"><span class="nav-number">7.1.</span> <span class="nav-text">IOC的流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#熟悉啥数据库？设计一个树型结构的组织。"><span class="nav-number">7.2.</span> <span class="nav-text">熟悉啥数据库？设计一个树型结构的组织。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写过注解吗"><span class="nav-number">7.3.</span> <span class="nav-text">写过注解吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#秒杀项目的构架"><span class="nav-number">7.4.</span> <span class="nav-text">秒杀项目的构架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么时候会触发full-GC"><span class="nav-number">7.5.</span> <span class="nav-text">什么时候会触发full GC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空间分配担保失败"><span class="nav-number">7.6.</span> <span class="nav-text">空间分配担保失败</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆和栈的区别"><span class="nav-number">7.7.</span> <span class="nav-text">堆和栈的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Callable和Runnable的区别"><span class="nav-number">7.8.</span> <span class="nav-text">Callable和Runnable的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反射的原理"><span class="nav-number">7.9.</span> <span class="nav-text">反射的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#成员变量i，用sychronized包括的i-线程安全吗"><span class="nav-number">7.10.</span> <span class="nav-text">成员变量i，用sychronized包括的i++线程安全吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证i-安全"><span class="nav-number">7.11.</span> <span class="nav-text">如何保证i++安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile的作用和原理"><span class="nav-number">7.12.</span> <span class="nav-text">volatile的作用和原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#讲讲JUC包下的CountDownLatch，CyclicBarrier和Semaphore"><span class="nav-number">7.13.</span> <span class="nav-text">讲讲JUC包下的CountDownLatch，CyclicBarrier和Semaphore</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#讲一下ArrayBlockingQueue"><span class="nav-number">7.14.</span> <span class="nav-text">讲一下ArrayBlockingQueue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#讲讲一个对象在内存中的变化过程。"><span class="nav-number">7.15.</span> <span class="nav-text">讲讲一个对象在内存中的变化过程。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾回收算法"><span class="nav-number">7.16.</span> <span class="nav-text">垃圾回收算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证缓存一致性"><span class="nav-number">7.17.</span> <span class="nav-text">如何保证缓存一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#讲讲平衡树"><span class="nav-number">7.18.</span> <span class="nav-text">讲讲平衡树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码测评"><span class="nav-number">7.19.</span> <span class="nav-text">代码测评</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis集群的架构"><span class="nav-number">7.20.</span> <span class="nav-text">Redis集群的架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希一致性算法"><span class="nav-number">7.21.</span> <span class="nav-text">哈希一致性算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadLocal的作用和场景"><span class="nav-number">7.22.</span> <span class="nav-text">ThreadLocal的作用和场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据库连接的步骤"><span class="nav-number">7.22.0.1.</span> <span class="nav-text">数据库连接的步骤</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadLocal的原理"><span class="nav-number">7.23.</span> <span class="nav-text">ThreadLocal的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单例模式有哪些创建方式"><span class="nav-number">7.24.</span> <span class="nav-text">单例模式有哪些创建方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#懒汉式和饿汉式各有什么优点"><span class="nav-number">7.25.</span> <span class="nav-text">懒汉式和饿汉式各有什么优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronized和Reentrantlock的区别，如何选择"><span class="nav-number">7.26.</span> <span class="nav-text">synchronized和Reentrantlock的区别，如何选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql如何性能调优？比较缓慢的话，从哪个方面优化？"><span class="nav-number">7.27.</span> <span class="nav-text">mysql如何性能调优？比较缓慢的话，从哪个方面优化？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么叫幻读，什么叫脏读"><span class="nav-number">7.28.</span> <span class="nav-text">什么叫幻读，什么叫脏读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有序矩阵的查找"><span class="nav-number">7.29.</span> <span class="nav-text">有序矩阵的查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一条mysql查询经历了什么"><span class="nav-number">7.30.</span> <span class="nav-text">一条mysql查询经历了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一条mysql查询经历了什么-1"><span class="nav-number">7.31.</span> <span class="nav-text">一条mysql查询经历了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四个字形容个人性格"><span class="nav-number">7.32.</span> <span class="nav-text">四个字形容个人性格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印空心菱形"><span class="nav-number">7.33.</span> <span class="nav-text">打印空心菱形</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递归的缺点？如何弥补缺点"><span class="nav-number">7.34.</span> <span class="nav-text">递归的缺点？如何弥补缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#秒杀系统的架构"><span class="nav-number">7.35.</span> <span class="nav-text">秒杀系统的架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#秒杀系统压力最大的是哪部分呢？"><span class="nav-number">7.36.</span> <span class="nav-text">秒杀系统压力最大的是哪部分呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要有RDB和AOF两种持久化方式"><span class="nav-number">7.37.</span> <span class="nav-text">为什么要有RDB和AOF两种持久化方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOF重写"><span class="nav-number">7.38.</span> <span class="nav-text">AOF重写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-树的叶子节点连接起来的好处？"><span class="nav-number">7.39.</span> <span class="nav-text">B+树的叶子节点连接起来的好处？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InnoDB和MyisAm的区别"><span class="nav-number">7.40.</span> <span class="nav-text">InnoDB和MyisAm的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAS的原理"><span class="nav-number">7.41.</span> <span class="nav-text">CAS的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java里面哪里用到了CAS？"><span class="nav-number">7.42.</span> <span class="nav-text">java里面哪里用到了CAS？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VIVO"><span class="nav-number">8.</span> <span class="nav-text">VIVO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍一下AQS"><span class="nav-number">8.1.</span> <span class="nav-text">介绍一下AQS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说一下公平锁和非公平锁的原理"><span class="nav-number">8.2.</span> <span class="nav-text">说一下公平锁和非公平锁的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hashMap为什么线程不安全，讲讲Chm"><span class="nav-number">8.3.</span> <span class="nav-text">hashMap为什么线程不安全，讲讲Chm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAS操作是什么，以及可能出现的问题"><span class="nav-number">8.4.</span> <span class="nav-text">CAS操作是什么，以及可能出现的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入一个url后的过程"><span class="nav-number">8.5.</span> <span class="nav-text">输入一个url后的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis中的zset，跳跃表的插入和删除"><span class="nav-number">8.6.</span> <span class="nav-text">Redis中的zset，跳跃表的插入和删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java异常了解吗？说说平时遇到的异常？"><span class="nav-number">8.7.</span> <span class="nav-text">Java异常了解吗？说说平时遇到的异常？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说说垃圾收集器"><span class="nav-number">8.8.</span> <span class="nav-text">说说垃圾收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类加载机制？如何实现类加载器？"><span class="nav-number">8.9.</span> <span class="nav-text">类加载机制？如何实现类加载器？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP报文结构，HTTP结构"><span class="nav-number">8.10.</span> <span class="nav-text">TCP报文结构，HTTP结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计一个应用层协议"><span class="nav-number">8.11.</span> <span class="nav-text">设计一个应用层协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#https加密过程"><span class="nav-number">8.12.</span> <span class="nav-text">https加密过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#快手"><span class="nav-number">9.</span> <span class="nav-text">快手</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分页查找，如果要查找很靠后的页面如何，比如100万之后查10条怎么优化"><span class="nav-number">9.1.</span> <span class="nav-text">分页查找，如果要查找很靠后的页面如何，比如100万之后查10条怎么优化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HR面"><span class="nav-number">10.</span> <span class="nav-text">HR面</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">黎达</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">Artikel</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">Kategorien</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">schlagwörter</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黎达</span>
+</div>
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
 
 
 
 
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
 
 
 
@@ -1205,118 +966,8 @@
 
 
 
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
 
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
 
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
 
   
 
