@@ -144,7 +144,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/11/12/clickhouse/">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/11/12/clickhouse/clickhouse/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -158,7 +158,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/12/clickhouse/" class="post-title-link" itemprop="url">clickhouse</a>
+            <a href="/2021/11/12/clickhouse/clickhouse/" class="post-title-link" itemprop="url">clickhouse</a>
         </h2>
 
         <div class="post-meta">
@@ -175,7 +175,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">عُدل في</span>
-                <time title="عُدل: 2021-11-14 17:40:38" itemprop="dateModified" datetime="2021-11-14T17:40:38+08:00">2021-11-14</time>
+                <time title="عُدل: 2021-11-14 17:52:19" itemprop="dateModified" datetime="2021-11-14T17:52:19+08:00">2021-11-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -556,7 +556,7 @@
 <h2 id="4-5-数据写入"><a href="#4-5-数据写入" class="headerlink" title="4.5 数据写入"></a>4.5 数据写入</h2><p>Clickhouse内部所有的数据操作都是面向<strong>Block数据块</strong>的，所以INSERT查询最终会将数据转换为Block数据块。也正因如此，INSERT语句在单个数据块的写入过程中是具有<strong>原子性</strong>的。在默认情况下，每个数据块最多写入1048576行数据（由<code>max_insert_block_size</code>参数控制）。也就是说，如果一条INSERT语句写入的数据少于<code>max_insert_block_size</code>行，那么这批数据的写入是具有原子性的，即要么全部成功，要么全部失败。需要注意的是，只有在Clickhouse服务端处理数据的时候才具有这种原子写入的特性，例如使用JDBC或HTTP接口时。</p>
 <h1 id="5-数据字典"><a href="#5-数据字典" class="headerlink" title="5. 数据字典"></a>5. 数据字典</h1><p>TO DO</p>
 <h1 id="6-MergeTree原理解析"><a href="#6-MergeTree原理解析" class="headerlink" title="6. MergeTree原理解析"></a>6. MergeTree原理解析</h1><p>只有合并树系列的表引擎才支持<strong>主键索引</strong>、<strong>数据分区</strong>、<strong>数据副本</strong>和<strong>数据采样</strong>这些特性，同时也只有此系列的表引擎支持ALTER相关操作。</p>
-<p><img src="E:%5Cblog%5Csource%5Cassets%5C%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.png" alt="未命名文件"></p>
+<p><img src="/.com//E:%5Cblog%5Csource%5Cassets%5C%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.png" alt="未命名文件"></p>
 <p>家族中其他表引擎则在MergeTree的基础上各有所长。如果给MergeTree系列的表引擎加上Replicated前缀，也会得到一组支持数据副本的表引擎。</p>
 <h2 id="6-1-MergeTree的创建方式与存储结构"><a href="#6-1-MergeTree的创建方式与存储结构" class="headerlink" title="6.1 MergeTree的创建方式与存储结构"></a>6.1 MergeTree的创建方式与存储结构</h2><ol>
 <li><p>MergeTree的创建方式</p>
@@ -610,13 +610,13 @@
 <li><p><strong>索引粒度</strong></p>
 <p>MergeTree使用<strong>MarkRange</strong>表示一个具体的区间，并通过start和end表示其具体的范围。</p>
 <p>如下图所示，以CounterID作为主键索引。</p>
-<p><img src="..%5Cassets%5C19530395-616ae9043a42ce93.png" alt="img"></p>
+<p><img src="/.com//.%5Cclickhouse%5C19530395-616ae9043a42ce93.png" alt="19530395-616ae9043a42ce93"></p>
 <p>如果使用多个主键，例如<code>ORDER BY (CountID, EventDate)</code>，则索引文件如下所示：</p>
-<p><img src="..%5Cassets%5C19530395-0ebd8d5439fdbb25.png" alt="img"></p>
+<p><img src="/.com//clickhouse%5C19530395-0ebd8d5439fdbb25.png" alt="19530395-0ebd8d5439fdbb25">!</p>
 </li>
 <li><p><strong>索引的查询过程</strong></p>
 <p>以示例数据为例，主键ID为String类型，ID的取值从A000开始，MergeTree的索引粒度设置为3，则primary.idx文件内的索引数据如下图所示：</p>
-<p><img src="..%5Cassets%5C19530395-b0d8a6e45a5cfdfb.png" alt="img"></p>
+<p><img src="/.com//19530395-b0d8a6e45a5cfdfb.png" alt="19530395-b0d8a6e45a5cfdfb"></p>
 </li>
 </ol>
 
@@ -1082,15 +1082,15 @@ preservesPartitioning: Boolean = false): RDD[U]  `</code></pre></li>
 </tr>
 <tr>
 <td>ls path</td>
-<td>使用 ls 命令来查看当前 znode 的子节点 [可监听] <br />-w  监听子节点变化 <br />-s   附加次级信息</td>
+<td>使用 ls 命令来查看当前 znode 的子节点 [可监听] <br>-w  监听子节点变化 <br>-s   附加次级信息</td>
 </tr>
 <tr>
 <td>create</td>
-<td>普通创建 <br />-s 含有序列 <br />-e 临时（重启或者超时消失）</td>
+<td>普通创建 <br>-s 含有序列 <br>-e 临时（重启或者超时消失）</td>
 </tr>
 <tr>
 <td>get path</td>
-<td>获得节点的值 [可监听] <br />-w 监听节点内容变化 <br />-s 附加次级信息</td>
+<td>获得节点的值 [可监听] <br>-w 监听节点内容变化 <br>-s 附加次级信息</td>
 </tr>
 <tr>
 <td>set</td>
@@ -1383,7 +1383,7 @@ preservesPartitioning: Boolean = false): RDD[U]  `</code></pre></li>
 <tr>
 <td>ARRAY</td>
 <td>数组是一组具有相同类型和名称的变量的集合。这些 变量称为数组的元素，每个数组元素都有一个编号，编号从 零开始。例如，数组值为[‘John’ , ‘Doe’ ]，那么第 2 个 元素可以通过数组名[1]进行引用。</td>
-<td>Array() 例如 array<string></td>
+<td>Array() 例如 array<string></string></td>
 </tr>
 </tbody></table>
 <p>Hive 有三种复杂数据类型 ARRAY、 MAP 和 STRUCT。 ARRAY 和 MAP 与 Java 中的 Array和 Map 类似，而 STRUCT 与 C 语言中的 Struct 类似，它封装了一个命名字段集合，复杂数据类型允许任意层次的嵌套。  </p>
@@ -1757,7 +1757,7 @@ preservesPartitioning: Boolean = false): RDD[U]  `</code></pre></li>
 <p>为了管理 Transaction， Kafka 引入了一个新的组件 Transaction Coordinator。 Producer 就是通过和 Transaction Coordinator 交互获得 Transaction ID 对应的任务状态。 TransactionCoordinator 还负责将事务所有写入 Kafka 的一个内部 Topic，这样即使整个服务重启，由于事务状态得到保存，进行中的事务状态可以得到恢复，从而继续进行。  </p>
 <h3 id="2-6-2-Consumer事务"><a href="#2-6-2-Consumer事务" class="headerlink" title="2.6.2 Consumer事务"></a>2.6.2 Consumer事务</h3><p>上述事务机制主要是从 Producer 方面考虑，对于 Consumer 而言，事务的保证就会相对较弱，尤其是无法保证 Commit 的信息被精确消费。这是由于 Consumer 可以通过 offset 访问任意信息，而且不同的 Segment File 生命周期不同，同一事务的消息可能会出现重启后被删除的情况。  </p>
 <h1 id="3-Kafka-API"><a href="#3-Kafka-API" class="headerlink" title="3 Kafka API"></a>3 Kafka API</h1><h2 id="3-1-Producer-API"><a href="#3-1-Producer-API" class="headerlink" title="3.1 Producer API"></a>3.1 Producer API</h2><h3 id="3-1-1-消息发送流程"><a href="#3-1-1-消息发送流程" class="headerlink" title="3.1.1 消息发送流程"></a>3.1.1 消息发送流程</h3><p>Kafka 的 Producer 发送消息采用的是<strong>异步发送</strong>的方式。在消息发送的过程中，涉及到了两个线程——<strong>main 线程和 Sender 线程</strong>，以及一个线程共享变量——<strong>RecordAccumulator</strong>。main 线程将消息发送给 RecordAccumulator， Sender 线程不断从RecordAccumulator 中拉取消息发送到 Kafka broker。  </p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210829153604369.png" alt="image-20210829153604369"></p>
+<p><img src="/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210829153604369.png" alt="image-20210829153604369"></p>
 <p><strong>相关参数：</strong><br>batch.size： 只有数据积累到 batch.size 之后， sender 才会发送数据。<br>linger.ms： 如果数据迟迟未达到 batch.size， sender 等待 linger.time 之后就会发送数据。  </p>
 <h3 id="3-1-2-异步发送API"><a href="#3-1-2-异步发送API" class="headerlink" title="3.1.2 异步发送API"></a>3.1.2 异步发送API</h3><ol>
 <li><p><strong>导入依赖</strong></p>
@@ -1898,7 +1898,7 @@ preservesPartitioning: Boolean = false): RDD[U]  `</code></pre></li>
 <li><strong>NAT模式</strong></li>
 <li><strong>主机模式</strong></li>
 </ol>
-<p><img src="https://i.loli.net/2021/05/09/CdsxetMYWaTNLOk.png" alt=""></p>
+<p><img src="https://i.loli.net/2021/05/09/CdsxetMYWaTNLOk.png" alt></p>
 <h1 id="2-Linux的文件目录"><a href="#2-Linux的文件目录" class="headerlink" title="2.Linux的文件目录"></a>2.Linux的文件目录</h1><p>linux 的文件系统是采用级层式的<strong>树状目录结构</strong>，在此结构中的最上层是<strong>根目录”/“</strong>，然后在此目录下再创建其他的目录。  </p>
 <ul>
 <li>在 Linux 世界里，<strong>一切皆文件</strong>（即使是一个硬件设备，也是使用文本来标志）  </li>

@@ -26,19 +26,19 @@
 <meta property="og:url" content="http://extrali.com/2020/05/25/Integrating-Spatial-Configuration-into-Heatmap-Regression/index.html">
 <meta property="og:site_name" content="Extrali">
 <meta property="og:description" content="Integrating Spatial Configuration into Heatmap Regression Based CNNs for Landmark Localization  (基于热图回归的CNN)概要在许多医学图像分析应用中，由于以下原因，只有有限数量的训练数据可用：  图像获取成本以及专家需要的大量手动注释工作。 训练小型卷积神经网络（CNN）等最新的机器学习方法数据集是一项">
-<meta property="og:image" content="c:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627092748519.png">
-<meta property="og:image" content="c:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627093504530.png">
-<meta property="og:image" content="c:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094103413.png">
-<meta property="og:image" content="c:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094735894.png">
-<meta property="og:image" content="c:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094924916.png">
-<meta property="og:image" content="c:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627095535655.png">
-<meta property="og:image" content="c:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627095315909.png">
+<meta property="og:image" content="http://extrali.com/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627092748519.png">
+<meta property="og:image" content="http://extrali.com/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627093504530.png">
+<meta property="og:image" content="http://extrali.com/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094103413.png">
+<meta property="og:image" content="http://extrali.com/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094735894.png">
+<meta property="og:image" content="http://extrali.com/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094924916.png">
+<meta property="og:image" content="http://extrali.com/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627095535655.png">
+<meta property="og:image" content="http://extrali.com/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627095315909.png">
 <meta property="article:published_time" content="2020-05-25T11:31:14.000Z">
 <meta property="article:modified_time" content="2020-06-27T02:16:08.723Z">
 <meta property="article:author" content="黎达">
 <meta property="article:tag" content="论文">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627092748519.png">
+<meta name="twitter:image" content="http://extrali.com/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627092748519.png">
 
 <link rel="canonical" href="http://extrali.com/2020/05/25/Integrating-Spatial-Configuration-into-Heatmap-Regression/">
 
@@ -244,27 +244,27 @@
 </li>
 </ul>
 <p>通过在端到端训练有素的卷积CNN框架中回归每个地标的热图来解剖点定位。 在我们提出的SpatialConfiguration-Net（SCN）中，两个组件通过乘法进行交互，以使局部外观组件着重于局部准确但模棱两可的候选预测，而空间配置组件着重于减少歧义以提高对地标误识别的鲁棒性。</p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627092748519.png" alt="image-20200627092748519"></p>
+<p><img src="/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627092748519.png" alt="image-20200627092748519"></p>
 <h3 id="2-方法"><a href="#2-方法" class="headerlink" title="2.方法"></a>2.方法</h3><p>​        为了在训练数据集有限的情况下降低地标定位误差，我们提出的SCN体系结构直接结合了两个交互组件的相应输出。如图1所示，当以端到端的方式训练基于热图回归的全卷积网络体系结构（第2.1节）时，通过将来自两个组件的预测相乘，可以实现这些组件的交互。由于这种相互作用，我们的SCN学会专用于其局部外观分量来提供局部准确但潜在的模棱两可的候选预测，而其空间配置分量则致力于通过消除歧义来提高对点误识别的鲁棒性（请参阅第2.2节）。当通过乘法结合时，这种相互作用导致低的点定位误差，即，对点误识别的高鲁棒性以及在每个识别的点处的高局部精度。</p>
 <h4 id="2-1-使用CNN回归热图"><a href="#2-1-使用CNN回归热图" class="headerlink" title="2.1 使用CNN回归热图"></a>2.1 使用CNN回归热图</h4><p>​        虽然直接回归地标坐标的CNN（Toshev and Szegedy，2014; Zhang et al。，2017）需要密集的层且具有许多网络参数才能对高度非线性且难以学习的图像进行坐标映射建模，但我们的方法基于回归热图图像 （Tompson et al。，2014），它对位于某个像素位置的点的伪概率进行编码。通过启用图像到图像的映射，由于减少了网络权重并因此降低了计算复杂度，因此我们受益于使用全卷积网络（Shelhamer et al。，2017）。</p>
 <p>​        N为点总数，目标维点L<del>i</del>的d维热图图像g<del>i</del>（x）：R^d^→R，i =</p>
 <p>{1,….，坐标为x ∗ i∈R^d^的N}被定义为高斯函数：</p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627093504530.png" alt="image-20200627093504530"></p>
+<p><img src="/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627093504530.png" alt="image-20200627093504530"></p>
 <p>因此，靠近目标坐标x<del>i</del>∈R^d^的热图像素具有较高的值，该值在远离x <del>i</del>处平滑但迅速减小。我们引入了比例因子γ以避免训练期间由于高斯函数的其他非常小的值引起的数值不稳定。 对于每个维度d，标准偏差σ<del>i</del>定义地标L<del>i</del>的热图图像中高斯函数的峰宽。</p>
 <p>​        不仅与我们之前的工作（Payer等人，2016）不同，而且与其他基于热图的方法（例如，Tompson等人，2014）不同，我们将σ<del>i</del>视为g<del>i</del>的未知参数，以便对其进行学习。 在训练CNN期间，除了网络权重w和偏差b之外。因此，我们可以根据网络的预测置信度分别学习每个地标的最佳热图峰宽。</p>
 <p>​        网络通过最小化预测的热图之间的差异来学习同时回归N个热图</p>
 <p>h<del>i</del>（x; w，b）和所有点L<del>i</del>的对应目标热图g<del>i</del>（x;σ<del>i</del>）：</p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094103413.png" alt="image-20200627094103413"></p>
+<p><img src="/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094103413.png" alt="image-20200627094103413"></p>
 <p>这个新颖的目标函数通过涉及热图峰宽σ=（σ<del>1</del>，…，σ<del>N</del>）^T^的L<del>2</del>范数的正则化项在（Payer等人，2016）上扩展。由于σ是可学习的网络参数，因此当σi→∞导致gi（x;σi）≈0时，该术语避免了平凡的解决方案。因子α定义了热图峰宽σ受罚的强度，并且λ控制了影响 网络权重w的L2范数的。</p>
 <p>​        在（2）中，hi（x; w，b）和gi（x;σi）的L2距离与惩罚σ相互抵触。 为了使（2）最小，前一项优选σ较大，而后一项则使σ尽可能小。网络会使预测点的热图峰宽较窄（确信预测正确），而不确定点的峰宽较宽（例如难以确定的点）。因此，如图2所示，网络学习了在生成过平滑的，可能不准确的预测的大σi和导致潜在的高度准确的响应但附近有多个峰值的小σi之间的最佳折衷。在网络推断中，我们通过获取热图具有最高值的坐标来获得每个地标L<del>i</del>的预测坐标x^i^∈R^d^：</p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094735894.png" alt="image-20200627094735894"></p>
+<p><img src="/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094735894.png" alt="image-20200627094735894"></p>
 <p>点Li的缩放区域针对不同σi的示例热图输出。 上图显示选择固定σi太小时的多个峰； 中间的图像显示了学习到的σi= 2.16的响应； 下图显示了对于太大的固定σi而言，响应过于平滑。 目标坐标x ∗ i用表示，预测坐标xˆi用表示。</p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094924916.png" alt="image-20200627094924916"></p>
+<p><img src="/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627094924916.png" alt="image-20200627094924916"></p>
 <h4 id="2-2-SpatialConfiguration-Net"><a href="#2-2-SpatialConfiguration-Net" class="headerlink" title="2.2 SpatialConfiguration-Net"></a>2.2 SpatialConfiguration-Net</h4><p>​        用于热图回归的SCN的基本概念是其两个组件之间的相互作用，分别表示局部外观和空间配置（见图3）。在第2.2.1节中，我们解释了两个组件如何相互作用以将本地化任务简化为两个子问题。 尽管两个相互作用的组件在结构上原则上是灵活的，但在2.2.2和2.2.3节中，我们将针对这两个组件描述我们特别建议的体系结构。</p>
 <p>我们提议的SCN的示意图。 在局部外观组件中，将输入图像I转换为HLA，代表N个点中每一个的局部外观热图。 黑色虚线表示HLA用作空间配置组件的输入，其中HLA转换为空间配置热图HSC。 HLA和HSC的乘积产生最终的热图H。 箭头表示连接，即</p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627095535655.png" alt="image-20200627095535655"></p>
+<p><img src="/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627095535655.png" alt="image-20200627095535655"></p>
 <h5 id="2-2-1局部外观⇔空间配置"><a href="#2-2-1局部外观⇔空间配置" class="headerlink" title="2.2.1局部外观⇔空间配置"></a>2.2.1局部外观⇔空间配置</h5><p>​        对于N个点，预测热图集H = {hi（x）| i = 1。 。 。 N}通过逐元素乘法获得。两个组件的相应热图输出：</p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627095315909.png" alt="image-20200627095315909"></p>
+<p><img src="/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200627095315909.png" alt="image-20200627095315909"></p>
 <p>由于符号的容易性，此处省略了网络权重w和偏置b。 热图hLA i（x）和hSC i（x）分别是每个地标Li的局部外观和空间配置分量的输出。</p>
 <p>​        这两个分量通过（4）中的乘法进行交互。 这种乘法对于SCN学习定位任务的简化至关重要，因为它迫使两个分量都对目标界标x ∗ i的位置产生响应，即hLA i（x）和hSC i（x） 传递x接近x ∗ i的响应，而在其他所有位置上，只要另一个组件没有响应，一个组件就可以响应。因此，只要空间配置组件对局部相似结构的位置没有响应，局部外观组件就可以集中精力将输入图像转换为目标界标x ∗ i位置处的局部高精度响应，无需抑制局部相似的结构。 另一方面，只要局部外观分量在x ∗ i的位置上产生局部高度精确的响应，空间配置分量就可以集中精力通过消除局部外观分量的输出中的假阳性响应来区分局部相似的结构。 ，而无需高度精确地定位x ∗ i，无需抑制局部相似的结构。 另一方面，只要局部外观分量在x ∗ i的位置上产生局部高度精确的响应，空间配置分量就可以集中精力通过消除局部外观分量的输出中的假阳性响应来区分局部相似的结构。 ，而无需高度精确地定位x ∗ i。</p>
 <p>​        相比之下，先前的工作（Tompson等人，2014； Pfister等人，2015）的目的是同时解决地标错误识别的稳健性以及每个网络组件中所识别点的局部精度，但缺点是无法简化 本地化任务。 另一方面，我们的体系结构导致了一个解决方案，其中两个组件都面临着更简单的任务，可以从少量的培训数据中学习。</p>

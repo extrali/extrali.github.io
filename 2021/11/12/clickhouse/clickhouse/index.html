@@ -23,23 +23,23 @@
   <meta name="description" content="refer: &lt;&lt;Clickhouse原理解析及应用实践&gt;&gt;  1. Clickhouse的前世今生OLAP常见架构分类：  ROLAP（Relational OLAP, 关系型OLAP）。直接使用关系模型构建，数据模型常使用星型模型或则雪花模型。  星型模是一种多维的数据关系，它由一个fact表和一组dimension表组成。每个dimension表都有一个维作为主键，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="clickhouse">
-<meta property="og:url" content="http://extrali.com/2021/11/12/clickhouse/index.html">
+<meta property="og:url" content="http://extrali.com/2021/11/12/clickhouse/clickhouse/index.html">
 <meta property="og:site_name" content="Extrali">
 <meta property="og:description" content="refer: &lt;&lt;Clickhouse原理解析及应用实践&gt;&gt;  1. Clickhouse的前世今生OLAP常见架构分类：  ROLAP（Relational OLAP, 关系型OLAP）。直接使用关系模型构建，数据模型常使用星型模型或则雪花模型。  星型模是一种多维的数据关系，它由一个fact表和一组dimension表组成。每个dimension表都有一个维作为主键，">
 <meta property="og:image" content="https://i.loli.net/2021/11/12/3YL8i12oFf9ae7t.png">
 <meta property="og:image" content="https://i.loli.net/2021/11/12/1cjWOKhoSzb6DM7.png">
-<meta property="og:image" content="e:%5Cblog%5Csource%5Cassets%5C%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.png">
-<meta property="og:image" content="http://extrali.com/2021/11/12/clickhouse/..%5Cassets%5C19530395-616ae9043a42ce93.png">
-<meta property="og:image" content="http://extrali.com/2021/11/12/clickhouse/..%5Cassets%5C19530395-0ebd8d5439fdbb25.png">
-<meta property="og:image" content="http://extrali.com/2021/11/12/clickhouse/..%5Cassets%5C19530395-b0d8a6e45a5cfdfb.png">
+<meta property="og:image" content="http://extrali.com/.com//E:%5Cblog%5Csource%5Cassets%5C%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.png">
+<meta property="og:image" content="http://extrali.com/.com//.%5Cclickhouse%5C19530395-616ae9043a42ce93.png">
+<meta property="og:image" content="http://extrali.com/.com//clickhouse%5C19530395-0ebd8d5439fdbb25.png">
+<meta property="og:image" content="http://extrali.com/.com//19530395-b0d8a6e45a5cfdfb.png">
 <meta property="article:published_time" content="2021-11-12T14:44:01.000Z">
-<meta property="article:modified_time" content="2021-11-14T09:40:38.558Z">
+<meta property="article:modified_time" content="2021-11-14T09:52:19.033Z">
 <meta property="article:author" content="黎达">
 <meta property="article:tag" content="clickhouse">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2021/11/12/3YL8i12oFf9ae7t.png">
 
-<link rel="canonical" href="http://extrali.com/2021/11/12/clickhouse/">
+<link rel="canonical" href="http://extrali.com/2021/11/12/clickhouse/clickhouse/">
 
 
 <script id="page-configurations">
@@ -157,7 +157,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/11/12/clickhouse/">
+    <link itemprop="mainEntityOfPage" href="http://extrali.com/2021/11/12/clickhouse/clickhouse/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -187,7 +187,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">عُدل في</span>
-                <time title="عُدل: 2021-11-14 17:40:38" itemprop="dateModified" datetime="2021-11-14T17:40:38+08:00">2021-11-14</time>
+                <time title="عُدل: 2021-11-14 17:52:19" itemprop="dateModified" datetime="2021-11-14T17:52:19+08:00">2021-11-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -568,7 +568,7 @@
 <h2 id="4-5-数据写入"><a href="#4-5-数据写入" class="headerlink" title="4.5 数据写入"></a>4.5 数据写入</h2><p>Clickhouse内部所有的数据操作都是面向<strong>Block数据块</strong>的，所以INSERT查询最终会将数据转换为Block数据块。也正因如此，INSERT语句在单个数据块的写入过程中是具有<strong>原子性</strong>的。在默认情况下，每个数据块最多写入1048576行数据（由<code>max_insert_block_size</code>参数控制）。也就是说，如果一条INSERT语句写入的数据少于<code>max_insert_block_size</code>行，那么这批数据的写入是具有原子性的，即要么全部成功，要么全部失败。需要注意的是，只有在Clickhouse服务端处理数据的时候才具有这种原子写入的特性，例如使用JDBC或HTTP接口时。</p>
 <h1 id="5-数据字典"><a href="#5-数据字典" class="headerlink" title="5. 数据字典"></a>5. 数据字典</h1><p>TO DO</p>
 <h1 id="6-MergeTree原理解析"><a href="#6-MergeTree原理解析" class="headerlink" title="6. MergeTree原理解析"></a>6. MergeTree原理解析</h1><p>只有合并树系列的表引擎才支持<strong>主键索引</strong>、<strong>数据分区</strong>、<strong>数据副本</strong>和<strong>数据采样</strong>这些特性，同时也只有此系列的表引擎支持ALTER相关操作。</p>
-<p><img src="E:%5Cblog%5Csource%5Cassets%5C%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.png" alt="未命名文件"></p>
+<p><img src="/.com//E:%5Cblog%5Csource%5Cassets%5C%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.png" alt="未命名文件"></p>
 <p>家族中其他表引擎则在MergeTree的基础上各有所长。如果给MergeTree系列的表引擎加上Replicated前缀，也会得到一组支持数据副本的表引擎。</p>
 <h2 id="6-1-MergeTree的创建方式与存储结构"><a href="#6-1-MergeTree的创建方式与存储结构" class="headerlink" title="6.1 MergeTree的创建方式与存储结构"></a>6.1 MergeTree的创建方式与存储结构</h2><ol>
 <li><p>MergeTree的创建方式</p>
@@ -622,13 +622,13 @@
 <li><p><strong>索引粒度</strong></p>
 <p>MergeTree使用<strong>MarkRange</strong>表示一个具体的区间，并通过start和end表示其具体的范围。</p>
 <p>如下图所示，以CounterID作为主键索引。</p>
-<p><img src="..%5Cassets%5C19530395-616ae9043a42ce93.png" alt="img"></p>
+<p><img src="/.com//.%5Cclickhouse%5C19530395-616ae9043a42ce93.png" alt="19530395-616ae9043a42ce93"></p>
 <p>如果使用多个主键，例如<code>ORDER BY (CountID, EventDate)</code>，则索引文件如下所示：</p>
-<p><img src="..%5Cassets%5C19530395-0ebd8d5439fdbb25.png" alt="img"></p>
+<p><img src="/.com//clickhouse%5C19530395-0ebd8d5439fdbb25.png" alt="19530395-0ebd8d5439fdbb25">!</p>
 </li>
 <li><p><strong>索引的查询过程</strong></p>
 <p>以示例数据为例，主键ID为String类型，ID的取值从A000开始，MergeTree的索引粒度设置为3，则primary.idx文件内的索引数据如下图所示：</p>
-<p><img src="..%5Cassets%5C19530395-b0d8a6e45a5cfdfb.png" alt="img"></p>
+<p><img src="/.com//19530395-b0d8a6e45a5cfdfb.png" alt="19530395-b0d8a6e45a5cfdfb"></p>
 </li>
 </ol>
 

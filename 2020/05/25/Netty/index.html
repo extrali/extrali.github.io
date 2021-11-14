@@ -26,16 +26,16 @@
 <meta property="og:url" content="http://extrali.com/2020/05/25/Netty/index.html">
 <meta property="og:site_name" content="Extrali">
 <meta property="og:description" content="1.Netty是什么 Netty 是一个 基于 NIO 的 client-server(客户端服务器)框架，使用它可以快速简单地开发网络应用程序。 它极大地简化并优化了 TCP 和 UDP 套接字服务器等网络编程,并且性能以及安全性等很多方面甚至都要更好。 支持多种协议 如 FTP，SMTP，HTTP 以及各种二进制和基于文本的传统协议。  2.Netty的特点是什么 高并发：Netty 是一款基">
-<meta property="og:image" content="c:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200619085705224.png">
+<meta property="og:image" content="http://extrali.com/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200619085705224.png">
 <meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/iaIdQfEric9TyHkpkttoicqYcbytibtU38aaqML3uQghC5WA6X8PNZ9h9YiaQDZpwREFEMIaqHkeUERAibAW9d0hmJ5g/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
-<meta property="og:image" content="c:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200619093216169.png">
+<meta property="og:image" content="http://extrali.com/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200619093216169.png">
 <meta property="og:image" content="https://img-blog.csdn.net/20160512174210997?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
 <meta property="article:published_time" content="2020-05-25T02:05:04.000Z">
 <meta property="article:modified_time" content="2020-08-03T01:34:06.231Z">
 <meta property="article:author" content="黎达">
 <meta property="article:tag" content="Netty">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200619085705224.png">
+<meta name="twitter:image" content="http://extrali.com/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200619085705224.png">
 
 <link rel="canonical" href="http://extrali.com/2020/05/25/Netty/">
 
@@ -265,7 +265,7 @@
 <li><strong><code>FixedLengthFrameDecoder</code></strong>: 固定长度解码器，它能够按照指定的长度对消息进行相应的拆包。</li>
 <li><strong><code>LengthFieldBasedFrameDecoder</code></strong>：</li>
 </ul>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200619085705224.png" alt="image-20200619085705224"></p>
+<p><img src="/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200619085705224.png" alt="image-20200619085705224"></p>
 <h1 id="10-什么是Netty的零拷贝"><a href="#10-什么是Netty的零拷贝" class="headerlink" title="10.什么是Netty的零拷贝"></a>10.什么是Netty的零拷贝</h1><p>Netty 的零拷贝主要包含三个方面：</p>
 <ol>
 <li>使用 Netty 提供的 <code>CompositeByteBuf</code> 类, 可以将多个<code>ByteBuf</code> 合并为一个逻辑上的 <code>ByteBuf</code>, 避免了各个 <code>ByteBuf</code> 之间的拷贝。</li>
@@ -305,7 +305,7 @@
 <h2 id="为什么要使用心跳机制？"><a href="#为什么要使用心跳机制？" class="headerlink" title="为什么要使用心跳机制？"></a>为什么要使用心跳机制？</h2><p>在 TCP 保持长连接的过程中，可能会出现断网等网络异常出现，异常发生的时候， client 与 server 之间如果没有交互的话，它们是无法发现对方已经掉线的。为了解决这个问题, 我们就需要引入 <strong>心跳机制</strong> 。</p>
 <p>心跳机制的工作原理是: 在 client 与 server 之间在一定时间内没有数据交互时, 即处于 idle 状态时, 客户端或服务器就会发送一个特殊的数据包给对方, 当接收方收到这个数据报文后, 也立即发送一个特殊的数据报文, 回应发送方, 此即一个 PING-PONG 交互。所以, 当某一端收到心跳消息后, 就知道了对方仍然在线, 这就确保 TCP 连接的有效性.</p>
 <p>TCP 实际上自带的就有长连接选项，本身是也有心跳包机制，也就是 TCP 的选项：<code>SO_KEEPALIVE</code>。但是，TCP 协议层面的长连接灵活性不够。所以，一般情况下我们都是在应用层协议上实现自定义心跳机制的，也就是在 Netty 层面通过编码实现。通过 Netty 实现心跳机制的话，核心类是 <code>IdleStateHandler</code> 。</p>
-<h1 id="16-为什么还需要应用层keepalive"><a href="#16-为什么还需要应用层keepalive" class="headerlink" title="16. 为什么还需要应用层keepalive"></a>16. 为什么还需要应用层keepalive</h1><p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200619093216169.png" alt="image-20200619093216169"></p>
+<h1 id="16-为什么还需要应用层keepalive"><a href="#16-为什么还需要应用层keepalive" class="headerlink" title="16. 为什么还需要应用层keepalive"></a>16. 为什么还需要应用层keepalive</h1><p><img src="/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200619093216169.png" alt="image-20200619093216169"></p>
 <h1 id="17-JDK-NIO-BUG"><a href="#17-JDK-NIO-BUG" class="headerlink" title="17.JDK NIO BUG"></a>17.JDK NIO BUG</h1><ul>
 <li>正常情况下，<code>selector.select()</code> 操作是阻塞的，只有被监听的 <code>fd</code> 有读写操作时，才被唤醒</li>
 <li>但是，在这个 <code>bug</code> 中，没有任何 <code>fd</code> 有读写请求，但是 <code>select()</code> 操作依旧被唤醒</li>

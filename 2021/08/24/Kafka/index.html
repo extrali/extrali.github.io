@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://i.loli.net/2021/08/29/TasCyYfQ5uBELIJ.png">
 <meta property="og:image" content="https://i.loli.net/2021/08/29/j5esYdzm1DOBcxg.png">
 <meta property="og:image" content="https://i.loli.net/2021/08/29/dZvJMmHUViKA2hN.png">
-<meta property="og:image" content="c:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210829153604369.png">
+<meta property="og:image" content="http://extrali.com/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210829153604369.png">
 <meta property="og:image" content="https://i.loli.net/2021/08/29/4N1kchtIQYpRix5.png">
 <meta property="article:published_time" content="2021-08-24T15:32:08.000Z">
 <meta property="article:modified_time" content="2021-08-29T08:33:18.776Z">
@@ -354,7 +354,7 @@
 <p>为了管理 Transaction， Kafka 引入了一个新的组件 Transaction Coordinator。 Producer 就是通过和 Transaction Coordinator 交互获得 Transaction ID 对应的任务状态。 TransactionCoordinator 还负责将事务所有写入 Kafka 的一个内部 Topic，这样即使整个服务重启，由于事务状态得到保存，进行中的事务状态可以得到恢复，从而继续进行。  </p>
 <h3 id="2-6-2-Consumer事务"><a href="#2-6-2-Consumer事务" class="headerlink" title="2.6.2 Consumer事务"></a>2.6.2 Consumer事务</h3><p>上述事务机制主要是从 Producer 方面考虑，对于 Consumer 而言，事务的保证就会相对较弱，尤其是无法保证 Commit 的信息被精确消费。这是由于 Consumer 可以通过 offset 访问任意信息，而且不同的 Segment File 生命周期不同，同一事务的消息可能会出现重启后被删除的情况。  </p>
 <h1 id="3-Kafka-API"><a href="#3-Kafka-API" class="headerlink" title="3 Kafka API"></a>3 Kafka API</h1><h2 id="3-1-Producer-API"><a href="#3-1-Producer-API" class="headerlink" title="3.1 Producer API"></a>3.1 Producer API</h2><h3 id="3-1-1-消息发送流程"><a href="#3-1-1-消息发送流程" class="headerlink" title="3.1.1 消息发送流程"></a>3.1.1 消息发送流程</h3><p>Kafka 的 Producer 发送消息采用的是<strong>异步发送</strong>的方式。在消息发送的过程中，涉及到了两个线程——<strong>main 线程和 Sender 线程</strong>，以及一个线程共享变量——<strong>RecordAccumulator</strong>。main 线程将消息发送给 RecordAccumulator， Sender 线程不断从RecordAccumulator 中拉取消息发送到 Kafka broker。  </p>
-<p><img src="C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210829153604369.png" alt="image-20210829153604369"></p>
+<p><img src="/.com//C:%5CUsers%5Cextra%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210829153604369.png" alt="image-20210829153604369"></p>
 <p><strong>相关参数：</strong><br>batch.size： 只有数据积累到 batch.size 之后， sender 才会发送数据。<br>linger.ms： 如果数据迟迟未达到 batch.size， sender 等待 linger.time 之后就会发送数据。  </p>
 <h3 id="3-1-2-异步发送API"><a href="#3-1-2-异步发送API" class="headerlink" title="3.1.2 异步发送API"></a>3.1.2 异步发送API</h3><ol>
 <li><p><strong>导入依赖</strong></p>
